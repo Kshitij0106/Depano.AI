@@ -1,0 +1,25 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.container {
+  background: #1e1e1e;
+  min-width: 100%;
+  padding-left: 130px;
+  padding-top: 20px;
+}
+
+.title {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 39px;
+  letter-spacing: 0.15em;
+  color: #ec0c0c;
+  text-shadow: 6px 4px 5px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  cursor: hand;
+}

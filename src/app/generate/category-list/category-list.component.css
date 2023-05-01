@@ -1,0 +1,32 @@
+.carousal {
+  width: fit-content;
+}
+
+.card {
+  align-items: center;
+  background: transparent;
+  margin-bottom: 40px;
+  border: none;
+}
+
+.img {
+  border-radius: 50%;
+  cursor: pointer;
+  cursor: hand;
+}
+
+.category-title {
+  margin-top: 20px;
+  text-align: center;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 20px;
+  line-height: 24px;
+  text-align: center;
+  letter-spacing: 0.12em;
+  color: #ffffff;
+  cursor: pointer;
+  cursor: hand;
+  max-width: 150px;
+}

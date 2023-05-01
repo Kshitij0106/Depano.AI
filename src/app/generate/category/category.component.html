@@ -1,0 +1,8 @@
+<app-header></app-header>
+<div class="container">
+  <app-category-list
+    [categoryList]="categoryLists"
+    (selectedCategory)="categorySelected($event)"
+  ></app-category-list>
+  <app-user-input (userInput)="inputSelected($event)"></app-user-input>
+</div>

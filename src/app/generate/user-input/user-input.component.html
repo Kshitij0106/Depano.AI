@@ -1,0 +1,24 @@
+<div class="container-fluid">
+  <h6 class="or">OR</h6>
+</div>
+<div class="container-fluid">
+  <div class="form-floating">
+    <textarea
+      class="input form-control"
+      placeholder="Add your own input"
+      id="userInput"
+      #userInputCategory
+    ></textarea>
+    <label class="label" for="userInput">Add your own input</label>
+    <span>
+      <button
+        for="userInput"
+        type="submit"
+        class="btn btn-secondary"
+        (click)="onSubmit(userInputCategory.value)"
+      >
+        Submit
+      </button>
+    </span>
+  </div>
+</div>

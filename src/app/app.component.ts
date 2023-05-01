@@ -6,9 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  title = 'Depano.AI';
-
-  openCategory(category: string) {
-    console.log(category);
-  }
+  title = 'Depano.ai';
 }

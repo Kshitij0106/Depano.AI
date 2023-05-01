@@ -1,0 +1,45 @@
+.or {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20.8093px;
+  line-height: 25px;
+  text-align: center;
+  letter-spacing: 0.12em;
+  color: #ffffff;
+  margin-bottom: 70px;
+}
+
+.input {
+  box-sizing: border-box;
+  border: 0.867056px solid #bababa;
+  border-radius: 13px;
+  background: #1e1e1e;
+  min-height: 180px;
+  max-height: 180px;
+  color: #ffffff;
+  direction: ltr;
+  text-align: start;
+}
+
+.label {
+  color: #ffffff;
+}
+
+.btn {
+  font-family: "Inter";
+  font-style: normal;
+  width: 125px;
+  font-weight: 400;
+  font-size: 20.8093px;
+  line-height: 25px;
+  text-align: center;
+  letter-spacing: 0.12em;
+  color: #ffffff;
+  background: #444444;
+  border-radius: 7px;
+  float: right;
+  padding: 5px;
+  margin-top: -60px;
+  margin-right: 30px;
+}

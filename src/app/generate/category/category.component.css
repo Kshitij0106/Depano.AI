@@ -1,0 +1,23 @@
+* {
+  margin: 0 auto;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #1e1e1e;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.container {
+  background: #1e1e1e;
+  min-width: 100%;
+  padding-top: 65px;
+  padding-bottom: 76px;
+  padding-left: 130px;
+  padding-right: 130px;
+}

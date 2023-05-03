@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Category } from '../category';
+import { Subcategory } from '../subcategory';
 
 @Component({
   selector: 'app-category-list',
@@ -7,12 +7,20 @@ import { Category } from '../category';
   styleUrls: ['./category-list.component.css'],
 })
 export class CategoryListComponent {
-  @Input() categoryList: Category[] = [];
-  @Output() selectedCategory = new EventEmitter<string>();
+  @Input() categoryList: Subcategory[] = [];
+  @Output() selectedCategory = new EventEmitter<Subcategory>();
+  category!: Subcategory;
 
   constructor() {}
 
-  selectCategory(categoryName: string) {
-    this.selectedCategory.emit(categoryName);
+  selectCategory(categoryCode: string, categoryName: string) {
+    this.category = {
+      name: categoryName,
+      code: categoryCode,
+      image: '',
+      prompt: '',
+    };
+
+    this.selectedCategory.emit(this.category);
   }
 }

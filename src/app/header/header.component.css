@@ -23,3 +23,13 @@
   cursor: pointer;
   cursor: hand;
 }
+
+.breadcrumb-item {
+  margin-top: 10px;
+  --bs-breadcrumb-divider: ">";
+}
+
+.link {
+  text-decoration: none;
+  color: #ffffff;
+}

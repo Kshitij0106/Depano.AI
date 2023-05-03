@@ -1,5 +1,8 @@
+import { Subcategory } from './subcategory';
+
 export interface Category {
-  name: string;
-  image: string;
-  code: string;
+  subCategories: Subcategory[];
+  optionalTypes: Subcategory[]; // optional types
+  next: boolean; // next sub level
+  mandatoryPrompts: string[]; // mandatory prompts
 }

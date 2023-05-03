@@ -5,11 +5,14 @@ import {
   ParamMap,
   Router,
 } from '@angular/router';
+import { Location } from '@angular/common';
+import { HostListener } from '@angular/core';
+import { MenCategoryService } from '../service/data/men-category.service';
+import { WomenCategoryService } from '../service/data/women-category.service';
 import { Category } from '../category';
 import { PromptService } from '../service/prompt.service';
-import { MenCategoryService } from '../service/data/men-category.service';
-import { Categories } from '../categories';
-import { WomenCategoryService } from '../service/data/women-category.service';
+import { Subcategory } from '../subcategory';
+import { BreadcrumbService } from 'src/app/service/breadcrumb.service';
 
 @Component({
   selector: 'app-category',
@@ -18,8 +21,8 @@ import { WomenCategoryService } from '../service/data/women-category.service';
 })
 export class CategoryComponent implements OnInit {
   category: string = '';
-  selectedCategory!: Categories;
-  categoryLists: Category[] = [];
+  selectedCategory!: Category;
+  categoryLists: Subcategory[] = [];
   userInput: string = '';
 
   constructor(
@@ -27,7 +30,9 @@ export class CategoryComponent implements OnInit {
     private route: ActivatedRoute,
     private menCategoryService: MenCategoryService,
     private womenCategoryService: WomenCategoryService,
-    private promptService: PromptService
+    private promptService: PromptService,
+    private breadcrumbService: BreadcrumbService,
+    private location: Location
   ) {
     this.getRoute();
   }
@@ -48,22 +53,25 @@ export class CategoryComponent implements OnInit {
   }
 
   getCategoryList() {
-    if (this.promptService.getKey('gender') === 'men') {
+    if (this.promptService.getKey('gender') === 'Men') {
       this.selectedCategory = this.menCategoryService.getCategory(
         this.category
-      ) as Categories;
-    } else if (this.promptService.getKey('gender') === 'women') {
+      ) as Category;
+    } else if (this.promptService.getKey('gender') === 'Women') {
       this.selectedCategory = this.womenCategoryService.getCategory(
         this.category
-      ) as Categories;
+      ) as Category;
     }
-    if (this.selectedCategory.next) {
-      this.categoryLists = this.selectedCategory.categories;
-    }
+    this.categoryLists = this.selectedCategory.subCategories;
   }
 
-  categorySelected(category: string) {
-    this.nextCategory(category);
+  categorySelected(category: Subcategory) {
+    if (this.selectedCategory.next) {
+      this.breadcrumbService.addBreadcrumb(category.code, category.name);
+      this.nextCategory(category.code);
+    } else {
+      this.previousCategory();
+    }
   }
 
   inputSelected(input: string) {
@@ -75,12 +83,20 @@ export class CategoryComponent implements OnInit {
     this.router.navigate(['../', category], {
       relativeTo: this.route,
     });
-    //.replace(/\s/g, '')
+  }
+
+  previousCategory() {
+    this.location.back();
   }
 
   generate() {
     this.router.navigate(['../../', 'result'], {
       relativeTo: this.route,
     });
+  }
+
+  @HostListener('window:popstate', ['$event'])
+  onPopState() {
+    this.breadcrumbService.removeBreadcrumb();
   }
 }

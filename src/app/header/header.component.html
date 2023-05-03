@@ -1,19 +1,18 @@
 <div class="container">
   <h6 class="title" (click)="openHome()">{{ title }}</h6>
+
+  <nav class="crumb">
+    <ol class="breadcrumb">
+      <ng-container *ngFor="let crumb of breadcrumbsList">
+        <li class="breadcrumb-item">
+          <a
+            class="link"
+            [routerLink]="['/generate', crumb.key]"
+            (click)="goToBreadcrumb(crumb.key)"
+            >{{ crumb.value }}</a
+          >
+        </li>
+      </ng-container>
+    </ol>
+  </nav>
 </div>
-<!-- <breadcrumb #parent>
-  <ol class="breadcrumb">
-    <ng-template ngFor let-route [ngForOf]="parent.breadcrumbs">
-      <li *ngIf="!route.terminal" class="breadcrumb-item">
-        <a href="" [routerLink]="[route.url]">{{ route.displayName }}</a>
-      </li>
-      <li
-        *ngIf="route.terminal"
-        class="breadcrumb-item active"
-        aria-current="page"
-      >
-        {{ route.displayName }}
-      </li>
-    </ng-template>
-  </ol>
-</breadcrumb> -->

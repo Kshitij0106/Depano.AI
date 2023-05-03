@@ -14,6 +14,7 @@ import { ResultComponent } from './result/result.component';
 import { MenCategoryService } from './generate/service/data/men-category.service';
 import { WomenCategoryService } from './generate/service/data/women-category.service';
 import { PromptService } from './generate/service/prompt.service';
+import { BreadcrumbService } from './service/breadcrumb.service';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,12 @@ import { PromptService } from './generate/service/prompt.service';
     BreadcrumbModule,
     HttpClientModule,
   ],
-  providers: [MenCategoryService, WomenCategoryService, PromptService],
+  providers: [
+    MenCategoryService,
+    WomenCategoryService,
+    PromptService,
+    BreadcrumbService,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

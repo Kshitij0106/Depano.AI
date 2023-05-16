@@ -10,75 +10,65 @@ export class WomenCategoryService {
   private Women: Category = {
     subCategories: [
       {
-        name: 'Western Wear',
-        image:
-          'https://i.pinimg.com/564x/6b/74/f5/6b74f51970916d6b7d73b17d9b606d31.jpg',
-        code: 'women-western',
-        prompt: '',
-      },
-      {
-        name: 'Indian Wear',
-        image:
-          'https://i.pinimg.com/564x/6b/74/f5/6b74f51970916d6b7d73b17d9b606d31.jpg',
-        code: 'women-indian',
-        prompt: '',
-      },
-    ],
-    optionalTypes: [],
-    mandatoryPrompts: [],
-    next: true,
-  };
-
-  private WesternWear: Category = {
-    subCategories: [
-      {
         name: 'Topwear',
-        image: '',
-        code: 'women-western-top',
+        image:
+          'https://i.pinimg.com/564x/6b/74/f5/6b74f51970916d6b7d73b17d9b606d31.jpg',
+        code: 'women-top',
         prompt: '',
       },
       {
         name: 'Bottomwear',
-        image: '',
-        code: 'women-western-bottom',
+        image:
+          'https://i.pinimg.com/564x/6b/74/f5/6b74f51970916d6b7d73b17d9b606d31.jpg',
+        code: 'women-bottom',
         prompt: '',
       },
       {
-        name: 'Dress/Jumpsuit',
-        image: '',
-        code: 'women-western-dress',
+        name: 'Dress',
+        image:
+          'https://i.pinimg.com/564x/6b/74/f5/6b74f51970916d6b7d73b17d9b606d31.jpg',
+        code: 'women-dress',
         prompt: '',
       },
       {
         name: 'Sets',
-        image: '',
-        code: 'women-western-sets',
-        prompt: '',
-      },
-      {
-        name: 'Lingerie/Sleepwear',
-        image: '',
-        code: 'women-western-sleepwear',
-        prompt: '',
-      },
-      {
-        name: 'Sportswear & Activewear',
-        image: '',
-        code: 'women-western-sports',
+        image:
+          'https://i.pinimg.com/564x/6b/74/f5/6b74f51970916d6b7d73b17d9b606d31.jpg',
+        code: 'women-set',
         prompt: '',
       },
     ],
     optionalTypes: [],
-    mandatoryPrompts: [],
+    key: '',
     next: true,
   };
 
   private Topwear: Category = {
     subCategories: [
       {
+        name: 'Westernwear',
+        image: '',
+        code: 'women-top-western',
+        prompt: '',
+      },
+      {
+        name: 'Indianwear',
+        image: '',
+        code: 'women-top-indian',
+        prompt: '',
+      },
+    ],
+    optionalTypes: [],
+    key: '',
+    next: true,
+  };
+
+  private TopWesternwear: Category = {
+    subCategories: [
+      {
         name: 'Top/Blouse',
         image: '',
-        code: 'women-blouse',
+        code: 'women-western-blouse',
         prompt: '',
       },
       {
@@ -90,7 +80,7 @@ export class WomenCategoryService {
       {
         name: 'Shirts',
         image: '',
-        code: 'women-shirt',
+        code: 'women-western-shirt',
         prompt: '',
       },
       {
@@ -117,77 +107,25 @@ export class WomenCategoryService {
         code: 'women-western-jackets',
         prompt: '',
       },
-    ],
-    optionalTypes: [],
-    mandatoryPrompts: [],
-    next: true,
-  };
-
-  private Bottomwear: Category = {
-    subCategories: [
       {
-        name: 'Jeans',
+        name: 'Innerwear/Sleepwear',
         image: '',
-        code: 'women-jeans',
+        code: 'women-top-sleepwear',
         prompt: '',
       },
       {
-        name: 'Trouser',
+        name: 'Sportswear & Activewear',
         image: '',
-        code: 'women-trouser',
-        prompt: '',
-      },
-      {
-        name: 'Shorts',
-        image: '',
-        code: 'women-shorts',
-        prompt: '',
-      },
-      {
-        name: 'Skirts',
-        image: '',
-        code: 'women-skirts',
+        code: 'women-top-sports',
         prompt: '',
       },
     ],
     optionalTypes: [],
-    mandatoryPrompts: [],
+    key: '',
     next: true,
   };
 
-  private DressJumpsuit: Category = {
-    subCategories: [
-      {
-        name: 'Bodycon',
-        image: '',
-        code: 'women-dress-bodycon',
-        prompt: '',
-      },
-      {
-        name: 'Qipao',
-        image: '',
-        code: 'women-dress-qipao',
-        prompt: '',
-      },
-      {
-        name: 'Plegged',
-        image: '',
-        code: 'women-dress-plegged',
-        prompt: '',
-      },
-      {
-        name: 'Peplum',
-        image: '',
-        code: 'women-dress-peplum',
-        prompt: '',
-      },
-    ],
-    optionalTypes: [],
-    mandatoryPrompts: [],
-    next: true,
-  };
-
-  private LingerieSleepwear: Category = {
+  private TopInnerwearSleepwear: Category = {
     subCategories: [
       {
         name: 'Bra',
@@ -196,55 +134,25 @@ export class WomenCategoryService {
         prompt: '',
       },
       {
-        name: 'Briefs',
-        image: '',
-        code: 'women-briefs',
-        prompt: '',
-      },
-      {
         name: 'Shapewear',
         image: '',
-        code: 'women-shapeswear',
-        prompt: '',
-      },
-      {
-        name: 'Sleepwear & Loungewear',
-        image: '',
-        code: 'women-sleepwear',
+        code: 'women-top-shapeswear',
         prompt: '',
       },
       {
         name: 'Thermal',
         image: '',
-        code: 'women-thermal',
-        prompt: '',
-      },
-      {
-        name: 'Swimwear',
-        image: '',
-        code: 'women-lingerie-swimwear',
+        code: 'women-top-thermal',
         prompt: '',
       },
     ],
     optionalTypes: [],
-    mandatoryPrompts: [],
-    next: false,
+    key: '',
+    next: true,
   };
 
-  private SportswearActivewear: Category = {
+  private TopSportswearActivewear: Category = {
     subCategories: [
-      {
-        name: 'Track pants & Shorts',
-        image: '',
-        code: 'women-sports-shorts',
-        prompt: '',
-      },
-      {
-        name: 'Tracksuit',
-        image: '',
-        code: 'women-sports-tracks',
-        prompt: '',
-      },
       {
         name: 'Jackets & Sweatshirts',
         image: '',
@@ -257,65 +165,13 @@ export class WomenCategoryService {
         code: 'women-sports-tshirts',
         prompt: '',
       },
-      {
-        name: 'Swimwear',
-        image: '',
-        code: 'women-sports-swimwear',
-        prompt: '',
-      },
     ],
     optionalTypes: [],
-    mandatoryPrompts: [],
+    key: '',
     next: true,
   };
 
-  private Sets: Category = {
-    subCategories: [
-      {
-        name: 'Co-ord set',
-        image: '',
-        code: 'women-coord',
-        prompt: '',
-      },
-      {
-        name: 'Pantsuits',
-        image: '',
-        code: 'women-pant-suit',
-        prompt: '',
-      },
-    ],
-    optionalTypes: [],
-    mandatoryPrompts: [],
-    next: true,
-  };
-
-  private Indianwear: Category = {
-    subCategories: [
-      {
-        name: 'Topwear',
-        image: '',
-        code: 'women-indian-top',
-        prompt: '',
-      },
-      {
-        name: 'Sets',
-        image: '',
-        code: 'women-indian-sets',
-        prompt: '',
-      },
-      {
-        name: 'Bottomwear',
-        image: '',
-        code: 'women-indian-bottom',
-        prompt: '',
-      },
-    ],
-    optionalTypes: [],
-    mandatoryPrompts: [],
-    next: true,
-  };
-
-  private IndianTopwear: Category = {
+  private TopIndianwear: Category = {
     subCategories: [
       {
         name: 'Kurti',
@@ -343,61 +199,109 @@ export class WomenCategoryService {
       },
     ],
     optionalTypes: [],
-    mandatoryPrompts: [],
+    key: '',
     next: true,
   };
 
-  private IndianSets: Category = {
+  private Bottomwear: Category = {
     subCategories: [
       {
-        name: 'Suits',
+        name: 'Westernwear',
         image: '',
-        code: 'women-indian-suits',
+        code: 'women-bottom-western',
         prompt: '',
       },
       {
-        name: 'Saree',
+        name: 'Indianwear',
         image: '',
-        code: 'women-indian-saree',
-        prompt: '',
-      },
-      {
-        name: 'Lehenga Set',
-        image: '',
-        code: 'women-lehenga-set',
-        prompt: '',
-      },
-      {
-        name: 'Sharara Set',
-        image: '',
-        code: 'women-sharara-set',
-        prompt: '',
-      },
-      {
-        name: 'Anarkali Set',
-        image: '',
-        code: 'women-anarkali-set',
-        prompt: '',
-      },
-      {
-        name: 'Dhoti Set',
-        image: '',
-        code: 'wpmen-dhoti-set',
-        prompt: '',
-      },
-      {
-        name: 'Dupatta',
-        image: '',
-        code: 'women-dupatta',
+        code: 'women-bottom-indian',
         prompt: '',
       },
     ],
     optionalTypes: [],
-    mandatoryPrompts: [],
+    key: '',
     next: true,
   };
 
-  private IndianBottomwear: Category = {
+  private BottomWesternwear: Category = {
+    subCategories: [
+      {
+        name: 'Jeans',
+        image: '',
+        code: 'women-jeans',
+        prompt: '',
+      },
+      {
+        name: 'Trouser',
+        image: '',
+        code: 'women-trouser',
+        prompt: '',
+      },
+      {
+        name: 'Shorts',
+        image: '',
+        code: 'women-shorts',
+        prompt: '',
+      },
+      {
+        name: 'Skirts',
+        image: '',
+        code: 'women-skirts',
+        prompt: '',
+      },
+      {
+        name: 'Innerwear/Sleepwear',
+        image: '',
+        code: 'women-bottom-sleepwear',
+        prompt: '',
+      },
+      {
+        name: 'Sportswear & Activewear',
+        image: '',
+        code: 'women-bottom-sports',
+        prompt: '',
+      },
+    ],
+    optionalTypes: [],
+    key: '',
+    next: true,
+  };
+
+  private BottomInnerwearSleepwear: Category = {
+    subCategories: [
+      {
+        name: 'Briefs',
+        image: '',
+        code: 'women-briefs',
+        prompt: '',
+      },
+      {
+        name: 'Shapewear',
+        image: '',
+        code: 'women-bottom-shapewear',
+        prompt: '',
+      },
+    ],
+    optionalTypes: [],
+    key: '',
+    next: true,
+  };
+
+  private BottomSportswearActivewear: Category = {
+    subCategories: [
+      {
+        name: 'Track pants & shorts',
+        image: '',
+        code: 'women-sports-pants',
+        prompt: '',
+      },
+    ],
+    optionalTypes: [],
+    key: '',
+    next: true,
+  };
+
+  private BottomIndianwear: Category = {
     subCategories: [
       {
         name: 'Leggings',
@@ -435,9 +339,177 @@ export class WomenCategoryService {
         code: 'women-indian-lehenga',
         prompt: '',
       },
+      {
+        name: 'Saree',
+        image: '',
+        code: 'women-bottom-saree',
+        prompt: '',
+      },
     ],
     optionalTypes: [],
-    mandatoryPrompts: [],
+    key: '',
+    next: true,
+  };
+
+  private Sets: Category = {
+    subCategories: [
+      {
+        name: 'Westernwear',
+        image: '',
+        code: 'women-set-western',
+        prompt: '',
+      },
+      {
+        name: 'Indianwear',
+        image: '',
+        code: 'women-set-indian',
+        prompt: '',
+      },
+    ],
+    optionalTypes: [],
+    key: '',
+    next: true,
+  };
+
+  private SetsWestern: Category = {
+    subCategories: [
+      {
+        name: 'Co-ord set',
+        image: '',
+        code: 'women-coord',
+        prompt: '',
+      },
+      {
+        name: 'Pantsuits',
+        image: '',
+        code: 'women-pant-suit',
+        prompt: '',
+      },
+      {
+        name: 'Innerwear/Sleepwear',
+        image: '',
+        code: 'women-set-inner',
+        prompt: '',
+      },
+      {
+        name: 'Sportswear & Activewear',
+        image: '',
+        code: 'women-set-sports',
+        prompt: '',
+      },
+    ],
+    optionalTypes: [],
+    key: '',
+    next: true,
+  };
+
+  private SetsInnerwearSleepwear: Category = {
+    subCategories: [
+      {
+        name: 'Sleepwear & Loungewear',
+        image: '',
+        code: 'women-set-sleep',
+        prompt: '',
+      },
+    ],
+    optionalTypes: [],
+    key: '',
+    next: true,
+  };
+
+  private SetsSportswearActivewear: Category = {
+    subCategories: [
+      {
+        name: 'Tracksuit',
+        image: '',
+        code: 'women-tracksuit',
+        prompt: '',
+      },
+      {
+        name: 'Swimwear',
+        image: '',
+        code: 'women-sports-swimwear',
+        prompt: '',
+      },
+    ],
+    optionalTypes: [],
+    key: '',
+    next: true,
+  };
+
+  private SetsIndian: Category = {
+    subCategories: [
+      {
+        name: 'Suits',
+        image: '',
+        code: 'women-indian-suits',
+        prompt: '',
+      },
+      {
+        name: 'Saree with Blouse',
+        image: '',
+        code: 'women-set-saree',
+        prompt: '',
+      },
+      {
+        name: 'Lehenga Set',
+        image: '',
+        code: 'women-lehenga-set',
+        prompt: '',
+      },
+      {
+        name: 'Sharara Set',
+        image: '',
+        code: 'women-sharara-set',
+        prompt: '',
+      },
+      {
+        name: 'Anarkali Set',
+        image: '',
+        code: 'women-anarkali-set',
+        prompt: '',
+      },
+      {
+        name: 'Dhoti Set',
+        image: '',
+        code: 'wpmen-dhoti-set',
+        prompt: '',
+      },
+    ],
+    optionalTypes: [],
+    key: '',
+    next: true,
+  };
+
+  private DressJumpsuit: Category = {
+    subCategories: [
+      {
+        name: 'Bodycon',
+        image: '',
+        code: 'women-dress-bodycon',
+        prompt: '',
+      },
+      {
+        name: 'Qipao',
+        image: '',
+        code: 'women-dress-qipao',
+        prompt: '',
+      },
+      {
+        name: 'Plegged',
+        image: '',
+        code: 'women-dress-plegged',
+        prompt: '',
+      },
+      {
+        name: 'Peplum',
+        image: '',
+        code: 'women-dress-peplum',
+        prompt: '',
+      },
+    ],
+    optionalTypes: [],
+    key: '',
     next: true,
   };
 
@@ -446,13 +518,19 @@ export class WomenCategoryService {
       case 'Women':
         return this.Women;
         break;
-      case 'women-western':
-        return this.WesternWear;
-        break;
-      case 'women-western-top':
+      case 'women-top':
         return this.Topwear;
         break;
-      case 'women-western-bottom':
+      case 'women-bottom':
+        return this.Bottomwear;
+        break;
+      case 'women-dress':
+        return this.DressJumpsuit;
+        break;
+      case 'women-set':
+        return this.Sets;
+        break;
+      case 'women-western':
         return this.Bottomwear;
         break;
       case 'women-western-dress':
@@ -461,23 +539,41 @@ export class WomenCategoryService {
       case 'women-western-sets':
         return this.Sets;
         break;
-      case 'women-western-sleepwear':
-        return this.LingerieSleepwear;
+      case 'women-top-western':
+        return this.TopWesternwear;
         break;
-      case 'women-western-sports':
-        return this.SportswearActivewear;
+      case 'women-top-indian':
+        return this.TopIndianwear;
         break;
-      case 'women-indian':
-        return this.Indianwear;
+      case 'women-top-sleepwear':
+        return this.TopInnerwearSleepwear;
         break;
-      case 'women-indian-top':
-        return this.IndianTopwear;
+      case 'women-top-sports':
+        return this.TopSportswearActivewear;
         break;
-      case 'women-indian-sets':
-        return this.IndianSets;
+      case 'women-bottom-western':
+        return this.BottomWesternwear;
         break;
-      case 'women-indian-bottom':
-        return this.IndianBottomwear;
+      case 'women-bottom-indian':
+        return this.BottomIndianwear;
+        break;
+      case 'women-bottom-sleepwear':
+        return this.BottomInnerwearSleepwear;
+        break;
+      case 'women-bottom-sports':
+        return this.BottomSportswearActivewear;
+        break;
+      case 'women-set-western':
+        return this.SetsWestern;
+        break;
+      case 'women-set-indian':
+        return this.SetsIndian;
+        break;
+      case 'women-set-inner':
+        return this.SetsInnerwearSleepwear;
+        break;
+      case 'women-set-sports':
+        return this.SetsSportswearActivewear;
         break;
       default:
         return '';

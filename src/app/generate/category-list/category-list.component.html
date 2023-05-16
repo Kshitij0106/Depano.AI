@@ -1,7 +1,10 @@
 <div class="container-fluid">
   <div class="row row-cols-6 row-cols-sm-5 align-items-center">
-    <ng-container *ngFor="let category of categoryList">
-      <div class="card" (click)="selectCategory(category.code, category.name)">
+    <ng-container *ngFor="let category of categoryList | filter : searchKey">
+      <div
+        class="card"
+        (click)="selectCategory(category.code, category.name, category.prompt)"
+      >
         <div class="card-body">
           <img
             class="img"

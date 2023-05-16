@@ -1,5 +1,33 @@
 <div class="container">
-  <h6 class="title" (click)="openHome()">{{ title }}</h6>
+  <div class="row">
+    <div class="col">
+      <h6 class="title" (click)="openHome()">{{ title }}</h6>
+    </div>
+
+    <div *ngIf="skip" class="col">
+      <div class="searchbar">
+        <i class="fa fa-search fa-s icon" aria-hidden="true"></i>
+        <input
+          type="text"
+          class="srch form-control"
+          id="search"
+          placeholder="Search category"
+          #search
+          (keyup)="searchCategory(search.value)"
+        />
+      </div>
+    </div>
+
+    <div *ngIf="skip" class="col">
+      <button
+        type="button"
+        class="btn skip btn-outline-danger"
+        (click)="onSkip()"
+      >
+        Skip
+      </button>
+    </div>
+  </div>
 
   <nav class="crumb">
     <ol class="breadcrumb">

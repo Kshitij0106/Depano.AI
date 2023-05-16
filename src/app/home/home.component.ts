@@ -19,7 +19,11 @@ export class HomeComponent {
 
   openCategory(category: string) {
     this.breadcrumbService.addBreadcrumb(category, category);
-    this.prompt.addToPrompt('gender', category);
+    if (category === 'Men') {
+      this.prompt.addToPrompt('gender', 'Male');
+    } else if (category === 'Women') {
+      this.prompt.addToPrompt('gender', 'Female');
+    }
     this.router.navigate(['generate', category]);
   }
 }

@@ -16,8 +16,19 @@ body {
 .container {
   background: #1e1e1e;
   min-width: 100%;
-  padding-top: 42px;
+  padding-top: 62px;
   padding-bottom: 55px;
   padding-left: 130px;
   padding-right: 130px;
+}
+
+.explore {
+  position: absolute;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 28px;
+  line-height: 39px;
+  letter-spacing: 0.12em;
+  color: #ffffff;
 }

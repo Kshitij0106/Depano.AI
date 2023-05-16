@@ -24,12 +24,73 @@
   cursor: hand;
 }
 
+.searchbar i {
+  position: absolute;
+  margin-left: 410px;
+  margin-top: 3px;
+}
+
+.searchbar {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.icon {
+  padding: 10px;
+  min-width: 40px;
+  color: #ffffff;
+}
+
+.srch {
+  background: #1e1e1e;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+
+  border: 1px solid #ffffff;
+  color: #ffffff;
+  border-radius: 10px;
+  width: 350px;
+  height: 40px;
+  margin-left: 400px;
+  padding-left: 45px;
+}
+
+.skip {
+  float: right;
+  width: 100px;
+  height: 40px;
+  margin-right: 100px;
+}
+
 .breadcrumb-item {
-  margin-top: 10px;
+  margin-top: 20px;
   --bs-breadcrumb-divider: ">";
+  --bs-breadcrumb-divider-color: #fff;
 }
 
 .link {
   text-decoration: none;
+  color: #ffffff;
+  width: 253px;
+  height: 17px;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  letter-spacing: 0.12em;
+}
+
+::placeholder {
+  width: 201px;
+  height: 25px;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20.8093px;
+  line-height: 25px;
+  text-align: center;
+  letter-spacing: 0.12em;
   color: #ffffff;
 }

@@ -1,7 +1,10 @@
-<app-header [skip]="true" (skipEvent)="onSkip()"></app-header>
+<app-header [skip]="true" (skipEvent)="generate()"></app-header>
+<div class="container">
+  <h6 class="explore">{{ "Explore more categories" }}</h6>
+</div>
 <div class="container">
   <app-category-list
-    [categoryList]="categoryLists"
+    [categoryList]="optionalList"
     (selectedCategory)="categorySelected($event)"
   ></app-category-list>
   <app-user-input (userInput)="inputSelected($event)"></app-user-input>

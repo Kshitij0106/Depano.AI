@@ -20,10 +20,10 @@ import { BreadcrumbService } from 'src/app/service/breadcrumb.service';
   styleUrls: ['./category.component.css'],
 })
 export class CategoryComponent implements OnInit {
-  category: string = '';
-  selectedCategory!: Category;
+  private category: string = '';
+  private selectedCategory!: Category;
+  private userInput: string = '';
   categoryLists: Subcategory[] = [];
-  userInput: string = '';
 
   constructor(
     private router: Router,
@@ -48,24 +48,72 @@ export class CategoryComponent implements OnInit {
   getRoute() {
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.category = params.get('category') || '';
+      this.setCategory(this.category);
     });
-    this.getCategoryList();
   }
 
-  getCategoryList() {
-    if (this.promptService.getKey('gender') === 'Men') {
-      this.selectedCategory = this.menCategoryService.getCategory(
-        this.category
-      ) as Category;
-    } else if (this.promptService.getKey('gender') === 'Women') {
-      this.selectedCategory = this.womenCategoryService.getCategory(
-        this.category
-      ) as Category;
+  getCategory(category: string) {
+    if (this.promptService.getKey('gender') === 'Male') {
+      return this.menCategoryService.getCategory(category) as Category;
+    } else if (this.promptService.getKey('gender') === 'Female') {
+      return this.womenCategoryService.getCategory(category) as Category;
     }
+    return {} as Category;
+  }
+
+  setCategory(category: string) {
+    this.selectedCategory = this.getCategory(category);
     this.categoryLists = this.selectedCategory.subCategories;
   }
 
+  onSkip() {
+    if (this.selectedCategory.key === 'attributes') {
+      this.optionalCategory();
+    } else {
+      let newCategoryList: Subcategory[] = [];
+      if (this.categoryLists[0].name.includes('Topwear')) {
+        let gender = this.promptService.getKey('gender').toLowerCase();
+        newCategoryList.push(
+          {
+            name: 'Westernwear',
+            image: '',
+            code: gender + '-western',
+            prompt: '',
+          },
+          {
+            name: 'Indianwear',
+            image: '',
+            code: gender + '-indian',
+            prompt: '',
+          }
+        );
+      } else {
+        let subCat = this.categoryLists;
+        for (let i = 0; i < subCat.length; i++) {
+          let selCat = this.getCategory(subCat[i].code);
+          if (selCat && selCat.next) {
+            for (let j = 0; j < selCat.subCategories.length; j++) {
+              newCategoryList.push(selCat.subCategories[j]);
+            }
+          }
+        }
+      }
+      this.categoryLists = newCategoryList;
+    }
+  }
+
+  // randomNumber(min: number, max: number) {
+  //   let number = Math.ceil(Math.random() * (max - min) + min);
+  //   if (this.numbers.includes(number)) {
+  //     this.randomNumber(min, max);
+  //   } else if (this.numbers.length <= 0 || !this.numbers.includes(number)) {
+  //     this.numbers.push(number);
+  //   }
+  //   return number;
+  // }
+
   categorySelected(category: Subcategory) {
+    this.setPrompt(this.selectedCategory.key, category.prompt);
     if (this.selectedCategory.next) {
       this.breadcrumbService.addBreadcrumb(category.code, category.name);
       this.nextCategory(category.code);
@@ -76,7 +124,19 @@ export class CategoryComponent implements OnInit {
 
   inputSelected(input: string) {
     this.userInput = input;
-    this.generate();
+    if (this.selectedCategory.next) {
+      this.setPrompt('user-input', this.userInput);
+      this.optionalCategory();
+    } else {
+      this.setPrompt(this.selectedCategory.key, this.userInput);
+      this.previousCategory();
+    }
+  }
+
+  setPrompt(key: string, value: string) {
+    if (key.length > 0 && value.length) {
+      this.promptService.addToPrompt(key, value);
+    }
   }
 
   nextCategory(category: string) {
@@ -85,14 +145,14 @@ export class CategoryComponent implements OnInit {
     });
   }
 
-  previousCategory() {
-    this.location.back();
-  }
-
-  generate() {
-    this.router.navigate(['../../', 'result'], {
+  optionalCategory() {
+    this.router.navigate(['../', 'optional', this.category], {
       relativeTo: this.route,
     });
+  }
+
+  previousCategory() {
+    this.location.back();
   }
 
   @HostListener('window:popstate', ['$event'])

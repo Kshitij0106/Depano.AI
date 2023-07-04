@@ -29,6 +29,7 @@ export class PromptService {
 
   sendPrompt() {
     let prompt = this.makePrompt();
+    console.log(prompt);
     const body = { prompt: prompt };
     return this.http.post<any>(this.url, body);
   }
@@ -47,9 +48,19 @@ export class PromptService {
       ',' +
       this.getKey('fit-type') +
       ',' +
+      this.getKey('color') +
+      ',' +
       this.getKey('type') +
       ',' +
-      this.mandatoryPrompt[2]
+      this.mandatoryPrompt[2] +
+      ',' +
+      this.getKey('fabric') +
+      ',' +
+      this.getKey('pattern') +
+      ',' +
+      this.getKey('user-optional-input') +
+      ',' +
+      this.getKey('user-input')
     );
   }
 

@@ -22,8 +22,12 @@ import { BreadcrumbService } from 'src/app/service/breadcrumb.service';
 export class CategoryComponent implements OnInit {
   private category: string = '';
   private selectedCategory!: Category;
+  private selectedClothingCode!: String;
   private userInput: string = '';
   categoryLists: Subcategory[] = [];
+  optionalToSkip: boolean = false;
+  private mandatoryAttributeIndex = 0;
+  private gettingAttributes = false;
 
   constructor(
     private router: Router,
@@ -43,12 +47,25 @@ export class CategoryComponent implements OnInit {
         this.getRoute();
       }
     });
+    // this.breadcrumbService.abc.subscribe((code) => {
+    //   if (this.selectedCategory.key !== 'attributes') {
+    //     this.gettingAttributes = false;
+    //     this.mandatoryAttributeIndex = 0;
+    //   } else {
+    //     this.gettingAttributes = true;
+    //     this.getMandatoryAttributes();
+    //   }
+    // });
   }
 
   getRoute() {
     this.route.paramMap.subscribe((params: ParamMap) => {
-      this.category = params.get('category') || '';
-      this.setCategory(this.category);
+      if (this.category === '' || this.category !== params.get('category')) {
+        this.category = params.get('category') || '';
+        if (!this.gettingAttributes) {
+          this.setCategory(this.category);
+        }
+      }
     });
   }
 
@@ -63,14 +80,18 @@ export class CategoryComponent implements OnInit {
 
   setCategory(category: string) {
     this.selectedCategory = this.getCategory(category);
-    this.categoryLists = this.selectedCategory.subCategories;
+    if (this.selectedCategory.key === 'attributes') {
+      this.getMandatoryAttributes();
+    } else {
+      this.categoryLists = this.selectedCategory.subCategories;
+    }
   }
 
   onSkip() {
-    if (this.selectedCategory.key === 'attributes') {
+    let newCategoryList: Subcategory[] = [];
+    if (this.selectedCategory.key === 'attributes' || this.optionalToSkip) {
       this.optionalCategory();
     } else {
-      let newCategoryList: Subcategory[] = [];
       if (this.categoryLists[0].name.includes('Topwear')) {
         let gender = this.promptService.getKey('gender').toLowerCase();
         newCategoryList.push(
@@ -88,48 +109,79 @@ export class CategoryComponent implements OnInit {
           }
         );
       } else {
-        let subCat = this.categoryLists;
-        for (let i = 0; i < subCat.length; i++) {
-          let selCat = this.getCategory(subCat[i].code);
-          if (selCat && selCat.next) {
-            for (let j = 0; j < selCat.subCategories.length; j++) {
-              newCategoryList.push(selCat.subCategories[j]);
+        if (this.selectedCategory.next) {
+          let subCat = this.categoryLists;
+          for (let i = 0; i < subCat.length; i++) {
+            let selCat = this.getCategory(subCat[i].code);
+            if (selCat && selCat.next) {
+              if (selCat.key === 'attributes') {
+                this.optionalToSkip = true;
+              }
+              for (let j = 0; j < selCat.subCategories.length; j++) {
+                if (!newCategoryList.includes(selCat.subCategories[j])) {
+                  if (selCat.key === 'attributes') {
+                    const duplicate = newCategoryList.find(
+                      (item) => item.name === selCat.subCategories[j].name
+                    );
+                    if (!duplicate) {
+                      newCategoryList.push(selCat.subCategories[j]);
+                    }
+                  } else {
+                    newCategoryList.push(selCat.subCategories[j]);
+                  }
+                }
+              }
             }
           }
         }
       }
-      this.categoryLists = newCategoryList;
+      this.categoryLists = newCategoryList.sort();
     }
   }
 
-  // randomNumber(min: number, max: number) {
-  //   let number = Math.ceil(Math.random() * (max - min) + min);
-  //   if (this.numbers.includes(number)) {
-  //     this.randomNumber(min, max);
-  //   } else if (this.numbers.length <= 0 || !this.numbers.includes(number)) {
-  //     this.numbers.push(number);
-  //   }
-  //   return number;
-  // }
-
   categorySelected(category: Subcategory) {
     this.setPrompt(this.selectedCategory.key, category.prompt);
-    if (this.selectedCategory.next) {
+    if (
+      this.selectedCategory.next &&
+      this.selectedCategory.key !== 'attributes'
+    ) {
       this.breadcrumbService.addBreadcrumb(category.code, category.name);
       this.nextCategory(category.code);
+      this.selectedClothingCode = category.code;
     } else {
-      this.previousCategory();
+      this.getMandatoryAttributes();
+    }
+  }
+
+  getMandatoryAttributes() {
+    this.gettingAttributes = true;
+    var code = '';
+    var subcategory = this.selectedCategory.subCategories;
+    if (this.mandatoryAttributeIndex < subcategory.length) {
+      code = subcategory[this.mandatoryAttributeIndex].code;
+      this.nextCategory(code);
+      this.breadcrumbService.addBreadcrumb(
+        code,
+        subcategory[this.mandatoryAttributeIndex].name
+      );
+      this.categoryLists = this.getCategory(code).subCategories;
+      this.mandatoryAttributeIndex++;
+    } else {
+      this.optionalCategory();
     }
   }
 
   inputSelected(input: string) {
     this.userInput = input;
-    if (this.selectedCategory.next) {
+    if (
+      this.selectedCategory.next &&
+      this.selectedCategory.key !== 'attributes'
+    ) {
       this.setPrompt('user-input', this.userInput);
       this.optionalCategory();
     } else {
       this.setPrompt(this.selectedCategory.key, this.userInput);
-      this.previousCategory();
+      this.getMandatoryAttributes();
     }
   }
 
@@ -146,7 +198,11 @@ export class CategoryComponent implements OnInit {
   }
 
   optionalCategory() {
-    this.router.navigate(['../', 'optional', this.category], {
+    if (this.selectedClothingCode === undefined) {
+      this.selectedClothingCode =
+        this.promptService.getKey('gender') === 'Male' ? 'Men' : 'Women';
+    }
+    this.router.navigate(['../', 'optional', this.selectedClothingCode], {
       relativeTo: this.route,
     });
   }

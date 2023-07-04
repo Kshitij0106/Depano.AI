@@ -11,6 +11,7 @@ import { Category } from '../category';
 import { MenCategoryService } from '../service/data/men-category.service';
 import { WomenCategoryService } from '../service/data/women-category.service';
 import { Subcategory } from '../subcategory';
+import { BreadcrumbService } from 'src/app/service/breadcrumb.service';
 
 @Component({
   selector: 'app-optional-types',
@@ -20,7 +21,7 @@ import { Subcategory } from '../subcategory';
 export class OptionalTypesComponent implements OnInit {
   type: string = '';
   optionalList: Subcategory[] = [];
-  userInput: string = '';
+  userOptionalInput: string = '';
   private selectedCategory!: Category;
 
   constructor(
@@ -29,6 +30,7 @@ export class OptionalTypesComponent implements OnInit {
     private menCategoryService: MenCategoryService,
     private womenCategoryService: WomenCategoryService,
     private promptService: PromptService,
+    private breadcrumbService: BreadcrumbService,
     private location: Location
   ) {
     this.getRoute();
@@ -60,19 +62,43 @@ export class OptionalTypesComponent implements OnInit {
 
   setCategory(type: string) {
     this.selectedCategory = this.getCategory(type);
-    this.optionalList = this.selectedCategory.optionalTypes;
+    if (this.selectedCategory.next) {
+      this.optionalList = this.sortList(this.selectedCategory.optionalTypes);
+    } else {
+      this.optionalList = this.selectedCategory.subCategories;
+    }
   }
 
-  categorySelected(category: Subcategory) {}
+  sortList(list: Subcategory[]) {
+    let names: string[] = [];
+    return list.filter((item) => {
+      const duplicate = names.includes(item.name);
+      if (!duplicate) {
+        names.push(item.name);
+        return true;
+      }
+      return false;
+    });
+  }
+
+  categorySelected(category: Subcategory) {
+    this.setPrompt(this.selectedCategory.key, category.prompt);
+    if (this.selectedCategory.next) {
+      this.breadcrumbService.addBreadcrumb(category.code, category.name);
+      this.nextCategory(category.code);
+    } else {
+      this.previousCategory();
+    }
+  }
 
   inputSelected(input: string) {
-    this.userInput = input;
-    // if (this.selectedCategory.next) {
-    //   this.setPrompt('user-optional-input', this.userInput);
-    // } else {
-    //   this.setPrompt(this.selectedCategory.key, this.userInput);
-    //   this.previousCategory();
-    // }
+    this.userOptionalInput = input;
+    if (this.selectedCategory.next) {
+      this.setPrompt('user-optional-input', this.userOptionalInput);
+    } else {
+      this.setPrompt(this.selectedCategory.key, this.userOptionalInput);
+      this.previousCategory();
+    }
     this.generate();
   }
 
@@ -84,6 +110,12 @@ export class OptionalTypesComponent implements OnInit {
 
   generate() {
     this.router.navigate(['../../../', 'result'], {
+      relativeTo: this.route,
+    });
+  }
+
+  nextCategory(category: string) {
+    this.router.navigate(['../', category], {
       relativeTo: this.route,
     });
   }

@@ -35,6 +35,7 @@ export class HeaderComponent {
 
   goToBreadcrumb(code: string) {
     this.breadcrumbService.createNewList(code);
+    this.breadcrumbService.abc.next(code);
   }
 
   searchCategory(searchText: string) {

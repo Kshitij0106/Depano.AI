@@ -18,6 +18,9 @@ body {
   border-radius: 50%;
   cursor: pointer;
   cursor: hand;
+  object-fit: cover;
+  height: 150px;
+  width: 150px;
 }
 
 .category-title {

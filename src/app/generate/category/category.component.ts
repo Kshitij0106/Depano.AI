@@ -47,15 +47,6 @@ export class CategoryComponent implements OnInit {
         this.getRoute();
       }
     });
-    // this.breadcrumbService.abc.subscribe((code) => {
-    //   if (this.selectedCategory.key !== 'attributes') {
-    //     this.gettingAttributes = false;
-    //     this.mandatoryAttributeIndex = 0;
-    //   } else {
-    //     this.gettingAttributes = true;
-    //     this.getMandatoryAttributes();
-    //   }
-    // });
   }
 
   getRoute() {

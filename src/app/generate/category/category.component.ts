@@ -22,7 +22,7 @@ import { BreadcrumbService } from 'src/app/service/breadcrumb.service';
 export class CategoryComponent implements OnInit {
   private category: string = '';
   private selectedCategory!: Category;
-  private selectedClothingCode!: String;
+  private selectedClothingCode!: string;
   private userInput: string = '';
   categoryLists: Subcategory[] = [];
   optionalToSkip: boolean = false;
@@ -39,25 +39,29 @@ export class CategoryComponent implements OnInit {
     private location: Location
   ) {
     this.getRoute();
+    // this.onBreadcrumb();
   }
 
   ngOnInit(): void {
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        this.getRoute();
-      }
-    });
+    // this.router.events.subscribe((event) => {
+    //   if (event instanceof NavigationEnd) {
+    //     this.getRoute();
+    //   }
+    // });
+    // this.onBreadcrumb();
   }
 
   getRoute() {
     this.route.paramMap.subscribe((params: ParamMap) => {
       if (this.category === '' || this.category !== params.get('category')) {
         this.category = params.get('category') || '';
-        if (!this.gettingAttributes) {
-          this.setCategory(this.category);
-        }
+        // if (!this.gettingAttributes) {
+        //   this.setCategory(this.category);
+        // }
       }
     });
+    this.selectedCategory = this.getCategory(this.category);
+    this.setCategory(this.selectedCategory);
   }
 
   getCategory(category: string) {
@@ -69,13 +73,20 @@ export class CategoryComponent implements OnInit {
     return {} as Category;
   }
 
-  setCategory(category: string) {
-    this.selectedCategory = this.getCategory(category);
-    if (this.selectedCategory.key === 'attributes') {
-      this.getMandatoryAttributes();
-    } else {
-      this.categoryLists = this.selectedCategory.subCategories;
-    }
+  setCategory(category: Category) {
+    // this.selectedCategory = this.getCategory(category);
+    // if (this.selectedCategory.key === 'attributes') {
+    //   this.getMandatoryAttributes();
+    // } else {
+    this.categoryLists = category.subCategories;
+    // }
+  }
+
+  onBreadcrumb() {
+    this.breadcrumbService.abc.subscribe((code) => {
+      this.selectedCategory = this.getCategory(code);
+      this.setCategory(this.selectedCategory);
+    });
   }
 
   onSkip() {
@@ -126,16 +137,18 @@ export class CategoryComponent implements OnInit {
           }
         }
       }
-      this.categoryLists = newCategoryList.sort();
+      this.categoryLists = newCategoryList;
     }
   }
 
   categorySelected(category: Subcategory) {
-    this.setPrompt(this.selectedCategory.key, category.prompt);
     if (
       this.selectedCategory.next &&
       this.selectedCategory.key !== 'attributes'
     ) {
+      this.selectedCategory = this.getCategory(category.code);
+      this.setCategory(this.selectedCategory);
+      this.setPrompt(this.selectedCategory.key, category.prompt);
       this.breadcrumbService.addBreadcrumb(category.code, category.name);
       this.nextCategory(category.code);
       this.selectedClothingCode = category.code;
@@ -147,7 +160,8 @@ export class CategoryComponent implements OnInit {
   getMandatoryAttributes() {
     this.gettingAttributes = true;
     var code = '';
-    var subcategory = this.selectedCategory.subCategories;
+    // var subcategory = this.selectedCategory.subCategories;
+    var subcategory = this.getCategory(this.selectedClothingCode).subCategories;
     if (this.mandatoryAttributeIndex < subcategory.length) {
       code = subcategory[this.mandatoryAttributeIndex].code;
       this.nextCategory(code);
@@ -155,7 +169,8 @@ export class CategoryComponent implements OnInit {
         code,
         subcategory[this.mandatoryAttributeIndex].name
       );
-      this.categoryLists = this.getCategory(code).subCategories;
+      this.setCategory(this.getCategory(code));
+      // this.categoryLists = this.getCategory(code).subCategories;
       this.mandatoryAttributeIndex++;
     } else {
       this.optionalCategory();

@@ -147,7 +147,7 @@ export class WomenCategoryService {
       {
         name: 'Topwear',
         image:
-          'https://i.pinimg.com/564x/6b/74/f5/6b74f51970916d6b7d73b17d9b606d31.jpg',
+          'https://i.pinimg.com/originals/c5/82/fd/c582fdd80283b0ffdc2d34a74bd2a8e3.jpg',
         code: 'women-top',
         prompt: 'from neck to waist',
       },
@@ -185,13 +185,15 @@ export class WomenCategoryService {
     subCategories: [
       {
         name: 'Westernwear',
-        image: '',
+        image:
+          'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.explicit.bing.net%2Fth%3Fid%3DOIP.XbDIj4fBZf7j6Rgar6JmAgHaJ4%26pid%3DApi&f=1&ipt=2de60556973b412506c8d274bca66b46275c1a3d846fd44342615af22291d1d3&ipo=images',
         code: 'women-top-western',
         prompt: 'western-style',
       },
       {
         name: 'Indianwear',
-        image: '',
+        image:
+          'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.nn-ZFSM6ztP1jSA1m4ly3gHaJ4%26pid%3DApi&f=1&ipt=55e554eae9c0ccb1b56742640201699a02fef9d3df995fe96b961067815d81ab&ipo=images',
         code: 'women-top-indian',
         prompt: 'indian-style',
       },
@@ -205,43 +207,50 @@ export class WomenCategoryService {
     subCategories: [
       {
         name: 'Top/Blouse',
-        image: '',
+        image:
+          'https://i5.walmartimages.com/asr/9f228d9e-4582-434c-9cd3-2ffaa45b4000_1.c42b0b1a13cdfe59c2ecfa4a55dec434.jpeg',
         code: 'women-western-blouse',
         prompt: 'blouse',
       },
       {
         name: 'T-Shirt/Polo',
-        image: '',
+        image:
+          'https://i.pinimg.com/originals/c5/82/fd/c582fdd80283b0ffdc2d34a74bd2a8e3.jpg',
         code: 'women-tshirt',
         prompt: 't-shirt',
       },
       {
         name: 'Shirts',
-        image: '',
+        image:
+          'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.explicit.bing.net%2Fth%3Fid%3DOIP.XbDIj4fBZf7j6Rgar6JmAgHaJ4%26pid%3DApi&f=1&ipt=2de60556973b412506c8d274bca66b46275c1a3d846fd44342615af22291d1d3&ipo=images',
         code: 'women-western-shirt',
         prompt: 'shirt',
       },
       {
         name: 'Sweatshirt',
-        image: '',
+        image:
+          'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.FlvVopCNBreg0zI9NYocxQHaHa%26pid%3DApi&f=1&ipt=bd487932095316720c18285a9e626765fb54ae201b58fccf9f216e5673a03570&ipo=images',
         code: 'women-sweatshirt',
         prompt: 'sweatshirt',
       },
       {
         name: 'Sweater',
-        image: '',
+        image:
+          'https://i5.walmartimages.com/asr/c58f377a-b843-415d-b9f2-b66f4f32cd80_1.310f77dffec582a0b8893d6b253a29ec.jpeg',
         code: 'women-sweater',
         prompt: 'sweater',
       },
       {
         name: 'Blazer & Coats',
-        image: '',
+        image:
+          'https://ae01.alicdn.com/kf/HTB1djL4czfguuRjSszcq6zb7FXab/feitong-2018-winer-Autumn-OL-Black-Women-Blazers-New-Fashion-Single-Button-Blazer-Femenino-Ladies-Blazer.jpg',
         code: 'women-coats',
         prompt: 'blazer',
       },
       {
         name: 'Jackets',
-        image: '',
+        image:
+          'https://i5.walmartimages.com/asr/a49c8a04-50de-4ba6-a5a1-c5600e9b2661.2faf8f723097680d0916978ad3c2ac88.jpeg',
         code: 'women-western-jackets',
         prompt: 'jacket',
       },
@@ -259,13 +268,15 @@ export class WomenCategoryService {
       },
       {
         name: 'Thermal',
-        image: '',
+        image:
+          'https://images-na.ssl-images-amazon.com/images/I/71FbHshmSXL._AC_UX466_.jpg',
         code: 'women-top-thermal',
         prompt: 'top thermal',
       },
       {
         name: 'Active T-shirts',
-        image: '',
+        image:
+          'https://i.pinimg.com/originals/db/79/90/db79909353e081a28cf05f7ca045ba4f.jpg',
         code: 'women-sports-tshirts',
         prompt: 'active t-shirts',
       },
@@ -279,25 +290,29 @@ export class WomenCategoryService {
     subCategories: [
       {
         name: 'Kurti',
-        image: '',
+        image:
+          'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.nn-ZFSM6ztP1jSA1m4ly3gHaJ4%26pid%3DApi&f=1&ipt=55e554eae9c0ccb1b56742640201699a02fef9d3df995fe96b961067815d81ab&ipo=images',
         code: 'women-indian-kurti',
         prompt: 'kurti',
       },
       {
         name: 'Top/Blouse',
-        image: '',
+        image:
+          'https://i.pinimg.com/originals/d5/7f/74/d57f749d4358307a0154e1195107255e.jpg',
         code: 'women-indian-blouse',
         prompt: 'blouse',
       },
       {
         name: 'Jackets',
-        image: '',
+        image:
+          'https://i.pinimg.com/736x/a1/84/10/a1841064183515c9727d1926afcd8f18.jpg',
         code: 'women-indian-jacket',
         prompt: 'indian jacket',
       },
       {
         name: 'Anarkali',
-        image: '',
+        image:
+          'https://2.bp.blogspot.com/-ouORdVKRVQM/Vr9WSskmlGI/AAAAAAAADZo/PoWCT-OdbyM/s1600/Pakistani-Anarkali-dresses-Latest-Designer-Anarkali-Suits-For-Women-2014-20156.jpg',
         code: 'women-indian-anarkali',
         prompt: 'anarkali',
       },
@@ -571,7 +586,8 @@ export class WomenCategoryService {
       },
       {
         name: 'T-Shirt/Polo',
-        image: '',
+        image:
+          'https://i.pinimg.com/originals/c5/82/fd/c582fdd80283b0ffdc2d34a74bd2a8e3.jpg',
         code: 'women-tshirt',
         prompt: 't-shirt',
       },
@@ -595,7 +611,8 @@ export class WomenCategoryService {
       },
       {
         name: 'Shirts',
-        image: '',
+        image:
+          'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.explicit.bing.net%2Fth%3Fid%3DOIP.XbDIj4fBZf7j6Rgar6JmAgHaJ4%26pid%3DApi&f=1&ipt=2de60556973b412506c8d274bca66b46275c1a3d846fd44342615af22291d1d3&ipo=images',
         code: 'women-western-shirt',
         prompt: 'shirt',
       },
@@ -607,13 +624,15 @@ export class WomenCategoryService {
       },
       {
         name: 'Sweatshirt',
-        image: '',
+        image:
+          'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.FlvVopCNBreg0zI9NYocxQHaHa%26pid%3DApi&f=1&ipt=bd487932095316720c18285a9e626765fb54ae201b58fccf9f216e5673a03570&ipo=images',
         code: 'women-sweatshirt',
         prompt: 'sweatshirt',
       },
       {
         name: 'Sweater',
-        image: '',
+        image:
+          'https://i5.walmartimages.com/asr/c58f377a-b843-415d-b9f2-b66f4f32cd80_1.310f77dffec582a0b8893d6b253a29ec.jpeg',
         code: 'women-sweater',
         prompt: 'sweater',
       },
@@ -625,13 +644,15 @@ export class WomenCategoryService {
       },
       {
         name: 'Blazer & Coats',
-        image: '',
+        image:
+          'https://ae01.alicdn.com/kf/HTB1djL4czfguuRjSszcq6zb7FXab/feitong-2018-winer-Autumn-OL-Black-Women-Blazers-New-Fashion-Single-Button-Blazer-Femenino-Ladies-Blazer.jpg',
         code: 'women-coats',
         prompt: 'blazer',
       },
       {
         name: 'Jackets',
-        image: '',
+        image:
+          'https://i5.walmartimages.com/asr/a49c8a04-50de-4ba6-a5a1-c5600e9b2661.2faf8f723097680d0916978ad3c2ac88.jpeg',
         code: 'women-western-jackets',
         prompt: 'jacket',
       },
@@ -669,7 +690,8 @@ export class WomenCategoryService {
       },
       {
         name: 'Kurti',
-        image: '',
+        image:
+          'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.nn-ZFSM6ztP1jSA1m4ly3gHaJ4%26pid%3DApi&f=1&ipt=55e554eae9c0ccb1b56742640201699a02fef9d3df995fe96b961067815d81ab&ipo=images',
         code: 'women-indian-kurti',
         prompt: 'kurti',
       },
@@ -693,13 +715,15 @@ export class WomenCategoryService {
       },
       {
         name: 'Top/Blouse',
-        image: '',
+        image:
+          'https://i.pinimg.com/originals/d5/7f/74/d57f749d4358307a0154e1195107255e.jpg',
         code: 'women-indian-blouse',
         prompt: 'blouse',
       },
       {
         name: 'Anarkali',
-        image: '',
+        image:
+          'https://2.bp.blogspot.com/-ouORdVKRVQM/Vr9WSskmlGI/AAAAAAAADZo/PoWCT-OdbyM/s1600/Pakistani-Anarkali-dresses-Latest-Designer-Anarkali-Suits-For-Women-2014-20156.jpg',
         code: 'women-indian-anarkali',
         prompt: 'anarkali',
       },
@@ -1489,6 +1513,18 @@ export class WomenCategoryService {
         return this.TopAttributes;
         break;
       case 'women-sports-tshirts':
+        return this.TopAttributes;
+        break;
+      case 'women-indian-kurti':
+        return this.TopAttributes;
+        break;
+      case 'women-indian-blouse':
+        return this.TopAttributes;
+        break;
+      case 'women-indian-jacket':
+        return this.TopAttributes;
+        break;
+      case 'women-indian-anarkali':
         return this.TopAttributes;
         break;
       case 'women-jeans':

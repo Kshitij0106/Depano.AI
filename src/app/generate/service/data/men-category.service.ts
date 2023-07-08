@@ -140,13 +140,15 @@ export class MenCategoryService {
     subCategories: [
       {
         name: 'Topwear',
-        image: '',
+        image:
+          'https://cdn.shopify.com/s/files/1/0151/1081/products/03_FRONT_MENS_T_TEMPLATE_2000x.jpg?v=1550808034',
         code: 'men-top',
         prompt: 'from neck to waist',
       },
       {
         name: 'Bottomwear',
-        image: '',
+        image:
+          'http://thefashionsupernova.com/wp-content/uploads/2014/02/asos-skinny-jeans-with-rips.jpg',
         code: 'men-bottom',
         prompt: 'from waist to heels',
       },
@@ -170,14 +172,14 @@ export class MenCategoryService {
       {
         name: 'Westernwear',
         image:
-          'https://i.pinimg.com/564x/6b/74/f5/6b74f51970916d6b7d73b17d9b606d31.jpg',
+          'https://www.weddingtropics.com/wp-content/uploads/2018/03/bradford-light-sand-linen-wedding-shirt.jpg',
         code: 'men-top-western',
         prompt: 'western-style',
       },
       {
         name: 'Indianwear',
         image:
-          'https://i.pinimg.com/564x/6b/74/f5/6b74f51970916d6b7d73b17d9b606d31.jpg',
+          'https://i.pinimg.com/736x/b8/a0/6c/b8a06cdeadc8dccf55d3d304640a356e.jpg',
         code: 'men-top-indian',
         prompt: 'indian-style',
       },
@@ -191,55 +193,63 @@ export class MenCategoryService {
     subCategories: [
       {
         name: 'T-Shirt',
-        image: '',
+        image:
+          'https://yi-files.s3.amazonaws.com/products/247000/247859/247864-full.jpg',
         code: 'men-tshirt',
         prompt: 't-shirt',
       },
       {
         name: 'Shirts',
-        image: '',
+        image:
+          'https://www.weddingtropics.com/wp-content/uploads/2018/03/bradford-light-sand-linen-wedding-shirt.jpg',
         code: 'men-shirt',
         prompt: 'shirt',
       },
       {
         name: 'Sweatshirt',
-        image: '',
+        image:
+          'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.FlvVopCNBreg0zI9NYocxQHaHa%26pid%3DApi&f=1&ipt=bd487932095316720c18285a9e626765fb54ae201b58fccf9f216e5673a03570&ipo=images',
         code: 'men-sweatshirt',
         prompt: 'sweatshirt',
       },
       {
         name: 'Sweater',
-        image: '',
+        image:
+          'https://cdnc.lystit.com/photos/09f0-2014/08/04/burberry-beige-lightweight-cashmere-sweater-product-1-22233121-2-155498004-normal.jpeg',
         code: 'men-sweater',
         prompt: 'sweater',
       },
       {
         name: 'Blazer & Coats',
-        image: '',
+        image: 'https://bpc.h-cdn.co/assets/16/38/1474377310-brooks-blazer.jpg',
         code: 'men-coats',
         prompt: 'blazer',
       },
       {
         name: 'Jackets',
-        image: '',
+        image:
+          'https://ae01.alicdn.com/kf/HTB1qddaXJzvK1RkSnfoq6zMwVXaG/Jacket-Men-Autumn-Winter-Style-Light-Weight-Overcoat-Outerwear-Warm-Polyester-Casual-Men-s-Jacket-chaqueta.jpg',
         code: 'men-western-jackets',
         prompt: 'jacket',
       },
       {
         name: 'Vests',
-        image: '',
+        image:
+          'https://5.imimg.com/data5/ME/GZ/KK/SELLER-31877795/grey3-500x500.JPG',
         code: 'men-vests',
         prompt: 'tank top',
       },
       {
         name: 'Thermal',
-        image: '',
+        image:
+          'https://images-na.ssl-images-amazon.com/images/I/61XfSsejFRL._AC_UL1500_.jpg',
         code: 'men-top-thermal',
         prompt: 'top thermal',
       },
       {
         name: 'Active T-shirts',
-        image: '',
+        image:
+          'https://i5.walmartimages.com/asr/f223a816-6f6b-40c2-91fc-3b8ea33597e1.06cf0a4887ab31ceda86fcabb57727fe.jpeg',
         code: 'men-active-tshirts',
         prompt: 'gym t-shirt',
       },
@@ -253,19 +263,22 @@ export class MenCategoryService {
     subCategories: [
       {
         name: 'Kurta',
-        image: '',
+        image:
+          'https://i.pinimg.com/736x/b8/a0/6c/b8a06cdeadc8dccf55d3d304640a356e.jpg',
         code: 'men-indian-kurta',
         prompt: 'kurta',
       },
       {
         name: 'Sherwani',
-        image: '',
+        image:
+          'https://i.pinimg.com/originals/e3/83/81/e383816d95682a866668c9031e8a8e3b.jpg',
         code: 'men-indian-sherwani',
         prompt: 'sherwani',
       },
       {
         name: 'Nehru Jackets',
-        image: '',
+        image:
+          'https://i.pinimg.com/originals/a8/76/df/a876df23222df6d8c93a0d7a10aa4f8e.jpg',
         code: 'men-indian-nehrujacket',
         prompt: 'nehru jacket',
       },
@@ -280,14 +293,14 @@ export class MenCategoryService {
       {
         name: 'Westernwear',
         image:
-          'https://i.pinimg.com/564x/6b/74/f5/6b74f51970916d6b7d73b17d9b606d31.jpg',
+          'https://handcmediastorage.blob.core.windows.net/productimages/TR/TRPRWS25-F30-134533-800px-1040px.jpg',
         code: 'men-bottom-western',
         prompt: 'western-style',
       },
       {
         name: 'Indianwear',
         image:
-          'https://i.pinimg.com/564x/6b/74/f5/6b74f51970916d6b7d73b17d9b606d31.jpg',
+          'https://i.pinimg.com/originals/ca/0c/be/ca0cbe75716868b1d94574aec015a6ee.jpg',
         code: 'men-bottom-indian',
         prompt: 'indian-style',
       },
@@ -301,49 +314,55 @@ export class MenCategoryService {
     subCategories: [
       {
         name: 'Jeans',
-        image: '',
+        image:
+          'http://thefashionsupernova.com/wp-content/uploads/2014/02/asos-skinny-jeans-with-rips.jpg',
         code: 'men-jeans',
         prompt: 'jeans',
       },
       {
         name: 'Trouser',
-        image: '',
+        image:
+          'https://handcmediastorage.blob.core.windows.net/productimages/TR/TRPRWS25-F30-134533-800px-1040px.jpg',
         code: 'men-trouser',
         prompt: 'trouser',
       },
       {
         name: 'Shorts',
-        image: '',
+        image:
+          'https://www.dmarge.com/wp-content/uploads/2014/10/Last-Import-22.jpg',
         code: 'men-shorts',
         prompt: 'shorts',
       },
       {
         name: 'Briefs & Trunks',
-        image: '',
+        image:
+          'https://cdna.lystit.com/photos/2011/11/02/calvin-klein-underwear-red-three-pack-of-boxer-briefs-product-6-2322682-965849467.jpeg',
         code: 'men-briefs',
         prompt: 'briefs',
       },
       {
         name: 'Boxers',
-        image: '',
+        image:
+          'https://i5.walmartimages.com/asr/c73bac41-2944-4726-8358-2b1cb32192a1_1.e3704449d96fa5f1b2c9995640e9deef.jpeg?odnWidth=1000&odnHeight=1000&odnBg=ffffff',
         code: 'men-boxers',
         prompt: 'boxers',
       },
       {
         name: 'Thermal',
-        image: '',
+        image:
+          'https://content.backcountry.com/images/items/900/SWL/SWL01KW/DEENV.jpg',
         code: 'men-bottom-thermal',
         prompt: 'bottom thermal',
       },
       {
         name: 'Track pants',
-        image: '',
+        image: 'https://i.ebayimg.com/images/g/6JsAAOSwECtclDXl/s-l1600.jpg',
         code: 'men-active-pants',
         prompt: 'track pants',
       },
       {
         name: 'Swimwear',
-        image: '',
+        image: 'https://www.lord.gr/4057-home_default/men-swimwear-stripes.jpg',
         code: 'men-swimwear',
         prompt: 'swimwear',
       },
@@ -357,13 +376,15 @@ export class MenCategoryService {
     subCategories: [
       {
         name: 'Dhoti',
-        image: '',
+        image:
+          'https://i.pinimg.com/originals/ca/0c/be/ca0cbe75716868b1d94574aec015a6ee.jpg',
         code: 'men-indian-dhoti',
         prompt: 'dhoti',
       },
       {
         name: 'Pyjama',
-        image: '',
+        image:
+          'https://i.pinimg.com/originals/fa/d7/5f/fad75f00bb172bc36bfe8284c48c99ba.jpg',
         code: 'men-indian-pyjama',
         prompt: 'pyjama',
       },
@@ -439,7 +460,8 @@ export class MenCategoryService {
     subCategories: [
       {
         name: 'T-Shirt',
-        image: '',
+        image:
+          'https://yi-files.s3.amazonaws.com/products/247000/247859/247864-full.jpg',
         code: 'men-tshirt',
         prompt: 'tshirt',
       },
@@ -451,51 +473,59 @@ export class MenCategoryService {
       },
       {
         name: 'Shirts',
-        image: '',
+        image:
+          'https://www.weddingtropics.com/wp-content/uploads/2018/03/bradford-light-sand-linen-wedding-shirt.jpg',
         code: 'men-shirt',
         prompt: 'shirt',
       },
       {
         name: 'Jeans',
-        image: '',
+        image:
+          'http://thefashionsupernova.com/wp-content/uploads/2014/02/asos-skinny-jeans-with-rips.jpg',
         code: 'men-jeans',
         prompt: 'jeans',
       },
       {
         name: 'Sweatshirt',
-        image: '',
+        image:
+          'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.FlvVopCNBreg0zI9NYocxQHaHa%26pid%3DApi&f=1&ipt=bd487932095316720c18285a9e626765fb54ae201b58fccf9f216e5673a03570&ipo=images',
         code: 'men-sweatshirt',
         prompt: 'sweatshirt',
       },
       {
         name: 'Sweater',
-        image: '',
+        image:
+          'https://cdnc.lystit.com/photos/09f0-2014/08/04/burberry-beige-lightweight-cashmere-sweater-product-1-22233121-2-155498004-normal.jpeg',
         code: 'men-sweater',
         prompt: 'sweater',
       },
       {
         name: 'Trouser',
-        image: '',
+        image:
+          'https://handcmediastorage.blob.core.windows.net/productimages/TR/TRPRWS25-F30-134533-800px-1040px.jpg',
         code: 'men-trouser',
         prompt: 'trouser',
       },
       {
         name: 'Shorts',
-        image: '',
+        image:
+          'https://www.dmarge.com/wp-content/uploads/2014/10/Last-Import-22.jpg',
         code: 'men-shorts',
         prompt: 'shorts',
       },
       {
         name: 'Vests',
-        image: '',
+        image:
+          'https://5.imimg.com/data5/ME/GZ/KK/SELLER-31877795/grey3-500x500.JPG',
         code: 'men-vests',
-        prompt: 'vests',
+        prompt: 'tank top',
       },
       {
         name: 'Thermal',
-        image: '',
+        image:
+          'https://images-na.ssl-images-amazon.com/images/I/61XfSsejFRL._AC_UL1500_.jpg',
         code: 'men-top-thermal',
-        prompt: 'top-thermal',
+        prompt: 'top thermal',
       },
     ],
     optionalTypes: [],
@@ -507,7 +537,8 @@ export class MenCategoryService {
     subCategories: [
       {
         name: 'Dhoti',
-        image: '',
+        image:
+          'https://i.pinimg.com/originals/ca/0c/be/ca0cbe75716868b1d94574aec015a6ee.jpg',
         code: 'men-indian-dhoti',
         prompt: 'dhoti',
       },
@@ -519,25 +550,29 @@ export class MenCategoryService {
       },
       {
         name: 'Kurta',
-        image: '',
+        image:
+          'https://i.pinimg.com/736x/b8/a0/6c/b8a06cdeadc8dccf55d3d304640a356e.jpg',
         code: 'men-indian-kurta',
         prompt: 'kurta',
       },
       {
         name: 'Pyjama',
-        image: '',
+        image:
+          'https://i.pinimg.com/originals/fa/d7/5f/fad75f00bb172bc36bfe8284c48c99ba.jpg',
         code: 'men-indian-pyjama',
         prompt: 'pyjama',
       },
       {
         name: 'Sherwani',
-        image: '',
+        image:
+          'https://i.pinimg.com/originals/e3/83/81/e383816d95682a866668c9031e8a8e3b.jpg',
         code: 'men-indian-sherwani',
         prompt: 'sherwani',
       },
       {
         name: 'Nehru Jackets',
-        image: '',
+        image:
+          'https://i.pinimg.com/originals/a8/76/df/a876df23222df6d8c93a0d7a10aa4f8e.jpg',
         code: 'men-indian-nehrujacket',
         prompt: 'nehru jacket',
       },

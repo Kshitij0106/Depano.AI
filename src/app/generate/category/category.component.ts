@@ -22,7 +22,7 @@ import { BreadcrumbService } from 'src/app/service/breadcrumb.service';
 export class CategoryComponent implements OnInit {
   private category: string = '';
   private selectedCategory!: Category;
-  private selectedClothingCode!: String;
+  private selectedClothingCode!: string;
   private userInput: string = '';
   categoryLists: Subcategory[] = [];
   optionalToSkip: boolean = false;

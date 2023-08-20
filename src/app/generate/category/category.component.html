@@ -1,4 +1,8 @@
-<app-header [skip]="true" (skipEvent)="onSkip()"></app-header>
+<app-header
+  [skip]="true"
+  (skipEvent)="onSkip()"
+  (goToBreadcrumbEvent)="goToBreadcrumb($event)"
+></app-header>
 <div class="container">
   <app-category-list
     [categoryList]="categoryLists"

@@ -13,6 +13,7 @@ export class HeaderComponent {
   title = 'Depano.ai';
   @Input() skip!: boolean;
   @Output() skipEvent = new EventEmitter<boolean>();
+  @Output() goToBreadcrumbEvent = new EventEmitter<string>();
   breadcrumbs!: Map<string, string>;
   list: string[] = [];
 
@@ -35,7 +36,7 @@ export class HeaderComponent {
 
   goToBreadcrumb(code: string) {
     this.breadcrumbService.createNewList(code);
-    this.breadcrumbService.abc.next(code);
+    this.goToBreadcrumbEvent.emit(code);
   }
 
   searchCategory(searchText: string) {

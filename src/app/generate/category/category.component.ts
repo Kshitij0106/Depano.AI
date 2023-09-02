@@ -75,7 +75,14 @@ export class CategoryComponent {
       this.gettingAttributes = false;
       this.mandatoryAttributeIndex = 0;
     } else {
+      var subcategory = this.getCategory(
+        this.selectedClothingCode
+      ).subCategories.map((cat) => {
+        return cat.code;
+      });
       // find the index of the code in the list
+      var idx = subcategory.indexOf(code);
+      this.mandatoryAttributeIndex = idx + 1;
     }
     this.loadCategory(code);
     this.loadCategoryList();
@@ -179,7 +186,7 @@ export class CategoryComponent {
       this.optionalCategory();
     } else {
       this.setPrompt(this.selectedCategory.key, this.userInput);
-      // this.getMandatoryAttributes();
+      this.getMandatoryAttributes();
     }
   }
 

@@ -19,15 +19,15 @@ import { BreadcrumbService } from 'src/app/service/breadcrumb.service';
   templateUrl: './category.component.html',
   styleUrls: ['./category.component.css'],
 })
-export class CategoryComponent implements OnInit {
+export class CategoryComponent {
   private category: string = '';
   private selectedCategory!: Category;
   private selectedClothingCode!: string;
   private userInput: string = '';
   categoryLists: Subcategory[] = [];
   optionalToSkip: boolean = false;
-  private mandatoryAttributeIndex = 0;
   private gettingAttributes = false;
+  mandatoryAttributeIndex = 0;
 
   constructor(
     private router: Router,
@@ -39,34 +39,22 @@ export class CategoryComponent implements OnInit {
     private location: Location
   ) {
     this.getRoute();
-  }
-
-  ngOnInit(): void {
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        this.getRoute();
-      }
-    });
-    // this.breadcrumbService.abc.subscribe((code) => {
-    //   if (this.selectedCategory.key !== 'attributes') {
-    //     this.gettingAttributes = false;
-    //     this.mandatoryAttributeIndex = 0;
-    //   } else {
-    //     this.gettingAttributes = true;
-    //     this.getMandatoryAttributes();
-    //   }
-    // });
+    this.loadCategory(this.category);
+    this.loadCategoryList();
   }
 
   getRoute() {
     this.route.paramMap.subscribe((params: ParamMap) => {
-      if (this.category === '' || this.category !== params.get('category')) {
-        this.category = params.get('category') || '';
-        if (!this.gettingAttributes) {
-          this.setCategory(this.category);
-        }
-      }
+      this.category = params.get('category') || '';
     });
+  }
+
+  loadCategory(category: string) {
+    this.selectedCategory = this.getCategory(category);
+  }
+
+  loadCategoryList() {
+    this.categoryLists = this.selectedCategory.subCategories;
   }
 
   getCategory(category: string) {
@@ -78,13 +66,26 @@ export class CategoryComponent implements OnInit {
     return {} as Category;
   }
 
-  setCategory(category: string) {
-    this.selectedCategory = this.getCategory(category);
-    if (this.selectedCategory.key === 'attributes') {
-      this.getMandatoryAttributes();
+  getSubCategoryList(category: string) {
+    return this.getCategory(category).subCategories;
+  }
+
+  goToBreadcrumb(code: string) {
+    if (this.getCategory(code).next) {
+      this.gettingAttributes = false;
+      this.mandatoryAttributeIndex = 0;
     } else {
-      this.categoryLists = this.selectedCategory.subCategories;
+      var subcategory = this.getCategory(
+        this.selectedClothingCode
+      ).subCategories.map((cat) => {
+        return cat.code;
+      });
+      // find the index of the code in the list
+      var idx = subcategory.indexOf(code);
+      this.mandatoryAttributeIndex = idx + 1;
     }
+    this.loadCategory(code);
+    this.loadCategoryList();
   }
 
   onSkip() {
@@ -135,36 +136,40 @@ export class CategoryComponent implements OnInit {
           }
         }
       }
-      this.categoryLists = newCategoryList.sort();
+      this.categoryLists = newCategoryList;
     }
   }
 
   categorySelected(category: Subcategory) {
     this.setPrompt(this.selectedCategory.key, category.prompt);
-    if (
-      this.selectedCategory.next &&
-      this.selectedCategory.key !== 'attributes'
-    ) {
-      this.breadcrumbService.addBreadcrumb(category.code, category.name);
-      this.nextCategory(category.code);
-      this.selectedClothingCode = category.code;
-    } else {
+    if (this.gettingAttributes) {
       this.getMandatoryAttributes();
+    } else {
+      this.breadcrumbService.addBreadcrumb(category.code, category.name);
+      if (this.getCategory(category.code).key === 'attributes') {
+        this.gettingAttributes = true;
+        this.selectedClothingCode = category.code;
+        this.loadCategory(category.code);
+        this.getMandatoryAttributes();
+      } else if (this.selectedCategory.next) {
+        this.loadCategory(category.code);
+        this.loadCategoryList();
+        this.nextCategory(category.code);
+      }
     }
   }
 
   getMandatoryAttributes() {
-    this.gettingAttributes = true;
     var code = '';
-    var subcategory = this.selectedCategory.subCategories;
+    var subcategory = this.getCategory(this.selectedClothingCode).subCategories;
     if (this.mandatoryAttributeIndex < subcategory.length) {
       code = subcategory[this.mandatoryAttributeIndex].code;
-      this.nextCategory(code);
+      this.loadCategory(code);
+      this.loadCategoryList();
       this.breadcrumbService.addBreadcrumb(
         code,
         subcategory[this.mandatoryAttributeIndex].name
       );
-      this.categoryLists = this.getCategory(code).subCategories;
       this.mandatoryAttributeIndex++;
     } else {
       this.optionalCategory();
@@ -198,6 +203,7 @@ export class CategoryComponent implements OnInit {
   }
 
   optionalCategory() {
+    this.promptService.showPrompt();
     if (this.selectedClothingCode === undefined) {
       this.selectedClothingCode =
         this.promptService.getKey('gender') === 'Male' ? 'Men' : 'Women';

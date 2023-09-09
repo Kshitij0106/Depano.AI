@@ -15,12 +15,24 @@ export class CategoryListComponent implements OnInit {
 
   constructor(private searchService: SearchService) {}
 
+  /**
+   * Implements the Angular lifecycle hook `ngOnInit`.
+   * Subscribes to the `searchText` observable from the `searchService`
+   * to update the `searchKey` property whenever the search text changes
+   * for searching the category from the category list.
+   */
   ngOnInit(): void {
     this.searchService.searchText.subscribe((text) => {
       this.searchKey = text;
     });
   }
 
+  /**
+   * @emits {Category} selectedCategory - The category selected by the user to category component.
+   * @param categoryCode - The code of the selected category.
+   * @param categoryName - The name of the selected category.
+   * @param categoryPrompt - The prompt of the selected category.
+   */
   selectCategory(
     categoryCode: string,
     categoryName: string,

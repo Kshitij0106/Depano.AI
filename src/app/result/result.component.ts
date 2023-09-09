@@ -19,12 +19,19 @@ export class ResultComponent {
     this.sendRequest();
   }
 
+  /**
+   * Navigates to homepage.
+   * Empties the breadcrumb list.
+   */
   openHome() {
     this.promptService.emptyPrompt();
     this.breadcrumbService.emptyBreadcrumbList();
     this.router.navigate(['home']);
   }
 
+  /**
+   * Sends a request to the prompt service to retrieve images and updates the 'images' property accordingly.
+   */
   sendRequest() {
     this.promptService.sendPrompt().subscribe((data) => {
       this.images = data.images;

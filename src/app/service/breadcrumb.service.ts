@@ -15,19 +15,34 @@ export class BreadcrumbService {
 
   constructor() {}
 
+  /**
+   * Add new breadcrumb to the list.
+   * @param code - The code of the selected category.
+   * @param name - The name of the selected category.
+   */
   addBreadcrumb(code: string, name: string) {
     this.breadcrumbList.push({ key: code, value: name });
   }
 
+  /**
+   * Removes the last breadcrumb from the list.
+   */
   removeBreadcrumb() {
     this.breadcrumbList.pop();
   }
 
+  /**
+   * Empty the breadcrumb list.
+   */
   emptyBreadcrumbList() {
     this.breadcrumbList = [];
   }
 
-  getBreadcrumbs() {
+  /**
+   * A getter that retrieves the breadcrumb list from the breadcrumb service.
+   * @returns {breadcrumb[]} - An array of breadcrumb items representing the current navigation path.
+   */
+  getBreadcrumbs(): breadcrumb[] {
     return this.breadcrumbList;
   }
 

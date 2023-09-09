@@ -27,6 +27,10 @@ export class PromptService {
     }
   }
 
+  getValue(key: string) {
+    return this.userPrompt.get(key);
+  }
+
   sendPrompt() {
     let prompt = this.makePrompt();
     console.log(prompt);

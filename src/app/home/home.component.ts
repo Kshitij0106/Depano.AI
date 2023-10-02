@@ -30,6 +30,6 @@ export class HomeComponent {
     } else if (category === 'Women') {
       this.prompt.addToPrompt('gender', 'Female');
     }
-    this.router.navigate(['generate', category]);
+    this.router.navigate(['generate', category.toLowerCase()]);
   }
 }

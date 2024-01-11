@@ -8,10 +8,9 @@ import {
 import { Location } from '@angular/common';
 import { PromptService } from '../service/prompt.service';
 import { Category } from '../category';
-import { MenCategoryService } from '../service/data/men-category.service';
-import { WomenCategoryService } from '../service/data/women-category.service';
 import { Subcategory } from '../subcategory';
 import { BreadcrumbService } from 'src/app/service/breadcrumb.service';
+import { CategoryService } from '../service/data/category.service';
 
 @Component({
   selector: 'app-optional-types',
@@ -19,16 +18,16 @@ import { BreadcrumbService } from 'src/app/service/breadcrumb.service';
   styleUrls: ['./optional-types.component.css'],
 })
 export class OptionalTypesComponent implements OnInit {
-  type: string = '';
+  optionalCategory: string = '';
+  // optionalAttribute: string = '';
+  private selectedOptionalCategory!: Category;
   optionalList: Subcategory[] = [];
   userOptionalInput: string = '';
-  private selectedCategory!: Category;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private menCategoryService: MenCategoryService,
-    private womenCategoryService: WomenCategoryService,
+    private categoryService: CategoryService,
     private promptService: PromptService,
     private breadcrumbService: BreadcrumbService,
     private location: Location
@@ -42,11 +41,11 @@ export class OptionalTypesComponent implements OnInit {
    * whenever the route changes.
    */
   ngOnInit(): void {
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        this.getRoute();
-      }
-    });
+    // this.router.events.subscribe((event) => {
+    //   if (event instanceof NavigationEnd) {
+    //     this.getRoute();
+    //   }
+    // });
   }
 
   /**
@@ -54,38 +53,39 @@ export class OptionalTypesComponent implements OnInit {
    */
   getRoute() {
     this.route.paramMap.subscribe((params: ParamMap) => {
-      this.type = params.get('type') || '';
-      this.setCategory(this.type);
+      this.optionalCategory = params.get('category') || '';
+      this.getOptionalCategory(this.optionalCategory);
     });
   }
 
   /**
-   * Retrieves a category based on the provided category string and user's gender.
-   * @param {string} category - The category string to retrieve from the API.
-   * @returns {Category} - The retrieved category object.
+   * Retrieves a category based on the provided category string.
+   * @param {string} optionalCategory - The category string to retrieve from the API.
    */
-  getCategory(category: string): Category {
-    if (this.promptService.getKey('gender') === 'Male') {
-      return this.menCategoryService.getCategory(category) as Category;
-    } else if (this.promptService.getKey('gender') === 'Female') {
-      return this.womenCategoryService.getCategory(category) as Category;
-    }
-    return {} as Category;
+  getOptionalCategory(optionalCategory: string) {
+    this.categoryService
+      .getCategory(optionalCategory, 'optional')
+      .subscribe((optionalCategory) => {
+        this.loadOptionalCategory(optionalCategory);
+        this.loadOptionalCategoryList();
+      });
   }
 
   /**
-   * Loads and sets the 'selected type' based on the provided category from the API.
-   * @param {string} type - The category string to load.
+   * Loads and sets the 'selected optional category'.
+   * @param {Category} optionalCategory - The category to load.
    */
-  setCategory(type: string) {
-    this.selectedCategory = this.getCategory(type);
-    if (this.selectedCategory.next) {
-      // If the user is selecting categories
-      this.optionalList = this.sortList(this.selectedCategory.optionalTypes);
-    } else {
-      // If the user is selecting attribute
-      this.optionalList = this.selectedCategory.subCategories;
-    }
+  loadOptionalCategory(optionalCategory: Category) {
+    this.selectedOptionalCategory = optionalCategory;
+  }
+
+  /**
+   * Loads and sets the 'list of subcategories' for the currently selected category.
+   */
+  loadOptionalCategoryList() {
+    this.optionalList = this.sortList(
+      this.selectedOptionalCategory.subCategories
+    );
   }
 
   /**
@@ -105,17 +105,27 @@ export class OptionalTypesComponent implements OnInit {
 
   /**
    * Retrieves the data of the 'category' selected by the user.
-   * @param {string} category - The category selected by the user.
+   * @param {string} subCategory - The category selected by the user.
    */
-  categorySelected(category: Subcategory) {
-    this.setPrompt(this.selectedCategory.key, category.prompt);
-    if (this.selectedCategory.next) {
-      // If the user is selecting categories
-      this.breadcrumbService.addBreadcrumb(category.code, category.name);
-      this.nextCategory(category.code);
+  categorySelected(subCategory: Subcategory) {
+    this.setPrompt(this.selectedOptionalCategory.key, subCategory.prompt);
+    if (this.selectedOptionalCategory.next) {
+      this.categoryService
+        .getCategory(subCategory.code, 'subcategory')
+        .subscribe((category) => {
+          // If the user is selecting categories
+          this.breadcrumbService.addBreadcrumb(
+            subCategory.code,
+            subCategory.name
+          );
+          this.loadOptionalCategory(category);
+          this.loadOptionalCategoryList();
+          // this.nextCategory();
+        });
     } else {
       // If the user is selecting attribute
       this.previousCategory();
+      console.log('previous');
     }
   }
 
@@ -125,12 +135,12 @@ export class OptionalTypesComponent implements OnInit {
    */
   inputSelected(input: string) {
     this.userOptionalInput = input;
-    if (this.selectedCategory.next) {
+    if (this.selectedOptionalCategory.next) {
       // If the user is selecting categories
       this.setPrompt('user-optional-input', this.userOptionalInput);
     } else {
       // If the user is selecting attribute
-      this.setPrompt(this.selectedCategory.key, this.userOptionalInput);
+      this.setPrompt(this.selectedOptionalCategory.key, this.userOptionalInput);
       this.previousCategory();
     }
     this.generate();
@@ -160,8 +170,8 @@ export class OptionalTypesComponent implements OnInit {
    * Navigates to the next category selected by user.
    * @param {string} category - The category to navigate to.
    */
-  nextCategory(category: string) {
-    this.router.navigate(['../', category], {
+  nextCategory() {
+    this.router.navigate(['../'], {
       relativeTo: this.route,
     });
   }
@@ -170,6 +180,9 @@ export class OptionalTypesComponent implements OnInit {
    * Navigates to the previous category.
    */
   previousCategory() {
-    this.location.back();
+    this.router.navigate([this.optionalCategory, 'optional'], {
+      relativeTo: this.route,
+    });
+    // this.location.back();
   }
 }

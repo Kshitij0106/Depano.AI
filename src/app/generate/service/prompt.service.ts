@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PromptService {
-  private url = 'http://127.0.0.1:5000/generate';
   private userPrompt = new Map();
   private mandatoryPrompt = [
     'Photorealistic image',
@@ -35,7 +35,7 @@ export class PromptService {
     let prompt = this.makePrompt();
     console.log(prompt);
     const body = { prompt: prompt };
-    return this.http.post<any>(this.url, body);
+    return this.http.post<any>(environment.imageAPI, body);
   }
 
   private makePrompt(): string {

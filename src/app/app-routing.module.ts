@@ -9,7 +9,10 @@ const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'generate/:category', component: CategoryComponent },
-  { path: 'generate/optional/:type', component: OptionalTypesComponent },
+  {
+    path: 'generate/:category/optional',
+    component: OptionalTypesComponent,
+  },
   { path: 'result', component: ResultComponent },
   { path: '**', redirectTo: '/home' },
 ];

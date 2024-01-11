@@ -20,16 +20,11 @@ export class HomeComponent {
   /**
    * Opens a specific category, adds it to the breadcrumb list, sets the gender prompt,
    * and navigates to the category's generation page.
-   *
    * @param {string} category - The category to open.
    */
   openCategory(category: string) {
-    this.breadcrumbService.addBreadcrumb(category, category);
-    if (category === 'Men') {
-      this.prompt.addToPrompt('gender', 'Male');
-    } else if (category === 'Women') {
-      this.prompt.addToPrompt('gender', 'Female');
-    }
+    this.breadcrumbService.addBreadcrumb(category.toLowerCase(), category);
+    this.prompt.addToPrompt('gender', category.toLowerCase());
     this.router.navigate(['generate', category.toLowerCase()]);
   }
 }

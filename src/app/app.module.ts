@@ -15,8 +15,7 @@ import { ResultComponent } from './result/result.component';
 import { PromptService } from './generate/service/prompt.service';
 import { SearchService } from './generate/service/search.service';
 import { BreadcrumbService } from './service/breadcrumb.service';
-import { MenCategoryService } from './generate/service/data/men-category.service';
-import { WomenCategoryService } from './generate/service/data/women-category.service';
+import { CategoryService } from './generate/service/data/category.service';
 import { NgxUiLoaderHttpModule, NgxUiLoaderModule } from 'ngx-ui-loader';
 
 @NgModule({
@@ -38,13 +37,7 @@ import { NgxUiLoaderHttpModule, NgxUiLoaderModule } from 'ngx-ui-loader';
     NgxUiLoaderModule,
     NgxUiLoaderHttpModule.forRoot({ showForeground: true }),
   ],
-  providers: [
-    MenCategoryService,
-    WomenCategoryService,
-    PromptService,
-    BreadcrumbService,
-    SearchService,
-  ],
+  providers: [CategoryService, PromptService, BreadcrumbService, SearchService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

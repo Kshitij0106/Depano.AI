@@ -10,7 +10,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'generate/:category', component: CategoryComponent },
   {
-    path: 'generate/:category/optional',
+    path: 'generate/:category/optional/:type',
     component: OptionalTypesComponent,
   },
   { path: 'result', component: ResultComponent },

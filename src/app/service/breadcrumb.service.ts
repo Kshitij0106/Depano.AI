@@ -46,6 +46,10 @@ export class BreadcrumbService {
     return this.breadcrumbList;
   }
 
+  /**
+   * Creating a new breadcrumb list till that selected category code.
+   * @param {string} code - The code of the selected category to navigate back to.
+   */
   createNewList(code: string) {
     let list: breadcrumb[] = [];
     for (let index in this.breadcrumbList) {

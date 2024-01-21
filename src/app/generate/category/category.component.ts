@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { Location } from '@angular/common';
 import { HostListener } from '@angular/core';
 import { Category } from '../category';
 import { PromptService } from '../service/prompt.service';
@@ -28,8 +27,7 @@ export class CategoryComponent implements OnInit {
     private route: ActivatedRoute,
     private categoryService: CategoryService,
     private promptService: PromptService,
-    private breadcrumbService: BreadcrumbService,
-    private location: Location
+    private breadcrumbService: BreadcrumbService
   ) {}
 
   /**
@@ -225,10 +223,6 @@ export class CategoryComponent implements OnInit {
   getMandatoryAttributes() {
     var code = '';
     this.gettingAttributes = true;
-    // if (this.selectedClothingCode === '') {
-    //     // If cloth is not selected then previous subcategory list is selected
-    //     this.subcategory = this.categoryLists;
-    //   }
     // Loading all the attributes of the cloth one by one based on the index
     if (this.mandatoryAttributeIndex < this.subcategory.length) {
       code = this.subcategory[this.mandatoryAttributeIndex].code;
@@ -297,22 +291,14 @@ export class CategoryComponent implements OnInit {
    * Navigates to the Optional component.
    */
   optionalCategory() {
-    this.promptService.showPrompt();
     if (this.selectedClothingCode === '') {
       // If the cloth is not selected, set it based on user's gender
       this.selectedClothingCode =
         this.promptService.getKey('gender') === 'Male' ? 'men' : 'women';
     }
-    this.router.navigate(['../', this.selectedClothingCode, 'optional'], {
+    this.router.navigate(['../', this.selectedClothingCode, 'optional', ''], {
       relativeTo: this.route,
     });
-  }
-
-  /**
-   * Navigates to the previous category.
-   */
-  previousCategory() {
-    this.location.back();
   }
 
   /**

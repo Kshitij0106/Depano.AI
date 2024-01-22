@@ -61,7 +61,11 @@ export class OptionalTypesComponent {
    */
   loadOptionalCategory(optionalCategory: Category) {
     this.selectedOptionalCategory = optionalCategory;
-    if (this.selectedOptionalCategory.key === 'attributes') {
+    if (
+      this.selectedOptionalCategory.key === 'wear' ||
+      this.selectedOptionalCategory.key === 'style' ||
+      this.selectedOptionalCategory.key === 'attributes'
+    ) {
       this.hideUserInput = true;
     } else {
       this.hideUserInput = false;

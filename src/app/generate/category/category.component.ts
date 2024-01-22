@@ -157,6 +157,14 @@ export class CategoryComponent implements OnInit {
                 if (cat.key === 'attributes') {
                   // If the selected category is an attribute
                   this.gettingAttributes = true;
+                  // If the user skips every category
+                  if (
+                    this.promptService.getKey('wear') === '' &&
+                    this.promptService.getKey('style') === '' &&
+                    this.promptService.getKey('type') === ''
+                  ) {
+                    this.optionalCategory();
+                  }
                 }
 
                 // Loop to iterate over the subcategories of the subcategories
@@ -299,7 +307,7 @@ export class CategoryComponent implements OnInit {
     if (this.selectedClothingCode === '') {
       // If the cloth is not selected, set it based on user's gender
       this.selectedClothingCode =
-        this.promptService.getKey('gender') === 'Male' ? 'men' : 'women';
+        this.promptService.getKey('gender') === 'men' ? 'men' : 'women';
     }
     this.router.navigate(['../', this.selectedClothingCode, 'optional', ''], {
       relativeTo: this.route,
@@ -314,11 +322,3 @@ export class CategoryComponent implements OnInit {
     this.breadcrumbService.removeBreadcrumb();
   }
 }
-
-// if (
-//   this.promptService.getKey('wear') === '' &&
-//   this.promptService.getKey('style') === '' &&
-//   this.promptService.getKey('type') === ''
-// ) {
-//   console.log('all skip');
-// }

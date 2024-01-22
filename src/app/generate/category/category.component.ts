@@ -21,6 +21,7 @@ export class CategoryComponent implements OnInit {
   subcategory: Subcategory[] = [];
   private gettingAttributes = false;
   mandatoryAttributeIndex = 0;
+  hideUserInput: boolean = false;
 
   constructor(
     private router: Router,
@@ -68,6 +69,15 @@ export class CategoryComponent implements OnInit {
    */
   loadCategory(category: Category) {
     this.selectedCategory = category;
+    if (
+      this.selectedCategory.key === 'wear' ||
+      this.selectedCategory.key === 'style' ||
+      this.selectedCategory.key === 'attributes'
+    ) {
+      this.hideUserInput = true;
+    } else {
+      this.hideUserInput = false;
+    }
   }
 
   /**

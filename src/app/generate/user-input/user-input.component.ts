@@ -2,6 +2,8 @@ import {
   Component,
   ElementRef,
   EventEmitter,
+  Input,
+  OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
@@ -11,11 +13,14 @@ import {
   templateUrl: './user-input.component.html',
   styleUrls: ['./user-input.component.css'],
 })
-export class UserInputComponent {
+export class UserInputComponent implements OnInit {
   @Output() userInput = new EventEmitter<string>();
+  @Input() hideUserInput!: boolean;
   @ViewChild('userInputCategory') userInputRef!: ElementRef;
 
   constructor() {}
+
+  ngOnInit(): void {}
 
   /**
    * Handles the submission of user input.

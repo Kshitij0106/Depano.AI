@@ -17,6 +17,7 @@ export class OptionalTypesComponent {
   private selectedOptionalCategory!: Category;
   optionalList: Subcategory[] = [];
   userOptionalInput: string = '';
+  hideUserInput: boolean = false;
 
   constructor(
     private router: Router,
@@ -60,6 +61,11 @@ export class OptionalTypesComponent {
    */
   loadOptionalCategory(optionalCategory: Category) {
     this.selectedOptionalCategory = optionalCategory;
+    if (this.selectedOptionalCategory.key === 'attributes') {
+      this.hideUserInput = true;
+    } else {
+      this.hideUserInput = false;
+    }
   }
 
   /**

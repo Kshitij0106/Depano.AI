@@ -1,11 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  Router,
-  ActivatedRoute,
-  ParamMap,
-  NavigationEnd,
-} from '@angular/router';
-import { Location } from '@angular/common';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { PromptService } from '../service/prompt.service';
 import { Category } from '../category';
 import { Subcategory } from '../subcategory';
@@ -17,35 +11,22 @@ import { CategoryService } from '../service/data/category.service';
   templateUrl: './optional-types.component.html',
   styleUrls: ['./optional-types.component.css'],
 })
-export class OptionalTypesComponent implements OnInit {
+export class OptionalTypesComponent {
   optionalCategory: string = '';
-  // optionalAttribute: string = '';
+  optionalAttribute: string = '';
   private selectedOptionalCategory!: Category;
   optionalList: Subcategory[] = [];
   userOptionalInput: string = '';
+  hideUserInput: boolean = false;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private categoryService: CategoryService,
     private promptService: PromptService,
-    private breadcrumbService: BreadcrumbService,
-    private location: Location
+    private breadcrumbService: BreadcrumbService
   ) {
     this.getRoute();
-  }
-
-  /**
-   * Implements the Angular lifecycle hook `ngOnInit`.
-   * Subscribes to the router events and triggers `getRoute` method on `NavigationEnd` events
-   * whenever the route changes.
-   */
-  ngOnInit(): void {
-    // this.router.events.subscribe((event) => {
-    //   if (event instanceof NavigationEnd) {
-    //     this.getRoute();
-    //   }
-    // });
   }
 
   /**
@@ -54,7 +35,10 @@ export class OptionalTypesComponent implements OnInit {
   getRoute() {
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.optionalCategory = params.get('category') || '';
-      this.getOptionalCategory(this.optionalCategory);
+      this.optionalAttribute = params.get('type') || '';
+      if (this.optionalAttribute === '') {
+        this.getOptionalCategory(this.optionalCategory);
+      }
     });
   }
 
@@ -77,6 +61,15 @@ export class OptionalTypesComponent implements OnInit {
    */
   loadOptionalCategory(optionalCategory: Category) {
     this.selectedOptionalCategory = optionalCategory;
+    if (
+      this.selectedOptionalCategory.key === 'wear' ||
+      this.selectedOptionalCategory.key === 'style' ||
+      this.selectedOptionalCategory.key === 'attributes'
+    ) {
+      this.hideUserInput = true;
+    } else {
+      this.hideUserInput = false;
+    }
   }
 
   /**
@@ -120,12 +113,11 @@ export class OptionalTypesComponent implements OnInit {
           );
           this.loadOptionalCategory(category);
           this.loadOptionalCategoryList();
-          // this.nextCategory();
+          this.nextCategory(category.code);
         });
     } else {
       // If the user is selecting attribute
       this.previousCategory();
-      console.log('previous');
     }
   }
 
@@ -143,7 +135,6 @@ export class OptionalTypesComponent implements OnInit {
       this.setPrompt(this.selectedOptionalCategory.key, this.userOptionalInput);
       this.previousCategory();
     }
-    this.generate();
   }
 
   /**
@@ -161,7 +152,8 @@ export class OptionalTypesComponent implements OnInit {
    * Navigates to the result component.
    */
   generate() {
-    this.router.navigate(['../../../', 'result'], {
+    this.promptService.showPrompt();
+    this.router.navigate(['../../../../', 'result'], {
       relativeTo: this.route,
     });
   }
@@ -170,8 +162,8 @@ export class OptionalTypesComponent implements OnInit {
    * Navigates to the next category selected by user.
    * @param {string} category - The category to navigate to.
    */
-  nextCategory() {
-    this.router.navigate(['../'], {
+  nextCategory(category: string) {
+    this.router.navigate(['../', category], {
       relativeTo: this.route,
     });
   }
@@ -180,9 +172,8 @@ export class OptionalTypesComponent implements OnInit {
    * Navigates to the previous category.
    */
   previousCategory() {
-    this.router.navigate([this.optionalCategory, 'optional'], {
+    this.router.navigate(['../', ''], {
       relativeTo: this.route,
     });
-    // this.location.back();
   }
 }

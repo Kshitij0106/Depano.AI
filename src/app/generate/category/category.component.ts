@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { Location } from '@angular/common';
 import { HostListener } from '@angular/core';
 import { Category } from '../category';
 import { PromptService } from '../service/prompt.service';
@@ -22,14 +21,14 @@ export class CategoryComponent implements OnInit {
   subcategory: Subcategory[] = [];
   private gettingAttributes = false;
   mandatoryAttributeIndex = 0;
+  hideUserInput: boolean = false;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private categoryService: CategoryService,
     private promptService: PromptService,
-    private breadcrumbService: BreadcrumbService,
-    private location: Location
+    private breadcrumbService: BreadcrumbService
   ) {}
 
   /**
@@ -70,6 +69,22 @@ export class CategoryComponent implements OnInit {
    */
   loadCategory(category: Category) {
     this.selectedCategory = category;
+    this.hideUserPromptBox();
+  }
+
+  /**
+   * Checks if the user prompt box is shown or not
+   */
+  hideUserPromptBox() {
+    if (
+      this.selectedCategory.key === 'wear' ||
+      this.selectedCategory.key === 'style' ||
+      this.selectedCategory.key === 'attributes'
+    ) {
+      this.hideUserInput = true;
+    } else {
+      this.hideUserInput = false;
+    }
   }
 
   /**
@@ -125,35 +140,38 @@ export class CategoryComponent implements OnInit {
             name: 'Westernwear',
             image: '',
             code: 'western',
-            prompt: '',
+            prompt: 'western-style',
           },
           {
             name: 'Indianwear',
             image: '',
             code: 'indian',
-            prompt: '',
+            prompt: 'indian-style',
           }
         );
       } else {
         if (this.selectedCategory.next) {
           // If the user skips the category
           let subCat = this.categoryLists;
-          if (
-            this.promptService.getValue('style') == null &&
-            this.promptService.getValue('type') == null
-          ) {
-            console.log('skip');
-            // console.log(this.selectedCategory);
-          }
-          console.log(subCat);
           for (let i = 0; i < subCat.length; i++) {
             // Loop to iterate over the subcategories of selected category
             this.categoryService
               .getCategory(subCat[i].code, 'subcategory')
               .subscribe((cat) => {
+                if (cat.key === 'type') {
+                  this.hideUserInput = false;
+                }
                 if (cat.key === 'attributes') {
                   // If the selected category is an attribute
                   this.gettingAttributes = true;
+                  // If the user skips every category
+                  if (
+                    this.promptService.getKey('wear') === '' &&
+                    this.promptService.getKey('style') === '' &&
+                    this.promptService.getKey('type') === ''
+                  ) {
+                    this.optionalCategory();
+                  }
                 }
 
                 // Loop to iterate over the subcategories of the subcategories
@@ -225,10 +243,6 @@ export class CategoryComponent implements OnInit {
   getMandatoryAttributes() {
     var code = '';
     this.gettingAttributes = true;
-    // if (this.selectedClothingCode === '') {
-    //     // If cloth is not selected then previous subcategory list is selected
-    //     this.subcategory = this.categoryLists;
-    //   }
     // Loading all the attributes of the cloth one by one based on the index
     if (this.mandatoryAttributeIndex < this.subcategory.length) {
       code = this.subcategory[this.mandatoryAttributeIndex].code;
@@ -297,22 +311,14 @@ export class CategoryComponent implements OnInit {
    * Navigates to the Optional component.
    */
   optionalCategory() {
-    this.promptService.showPrompt();
     if (this.selectedClothingCode === '') {
       // If the cloth is not selected, set it based on user's gender
       this.selectedClothingCode =
-        this.promptService.getKey('gender') === 'Male' ? 'men' : 'women';
+        this.promptService.getKey('gender') === 'men' ? 'men' : 'women';
     }
-    this.router.navigate(['../', this.selectedClothingCode, 'optional'], {
+    this.router.navigate(['../', this.selectedClothingCode, 'optional', ''], {
       relativeTo: this.route,
     });
-  }
-
-  /**
-   * Navigates to the previous category.
-   */
-  previousCategory() {
-    this.location.back();
   }
 
   /**
@@ -323,23 +329,3 @@ export class CategoryComponent implements OnInit {
     this.breadcrumbService.removeBreadcrumb();
   }
 }
-
-// if (
-//   this.promptService.getKey('wear') === '' &&
-//   this.promptService.getKey('style') === '' &&
-//   this.promptService.getKey('type') === ''
-// ) {
-//   newCategoryList.push(
-//     {
-//       name: 'Fabric',
-//       image: '',
-//       code: 'fabric',
-//       prompt: '',
-//     },
-//     {
-//       name: 'Color',
-//       image: '',
-//       code: 'color',
-//       prompt: '',
-//     }
-//   );

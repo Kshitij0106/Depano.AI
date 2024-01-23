@@ -69,6 +69,13 @@ export class CategoryComponent implements OnInit {
    */
   loadCategory(category: Category) {
     this.selectedCategory = category;
+    this.hideUserPromptBox();
+  }
+
+  /**
+   * Checks if the user prompt box is shown or not
+   */
+  hideUserPromptBox() {
     if (
       this.selectedCategory.key === 'wear' ||
       this.selectedCategory.key === 'style' ||

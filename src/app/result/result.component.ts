@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./result.component.css'],
 })
 export class ResultComponent {
-  images: string[] = [];
+  image!: string;
 
   constructor(
     private promptService: PromptService,
@@ -34,7 +34,7 @@ export class ResultComponent {
    */
   sendRequest() {
     this.promptService.sendPrompt().subscribe((data) => {
-      this.images = data.images;
+      this.image = data.url;
     });
   }
 }

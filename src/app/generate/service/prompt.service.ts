@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
@@ -50,10 +50,11 @@ export class PromptService {
    *
    * @returns {Observable<any>} - An observable containing the server's response, which includes generated images.
    */
-  sendPrompt(): Observable<any> {
+  sendPrompt(): Observable<Response> {
     let prompt = this.makePrompt();
     const body = { prompt: prompt };
-    return this.http.post<any>(environment.imageAPI, body);
+    this.http.post<Response>(environment.gateway + 'prompts', body);
+    return this.http.post<Response>(environment.gateway + 'generate', body);
   }
 
   /**

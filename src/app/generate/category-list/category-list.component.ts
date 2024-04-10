@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Subcategory } from '../subcategory';
-import { SearchService } from '../service/search.service';
+import { Subcategory } from '../interfaces/subcategory';
+import { SearchService } from '../services/search.service';
 
 @Component({
   selector: 'app-category-list',
@@ -31,7 +31,6 @@ export class CategoryListComponent implements OnInit {
    * @emits {Category} selectedCategory - The category selected by the user to category component.
    * @param categoryCode - The code of the selected category.
    * @param categoryName - The name of the selected category.
-   * @param categoryPrompt - The prompt of the selected category.
    */
   selectCategory(
     categoryCode: string,
@@ -42,7 +41,6 @@ export class CategoryListComponent implements OnInit {
       name: categoryName,
       code: categoryCode,
       image: '',
-      prompt: categoryPrompt,
     };
 
     this.selectedCategory.emit(this.category);

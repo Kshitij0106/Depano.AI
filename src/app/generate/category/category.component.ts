@@ -1,11 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import {
+  ActivatedRoute,
+  NavigationEnd,
+  ParamMap,
+  Router,
+} from '@angular/router';
 import { HostListener } from '@angular/core';
-import { Category } from '../category';
-import { PromptService } from '../service/prompt.service';
-import { Subcategory } from '../subcategory';
-import { BreadcrumbService } from 'src/app/service/breadcrumb.service';
-import { CategoryService } from '../service/data/category.service';
+import { Location } from '@angular/common';
+import { Category } from '../interfaces/category';
+import { PromptService } from '../services/prompt.service';
+import { Subcategory } from '../interfaces/subcategory';
+import { BreadcrumbService } from 'src/app/services/breadcrumb.service';
+import { CategoryService } from '../services/data/category.service';
 
 @Component({
   selector: 'app-category',
@@ -14,22 +20,28 @@ import { CategoryService } from '../service/data/category.service';
 })
 export class CategoryComponent implements OnInit {
   private category: string = '';
+  public selectedCategoryKey: string = '';
+  private selectedClothCode: string = '';
   private selectedCategory!: Category;
   categoryLists: Subcategory[] = [];
-  private selectedClothingCode: string = '';
   private userInput: string = '';
   subcategory: Subcategory[] = [];
-  private gettingAttributes = false;
-  mandatoryAttributeIndex = 0;
-  hideUserInput: boolean = false;
+  userPrompt: boolean = false;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private categoryService: CategoryService,
     private promptService: PromptService,
-    private breadcrumbService: BreadcrumbService
-  ) {}
+    private breadcrumbService: BreadcrumbService,
+    private location: Location
+  ) {
+    // this.router.events.subscribe((event) => {
+    //   if (event instanceof NavigationEnd) {
+    //     this.getCategory(this.getRoute());
+    //   }
+    // });
+  }
 
   /**
    * Implements the Angular lifecycle hook `ngOnInit`.
@@ -55,12 +67,14 @@ export class CategoryComponent implements OnInit {
    * Loads the category based on the provided category from the API.
    */
   getCategory(category: string) {
-    this.categoryService
-      .getCategory(category, 'subcategory')
-      .subscribe((category) => {
-        this.loadCategory(category);
-        this.loadCategoryList();
-      });
+    this.categoryService.getCategory(category).subscribe((category) => {
+      if (category.key === 'type') {
+        this.selectedClothCode = category.code;
+        console.log(this.selectedClothCode);
+      }
+      this.loadCategory(category);
+      this.loadCategoryList();
+    });
   }
 
   /**
@@ -77,13 +91,13 @@ export class CategoryComponent implements OnInit {
    */
   hideUserPromptBox() {
     if (
+      this.selectedCategory.key === 'gender' ||
       this.selectedCategory.key === 'wear' ||
-      this.selectedCategory.key === 'style' ||
-      this.selectedCategory.key === 'attributes'
+      this.selectedCategory.key === 'type'
     ) {
-      this.hideUserInput = true;
+      this.userPrompt = true;
     } else {
-      this.hideUserInput = false;
+      this.userPrompt = false;
     }
   }
 
@@ -101,26 +115,24 @@ export class CategoryComponent implements OnInit {
    */
   goToBreadcrumb(code: string) {
     var subcategory: string[];
-    this.categoryService
-      .getCategory(code, 'subcategory')
-      .subscribe((category) => {
-        if (category.next) {
-          // If the 'code' belong to category('wear', 'type', 'gender')
-          this.gettingAttributes = false;
-          this.mandatoryAttributeIndex = 0;
-        } else {
-          // If the 'code' belong to attributes
-          // Retrieve the list of attributes codes from the selected cloth
-          subcategory = this.subcategory.map((cat) => {
-            return cat.code;
-          });
-          // Find the index of the slelcted 'attribute' in the subcategory list to get it's index.
-          var idx = subcategory.indexOf(code);
-          this.mandatoryAttributeIndex = idx + 1;
-        }
-        this.loadCategory(category);
-        this.loadCategoryList();
-      });
+    this.categoryService.getCategory(code).subscribe((category) => {
+      if (category.next) {
+        // If the 'code' belong to category('wear', 'type', 'gender')
+        // this.gettingAttributes = false;
+        // this.mandatoryAttributeIndex = 0;
+      } else {
+        // If the 'code' belong to attributes
+        // Retrieve the list of attributes codes from the selected cloth
+        subcategory = this.subcategory.map((cat) => {
+          return cat.code;
+        });
+        // Find the index of the slelcted 'attribute' in the subcategory list to get it's index.
+        // var idx = subcategory.indexOf(code);
+        // this.mandatoryAttributeIndex = idx + 1;
+      }
+      this.loadCategory(category);
+      this.loadCategoryList();
+    });
   }
 
   /**
@@ -129,80 +141,86 @@ export class CategoryComponent implements OnInit {
    */
   onSkip() {
     let newCategoryList: Subcategory[] = [];
-    if (this.gettingAttributes) {
-      // If the user is already selecting attributes
-      this.getMandatoryAttributes();
+    if (this.selectedCategory.key === 'type') {
+      this.generate();
+    }
+    if (this.categoryLists[0].name.includes('Topwear')) {
+      // If the user skips any wear then add 2 new subcategories
+      newCategoryList.push(
+        {
+          name: 'Westernwear',
+          image: '',
+          code: 'western',
+          // prompt: 'western-style',
+        },
+        {
+          name: 'Indianwear',
+          image: '',
+          code: 'indian',
+          // prompt: 'indian-style',
+        }
+      );
     } else {
-      if (this.categoryLists[0].name.includes('Topwear')) {
-        // If the user skips any wear then add 2 new subcategories
-        newCategoryList.push(
-          {
-            name: 'Westernwear',
-            image: '',
-            code: 'western',
-            prompt: 'western-style',
-          },
-          {
-            name: 'Indianwear',
-            image: '',
-            code: 'indian',
-            prompt: 'indian-style',
-          }
-        );
-      } else {
-        if (this.selectedCategory.next) {
-          // If the user skips the category
-          let subCat = this.categoryLists;
-          for (let i = 0; i < subCat.length; i++) {
-            // Loop to iterate over the subcategories of selected category
-            this.categoryService
-              .getCategory(subCat[i].code, 'subcategory')
-              .subscribe((cat) => {
-                if (cat.key === 'type') {
-                  this.hideUserInput = false;
-                }
-                if (cat.key === 'attributes') {
-                  // If the selected category is an attribute
-                  this.gettingAttributes = true;
-                  // If the user skips every category
-                  if (
-                    this.promptService.getKey('wear') === '' &&
-                    this.promptService.getKey('style') === '' &&
-                    this.promptService.getKey('type') === ''
-                  ) {
-                    this.optionalCategory();
-                  }
-                }
+      if (this.selectedCategory.next) {
+        // If the user skips the category
+        let subCat = this.categoryLists;
+        for (let i = 0; i < subCat.length; i++) {
+          // Loop to iterate over the subcategories of selected category
+          this.categoryService.getCategory(subCat[i].code).subscribe((cat) => {
+            if (cat.key === 'type') {
+              this.userPrompt = false;
+            }
+            if (cat.key === 'attributes') {
+              // If the selected category is an attribute
+              // this.gettingAttributes = true;
+              // // If the user skips every category
+              if (
+                this.promptService.getKey('wear') === '' &&
+                this.promptService.getKey('style') === '' &&
+                this.promptService.getKey('type') === ''
+              ) {
+                // newCategoryList = [];
+                // newCategoryList.push(
+                //   {
+                //     name: 'Fabric',
+                //     image: '',
+                //     code: 'fabric',
+                //     prompt: '',
+                //   },
+                //   {
+                //     name: 'Color',
+                //     image: '',
+                //     code: 'color',
+                //     prompt: '',
+                //   }
+                // );
+              }
+            }
 
-                // Loop to iterate over the subcategories of the subcategories
-                for (let j = 0; j < cat.subCategories.length; j++) {
-                  if (!newCategoryList.includes(cat.subCategories[j])) {
-                    // Adding attributes only once to the list
-                    if (cat.key === 'attributes') {
-                      // Finding the attribute in the exisitng list
-                      const duplicate = newCategoryList.find(
-                        (item) => item.name === cat.subCategories[j].name
-                      );
-                      if (!duplicate) {
-                        newCategoryList.push(cat.subCategories[j]);
-                      }
-                    } else {
-                      // Directly add the category to the list
-                      // without checking as categories are unique
-                      newCategoryList.push(cat.subCategories[j]);
-                    }
+            // Loop to iterate over the subcategories of the subcategories
+            for (let j = 0; j < cat.subCategories.length; j++) {
+              if (!newCategoryList.includes(cat.subCategories[j])) {
+                // Adding attributes only once to the list
+                if (cat.key === 'attributes') {
+                  // Finding the attribute in the exisitng list
+                  const duplicate = newCategoryList.find(
+                    (item) => item.name === cat.subCategories[j].name
+                  );
+                  if (!duplicate) {
+                    newCategoryList.push(cat.subCategories[j]);
                   }
+                } else {
+                  // Directly add the category to the list
+                  // without checking as categories are unique
+                  newCategoryList.push(cat.subCategories[j]);
                 }
-              });
-          }
+              }
+            }
+          });
         }
       }
-      this.categoryLists = newCategoryList;
-      // If getting attribute for the first time
-      if (this.gettingAttributes) {
-        this.getMandatoryAttributes();
-      }
     }
+    this.categoryLists = newCategoryList;
   }
 
   /**
@@ -211,56 +229,16 @@ export class CategoryComponent implements OnInit {
    */
   categorySelected(subCategory: Subcategory) {
     this.category = subCategory.code;
-    this.setPrompt(this.selectedCategory.key, subCategory.prompt);
-    if (this.gettingAttributes) {
-      // If the user is already selecting attributes
-      this.getMandatoryAttributes();
-    } else {
+    this.selectedCategoryKey = subCategory.name;
+    if (this.selectedCategory.next) {
       this.breadcrumbService.addBreadcrumb(subCategory.code, subCategory.name);
-      this.categoryService
-        .getCategory(subCategory.code, 'subcategory')
-        .subscribe((category) => {
-          this.nextCategory(subCategory.code);
-          if (category.key === 'attributes') {
-            // If the user selects cloth then switch the flow to display attributes
-            this.gettingAttributes = true;
-            this.selectedClothingCode = category.code;
-            this.loadCategory(category);
-            this.subcategory = category.subCategories;
-            this.getMandatoryAttributes();
-          } else if (this.selectedCategory.next) {
-            // If the user is selecting categories then regular flow
-            this.loadCategory(category);
-            this.loadCategoryList();
-          }
-        });
-    }
-  }
-
-  /**
-   * Displaying the attributes to the user automatically by chaning the flow.
-   */
-  getMandatoryAttributes() {
-    var code = '';
-    this.gettingAttributes = true;
-    // Loading all the attributes of the cloth one by one based on the index
-    if (this.mandatoryAttributeIndex < this.subcategory.length) {
-      code = this.subcategory[this.mandatoryAttributeIndex].code;
-      this.categoryService
-        .getCategory(code, 'subcategory')
-        .subscribe((category) => {
-          this.loadCategory(category);
-          this.loadCategoryList();
-        });
-      this.breadcrumbService.addBreadcrumb(
-        code,
-        this.subcategory[this.mandatoryAttributeIndex].name
-      );
-      this.mandatoryAttributeIndex++;
+      this.getCategory(subCategory.code);
+      this.nextCategory(subCategory.code);
     } else {
-      // If all the attributes are shown then go to optional component
-      this.optionalCategory();
-      this.gettingAttributes = false;
+      // If the user is selecting attribute
+      this.categoryService.getAttribute(subCategory.code).subscribe();
+      this.getCategory(this.selectedClothCode);
+      // this.previousCategory();
     }
   }
 
@@ -270,19 +248,22 @@ export class CategoryComponent implements OnInit {
    */
   inputSelected(input: string) {
     this.userInput = input;
-    if (
-      this.selectedCategory.next &&
-      this.selectedCategory.key !== 'attributes'
-    ) {
-      // If the user is selecting categories
-      // Set the 'user-input' prompt and navigate to the optional category
-      this.setPrompt('user-input', this.userInput);
-      this.optionalCategory();
+
+    if (this.selectedCategory.next) {
+      if (this.selectedCategory.key === 'style') {
+        // If the user is selecting categories
+        // Set the 'user-input' prompt
+        const currentCategory = this.selectedCategory.code.split('-').at(0);
+        const gender = this.promptService.getValue('gender');
+        this.setPrompt('type', this.userInput);
+        this.getCategory(gender + '-' + currentCategory);
+        this.nextCategory(gender + '-' + currentCategory);
+      }
     } else {
       // If the user is selecting attributes
-      // Set the 'input' prompt and continue to get next attributes
       this.setPrompt(this.selectedCategory.key, this.userInput);
-      this.getMandatoryAttributes();
+      this.getCategory(this.selectedClothCode);
+      // this.previousCategory();
     }
   }
 
@@ -308,17 +289,22 @@ export class CategoryComponent implements OnInit {
   }
 
   /**
-   * Navigates to the Optional component.
+   * Navigates to the result component.
    */
-  optionalCategory() {
-    if (this.selectedClothingCode === '') {
-      // If the cloth is not selected, set it based on user's gender
-      this.selectedClothingCode =
-        this.promptService.getKey('gender') === 'men' ? 'men' : 'women';
-    }
-    this.router.navigate(['../', this.selectedClothingCode, 'optional', ''], {
+  generate() {
+    this.promptService.showPrompt();
+    this.promptService.sendPrompt().subscribe();
+    this.router.navigate(['../../', 'result'], {
       relativeTo: this.route,
     });
+    this.promptService.emptyPrompt();
+  }
+
+  /**
+   * Navigates to the previous category.
+   */
+  previousCategory() {
+    this.location.back();
   }
 
   /**

@@ -1,0 +1,31 @@
+<app-header [skip]="false"></app-header>
+<div class="ctn container-fluid">
+  <div class="row">
+    <div class="col1 col-6">
+      <div class="card1" (click)="openCategory('Women')">
+        <img
+          src="../assets/Women.png"
+          class="img card-img-top"
+          alt="..."
+          height="615"
+        />
+        <div class="card-body">
+          <h5 class="card-title">Women</h5>
+        </div>
+      </div>
+    </div>
+    <div class="col2 col-6">
+      <div class="card2" (click)="openCategory('Men')">
+        <img
+          src="../assets/Men.png"
+          class="img card-img-top"
+          alt="..."
+          height="615"
+        />
+        <div class="card-body">
+          <h5 class="card-title">Men</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

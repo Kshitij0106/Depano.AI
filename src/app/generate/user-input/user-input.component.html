@@ -1,4 +1,4 @@
-<div *ngIf="!hideUserInput">
+<div *ngIf="!userPrompt">
   <div class="container-fluid">
     <h6 class="or">OR</h6>
   </div>
@@ -10,7 +10,7 @@
         id="userInput"
         #userInputCategory
       ></textarea>
-      <label class="label" for="userInput">Add your own input</label>
+      <label class="label" for="userInput">Add your own {{ key }}</label>
       <span>
         <button
           for="userInput"

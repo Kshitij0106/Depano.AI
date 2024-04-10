@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { PromptService } from '../generate/service/prompt.service';
-import { BreadcrumbService } from '../service/breadcrumb.service';
+import { PromptService } from '../generate/services/prompt.service';
+import { BreadcrumbService } from '../services/breadcrumb.service';
 import { Router } from '@angular/router';
 
 @Component({

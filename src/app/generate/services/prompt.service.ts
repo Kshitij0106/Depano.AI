@@ -3,11 +3,17 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 
+interface Prompt {
+  category: string;
+  input: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
 export class PromptService {
   private userPrompt = new Map();
+  private prompts: Prompt[] = [];
   private mandatoryPrompt = [
     'Photorealistic image',
     'model',
@@ -23,6 +29,10 @@ export class PromptService {
    */
   addToPrompt(key: string, value: string) {
     this.userPrompt.set(key, value);
+    this.prompts.push({
+      category: key,
+      input: value,
+    });
   }
 
   /**
@@ -50,11 +60,13 @@ export class PromptService {
    *
    * @returns {Observable<any>} - An observable containing the server's response, which includes generated images.
    */
-  sendPrompt(): Observable<Response> {
-    let prompt = this.makePrompt();
-    const body = { prompt: prompt };
-    this.http.post<Response>(environment.gateway + 'prompts', body);
-    return this.http.post<Response>(environment.gateway + 'generate', body);
+  sendPrompt(): Observable<any> {
+    let userInput = this.getPrompt();
+    return this.http.post<any>(
+      environment.gateway + 'prompts/create/' + this.getValue('gender'),
+      userInput
+    );
+    // return this.http.post<Response>(environment.gateway + 'generate', body);
   }
 
   /**
@@ -92,11 +104,16 @@ export class PromptService {
     );
   }
 
+  public getPrompt() {
+    return this.prompts;
+  }
+
   /**
    * Empty the prompt map.
    */
   emptyPrompt() {
     this.userPrompt.clear();
+    this.prompts = [];
   }
 
   showPrompt() {

@@ -1,0 +1,62 @@
+* {
+  margin: 0 auto;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.ctn {
+  max-width: 100%;
+  /* display: flex; */
+  background: #1e1e1e;
+}
+
+.col1 {
+  background: #1e1e1e;
+}
+
+.col2 {
+  background: #1c1a1a;
+}
+
+.card1 {
+  width: 410px;
+  height: 690px;
+  cursor: pointer;
+  cursor: hand;
+}
+
+.card2 {
+  width: 410px;
+  height: 690px;
+  cursor: pointer;
+  cursor: hand;
+}
+
+/* .card3 {
+    width: 410px;
+    height: 690px;
+    background: #2c2828;
+    cursor: pointer;
+    cursor: hand;
+  } */
+
+.img {
+  padding: 60px;
+}
+
+.card-body {
+  box-shadow: inset 1px 9px 17px -1px rgba(0, 0, 0, 0.03);
+  cursor: pointer;
+  cursor: hand;
+}
+
+.card-title {
+  text-align: center;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 26px;
+  padding-top: 20px;
+  letter-spacing: 0.12em;
+  color: #ffffff;
+}

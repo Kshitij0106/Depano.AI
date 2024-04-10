@@ -1,62 +1,84 @@
 * {
-  margin: 0 auto;
+  margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+body {
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-wrap: nowrap;
+}
+
 .ctn {
-  max-width: 100%;
-  /* display: flex; */
-  background: #1e1e1e;
+  min-width: 100%;
+  margin-bottom: 50px;
 }
 
-.col1 {
-  background: #1e1e1e;
+.txt {
+  padding-top: 250px;
+  font-family: Inter;
+  font-size: 36px;
+  font-weight: 700;
+  text-align: left;
+  padding-left: 100px;
 }
 
-.col2 {
-  background: #1c1a1a;
+.description {
+  margin-top: 5px;
+  padding-left: 100px;
+  padding-right: 150px;
 }
-
-.card1 {
-  width: 410px;
-  height: 690px;
-  cursor: pointer;
-  cursor: hand;
-}
-
-.card2 {
-  width: 410px;
-  height: 690px;
-  cursor: pointer;
-  cursor: hand;
-}
-
-/* .card3 {
-  width: 410px;
-  height: 690px;
-  background: #2c2828;
-  cursor: pointer;
-  cursor: hand;
-} */
 
 .img {
-  padding: 60px;
+  margin: 10px;
+  width: 700px;
+  height: 627px;
+  border-radius: 20%;
 }
 
-.card-body {
-  box-shadow: inset 1px 9px 17px -1px rgba(0, 0, 0, 0.03);
-  cursor: pointer;
-  cursor: hand;
+.start {
+  margin-top: 15px;
+  margin-left: 100px;
+  margin-right: 20px;
+  float: left;
+  width: 140px;
+  height: 40px;
 }
 
-.card-title {
-  text-align: center;
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 300;
-  font-size: 26px;
-  padding-top: 20px;
-  letter-spacing: 0.12em;
+.icon {
+  padding-left: 10px;
   color: #ffffff;
+}
+
+.info {
+  margin-top: 15px;
+  color: #5f87ff;
+  background-color: #dae8ff;
+  width: 100px;
+  height: 40px;
+}
+
+.output_heading {
+  margin-top: 100px;
+  margin-left: 50px;
+  font-family: Inter;
+  font-size: 36px;
+  font-weight: 700;
+  text-align: left;
+}
+
+.output {
+  margin-top: 20px;
+  margin-left: 50px;
+}
+
+.result_img {
+  margin-top: 10px;
+  margin-bottom: 30px;
+  width: 320px;
+  height: 300px;
+  border-radius: 5%;
 }

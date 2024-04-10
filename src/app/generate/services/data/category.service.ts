@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Category } from '../../category';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Category } from '../../interfaces/category';
+import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import { PromptService } from '../prompt.service';
 import { environment } from '../../../../environments/environment';
@@ -24,23 +24,26 @@ export class CategoryService {
    * Retrieves category information, based on the specified category and subcategory type from the API.
    *
    * @param {string} category - The main category for which information is requested.
-   * @param {string} subcategoryType - The type of subcategories to retrieve.
    * @returns {Observable<Category>} - An observable containing the category information.
    */
-  public getCategory(
-    category: string,
-    subcategoryType: string
-  ): Observable<Category> {
-    let headers = new HttpHeaders();
-    headers = headers.set('subcategoryType', subcategoryType);
+  public getCategory(category: string): Observable<Category> {
     return this.http
-      .get<Category>(environment.gateway + this.getGender() + '/' + category, {
-        headers: headers,
-      })
+      .get<Category>(environment.gateway + this.getGender() + '/' + category)
       .pipe(
         map((response) => {
           return response;
         })
       );
+  }
+
+  public getAttribute(category: string): Observable<any> {
+    return this.http.get(
+      environment.gateway +
+        this.getGender() +
+        '/' +
+        'attributes' +
+        '/' +
+        category
+    );
   }
 }

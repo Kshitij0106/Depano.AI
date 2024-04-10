@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { BreadcrumbService, breadcrumb } from '../service/breadcrumb.service';
-import { PromptService } from '../generate/service/prompt.service';
-import { SearchService } from '../generate/service/search.service';
+import { BreadcrumbService, breadcrumb } from '../services/breadcrumb.service';
+import { PromptService } from '../generate/services/prompt.service';
+import { SearchService } from '../generate/services/search.service';
 
 @Component({
   selector: 'app-header',

@@ -9,7 +9,8 @@
     (selectedCategory)="categorySelected($event)"
   ></app-category-list>
   <app-user-input
+    [key]="selectedCategoryKey"
     (userInput)="inputSelected($event)"
-    [hideUserInput]="hideUserInput"
+    [userPrompt]="userPrompt"
   ></app-user-input>
 </div>

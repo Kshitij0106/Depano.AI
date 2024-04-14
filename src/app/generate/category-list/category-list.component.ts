@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Subcategory } from '../interfaces/subcategory';
+import { Subcategory } from '../models/subcategory';
 import { SearchService } from '../services/search.service';
 
 @Component({

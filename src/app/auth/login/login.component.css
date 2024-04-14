@@ -1,0 +1,104 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.ctn {
+  min-width: 100%;
+  background: #ebebec;
+}
+
+.container {
+  align-items: center;
+  margin-top: 20px;
+  padding: 150px;
+}
+
+.img {
+  min-width: 100%;
+  min-height: 100%;
+  /* /* margin: 10px; */
+  width: 640px;
+  height: 735px;
+}
+
+.title {
+  text-align: center;
+  align-items: center;
+  color: red;
+  font-family: Sen;
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 38.5px;
+}
+
+.sign {
+  font-family: Roboto;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 23.44px;
+  letter-spacing: 0.15em;
+  text-align: left;
+  margin-top: 50px;
+}
+
+.create {
+  text-decoration: none;
+  font-family: Roboto;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 18.75px;
+  letter-spacing: 0.06em;
+  text-align: right;
+  float: right;
+  margin-top: 50px;
+}
+
+.hr {
+  background: black;
+  border: none;
+  color: black;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  height: 1px;
+}
+
+.txt_input {
+  height: 45px;
+  padding: 10px;
+  border-color: black;
+  margin-bottom: 20px;
+  margin-top: 10px;
+  border-radius: 10px;
+}
+
+.check_box {
+  margin-top: 5px;
+  margin-left: 2px;
+}
+
+.check_input {
+  padding-left: 10px;
+}
+
+.forgot {
+  text-align: right;
+  float: right;
+  color: red;
+}
+
+.login {
+  float: right;
+  width: 140px;
+  height: 40px;
+  margin-top: 10px;
+}

@@ -17,6 +17,8 @@ import { BreadcrumbService } from './services/breadcrumb.service';
 import { CategoryService } from './generate/services/data/category.service';
 import { NgxUiLoaderHttpModule, NgxUiLoaderModule } from 'ngx-ui-loader';
 import { GenderSelectionComponent } from './generate/gender-selection/gender-selection.component';
+import { LoginComponent } from './auth/login/login.component';
+import { SignupComponent } from './auth/signup/signup.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +30,8 @@ import { GenderSelectionComponent } from './generate/gender-selection/gender-sel
     UserInputComponent,
     ResultComponent,
     GenderSelectionComponent,
+    LoginComponent,
+    SignupComponent,
   ],
   imports: [
     BrowserModule,

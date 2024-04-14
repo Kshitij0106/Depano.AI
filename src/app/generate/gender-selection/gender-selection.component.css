@@ -1,24 +1,23 @@
 * {
-  margin: 0 auto;
+  margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-.ctn {
-  max-width: 100%;
-  /* display: flex; */
-  background: #1e1e1e;
+body {
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-wrap: nowrap;
 }
 
-.col1 {
-  background: #1e1e1e;
-}
+/* .ctn {
+  min-width: 100%;
+  min-height: 100%;
+} */
 
-.col2 {
-  background: #1c1a1a;
-}
-
-.card1 {
+/* .card1 {
   width: 410px;
   height: 690px;
   cursor: pointer;
@@ -30,7 +29,7 @@
   height: 690px;
   cursor: pointer;
   cursor: hand;
-}
+} */
 
 /* .card3 {
     width: 410px;
@@ -40,17 +39,17 @@
     cursor: hand;
   } */
 
-.img {
+/* .img {
   padding: 60px;
-}
+} */
 
-.card-body {
+/* .card-body {
   box-shadow: inset 1px 9px 17px -1px rgba(0, 0, 0, 0.03);
   cursor: pointer;
   cursor: hand;
-}
+} */
 
-.card-title {
+/* .card-title {
   text-align: center;
   font-family: "Inter";
   font-style: normal;
@@ -59,4 +58,4 @@
   padding-top: 20px;
   letter-spacing: 0.12em;
   color: #ffffff;
-}
+} */

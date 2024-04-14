@@ -6,15 +6,16 @@
   line-height: 25px;
   text-align: center;
   letter-spacing: 0.12em;
-  color: #ffffff;
+  color: #000000;
   margin-bottom: 70px;
 }
 
 .input {
   box-sizing: border-box;
-  border: 0.867056px solid #bababa;
+  border: solid #504949;
   border-radius: 13px;
-  background: #1e1e1e;
+  border-width: 2px;
+  background: #ebebec;
   min-height: 180px;
   max-height: 180px;
   color: #ffffff;
@@ -23,7 +24,9 @@
 }
 
 .label {
-  color: #ffffff;
+  color: #353c44;
+  padding: 30px;
+  font-style: roboto;
 }
 
 .btn {

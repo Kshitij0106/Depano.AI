@@ -3,14 +3,18 @@
   (skipEvent)="onSkip()"
   (goToBreadcrumbEvent)="goToBreadcrumb($event)"
 ></app-header>
-<div class="container">
-  <app-category-list
-    [categoryList]="categoryLists"
-    (selectedCategory)="categorySelected($event)"
-  ></app-category-list>
-  <app-user-input
-    [key]="selectedCategoryKey"
-    (userInput)="inputSelected($event)"
-    [userPrompt]="userPrompt"
-  ></app-user-input>
+<div class="ctn container-fluid">
+  <div class="row">
+    <div class="col">
+      <app-category-list
+        [categoryList]="categoryLists"
+        (selectedCategory)="categorySelected($event)"
+      ></app-category-list>
+      <app-user-input
+        [key]="selectedCategoryKey"
+        (userInput)="inputSelected($event)"
+        [userPrompt]="userPrompt"
+      ></app-user-input>
+    </div>
+  </div>
 </div>

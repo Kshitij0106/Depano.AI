@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Category } from '../../interfaces/category';
+import { Category } from '../../models/category';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import { PromptService } from '../prompt.service';

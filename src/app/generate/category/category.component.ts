@@ -7,9 +7,9 @@ import {
 } from '@angular/router';
 import { HostListener } from '@angular/core';
 import { Location } from '@angular/common';
-import { Category } from '../interfaces/category';
+import { Category } from '../models/category';
 import { PromptService } from '../services/prompt.service';
-import { Subcategory } from '../interfaces/subcategory';
+import { Subcategory } from '../models/subcategory';
 import { BreadcrumbService } from 'src/app/services/breadcrumb.service';
 import { CategoryService } from '../services/data/category.service';
 

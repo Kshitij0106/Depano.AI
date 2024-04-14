@@ -1,11 +1,11 @@
 * {
-  margin: 0 auto;
+  margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
 body {
-  background: #1e1e1e;
+  background: #ebebec;
   overflow: hidden;
   align-items: center;
   justify-content: center;
@@ -13,8 +13,8 @@ body {
   flex-wrap: nowrap;
 }
 
-.container {
-  background: #1e1e1e;
+.ctn {
+  background: #ebebec;
   min-width: 100%;
   padding-top: 42px;
   padding-bottom: 55px;

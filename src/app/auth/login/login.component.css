@@ -26,7 +26,6 @@ body {
 .img {
   min-width: 100%;
   min-height: 100%;
-  /* /* margin: 10px; */
   width: 640px;
   height: 735px;
 }
@@ -41,7 +40,7 @@ body {
   line-height: 38.5px;
 }
 
-.sign {
+.sign-txt {
   font-family: Roboto;
   font-size: 20px;
   font-weight: 600;
@@ -51,7 +50,7 @@ body {
   margin-top: 50px;
 }
 
-.create {
+.create-acc-btn {
   text-decoration: none;
   font-family: Roboto;
   font-size: 16px;
@@ -72,7 +71,7 @@ body {
   height: 1px;
 }
 
-.txt_input {
+.txt-input {
   height: 45px;
   padding: 10px;
   border-color: black;
@@ -81,22 +80,22 @@ body {
   border-radius: 10px;
 }
 
-.check_box {
+.check-box {
   margin-top: 5px;
   margin-left: 2px;
 }
 
-.check_input {
+.check-input {
   padding-left: 10px;
 }
 
-.forgot {
+.forgot-btn {
   text-align: right;
   float: right;
   color: red;
 }
 
-.login {
+.login-btn {
   float: right;
   width: 140px;
   height: 40px;

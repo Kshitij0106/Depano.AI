@@ -4,12 +4,12 @@
       <h6 class="title" (click)="openHome()">{{ title }}</h6>
     </div>
 
-    <!-- <div *ngIf="skip" class="col">
+    <!-- <div class="col">
       <div class="searchbar">
-        <i class="fa fa-search fa-s icon" aria-hidden="true"></i>
+        <i class="bi bi-search search-icon"></i>
         <input
           type="text"
-          class="srch form-control"
+          class="search-input form-control"
           id="search"
           placeholder="Search category"
           #search
@@ -18,18 +18,7 @@
       </div>
     </div> -->
 
-    <!-- <div *ngIf="skip" class="col">
-      <button
-        type="button"
-        class="btn skip btn-outline-danger"
-        (click)="onSkip()"
-      >
-        Skip
-      </button>
-    </div>
-  </div> -->
-
-    <div class="col-2">
+    <div *ngIf="showProfile" class="col-2">
       <div class="btn-group">
         <button
           type="button"
@@ -38,8 +27,7 @@
           aria-expanded="false"
         >
           Kshitij
-          <!-- <i class="fas fa-angle-down icon" aria-hidden="true"></i> -->
-          <i class="bi bi-chevron-compact-down icon"></i>
+          <i class="bi bi-chevron-compact-down profile-icon"></i>
         </button>
         <ul class="dropdown-menu">
           <li>
@@ -58,20 +46,5 @@
         </ul>
       </div>
     </div>
-
-    <!-- <nav class="crumb">
-      <ol class="breadcrumb">
-        <ng-container *ngFor="let crumb of breadcrumbsList">
-          <li class="breadcrumb-item">
-            <a
-              class="link"
-              [routerLink]="['/generate', crumb.key]"
-              (click)="goToBreadcrumb(crumb.key)"
-              >{{ crumb.value }}</a
-            >
-          </li>
-        </ng-container>
-      </ol>
-    </nav> -->
   </div>
 </div>

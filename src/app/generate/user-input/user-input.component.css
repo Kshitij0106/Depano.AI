@@ -1,3 +1,7 @@
+.ctn {
+  margin-right: 100px;
+}
+
 .or {
   font-family: "Inter";
   font-style: normal;
@@ -10,7 +14,7 @@
   margin-bottom: 70px;
 }
 
-.input {
+.prompt-input {
   box-sizing: border-box;
   border: solid #504949;
   border-radius: 13px;
@@ -23,7 +27,7 @@
   text-align: start;
 }
 
-.label {
+.prompt-label {
   color: #353c44;
   padding: 30px;
   font-style: roboto;

@@ -2,12 +2,12 @@
   <div class="row row-cols-5 row-cols-sm-5 align-items-center">
     <ng-container *ngFor="let category of categoryList | filter : searchKey">
       <div
-        class="card"
+        class="category-card"
         (click)="selectCategory(category.code, category.name, category.prompt)"
       >
         <div class="card-body">
           <img
-            class="img"
+            class="category-img"
             src="../../../assets/tshirt.png"
             [style.background-color]="category.code"
           />

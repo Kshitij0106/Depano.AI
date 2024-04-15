@@ -16,8 +16,64 @@ body {
 .ctn {
   background: #ebebec;
   min-width: 100%;
-  padding-top: 42px;
+  padding-top: 20px;
   padding-bottom: 55px;
-  padding-left: 130px;
-  padding-right: 130px;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.crumb {
+  padding-left: 60px;
+}
+
+.breadcrumb-item {
+  --bs-breadcrumb-divider: ">";
+  --bs-breadcrumb-divider-color: #000000;
+}
+
+.category-link {
+  text-decoration: none;
+  color: #000000;
+  width: 253px;
+  height: 17px;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  letter-spacing: 0.12em;
+}
+
+::placeholder {
+  width: 201px;
+  height: 25px;
+  font-family: "Inter";
+  font-style: bold;
+  font-weight: 400;
+  font-size: 20.8093px;
+  line-height: 25px;
+  text-align: center;
+  letter-spacing: 0.12em;
+  color: #000000;
+}
+
+.skip-btn {
+  float: right;
+  width: 170px;
+  height: 40px;
+  background-color: #ffffff;
+}
+
+.skip-icon {
+  padding: 10px;
+}
+
+.category-list {
+  padding-left: 80px;
+  padding-right: 80px;
+}
+
+.user-input {
+  padding-left: 100px;
+  padding-right: 100px;
 }

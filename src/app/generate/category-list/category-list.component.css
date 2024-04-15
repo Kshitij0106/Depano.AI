@@ -1,13 +1,4 @@
-/* body {
-  overflow: hidden;
-  align-items: center;
-  justify-content: center;
-  display: flex;
-  flex-wrap: nowrap;
-} */
-
-.card {
-  /* text-align: center; */
+.category-card {
   align-items: center;
   border: none;
   padding: 10px;
@@ -24,7 +15,7 @@
   transform: scale(1.1);
 }
 
-.img {
+.category-img {
   border-radius: 10%;
   object-fit: cover;
   height: 230px;

@@ -10,7 +10,10 @@ import { Location } from '@angular/common';
 import { Category } from '../models/category';
 import { PromptService } from '../services/prompt.service';
 import { Subcategory } from '../models/subcategory';
-import { BreadcrumbService } from 'src/app/services/breadcrumb.service';
+import {
+  BreadcrumbService,
+  breadcrumb,
+} from 'src/app/services/breadcrumb.service';
 import { CategoryService } from '../services/data/category.service';
 
 @Component({
@@ -27,6 +30,9 @@ export class CategoryComponent implements OnInit {
   private userInput: string = '';
   subcategory: Subcategory[] = [];
   userPrompt: boolean = false;
+
+  breadcrumbs!: Map<string, string>;
+  list: string[] = [];
 
   constructor(
     private router: Router,
@@ -114,6 +120,7 @@ export class CategoryComponent implements OnInit {
    * @param {string} code - The 'code' of the category or subcategory to navigate to.
    */
   goToBreadcrumb(code: string) {
+    this.breadcrumbService.createNewList(code);
     var subcategory: string[];
     this.categoryService.getCategory(code).subscribe((category) => {
       if (category.next) {
@@ -133,6 +140,14 @@ export class CategoryComponent implements OnInit {
       this.loadCategory(category);
       this.loadCategoryList();
     });
+  }
+
+  /**
+   * A getter that retrieves the breadcrumb list from the breadcrumb service.
+   * @returns {breadcrumb[]} - An array of breadcrumb items representing the current navigation path.
+   */
+  get breadcrumbsList(): breadcrumb[] {
+    return this.breadcrumbService.getBreadcrumbs();
   }
 
   /**

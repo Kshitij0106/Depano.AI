@@ -1,4 +1,4 @@
-<app-header [skip]="false"></app-header>
+<app-header [showProfile]="false"></app-header>
 <div class="ctn container-fluid">
   <div class="row">
     <div class="col-6">
@@ -10,43 +10,48 @@
       </p>
       <button
         type="button"
-        class="start btn btn-primary"
+        class="start-btn btn btn-primary"
         (click)="getStarted()"
       >
         Get Started
-        <i class="bi bi-arrow-right icon"></i>
-        <!-- <i class="fa fa-arrow-right fa-s icon" aria-hidden="true"></i> -->
+        <i class="bi bi-arrow-right start-btn-icon"></i>
       </button>
-      <button type="button" class="info btn">Learn More</button>
+      <button type="button" class="info-btn btn">Learn More</button>
     </div>
     <div class="col-6">
-      <img src="./assets/home_pic.png" class="img" alt="..." />
+      <img src="./assets/home_pic.png" class="home-img" alt="..." />
     </div>
   </div>
 
   <div class="row">
     <div class="col">
-      <h1 class="output_heading">Create styles like..</h1>
+      <h1 class="output-heading">Create styles like..</h1>
     </div>
   </div>
-  <div class="output row">
+  <div class="output-ctn row">
     <div class="col-3">
-      <img src="./assets/result.png" class="result_img" alt="..." />
+      <img src="./assets/result.jpg" class="result-img" alt="..." />
     </div>
     <div class="col-3">
-      <img src="./assets/result.png" class="result_img" alt="..." />
+      <img src="./assets/result.jpg" class="result-img" alt="..." />
     </div>
     <div class="col-3">
-      <img src="./assets/result.png" class="result_img" alt="..." />
+      <img src="./assets/result.jpg" class="result-img" alt="..." />
     </div>
     <div class="col-3">
-      <img src="./assets/result.png" class="result_img" alt="..." />
+      <img src="./assets/result.jpg" class="result-img" alt="..." />
     </div>
     <div class="col-3">
-      <img src="./assets/result.png" class="result_img" alt="..." />
+      <img src="./assets/result.jpg" class="result-img" alt="..." />
     </div>
     <div class="col-3">
-      <img src="./assets/result.png" class="result_img" alt="..." />
+      <img src="./assets/result.jpg" class="result-img" alt="..." />
+    </div>
+    <div class="col-3">
+      <img src="./assets/result.jpg" class="result-img" alt="..." />
+    </div>
+    <div class="col-3">
+      <img src="./assets/result.jpg" class="result-img" alt="..." />
     </div>
   </div>
 </div>

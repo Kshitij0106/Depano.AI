@@ -13,7 +13,7 @@ export class GenderSelectionComponent {
 
   constructor(
     private router: Router,
-    private prompt: PromptService,
+    private promptService: PromptService,
     private breadcrumbService: BreadcrumbService
   ) {}
 
@@ -24,7 +24,8 @@ export class GenderSelectionComponent {
    */
   openCategory(category: string) {
     this.breadcrumbService.addBreadcrumb(category.toLowerCase(), category);
-    this.prompt.addToPrompt('gender', category.toLowerCase());
+    this.promptService.setGender(category.toLowerCase());
+    this.promptService.addToPrompt('gender', category.toLowerCase());
     this.router.navigate(['generate', category.toLowerCase()]);
   }
 }

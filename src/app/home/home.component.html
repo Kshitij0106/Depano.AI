@@ -1,5 +1,10 @@
-<app-header [showProfile]="false"></app-header>
 <div class="ctn container-fluid">
+  <div class="row">
+    <div class="col-10">
+      <h6 class="title">{{ title }}</h6>
+    </div>
+  </div>
+
   <div class="row">
     <div class="col-6">
       <h1 class="txt">Create your own AI design</h1>
@@ -8,15 +13,10 @@
         Design your unique style in just a few clicks, tailored perfectly to
         you.
       </p>
-      <button
-        type="button"
-        class="start-btn btn btn-primary"
-        (click)="getStarted()"
-      >
-        Get Started
-        <i class="bi bi-arrow-right start-btn-icon"></i>
+      <button type="button" class="start-btn btn" (click)="getStarted()">
+        Get started
       </button>
-      <button type="button" class="info-btn btn">Learn More</button>
+      <button type="button" class="info-btn btn">Learn more</button>
     </div>
     <div class="col-6">
       <img src="./assets/home_pic.png" class="home-img" alt="..." />

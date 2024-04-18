@@ -14,13 +14,13 @@ body {
 
 .ctn {
   min-width: 100%;
-  background: #ebebec;
+  background: #ffffff;
 }
 
 .container {
   align-items: center;
-  margin-top: 20px;
-  padding: 150px;
+  margin-top: 80px;
+  padding: 100px;
 }
 
 .img {
@@ -31,53 +31,27 @@ body {
 }
 
 .title {
-  text-align: center;
-  align-items: center;
-  color: red;
-  font-family: Sen;
-  font-size: 32px;
+  padding-left: 20px;
+  padding-top: 20px;
+  font-family: "Inter";
+  font-style: normal;
   font-weight: 400;
-  line-height: 38.5px;
-}
-
-.sign-txt {
-  font-family: Roboto;
-  font-size: 20px;
-  font-weight: 600;
-  line-height: 23.44px;
+  font-size: 32px;
+  line-height: 39px;
   letter-spacing: 0.15em;
-  text-align: left;
-  margin-top: 50px;
-}
-
-.create-acc-btn {
-  text-decoration: none;
-  font-family: Roboto;
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 18.75px;
-  letter-spacing: 0.06em;
-  text-align: right;
-  float: right;
-  margin-top: 50px;
-}
-
-.hr {
-  background: black;
-  border: none;
-  color: black;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  height: 1px;
+  color: #ec0c0c;
+  text-shadow: 6px 4px 5px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  cursor: hand;
 }
 
 .txt-input {
+  width: 300px;
   height: 45px;
   padding: 10px;
+  margin-top: 30px;
   border-color: black;
-  margin-bottom: 20px;
-  margin-top: 10px;
-  border-radius: 10px;
+  border-radius: 6px;
 }
 
 .check-box {
@@ -92,12 +66,33 @@ body {
 .forgot-btn {
   text-align: right;
   float: right;
-  color: red;
+  margin-right: 10px;
 }
 
 .login-btn {
-  float: right;
-  width: 140px;
-  height: 40px;
+  width: 300px;
+  height: 45px;
   margin-top: 10px;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20.8093px;
+  line-height: 25px;
+  letter-spacing: 0.02em;
+  text-align: center;
+  color: #ffffff;
+  background-color: black;
+  border-radius: 6px;
+}
+
+.create-acc-btn {
+  text-align: center;
+  align-items: center;
+  text-decoration: none;
+  font-family: "Inter";
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 18.75px;
+  letter-spacing: 0.06em;
+  margin-top: 5px;
 }

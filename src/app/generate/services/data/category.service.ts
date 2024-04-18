@@ -17,7 +17,7 @@ export class CategoryService {
    * @returns {string} - The user's selected gender, or an empty string if not available.
    */
   private getGender(): string {
-    return this.promptService.getKey('gender');
+    return this.promptService.getGender();
   }
 
   /**

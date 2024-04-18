@@ -12,7 +12,6 @@ import { CategoryListComponent } from './generate/category-list/category-list.co
 import { UserInputComponent } from './generate/user-input/user-input.component';
 import { ResultComponent } from './result/result.component';
 import { PromptService } from './generate/services/prompt.service';
-import { SearchService } from './generate/services/search.service';
 import { BreadcrumbService } from './services/breadcrumb.service';
 import { CategoryService } from './generate/services/data/category.service';
 import { NgxUiLoaderHttpModule, NgxUiLoaderModule } from 'ngx-ui-loader';
@@ -41,7 +40,7 @@ import { SignupComponent } from './auth/signup/signup.component';
     NgxUiLoaderModule,
     NgxUiLoaderHttpModule.forRoot({ showForeground: true }),
   ],
-  providers: [CategoryService, PromptService, BreadcrumbService, SearchService],
+  providers: [CategoryService, PromptService, BreadcrumbService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

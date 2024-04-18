@@ -17,12 +17,18 @@
         </ol>
       </nav>
     </div>
-    <div class="col">
-      <button type="button" class="btn skip-btn" (click)="onSkip()">
-        Skip Category
-        <i class="bi bi-skip-end skip-icon"></i>
+    <div *ngIf="showGenerateButton; else showSkip" class="col">
+      <button type="button" class="btn skip-btn" (click)="generate()">
+        Generate
       </button>
     </div>
+    <ng-template #showSkip>
+      <div class="col">
+        <button type="button" class="btn skip-btn" (click)="onSkip()">
+          Skip Category
+        </button>
+      </div>
+    </ng-template>
   </div>
   <div class="row">
     <div class="col">
@@ -37,7 +43,7 @@
         <app-user-input
           [key]="selectedCategoryKey"
           (userInput)="inputSelected($event)"
-          [userPrompt]="userPrompt"
+          [userPrompt]="hideUserPrompt"
         ></app-user-input>
       </div>
     </div>

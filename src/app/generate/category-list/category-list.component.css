@@ -1,31 +1,29 @@
 .category-card {
   align-items: center;
   border: none;
-  padding: 10px;
   margin: 20px;
   width: 220px;
-  background: #ebebec;
+  background-color: #f8f6f6;
   cursor: pointer;
   cursor: hand;
   transition: all 0.2s ease;
+  border-radius: 10%;
 }
 
-.card:hover {
+.category-card:hover {
   box-shadow: 5px 6px 6px 2px #e9ecef;
   transform: scale(1.1);
 }
 
 .category-img {
-  border-radius: 10%;
   object-fit: cover;
   height: 230px;
   width: 200px;
-  padding: 20px;
-  background-color: #ffffff;
+  padding: 10px;
 }
 
 .category-title {
-  margin-top: 20px;
+  margin-top: 15px;
   text-align: center;
   font-family: "Inter";
   font-style: normal;

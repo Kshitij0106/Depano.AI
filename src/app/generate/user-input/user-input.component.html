@@ -6,16 +6,15 @@
     <div class="form-floating">
       <textarea
         class="prompt-input form-control"
-        placeholder="Add your own input"
+        placeholder="Add your own {{ key }}"
         id="userInput"
         #userInputCategory
       ></textarea>
-      <label class="prompt-label" for="userInput">Add your own {{ key }}</label>
       <span>
         <button
           for="userInput"
           type="submit"
-          class="btn btn-secondary"
+          class="btn"
           (click)="onSubmit(userInputCategory.value)"
         >
           Submit

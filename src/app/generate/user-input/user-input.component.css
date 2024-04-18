@@ -11,6 +11,7 @@
   text-align: center;
   letter-spacing: 0.12em;
   color: #000000;
+  margin-top: 20px;
   margin-bottom: 70px;
 }
 
@@ -19,18 +20,23 @@
   border: solid #504949;
   border-radius: 13px;
   border-width: 2px;
-  background: #ebebec;
+  background: #ffffff;
   min-height: 180px;
   max-height: 180px;
-  color: #ffffff;
+  color: #000000;
   direction: ltr;
   text-align: start;
 }
 
-.prompt-label {
-  color: #353c44;
-  padding: 30px;
-  font-style: roboto;
+.prompt-input::placeholder {
+  font-family: "Inter";
+  font-style: bold;
+  font-weight: 400;
+  font-size: 20.8093px;
+  line-height: 25px;
+  text-align: start;
+  letter-spacing: 0.12em;
+  color: #000000;
 }
 
 .btn {
@@ -43,7 +49,7 @@
   text-align: center;
   letter-spacing: 0.12em;
   color: #ffffff;
-  background: #444444;
+  background: #000000;
   border-radius: 7px;
   float: right;
   padding: 5px;

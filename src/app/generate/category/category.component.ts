@@ -1,10 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  ActivatedRoute,
-  NavigationEnd,
-  ParamMap,
-  Router,
-} from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { HostListener } from '@angular/core';
 import { Location } from '@angular/common';
 import { Category } from '../models/category';
@@ -23,13 +18,14 @@ import { CategoryService } from '../services/data/category.service';
 })
 export class CategoryComponent implements OnInit {
   private category: string = '';
+  public showGenerateButton: boolean = false;
   public selectedCategoryKey: string = '';
   private selectedClothCode: string = '';
-  private selectedCategory!: Category;
+  public selectedCategory!: Category;
   categoryLists: Subcategory[] = [];
   private userInput: string = '';
   subcategory: Subcategory[] = [];
-  userPrompt: boolean = false;
+  hideUserPrompt: boolean = false;
 
   breadcrumbs!: Map<string, string>;
   list: string[] = [];
@@ -41,17 +37,11 @@ export class CategoryComponent implements OnInit {
     private promptService: PromptService,
     private breadcrumbService: BreadcrumbService,
     private location: Location
-  ) {
-    // this.router.events.subscribe((event) => {
-    //   if (event instanceof NavigationEnd) {
-    //     this.getCategory(this.getRoute());
-    //   }
-    // });
-  }
+  ) {}
 
   /**
    * Implements the Angular lifecycle hook `ngOnInit`.
-   * Retrieves the 'category' route parameter from URL.
+   * Loads the category based on the provided category from the API.
    */
   ngOnInit(): void {
     this.getCategory(this.getRoute());
@@ -74,10 +64,6 @@ export class CategoryComponent implements OnInit {
    */
   getCategory(category: string) {
     this.categoryService.getCategory(category).subscribe((category) => {
-      if (category.key === 'type') {
-        this.selectedClothCode = category.code;
-        console.log(this.selectedClothCode);
-      }
       this.loadCategory(category);
       this.loadCategoryList();
     });
@@ -85,25 +71,36 @@ export class CategoryComponent implements OnInit {
 
   /**
    * Loads and sets the 'selected category'.
+   * Calls checkCategory Function.
    * @param {Category} category - The category to load.
    */
   loadCategory(category: Category) {
     this.selectedCategory = category;
-    this.hideUserPromptBox();
+    this.checkCategory(category);
   }
 
   /**
-   * Checks if the user prompt box is shown or not
+   * Checks if the user prompt box is shown or not.
+   * Check whether to show skip or generate button.
+   * Set the Selected clothing code.
+   * @param {Category} category - The category to check.
    */
-  hideUserPromptBox() {
+  checkCategory(category: Category) {
     if (
       this.selectedCategory.key === 'gender' ||
       this.selectedCategory.key === 'wear' ||
       this.selectedCategory.key === 'type'
     ) {
-      this.userPrompt = true;
+      this.hideUserPrompt = true;
     } else {
-      this.userPrompt = false;
+      this.hideUserPrompt = false;
+    }
+
+    if (this.selectedCategory.key === 'type') {
+      this.selectedClothCode = category.code;
+      this.showGenerateButton = true;
+    } else {
+      this.showGenerateButton = false;
     }
   }
 
@@ -156,9 +153,6 @@ export class CategoryComponent implements OnInit {
    */
   onSkip() {
     let newCategoryList: Subcategory[] = [];
-    if (this.selectedCategory.key === 'type') {
-      this.generate();
-    }
     if (this.categoryLists[0].name.includes('Topwear')) {
       // If the user skips any wear then add 2 new subcategories
       newCategoryList.push(
@@ -166,13 +160,11 @@ export class CategoryComponent implements OnInit {
           name: 'Westernwear',
           image: '',
           code: 'western',
-          // prompt: 'western-style',
         },
         {
           name: 'Indianwear',
           image: '',
           code: 'indian',
-          // prompt: 'indian-style',
         }
       );
     } else {
@@ -182,57 +174,41 @@ export class CategoryComponent implements OnInit {
         for (let i = 0; i < subCat.length; i++) {
           // Loop to iterate over the subcategories of selected category
           this.categoryService.getCategory(subCat[i].code).subscribe((cat) => {
-            if (cat.key === 'type') {
-              this.userPrompt = false;
-            }
-            if (cat.key === 'attributes') {
-              // If the selected category is an attribute
-              // this.gettingAttributes = true;
-              // // If the user skips every category
-              if (
-                this.promptService.getKey('wear') === '' &&
-                this.promptService.getKey('style') === '' &&
-                this.promptService.getKey('type') === ''
-              ) {
-                // newCategoryList = [];
-                // newCategoryList.push(
-                //   {
-                //     name: 'Fabric',
-                //     image: '',
-                //     code: 'fabric',
-                //     prompt: '',
-                //   },
-                //   {
-                //     name: 'Color',
-                //     image: '',
-                //     code: 'color',
-                //     prompt: '',
-                //   }
-                // );
+            // All skip case
+            if (
+              cat.key === 'type' &&
+              this.breadcrumbService.getBreadcrumbs().length == 1
+            ) {
+              this.getCategory('optional');
+            } else {
+              if (cat.key === 'style') {
+                this.hideUserPrompt = false;
               }
-            }
-
-            // Loop to iterate over the subcategories of the subcategories
-            for (let j = 0; j < cat.subCategories.length; j++) {
-              if (!newCategoryList.includes(cat.subCategories[j])) {
-                // Adding attributes only once to the list
-                if (cat.key === 'attributes') {
-                  // Finding the attribute in the exisitng list
-                  const duplicate = newCategoryList.find(
-                    (item) => item.name === cat.subCategories[j].name
-                  );
-                  if (!duplicate) {
+              // Loop to iterate over the subcategories of the subcategories
+              for (let j = 0; j < cat.subCategories.length; j++) {
+                if (!newCategoryList.includes(cat.subCategories[j])) {
+                  // Adding attributes only once to the list
+                  if (cat.key === 'type') {
+                    // Finding the attribute in the exisitng list
+                    const duplicate = newCategoryList.find(
+                      (item) => item.name === cat.subCategories[j].name
+                    );
+                    if (!duplicate) {
+                      newCategoryList.push(cat.subCategories[j]);
+                    }
+                  } else {
+                    // Directly add the category to the list
+                    // without checking as categories are unique
                     newCategoryList.push(cat.subCategories[j]);
                   }
-                } else {
-                  // Directly add the category to the list
-                  // without checking as categories are unique
-                  newCategoryList.push(cat.subCategories[j]);
                 }
               }
             }
           });
         }
+      } else {
+        this.changeCategoryRoute(this.selectedClothCode);
+        this.getCategory(this.selectedClothCode);
       }
     }
     this.categoryLists = newCategoryList;
@@ -246,14 +222,15 @@ export class CategoryComponent implements OnInit {
     this.category = subCategory.code;
     this.selectedCategoryKey = subCategory.name;
     if (this.selectedCategory.next) {
+      // If the user is selecting categories
       this.breadcrumbService.addBreadcrumb(subCategory.code, subCategory.name);
       this.getCategory(subCategory.code);
-      this.nextCategory(subCategory.code);
+      this.changeCategoryRoute(subCategory.code);
     } else {
-      // If the user is selecting attribute
+      // If the user is selecting attribute, route to previous category
       this.categoryService.getAttribute(subCategory.code).subscribe();
+      this.changeCategoryRoute(this.selectedClothCode);
       this.getCategory(this.selectedClothCode);
-      // this.previousCategory();
     }
   }
 
@@ -263,41 +240,40 @@ export class CategoryComponent implements OnInit {
    */
   inputSelected(input: string) {
     this.userInput = input;
-
     if (this.selectedCategory.next) {
       if (this.selectedCategory.key === 'style') {
         // If the user is selecting categories
         // Set the 'user-input' prompt
         const currentCategory = this.selectedCategory.code.split('-').at(0);
-        const gender = this.promptService.getValue('gender');
+        const gender = this.promptService.getGender();
         this.setPrompt('type', this.userInput);
         this.getCategory(gender + '-' + currentCategory);
-        this.nextCategory(gender + '-' + currentCategory);
+        this.changeCategoryRoute(gender + '-' + currentCategory);
       }
     } else {
-      // If the user is selecting attributes
+      // If the user is selecting attributes, route to previous category
       this.setPrompt(this.selectedCategory.key, this.userInput);
       this.getCategory(this.selectedClothCode);
-      // this.previousCategory();
+      this.changeCategoryRoute(this.selectedClothCode);
     }
   }
 
   /**
    * Sets a key-value pair in the "prompt" service if the key is non-empty and the value is non-empty.
-   * @param {string} key - The key to set.
-   * @param {string} value - The prompt of the selected category.
+   * @param {string} key - The key to selected Category.
+   * @param {string} userInput - The user input of the selected category.
    */
-  setPrompt(key: string, value: string) {
-    if (key.length > 0 && value.length) {
-      this.promptService.addToPrompt(key, value);
+  setPrompt(key: string, userInput: string) {
+    if (key.length > 0 && userInput.length) {
+      this.promptService.addToPrompt(key, userInput);
     }
   }
 
   /**
-   * Navigates to the next category selected by user.
+   * Navigates to the category selected by user.
    * @param {string} category - The category to navigate to.
    */
-  nextCategory(category: string) {
+  changeCategoryRoute(category: string) {
     this.router.navigate(['../', category], {
       relativeTo: this.route,
     });
@@ -307,7 +283,6 @@ export class CategoryComponent implements OnInit {
    * Navigates to the result component.
    */
   generate() {
-    this.promptService.showPrompt();
     this.promptService.sendPrompt().subscribe();
     this.router.navigate(['../../', 'result'], {
       relativeTo: this.route,

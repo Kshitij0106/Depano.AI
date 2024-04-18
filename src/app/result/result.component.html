@@ -1,24 +1,44 @@
 <app-header></app-header>
-<div class="container">
-  <button type="button" class="btn btn-outline-danger" (click)="openHome()">
-    <i class="fa fa-retweet fa-xs" aria-hidden="true"></i>
-    Start again
-  </button>
-  <button
-    type="button"
-    class="btn regen btn-outline-danger"
-    (click)="sendRequest()"
-  >
-    <i class="fa fa-retweet fa-xs" aria-hidden="true"></i>
-    Regenerate
-  </button>
-  <button type="button" class="btn share btn-outline-danger">
-    <i class="fa fa-share-alt fa-xs" aria-hidden="true"></i>
-    Share
-  </button>
-  <div class="resultCtn">
-    <!-- <ng-container *ngFor="let image of images"> -->
-    <img class="img" src="{{ image }}" height="150px" width="150px" />
-    <!-- </ng-container> -->
+<div class="container container-fluid">
+  <div class="row">
+    <div class="col-9">
+      <button
+        type="button"
+        class="start-btn btn-outline-danger"
+        (click)="openHome()"
+      >
+        <i class="fa fa-retweet fa-xs" aria-hidden="true"></i>
+        Start again
+      </button>
+    </div>
+    <div class="col-1">
+      <button
+        type="button"
+        class="regen-btn btn-outline-danger"
+        (click)="sendRequest()"
+      >
+        <i class="bi bi-arrow-clockwise"></i>
+        Regenerate
+      </button>
+    </div>
+    <div class="col-1">
+      <button type="button" class="share-btn btn-outline-danger">
+        <i class="bi bi-share-fill"></i>
+      </button>
+    </div>
+    <div class="col-1">
+      <button type="button" class="download-btn btn-outline-danger">
+        <i class="bi bi-download"></i>
+      </button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <img class="img" src="{{ image }}" />
+    </div>
+  </div>
+  <div class="row">
+    <div class="col"></div>
+    <div class="col"></div>
   </div>
 </div>

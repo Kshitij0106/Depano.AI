@@ -3,7 +3,7 @@
     <ng-container *ngFor="let category of categoryList | filter : searchKey">
       <div
         class="category-card"
-        (click)="selectCategory(category.code, category.name, category.prompt)"
+        (click)="selectCategory(category.code, category.name)"
       >
         <div class="card-body">
           <img

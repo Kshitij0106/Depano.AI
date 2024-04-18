@@ -1,26 +1,13 @@
 <div class="ctn container-fluid">
   <div class="row">
-    <div class="col-6">
+    <div class="col-8">
       <img src="./assets/home_pic.png" class="img" alt="..." />
     </div>
-    <div class="col-6">
+    <div class="col-4">
+      <div class="row">
+        <h6 class="title">{{ title }}</h6>
+      </div>
       <div class="container">
-        <div class="row">
-          <h6 class="title">{{ title }}</h6>
-        </div>
-        <div class="row">
-          <div class="col">
-            <h6 class="sign-txt">Sign in</h6>
-          </div>
-          <div class="col">
-            <button type="button" class="create-acc-btn btn btn-link">
-              create an account
-            </button>
-          </div>
-        </div>
-        <div class="hr row">
-          <hr />
-        </div>
         <div class="row">
           <div class="mb-3">
             <form>
@@ -49,16 +36,15 @@
                 <label class="check-input form-check-label" for="remember-input"
                   >Remember me</label
                 >
-                <button type="button" class="forgot-btn btn btn-link">
+                <button type="button" class="forgot-btn btn">
                   Forgot password?
                 </button>
               </div>
-              <button
-                type="submit"
-                class="login-btn btn btn-primary"
-                (click)="validate()"
-              >
+              <button type="submit" class="login-btn btn" (click)="validate()">
                 Sign in
+              </button>
+              <button type="submit" class="create-acc-btn btn">
+                Create account
               </button>
             </form>
           </div>

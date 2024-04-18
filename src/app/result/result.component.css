@@ -5,7 +5,7 @@
 }
 
 body {
-  background: #1e1e1e;
+  background: #ffffff;
   overflow: hidden;
   align-items: center;
   justify-content: center;
@@ -14,15 +14,35 @@ body {
 }
 
 .container {
-  background: #1e1e1e;
+  min-width: 100%;
   min-width: 100%;
   padding-top: 45px;
-  padding-bottom: 75px;
+  /* padding-bottom: 75px; */
   padding-left: 130px;
   padding-right: 130px;
+  /* background-color: #000000; */
 }
 
-.btn {
+.start-btn {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20.8093px;
+  line-height: 25px;
+  text-align: center;
+  letter-spacing: 0.12em;
+  color: #000000;
+  background-color: #ffffff;
+  padding: 12px 21px;
+  border-radius: 10px;
+  height: 50px;
+  width: 200px;
+}
+
+.regen-btn {
+  float: right;
+  height: 50px;
+  width: 200px;
   font-family: "Inter";
   font-style: normal;
   font-weight: 400;
@@ -31,37 +51,48 @@ body {
   text-align: center;
   letter-spacing: 0.12em;
   color: #ffffff;
+  background-color: #000000;
   padding: 12px 21px;
   border-radius: 10px;
 }
 
-.regen {
-  background: #de437d;
+.share-btn {
   float: right;
-  margin-right: 130px;
+  height: 50px;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20.8093px;
+  line-height: 25px;
+  text-align: center;
+  letter-spacing: 0.12em;
+  color: #ffffff;
+  background-color: #000000;
+  padding: 12px 21px;
+  border-radius: 10px;
 }
 
-.share {
+.download-btn {
+  height: 50px;
   float: right;
-  margin-right: -350px;
-}
-
-.resultCtn {
-  background: #1e1e1e;
-  min-width: 100%;
-  margin-top: 10px;
-  padding-top: 65px;
-  padding-bottom: 45px;
-  padding-left: 30px;
-  padding-right: 30px;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20.8093px;
+  line-height: 25px;
+  text-align: center;
+  letter-spacing: 0.12em;
+  color: #ffffff;
+  background-color: #000000;
+  padding: 12px 21px;
+  border-radius: 10px;
 }
 
 .img {
-  width: 330px;
-  height: 400px;
+  margin-top: 60px;
+  margin-bottom: 10px;
+  width: 450px;
+  height: 500px;
   border-radius: 30px;
-  background: #d9d9d9;
-  margin-left: 40px;
-  margin-right: 20px;
-  cursor: pointer;
+  margin-left: 400px;
 }

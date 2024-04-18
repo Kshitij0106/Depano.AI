@@ -5,7 +5,6 @@
 }
 
 body {
-  background: #ebebec;
   overflow: hidden;
   align-items: center;
   justify-content: center;
@@ -14,7 +13,7 @@ body {
 }
 
 .ctn {
-  background: #ebebec;
+  background: #ffffff;
   min-width: 100%;
   padding-top: 20px;
   padding-bottom: 55px;
@@ -44,24 +43,20 @@ body {
   letter-spacing: 0.12em;
 }
 
-::placeholder {
-  width: 201px;
-  height: 25px;
+.skip-btn {
+  float: right;
+  width: 170px;
+  height: 50px;
+  background-color: #000000;
   font-family: "Inter";
-  font-style: bold;
+  font-style: normal;
   font-weight: 400;
   font-size: 20.8093px;
   line-height: 25px;
   text-align: center;
-  letter-spacing: 0.12em;
-  color: #000000;
-}
-
-.skip-btn {
-  float: right;
-  width: 170px;
-  height: 40px;
-  background-color: #ffffff;
+  color: #ffffff;
+  padding: 12px 21px;
+  border-radius: 10px;
 }
 
 .skip-icon {

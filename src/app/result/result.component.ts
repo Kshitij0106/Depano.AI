@@ -26,7 +26,7 @@ export class ResultComponent {
   openHome() {
     this.promptService.emptyPrompt();
     this.breadcrumbService.emptyBreadcrumbList();
-    this.router.navigate(['home']);
+    this.router.navigate(['gender']);
   }
 
   /**

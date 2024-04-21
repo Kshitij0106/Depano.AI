@@ -17,45 +17,66 @@ body {
   min-height: 100%;
 }
 
-/* .card1 {
-  width: 410px;
-  height: 690px;
+.card1 {
   cursor: pointer;
   cursor: hand;
 }
 
 .card2 {
-  width: 410px;
-  height: 690px;
   cursor: pointer;
   cursor: hand;
-} */
+}
 
-/* .card3 {
-    width: 410px;
-    height: 690px;
-    background: #2c2828;
-    cursor: pointer;
-    cursor: hand;
-  } */
-
-/* .img {
-  padding: 60px;
-} */
-
-/* .card-body {
-  box-shadow: inset 1px 9px 17px -1px rgba(0, 0, 0, 0.03);
+.women-overlay {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 25%;
+  height: 675px;
+  margin-top: 60px;
+  padding-top: 300px;
+  overflow: hidden;
+  backdrop-filter: blur(2px) brightness(80%);
+  transition: all 0.3s ease-in-out;
   cursor: pointer;
   cursor: hand;
-} */
+}
 
-/* .card-title {
+.card1:hover .women-overlay {
+  opacity: 1;
+}
+
+.men-overlay {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 25%;
+  margin-top: 60px;
+  height: 675px;
+  padding-top: 300px;
+  overflow: hidden;
+  backdrop-filter: blur(2px) brightness(80%);
+  transition: all 0.3s ease-in-out;
+}
+
+.card2:hover .men-overlay {
+  opacity: 1;
+}
+
+.img {
+  height: 675px;
+}
+
+.card-title {
+  align-items: center;
   text-align: center;
   font-family: "Inter";
   font-style: normal;
   font-weight: 300;
-  font-size: 26px;
+  font-size: 46px;
   padding-top: 20px;
   letter-spacing: 0.12em;
   color: #ffffff;
-} */
+}

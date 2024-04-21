@@ -44,6 +44,7 @@ export class PromptService {
    */
   sendPrompt(): Observable<any> {
     let userInput = this.getPrompt();
+    console.log(userInput);
     return this.http.post<any>(
       environment.gateway + 'prompts/create/' + this.getGender(),
       userInput

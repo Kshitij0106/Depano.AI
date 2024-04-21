@@ -35,6 +35,7 @@
       <div class="category-list">
         <app-category-list
           [categoryList]="categoryLists"
+          [showCheckBox]="showCheckBox"
           (selectedCategory)="categorySelected($event)"
         ></app-category-list>
       </div>

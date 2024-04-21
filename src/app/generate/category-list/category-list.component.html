@@ -6,6 +6,17 @@
         (click)="selectCategory(category.code, category.name)"
       >
         <div class="card-body">
+          <div class="form-check">
+            <input
+              class="attribute-check form-check-input"
+              type="checkbox"
+              id="flexCheckChecked"
+              checked
+              readonly
+              [hidden]="!showCheckBox || !checkAttribute(category.code)"
+              [checked]="checkAttribute(category.code)"
+            />
+          </div>
           <img
             class="category-img"
             src="../../../assets/tshirt.png"

@@ -10,6 +10,7 @@ import {
   breadcrumb,
 } from 'src/app/services/breadcrumb.service';
 import { CategoryService } from '../services/data/category.service';
+import { CheckedAttributesService } from '../services/checked-attributes.service';
 
 @Component({
   selector: 'app-category',
@@ -18,23 +19,25 @@ import { CategoryService } from '../services/data/category.service';
 })
 export class CategoryComponent implements OnInit {
   private category: string = '';
-  public showGenerateButton: boolean = false;
   public selectedCategoryKey: string = '';
   private selectedClothCode: string = '';
   public selectedCategory!: Category;
   categoryLists: Subcategory[] = [];
-  private userInput: string = '';
   subcategory: Subcategory[] = [];
+  private userInput: string = '';
+  public showGenerateButton: boolean = false;
   hideUserPrompt: boolean = false;
+  public showCheckBox: boolean = false;
 
-  breadcrumbs!: Map<string, string>;
-  list: string[] = [];
+  // breadcrumbs!: Map<string, string>;
+  // list: string[] = [];
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private categoryService: CategoryService,
     private promptService: PromptService,
+    private checkAttributeService: CheckedAttributesService,
     private breadcrumbService: BreadcrumbService,
     private location: Location
   ) {}
@@ -99,8 +102,10 @@ export class CategoryComponent implements OnInit {
     if (this.selectedCategory.key === 'type') {
       this.selectedClothCode = category.code;
       this.showGenerateButton = true;
+      this.showCheckBox = true;
     } else {
       this.showGenerateButton = false;
+      this.showCheckBox = false;
     }
   }
 
@@ -118,25 +123,8 @@ export class CategoryComponent implements OnInit {
    */
   goToBreadcrumb(code: string) {
     this.breadcrumbService.createNewList(code);
-    var subcategory: string[];
-    this.categoryService.getCategory(code).subscribe((category) => {
-      if (category.next) {
-        // If the 'code' belong to category('wear', 'type', 'gender')
-        // this.gettingAttributes = false;
-        // this.mandatoryAttributeIndex = 0;
-      } else {
-        // If the 'code' belong to attributes
-        // Retrieve the list of attributes codes from the selected cloth
-        subcategory = this.subcategory.map((cat) => {
-          return cat.code;
-        });
-        // Find the index of the slelcted 'attribute' in the subcategory list to get it's index.
-        // var idx = subcategory.indexOf(code);
-        // this.mandatoryAttributeIndex = idx + 1;
-      }
-      this.loadCategory(category);
-      this.loadCategoryList();
-    });
+    this.checkAttributeService.emptyCheckedAttributesList();
+    this.getCategory(code);
   }
 
   /**
@@ -207,8 +195,8 @@ export class CategoryComponent implements OnInit {
           });
         }
       } else {
-        this.changeCategoryRoute(this.selectedClothCode);
         this.getCategory(this.selectedClothCode);
+        this.changeCategoryRoute(this.selectedClothCode);
       }
     }
     this.categoryLists = newCategoryList;
@@ -223,14 +211,25 @@ export class CategoryComponent implements OnInit {
     this.selectedCategoryKey = subCategory.name;
     if (this.selectedCategory.next) {
       // If the user is selecting categories
-      this.breadcrumbService.addBreadcrumb(subCategory.code, subCategory.name);
+      if (this.selectedCategory.key !== 'type') {
+        // Only adding if not attribute
+        this.breadcrumbService.addBreadcrumb(
+          subCategory.code,
+          subCategory.name
+        );
+      }
       this.getCategory(subCategory.code);
       this.changeCategoryRoute(subCategory.code);
     } else {
       // If the user is selecting attribute, route to previous category
       this.categoryService.getAttribute(subCategory.code).subscribe();
-      this.changeCategoryRoute(this.selectedClothCode);
       this.getCategory(this.selectedClothCode);
+      this.changeCategoryRoute(this.selectedClothCode);
+      // add selected attribute to a list
+      this.checkAttributeService.addSelectedAttribute(
+        this.selectedCategory.code,
+        true
+      );
     }
   }
 
@@ -255,6 +254,11 @@ export class CategoryComponent implements OnInit {
       this.setPrompt(this.selectedCategory.key, this.userInput);
       this.getCategory(this.selectedClothCode);
       this.changeCategoryRoute(this.selectedClothCode);
+      // add selected attribute to a list
+      this.checkAttributeService.addSelectedAttribute(
+        this.selectedCategory.key,
+        true
+      );
     }
   }
 
@@ -288,6 +292,7 @@ export class CategoryComponent implements OnInit {
       relativeTo: this.route,
     });
     this.promptService.emptyPrompt();
+    this.checkAttributeService.emptyCheckedAttributesList();
   }
 
   /**

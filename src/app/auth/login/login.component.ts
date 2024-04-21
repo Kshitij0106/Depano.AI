@@ -11,6 +11,14 @@ export class LoginComponent {
 
   constructor(private router: Router) {}
 
+  /**
+   * Navigates to homepage.
+   * Empties the breadcrumb list.
+   */
+  openHome() {
+    this.router.navigate(['home']);
+  }
+
   validate() {
     this.router.navigate(['gender']);
   }

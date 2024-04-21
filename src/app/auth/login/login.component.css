@@ -19,7 +19,7 @@ body {
 
 .container {
   align-items: center;
-  margin-top: 80px;
+  margin-top: 100px;
   padding: 100px;
 }
 
@@ -31,8 +31,6 @@ body {
 }
 
 .title {
-  padding-left: 20px;
-  padding-top: 20px;
   font-family: "Inter";
   font-style: normal;
   font-weight: 400;
@@ -43,6 +41,17 @@ body {
   text-shadow: 6px 4px 5px rgba(0, 0, 0, 0.25);
   cursor: pointer;
   cursor: hand;
+}
+
+.overlay {
+  position: absolute;
+}
+
+.title-overlay {
+  padding-left: 60px;
+  padding-top: 20px;
+  left: 0;
+  top: 0;
 }
 
 .txt-input {

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { BreadcrumbService } from '../services/breadcrumb.service';
 import { PromptService } from '../generate/services/prompt.service';
+import { CheckedAttributesService } from '../generate/services/checked-attributes.service';
 
 @Component({
   selector: 'app-header',
@@ -14,7 +15,8 @@ export class HeaderComponent {
   constructor(
     private router: Router,
     private breadcrumbService: BreadcrumbService,
-    private promptService: PromptService
+    private promptService: PromptService,
+    private checkAttributeService: CheckedAttributesService
   ) {}
 
   /**
@@ -24,6 +26,7 @@ export class HeaderComponent {
   openHome() {
     this.promptService.emptyPrompt();
     this.breadcrumbService.emptyBreadcrumbList();
+    this.checkAttributeService.emptyCheckedAttributesList();
     this.router.navigate(['home']);
   }
 }

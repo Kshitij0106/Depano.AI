@@ -11,7 +11,6 @@ export interface breadcrumb {
 })
 export class BreadcrumbService {
   private breadcrumbList: breadcrumb[] = [];
-  // public abc = new BehaviorSubject<string>('');
 
   constructor() {}
 

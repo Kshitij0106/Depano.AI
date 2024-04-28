@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
-  title = 'Depano.ai';
+  title = 'Depano AI';
 
   constructor(private router: Router) {}
 

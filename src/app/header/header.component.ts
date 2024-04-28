@@ -10,7 +10,7 @@ import { CheckedAttributesService } from '../generate/services/checked-attribute
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent {
-  title = 'Depano.ai';
+  title = 'Depano AI';
 
   constructor(
     private router: Router,

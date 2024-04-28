@@ -122,9 +122,9 @@ export class CategoryComponent implements OnInit {
    * @param {string} code - The 'code' of the category or subcategory to navigate to.
    */
   goToBreadcrumb(code: string) {
+    this.getCategory(code);
     this.breadcrumbService.createNewList(code);
     this.checkAttributeService.emptyCheckedAttributesList();
-    this.getCategory(code);
   }
 
   /**
@@ -210,6 +210,10 @@ export class CategoryComponent implements OnInit {
     this.category = subCategory.code;
     this.selectedCategoryKey = subCategory.name;
     if (this.selectedCategory.next) {
+      // if (this.selectedCategory.code === 'dress-wear') {
+      //   console.log(this.category);
+      //   this.categoryService.getCategory(this.category);
+      // }
       // If the user is selecting categories
       if (this.selectedCategory.key !== 'type') {
         // Only adding if not attribute
@@ -287,12 +291,9 @@ export class CategoryComponent implements OnInit {
    * Navigates to the result component.
    */
   generate() {
-    this.promptService.sendPrompt().subscribe();
     this.router.navigate(['../../', 'result'], {
       relativeTo: this.route,
     });
-    this.promptService.emptyPrompt();
-    this.checkAttributeService.emptyCheckedAttributesList();
   }
 
   /**

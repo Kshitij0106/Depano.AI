@@ -9,7 +9,7 @@ import { PromptService } from '../services/prompt.service';
   styleUrls: ['./gender-selection.component.css'],
 })
 export class GenderSelectionComponent {
-  title = 'Depano.AI';
+  title = 'Depano AI';
 
   constructor(
     private router: Router,

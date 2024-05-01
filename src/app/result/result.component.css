@@ -24,16 +24,15 @@ body {
 }
 
 .start-btn {
-  font-family: "Inter";
+  font-family: Inter;
   font-style: normal;
   font-weight: 400;
-  font-size: 20.8093px;
+  font-size: 20px;
   line-height: 25px;
   text-align: center;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.08em;
   color: #000000;
   background-color: #ffffff;
-  padding: 12px 21px;
   border-radius: 10px;
   height: 50px;
   width: 200px;
@@ -43,23 +42,22 @@ body {
   float: right;
   height: 50px;
   width: 200px;
-  font-family: "Inter";
+  font-family: Inter;
   font-style: normal;
   font-weight: 400;
-  font-size: 20.8093px;
+  font-size: 20px;
   line-height: 25px;
   text-align: center;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.08em;
   color: #ffffff;
   background-color: #000000;
-  padding: 12px 21px;
   border-radius: 10px;
 }
 
 .share-btn {
   float: right;
   height: 50px;
-  font-family: "Inter";
+  font-family: Inter;
   font-style: normal;
   font-weight: 400;
   font-size: 20.8093px;
@@ -75,7 +73,7 @@ body {
 .download-btn {
   height: 50px;
   float: right;
-  font-family: "Inter";
+  font-family: Inter;
   font-style: normal;
   font-weight: 400;
   font-size: 20.8093px;

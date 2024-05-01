@@ -169,6 +169,14 @@ export class CategoryComponent implements OnInit {
             ) {
               this.getCategory('optional');
             } else {
+              if (cat.key === 'type') {
+                const currentCategory = this.selectedCategory.code
+                  .split('-')
+                  .at(0);
+                const gender = this.promptService.getGender();
+                this.getCategory(gender + '-' + currentCategory);
+                this.changeCategoryRoute(gender + '-' + currentCategory);
+              }
               if (cat.key === 'style') {
                 this.hideUserPrompt = false;
               }
@@ -210,10 +218,6 @@ export class CategoryComponent implements OnInit {
     this.category = subCategory.code;
     this.selectedCategoryKey = subCategory.name;
     if (this.selectedCategory.next) {
-      // if (this.selectedCategory.code === 'dress-wear') {
-      //   console.log(this.category);
-      //   this.categoryService.getCategory(this.category);
-      // }
       // If the user is selecting categories
       if (this.selectedCategory.key !== 'type') {
         // Only adding if not attribute
@@ -308,6 +312,7 @@ export class CategoryComponent implements OnInit {
    */
   @HostListener('window:popstate', ['$event'])
   onPopState() {
+    this.getCategory(this.getRoute());
     this.breadcrumbService.removeBreadcrumb();
   }
 }

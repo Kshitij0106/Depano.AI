@@ -31,13 +31,13 @@ body {
 }
 
 .title {
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 32px;
-  line-height: 39px;
+  font-family: Noto Sans;
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 19.07px;
   letter-spacing: 0.15em;
-  color: #ec0c0c;
+  font-style: normal;
+  color: #000000;
   text-shadow: 6px 4px 5px rgba(0, 0, 0, 0.25);
   cursor: pointer;
   cursor: hand;
@@ -61,6 +61,8 @@ body {
   margin-top: 30px;
   border-color: black;
   border-radius: 6px;
+  font-family: Roboto;
+  letter-spacing: 0.02em;
 }
 
 .check-box {
@@ -70,19 +72,22 @@ body {
 
 .check-input {
   padding-left: 10px;
+  font-family: Roboto;
+  color: #545050;
 }
 
 .forgot-btn {
   text-align: right;
   float: right;
   margin-right: 10px;
+  font-family: Roboto;
 }
 
 .login-btn {
   width: 300px;
   height: 45px;
   margin-top: 10px;
-  font-family: "Inter";
+  font-family: Roboto;
   font-style: normal;
   font-weight: 400;
   font-size: 20.8093px;
@@ -98,7 +103,7 @@ body {
   text-align: center;
   align-items: center;
   text-decoration: none;
-  font-family: "Inter";
+  font-family: Roboto;
   font-size: 16px;
   font-weight: 600;
   line-height: 18.75px;

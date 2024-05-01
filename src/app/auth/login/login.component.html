@@ -10,13 +10,16 @@
       <div class="container">
         <div class="row">
           <div class="mb-3">
-            <form>
+            <form #userform="ngForm">
               <div class="mb-3">
                 <input
                   placeholder="Email"
                   type="email"
                   class="txt-input form-control"
                   id="email"
+                  [(ngModel)]="email"
+                  name="email"
+                  required
                 />
               </div>
               <div class="mb-3">
@@ -25,6 +28,9 @@
                   type="password"
                   class="txt-input form-control"
                   id="password"
+                  [(ngModel)]="password"
+                  name="password"
+                  required
                 />
               </div>
               <div class="mb-3 form-check">

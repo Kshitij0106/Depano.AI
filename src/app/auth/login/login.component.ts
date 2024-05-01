@@ -7,7 +7,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
-  title = 'Depano AI';
+  title = 'DEPANO AI';
+  email: string = '';
+  password: string = '';
 
   constructor(private router: Router) {}
 
@@ -20,6 +22,7 @@ export class LoginComponent {
   }
 
   validate() {
+    console.log(this.email, this.password);
     this.router.navigate(['gender']);
   }
 }

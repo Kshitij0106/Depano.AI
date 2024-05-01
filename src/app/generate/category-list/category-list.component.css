@@ -3,7 +3,6 @@
   border: none;
   margin: 20px;
   width: 220px;
-  background-color: #f8f6f6;
   cursor: pointer;
   cursor: hand;
   transition: all 0.2s ease;
@@ -29,14 +28,14 @@
 
 .category-title {
   margin-top: 10px;
-  text-align: center;
-  font-family: "Inter";
   font-style: normal;
-  font-weight: 300;
-  font-size: 20px;
-  line-height: 24px;
   text-align: center;
-  letter-spacing: 0.12em;
-  color: #000000;
+  color: #62808f;
   width: 200px;
+  font-family: Roboto;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 18.75px;
+  letter-spacing: 0.15em;
+  text-align: center;
 }

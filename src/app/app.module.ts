@@ -18,6 +18,7 @@ import { NgxUiLoaderHttpModule, NgxUiLoaderModule } from 'ngx-ui-loader';
 import { GenderSelectionComponent } from './generate/gender-selection/gender-selection.component';
 import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { SignupComponent } from './auth/signup/signup.component';
     HttpClientModule,
     Ng2SearchPipeModule,
     NgxUiLoaderModule,
+    FormsModule,
     NgxUiLoaderHttpModule.forRoot({ showForeground: true }),
   ],
   providers: [CategoryService, PromptService, BreadcrumbService],

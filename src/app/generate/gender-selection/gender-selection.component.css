@@ -29,7 +29,8 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  width: 30%;
+  width: 40%;
+  opacity: 0;
   height: 675px;
   margin-top: 60px;
   padding-top: 300px;
@@ -47,9 +48,9 @@ body {
 .card-title-women {
   font-weight: bold;
   text-align: left;
-  font-family: "Inter";
+  font-family: Roboto;
   padding-left: 100px;
-  font-style: normal;
+  font-style: italic;
   font-size: 66px;
   letter-spacing: 0.12em;
   color: #000000;
@@ -65,7 +66,7 @@ body {
   position: absolute;
   top: 0;
   right: 0;
-  width: 30%;
+  width: 40%;
   margin-top: 60px;
   height: 675px;
   padding-top: 300px;
@@ -82,8 +83,8 @@ body {
   font-weight: bold;
   text-align: right;
   padding-right: 70px;
-  font-family: "Inter";
-  font-style: normal;
+  font-family: Roboto;
+  font-style: italic;
   font-size: 66px;
   letter-spacing: 0.12em;
   color: #000000;

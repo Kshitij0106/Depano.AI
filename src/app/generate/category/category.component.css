@@ -27,35 +27,39 @@ body {
 
 .breadcrumb-item {
   --bs-breadcrumb-divider: ">";
-  --bs-breadcrumb-divider-color: #000000;
+  --bs-breadcrumb-divider-color: #727272;
+  font-weight: 500;
+  font-size: large;
 }
 
 .category-link {
   text-decoration: none;
-  color: #000000;
+  color: #727272;
   width: 253px;
   height: 17px;
-  font-family: "Inter";
+  font-family: Roboto;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 600;
   font-size: 14px;
   line-height: 17px;
   letter-spacing: 0.12em;
 }
 
 .skip-btn {
-  float: right;
-  width: 170px;
-  height: 50px;
-  background-color: #000000;
-  font-family: "Inter";
-  font-style: normal;
+  /* font-family: "Inter";
+  font-style: normal; */
   font-weight: 400;
-  font-size: 20.8093px;
+  font-size: 14px;
   line-height: 25px;
+  letter-spacing: 0.12em;
+  float: right;
+  width: 150px;
+  height: 45px;
+  background-color: #000000;
+  font-family: Roboto;
+  font-style: normal;
   text-align: center;
   color: #ffffff;
-  padding: 12px 21px;
   border-radius: 10px;
 }
 

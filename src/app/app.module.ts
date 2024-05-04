@@ -10,13 +10,15 @@ import { HomeComponent } from './home/home.component';
 import { CategoryComponent } from './generate/category/category.component';
 import { CategoryListComponent } from './generate/category-list/category-list.component';
 import { UserInputComponent } from './generate/user-input/user-input.component';
-import { OptionalTypesComponent } from './generate/optional-types/optional-types.component';
 import { ResultComponent } from './result/result.component';
-import { PromptService } from './generate/service/prompt.service';
-import { SearchService } from './generate/service/search.service';
-import { BreadcrumbService } from './service/breadcrumb.service';
-import { CategoryService } from './generate/service/data/category.service';
+import { PromptService } from './generate/services/prompt.service';
+import { BreadcrumbService } from './services/breadcrumb.service';
+import { CategoryService } from './generate/services/data/category.service';
 import { NgxUiLoaderHttpModule, NgxUiLoaderModule } from 'ngx-ui-loader';
+import { GenderSelectionComponent } from './generate/gender-selection/gender-selection.component';
+import { LoginComponent } from './auth/login/login.component';
+import { SignupComponent } from './auth/signup/signup.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -26,8 +28,10 @@ import { NgxUiLoaderHttpModule, NgxUiLoaderModule } from 'ngx-ui-loader';
     CategoryComponent,
     CategoryListComponent,
     UserInputComponent,
-    OptionalTypesComponent,
     ResultComponent,
+    GenderSelectionComponent,
+    LoginComponent,
+    SignupComponent,
   ],
   imports: [
     BrowserModule,
@@ -35,9 +39,10 @@ import { NgxUiLoaderHttpModule, NgxUiLoaderModule } from 'ngx-ui-loader';
     HttpClientModule,
     Ng2SearchPipeModule,
     NgxUiLoaderModule,
+    FormsModule,
     NgxUiLoaderHttpModule.forRoot({ showForeground: true }),
   ],
-  providers: [CategoryService, PromptService, BreadcrumbService, SearchService],
+  providers: [CategoryService, PromptService, BreadcrumbService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

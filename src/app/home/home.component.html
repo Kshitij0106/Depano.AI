@@ -1,31 +1,64 @@
-<app-header [skip]="false"></app-header>
 <div class="ctn container-fluid">
   <div class="row">
-    <div class="col1 col-6">
-      <div class="card1" (click)="openCategory('Women')">
-        <img
-          src="../assets/Women.png"
-          class="img card-img-top"
-          alt="..."
-          height="615"
-        />
-        <div class="card-body">
-          <h5 class="card-title">Women</h5>
-        </div>
+    <div class="col-10">
+      <h6 class="title">{{ title }}</h6>
+    </div>
+  </div>
+
+  <div class="row justify-content-center">
+    <div class="col-6 .col-md-4">
+      <div class="row">
+        <h1 class="txt">Create your own AI design</h1>
+      </div>
+      <div class="row">
+        <p class="description">
+          Express yourself effortlessly with our AI-powered fashion platform.
+          Design your unique style in just a few clicks, tailored perfectly to
+          you.
+        </p>
+      </div>
+
+      <div class="row">
+        <button type="button" class="start-btn btn" (click)="getStarted()">
+          Get started
+        </button>
+        <button type="button" class="info-btn btn">Learn more</button>
       </div>
     </div>
-    <div class="col2 col-6">
-      <div class="card2" (click)="openCategory('Men')">
-        <img
-          src="../assets/Men.png"
-          class="img card-img-top"
-          alt="..."
-          height="615"
-        />
-        <div class="card-body">
-          <h5 class="card-title">Men</h5>
-        </div>
-      </div>
+    <div class="col-6 .col-md-4">
+      <img src="./assets/home_pic.png" class="home-img" alt="..." />
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <h1 class="output-heading">Create styles like..</h1>
+    </div>
+  </div>
+  <div class="output-ctn row justify-content-center">
+    <div class="col-3 .col-xs-1">
+      <img src="./assets/result.jpg" class="result-img" alt="..." />
+    </div>
+    <div class="col-3 .col-xs-1">
+      <img src="./assets/result.jpg" class="result-img" alt="..." />
+    </div>
+    <div class="col-3 .col-xs-1">
+      <img src="./assets/result.jpg" class="result-img" alt="..." />
+    </div>
+    <div class="col-3 .col-xs-1">
+      <img src="./assets/result.jpg" class="result-img" alt="..." />
+    </div>
+    <div class="col-3 .col-xs-1">
+      <img src="./assets/result.jpg" class="result-img" alt="..." />
+    </div>
+    <div class="col-3 .col-xs-1">
+      <img src="./assets/result.jpg" class="result-img" alt="..." />
+    </div>
+    <div class="col-3 .col-xs-1">
+      <img src="./assets/result.jpg" class="result-img" alt="..." />
+    </div>
+    <div class="col-3 .col-xs-1">
+      <img src="./assets/result.jpg" class="result-img" alt="..." />
     </div>
   </div>
 </div>

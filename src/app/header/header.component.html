@@ -1,46 +1,36 @@
-<div class="container">
+<div class="cnt container-fluid">
   <div class="row">
-    <div class="col">
+    <div class="col-10">
       <h6 class="title" (click)="openHome()">{{ title }}</h6>
     </div>
 
-    <div *ngIf="skip" class="col">
-      <div class="searchbar">
-        <i class="fa fa-search fa-s icon" aria-hidden="true"></i>
-        <input
-          type="text"
-          class="srch form-control"
-          id="search"
-          placeholder="Search category"
-          #search
-          (keyup)="searchCategory(search.value)"
-        />
+    <div class="col-2">
+      <div class="btn-group">
+        <button
+          type="button"
+          class="profile btn dropdown-toggle"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          Kshitij
+          <i class="profile-icon fas fa-angle-down"></i>
+        </button>
+        <ul class="dropdown-menu">
+          <li>
+            <button class="dropdown-item" type="button">
+              <i class="bi bi-person item-icon"></i>
+              Profile
+            </button>
+          </li>
+          <li><hr class="dropdown-divider" /></li>
+          <li>
+            <button class="dropdown-item" type="button">
+              <i class="bi bi-box-arrow-left item-icon"></i>
+              Log out
+            </button>
+          </li>
+        </ul>
       </div>
     </div>
-
-    <div *ngIf="skip" class="col">
-      <button
-        type="button"
-        class="btn skip btn-outline-danger"
-        (click)="onSkip()"
-      >
-        Skip
-      </button>
-    </div>
   </div>
-
-  <nav class="crumb">
-    <ol class="breadcrumb">
-      <ng-container *ngFor="let crumb of breadcrumbsList">
-        <li class="breadcrumb-item">
-          <a
-            class="link"
-            [routerLink]="['/generate', crumb.key]"
-            (click)="goToBreadcrumb(crumb.key)"
-            >{{ crumb.value }}</a
-          >
-        </li>
-      </ng-container>
-    </ol>
-  </nav>
 </div>

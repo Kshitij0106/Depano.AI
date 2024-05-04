@@ -1,0 +1,75 @@
+<div class="ctn container-fluid">
+  <div class="row">
+    <div class="col-8">
+      <img src="./assets/home_pic.png" class="img" alt="..." />
+      <div class="overlay title-overlay">
+        <h6 class="title" (click)="openHome()">{{ title }}</h6>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="container">
+        <div class="row">
+          <div class="mb-3">
+            <form #userform="ngForm">
+              <div class="mb-3">
+                <input
+                  placeholder="Email/Phone"
+                  type="email"
+                  class="txt-input form-control"
+                  id="email"
+                  [(ngModel)]="email"
+                  name="email"
+                  required
+                />
+                <div
+                  *ngIf="emailError"
+                  class="invalid-error alert-danger"
+                  role="alert"
+                >
+                  Email/Phone can't be empty!
+                </div>
+              </div>
+              <div class="mb-3">
+                <input
+                  placeholder="Password"
+                  type="password"
+                  class="txt-input form-control"
+                  id="password"
+                  [(ngModel)]="password"
+                  name="password"
+                  required
+                />
+                <div
+                  *ngIf="passError"
+                  class="invalid-error alert-danger"
+                  role="alert"
+                >
+                  Password can't be empty!
+                </div>
+              </div>
+              <div class="mb-3 form-check">
+                <input
+                  type="checkbox"
+                  class="check-box form-check-input"
+                  id="remember"
+                />
+                <label class="check-input form-check-label" for="remember-input"
+                  >Remember me</label
+                >
+                <button type="button" class="forgot-btn btn">
+                  Forgot password?
+                </button>
+              </div>
+              <button type="submit" class="login-btn btn" (click)="validate()">
+                Sign in
+              </button>
+              <button type="submit" class="create-acc-btn btn">
+                Create account
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

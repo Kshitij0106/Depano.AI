@@ -15,7 +15,8 @@ import {
 })
 export class UserInputComponent implements OnInit {
   @Output() userInput = new EventEmitter<string>();
-  @Input() hideUserInput!: boolean;
+  @Input() userPrompt!: boolean;
+  @Input() key!: string;
   @ViewChild('userInputCategory') userInputRef!: ElementRef;
 
   constructor() {}

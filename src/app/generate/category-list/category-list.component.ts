@@ -1,50 +1,41 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Subcategory } from '../subcategory';
-import { SearchService } from '../service/search.service';
+import { Subcategory } from '../models/subcategory';
+import { CheckedAttributesService } from '../services/checked-attributes.service';
 
 @Component({
   selector: 'app-category-list',
   templateUrl: './category-list.component.html',
   styleUrls: ['./category-list.component.css'],
 })
-export class CategoryListComponent implements OnInit {
+export class CategoryListComponent {
   @Input() categoryList: Subcategory[] = [];
+  @Input() showCheckBox: boolean = false;
   @Output() selectedCategory = new EventEmitter<Subcategory>();
   category!: Subcategory;
   searchKey!: string;
 
-  constructor(private searchService: SearchService) {}
-
-  /**
-   * Implements the Angular lifecycle hook `ngOnInit`.
-   * Subscribes to the `searchText` observable from the `searchService`
-   * to update the `searchKey` property whenever the search text changes
-   * for searching the category from the category list.
-   */
-  ngOnInit(): void {
-    this.searchService.searchText.subscribe((text) => {
-      this.searchKey = text;
-    });
-  }
+  constructor(private checkAttributeService: CheckedAttributesService) {}
 
   /**
    * @emits {Category} selectedCategory - The category selected by the user to category component.
    * @param categoryCode - The code of the selected category.
    * @param categoryName - The name of the selected category.
-   * @param categoryPrompt - The prompt of the selected category.
    */
-  selectCategory(
-    categoryCode: string,
-    categoryName: string,
-    categoryPrompt: string
-  ) {
+  selectCategory(categoryCode: string, categoryName: string) {
     this.category = {
       name: categoryName,
       code: categoryCode,
       image: '',
-      prompt: categoryPrompt,
     };
 
     this.selectedCategory.emit(this.category);
+  }
+
+  /**
+   * @param categoryCode - The code of the selected category.
+   * Checks if the attribute is selected previously or not.
+   */
+  checkAttribute(code: string) {
+    return this.checkAttributeService.getAttribute(code);
   }
 }

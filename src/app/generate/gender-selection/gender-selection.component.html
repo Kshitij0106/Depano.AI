@@ -1,0 +1,29 @@
+<app-header></app-header>
+<div class="ctn container-fluid">
+  <div class="row">
+    <div class="col col-6">
+      <div class="card-women" (click)="openCategory('Women')">
+        <img
+          src="https://firebasestorage.googleapis.com/v0/b/depano-ai.appspot.com/o/App%2Fwomen.png?alt=media&token=4c005abb-ecfd-4282-8355-8e8d8b1ee245"
+          class="img card-img-top"
+          alt="..."
+        />
+        <div class="overlay women-overlay">
+          <h5 class="card-title-women">Women</h5>
+        </div>
+      </div>
+    </div>
+    <div class="col col-6">
+      <div class="card-men" (click)="openCategory('Men')">
+        <img
+          src="https://firebasestorage.googleapis.com/v0/b/depano-ai.appspot.com/o/App%2Fmen.png?alt=media&token=bf177384-ad16-49a4-9891-89b7eb8a592f"
+          class="img card-img-top"
+          alt="..."
+        />
+        <div class="overlay men-overlay">
+          <h5 class="card-title-men">Men</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

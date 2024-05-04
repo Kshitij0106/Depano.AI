@@ -4,92 +4,64 @@
   box-sizing: border-box;
 }
 
-.container {
-  background: #1e1e1e;
+.cnt {
+  background-color: #ece7e7;
+  /* background: linear-gradient(rgb(112, 112, 112), rgb(180, 179, 179)); */
   min-width: 100%;
-  padding-left: 130px;
-  padding-top: 20px;
+  padding-left: 60px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .title {
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 32px;
-  line-height: 39px;
+  font-family: Noto Sans;
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 19.07px;
   letter-spacing: 0.15em;
-  color: #ec0c0c;
+  font-style: normal;
+  color: #000000;
   text-shadow: 6px 4px 5px rgba(0, 0, 0, 0.25);
   cursor: pointer;
   cursor: hand;
+  width: 200px;
+  margin-top: 10px;
 }
 
-.searchbar i {
-  position: absolute;
-  margin-left: 410px;
-  margin-top: 3px;
-}
-
-.searchbar {
-  width: 100%;
-  margin-bottom: 10px;
-}
-
-.icon {
-  padding: 10px;
-  min-width: 40px;
-  color: #ffffff;
-}
-
-.srch {
-  background: #1e1e1e;
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  border: 1px solid #ffffff;
-  color: #ffffff;
-  border-radius: 10px;
-  width: 350px;
-  height: 40px;
-  margin-left: 400px;
-  padding-left: 45px;
-}
-
-.skip {
+.profile {
+  background-color: #ffffff;
+  color: #000000;
   float: right;
-  width: 100px;
+  width: 180px;
   height: 40px;
-  margin-right: 100px;
+  margin-left: 40px;
+  border-radius: 8px;
+  font-size: large;
 }
 
-.breadcrumb-item {
-  margin-top: 20px;
-  --bs-breadcrumb-divider: ">";
-  --bs-breadcrumb-divider-color: #fff;
+.profile-icon {
+  padding-left: 40px;
+  color: #000000;
+  font-size: 23px;
 }
 
-.link {
-  text-decoration: none;
-  color: #ffffff;
-  width: 253px;
-  height: 17px;
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 17px;
-  letter-spacing: 0.12em;
+.dropdown-item {
+  color: #000000;
+  background-color: #ffffff;
+  min-width: 180px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  padding: 12px 16px;
 }
 
-::placeholder {
-  width: 201px;
-  height: 25px;
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 20.8093px;
-  line-height: 25px;
-  text-align: center;
-  letter-spacing: 0.12em;
-  color: #ffffff;
+.dropdown-divider {
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+.dropdown-toggle::after {
+  display: none;
+}
+
+.item-icon {
+  padding-right: 10px;
 }

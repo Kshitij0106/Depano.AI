@@ -9,6 +9,8 @@ import { Router } from '@angular/router';
 export class LoginComponent {
   title = 'DEPANO AI';
   email: string = '';
+  emailError: boolean = false;
+  passError: boolean = false;
   password: string = '';
 
   constructor(private router: Router) {}
@@ -22,7 +24,19 @@ export class LoginComponent {
   }
 
   validate() {
-    console.log(this.email, this.password);
-    this.router.navigate(['gender']);
+    if (this.email === '') {
+      this.emailError = true;
+    } else {
+      this.emailError = false;
+    }
+    if (this.password === '') {
+      this.passError = true;
+    } else {
+      this.passError = false;
+    }
+    if (this.email !== '' && this.password !== '') {
+      console.log(this.email, this.password);
+      this.router.navigate(['gender']);
+    }
   }
 }

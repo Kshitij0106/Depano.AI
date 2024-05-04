@@ -13,7 +13,7 @@
             <form #userform="ngForm">
               <div class="mb-3">
                 <input
-                  placeholder="Email"
+                  placeholder="Email/Phone"
                   type="email"
                   class="txt-input form-control"
                   id="email"
@@ -21,6 +21,13 @@
                   name="email"
                   required
                 />
+                <div
+                  *ngIf="emailError"
+                  class="invalid-error alert-danger"
+                  role="alert"
+                >
+                  Email/Phone can't be empty!
+                </div>
               </div>
               <div class="mb-3">
                 <input
@@ -32,6 +39,13 @@
                   name="password"
                   required
                 />
+                <div
+                  *ngIf="passError"
+                  class="invalid-error alert-danger"
+                  role="alert"
+                >
+                  Password can't be empty!
+                </div>
               </div>
               <div class="mb-3 form-check">
                 <input

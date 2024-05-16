@@ -14,15 +14,15 @@
               <div class="mb-3">
                 <input
                   placeholder="Email/Phone"
-                  type="email"
+                  type="text"
                   class="txt-input form-control"
-                  id="email"
-                  [(ngModel)]="email"
-                  name="email"
+                  id="id"
+                  [(ngModel)]="userAuth.id"
+                  name="id"
                   required
                 />
                 <div
-                  *ngIf="emailError"
+                  *ngIf="idError"
                   class="invalid-error alert-danger"
                   role="alert"
                 >
@@ -35,7 +35,7 @@
                   type="password"
                   class="txt-input form-control"
                   id="password"
-                  [(ngModel)]="password"
+                  [(ngModel)]="userAuth.password"
                   name="password"
                   required
                 />

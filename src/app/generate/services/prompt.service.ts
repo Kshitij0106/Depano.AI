@@ -50,18 +50,22 @@ export class PromptService {
     );
   }
 
+  regenerate(): Observable<any> {
+    return this.http.get<any>(environment.gateway + 'prompts/regenerate');
+  }
+
   public getPrompt() {
     return this.userPrompts;
   }
 
   /**
    * Empty the prompt map.
+   * Clears the prompt stored in backend
    */
   emptyPrompt() {
     this.userPrompts = [];
-  }
-
-  showPrompt() {
-    console.log(this.getPrompt());
+    this.http
+      .get(environment.gateway + this.getGender() + '/' + 'refresh')
+      .subscribe();
   }
 }

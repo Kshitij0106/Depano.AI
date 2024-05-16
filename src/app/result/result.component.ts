@@ -23,24 +23,30 @@ export class ResultComponent {
 
   /**
    * Navigates to homepage.
-   * Empties the breadcrumb list.
    */
   openHome() {
-    this.router.navigate(['gender']);
     this.emptyData();
+    this.router.navigate(['gender']);
   }
 
   /**
    * Sends a request to the prompt service to retrieve images and updates the 'images' property accordingly.
    */
   sendRequest() {
-    this.promptService.showPrompt();
     this.promptService.sendPrompt().subscribe((data) => {
       this.image = data.url;
     });
-    this.emptyData();
   }
 
+  regenerate() {
+    this.promptService.regenerate().subscribe((data) => {
+      this.image = data.url;
+    });
+  }
+
+  /**
+   * Empties the data.
+   */
   emptyData() {
     this.promptService.emptyPrompt();
     this.breadcrumbService.emptyBreadcrumbList();

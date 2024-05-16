@@ -21,12 +21,18 @@ export class HeaderComponent {
 
   /**
    * Navigates to homepage.
-   * Empties the breadcrumb list.
    */
   openHome() {
+    this.emptyData();
+    this.router.navigate(['home']);
+  }
+
+  /**
+   * Empties the data.
+   */
+  emptyData() {
     this.promptService.emptyPrompt();
     this.breadcrumbService.emptyBreadcrumbList();
     this.checkAttributeService.emptyCheckedAttributesList();
-    this.router.navigate(['home']);
   }
 }

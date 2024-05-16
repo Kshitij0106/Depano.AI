@@ -20,6 +20,7 @@
             "tsConfig": "tsconfig.app.json",
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
+              "node_modules/ngx-toastr/toastr.css",
               "src/styles.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
@@ -56,10 +57,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "Depano.AI:build:production"
+              "buildTarget": "Depano.AI:build:production"
             },
             "development": {
-              "browserTarget": "Depano.AI:build:development"
+              "buildTarget": "Depano.AI:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -67,7 +68,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "Depano.AI:build"
+            "buildTarget": "Depano.AI:build"
           }
         },
         "test": {

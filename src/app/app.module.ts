@@ -18,6 +18,8 @@ import { GenderSelectionComponent } from './generate/gender-selection/gender-sel
 import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { FormsModule } from '@angular/forms';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -38,6 +40,8 @@ import { FormsModule } from '@angular/forms';
     HttpClientModule,
     NgxUiLoaderModule,
     FormsModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(),
     NgxUiLoaderHttpModule.forRoot({ showForeground: true }),
   ],
   providers: [CategoryService, PromptService, BreadcrumbService],

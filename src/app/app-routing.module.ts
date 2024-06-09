@@ -6,11 +6,13 @@ import { ResultComponent } from './result/result.component';
 import { GenderSelectionComponent } from './generate/gender-selection/gender-selection.component';
 import { LoginComponent } from './auth/login/login.component';
 import { authGuard } from './auth/guard/auth.guard';
+import { SignupComponent } from './auth/signup/signup.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'signup', component: SignupComponent },
   {
     path: 'gender',
     component: GenderSelectionComponent,

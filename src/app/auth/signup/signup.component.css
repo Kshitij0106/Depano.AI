@@ -1,0 +1,139 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.ctn {
+  min-width: 100%;
+  background: #ffffff;
+}
+
+.container {
+  align-items: center;
+  margin-top: 30px;
+  padding: 100px;
+}
+
+.img {
+  min-width: 100%;
+  min-height: 100%;
+  width: 640px;
+  height: 735px;
+}
+
+.title {
+  font-family: Noto Sans;
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 19.07px;
+  letter-spacing: 0.15em;
+  font-style: normal;
+  color: #000000;
+  cursor: pointer;
+  cursor: hand;
+}
+
+.overlay {
+  position: absolute;
+}
+
+.title-overlay {
+  padding-left: 60px;
+  padding-top: 20px;
+  left: 0;
+  top: 0;
+}
+
+.heading {
+  text-align: center;
+  font-family: Noto Sans;
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 19.07px;
+  letter-spacing: 0.15em;
+  font-style: normal;
+  color: #000000;
+  margin-bottom: 10px;
+}
+
+.txt-input {
+  width: 300px;
+  height: 45px;
+  padding: 10px;
+  margin-top: 20px;
+  border-color: black;
+  border-radius: 6px;
+  font-family: Roboto;
+  letter-spacing: 0.02em;
+}
+
+.invalid-error {
+  color: red;
+  margin-left: 2px;
+  width: 250px;
+}
+
+.check-box {
+  margin-top: 5px;
+  margin-left: 2px;
+  border-width: 1px;
+  border-color: #000000;
+}
+
+.check-input {
+  padding-left: 10px;
+  font-family: Roboto;
+  color: #545050;
+}
+
+.forgot-btn {
+  text-align: right;
+  float: right;
+  margin-right: 10px;
+  font-family: Roboto;
+}
+
+.login-btn {
+  width: 300px;
+  height: 45px;
+  margin-top: 20px;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20.8093px;
+  line-height: 25px;
+  letter-spacing: 0.02em;
+  text-align: center;
+  color: #ffffff;
+  background-color: black;
+  border-radius: 6px;
+}
+
+.create-acc-btn {
+  text-align: center;
+  align-items: center;
+  text-decoration: none;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 18.75px;
+  letter-spacing: 0.06em;
+  margin-top: 5px;
+}
+
+.otp-state {
+  margin-top: 100px;
+}
+
+.pass-error {
+  margin-top: 10px;
+}

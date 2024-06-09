@@ -20,6 +20,9 @@ import { SignupComponent } from './auth/signup/signup.component';
 import { FormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { UserService } from './services/user.service';
+import { AuthService } from './auth/services/auth.service';
+import { CheckedAttributesService } from './generate/services/checked-attributes.service';
 
 @NgModule({
   declarations: [
@@ -44,7 +47,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ToastrModule.forRoot(),
     NgxUiLoaderHttpModule.forRoot({ showForeground: true }),
   ],
-  providers: [CategoryService, PromptService, BreadcrumbService],
+  providers: [
+    CategoryService,
+    PromptService,
+    BreadcrumbService,
+    UserService,
+    AuthService,
+    CheckedAttributesService,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

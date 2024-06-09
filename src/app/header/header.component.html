@@ -1,4 +1,4 @@
-<div class="cnt container-fluid">
+<div [ngStyle]="{ background: background }" class="cnt container-fluid">
   <div class="row">
     <div class="col-10">
       <h6 class="title" (click)="openHome()">{{ title }}</h6>
@@ -12,19 +12,19 @@
           data-bs-toggle="dropdown"
           aria-expanded="false"
         >
-          Kshitij
+          {{ this.loggedInUser.name }}
           <i class="profile-icon fas fa-angle-down"></i>
         </button>
         <ul class="dropdown-menu">
           <li>
             <button class="dropdown-item" type="button">
               <i class="bi bi-person item-icon"></i>
-              Profile
+              {{ this.loggedInUser.credits }} {{ "Credits" }}
             </button>
           </li>
           <li><hr class="dropdown-divider" /></li>
           <li>
-            <button class="dropdown-item" type="button">
+            <button class="dropdown-item" type="button" (click)="logOut()">
               <i class="bi bi-box-arrow-left item-icon"></i>
               Log out
             </button>

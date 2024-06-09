@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { BreadcrumbService } from 'src/app/services/breadcrumb.service';
 import { PromptService } from '../services/prompt.service';
@@ -27,5 +27,13 @@ export class GenderSelectionComponent {
     this.promptService.setGender(category.toLowerCase());
     this.promptService.addToPrompt('gender', category.toLowerCase());
     this.router.navigate(['generate', category.toLowerCase()]);
+  }
+
+  /**
+   * Removes the last breadcrumb when back button is pressed.
+   */
+  @HostListener('window:popstate', ['$event'])
+  onPopState() {
+    this.router.navigate(['home']);
   }
 }

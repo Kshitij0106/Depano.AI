@@ -1,64 +1,240 @@
 <div class="ctn container-fluid">
-  <div class="row">
+  <div class="row title-ctn">
     <div class="col-10">
       <h6 class="title">{{ title }}</h6>
     </div>
   </div>
 
-  <div class="row justify-content-center">
-    <div class="col-6 .col-md-4">
-      <div class="row">
-        <h1 class="txt">Create your own AI design</h1>
+  <div class="row heading-ctn justify-content-center">
+    <div class="col">
+      <img src="./assets/home-page.png" class="img" alt="..." />
+      <div class="row overlay title-overlay">
+        <div class="row">
+          <p class="txt">Revolutionizing Fashion with AI</p>
+        </div>
+        <div class="row">
+          <p class="description">
+            Empowering Designers to Create, Innovate, and Inspire
+          </p>
+        </div>
+        <div class="row btns">
+          <button type="button" class="start-btn btn" (click)="getStarted()">
+            Get started
+          </button>
+          <button type="button" class="info-btn btn">Learn more</button>
+        </div>
       </div>
+    </div>
+  </div>
+
+  <div class="row sevices-ctn justify-content-center">
+    <div class="col">
       <div class="row">
-        <p class="description">
-          Express yourself effortlessly with our AI-powered fashion platform.
-          Design your unique style in just a few clicks, tailored perfectly to
-          you.
+        <p class="services-heading">Depano AI</p>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <p class="services-description">
+            Welcome to DEPANO AI, where cutting-edge technology meets the world
+            of fashion design. Our AI-powered platform is meticulously crafted
+            to transform the creative process for fashion designers, students,
+            and enthusiasts alike. Here’s what makes our product unique
+          </p>
+        </div>
+      </div>
+
+      <div class="row justify-content-center">
+        <div class="col-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">AI-Driven Design Automation</h5>
+              <p class="card-text">
+                Our AI synthesizes apparel type, fit size, embroidery, style,
+                and material to generate high-quality, creative outputs with
+                unmatched accuracy.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-4">
+          <div class="card crd2">
+            <div class="card-body">
+              <h5 class="card-title">User-Friendly Interface</h5>
+              <p class="card-text">
+                Our platform offers a seamless user experience with intuitive
+                tools, perfect for both novice designers and seasoned
+                professionals.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-4">
+          <div class="card crd3">
+            <div class="card-body">
+              <h5 class="card-title">Enhanced Creativity</h5>
+              <p class="card-text">
+                Overcome creative blocks with DEPANO AI. Get endless inspiration
+                and tailored designs using specialized keywords and prompts.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-4">
+          <div class="card crd4">
+            <div class="card-body">
+              <h5 class="card-title">Cost-Effective Solutions</h5>
+              <p class="card-text">
+                Say goodbye to high design costs. For just ₹50, DEPANO AI offers
+                20 images, allowing you to create extensive collections
+                affordably.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-8">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Market-Ready Designs</h5>
+              <p class="card-text">
+                DEPANO AI accelerates the design process, making creations
+                market-ready and saving time and resources.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row outputs-ctn">
+    <div class="col">
+      <div class="row">
+        <h1 class="outputs-heading">Create styles like..</h1>
+      </div>
+    </div>
+
+    <div class="row result-row">
+      <div class="col-4 .col-xs-1">
+        <img
+          src="https://firebasestorage.googleapis.com/v0/b/depano-ai.appspot.com/o/App%2FHomePage%2F136500795.png?alt=media&token=759202a0-a1c4-47c4-a6e8-4bfe786bfc24"
+          class="result-img"
+          alt="..."
+        />
+      </div>
+      <div class="col-4 .col-xs-1">
+        <img
+          src="https://firebasestorage.googleapis.com/v0/b/depano-ai.appspot.com/o/App%2FHomePage%2F1381583102.png?alt=media&token=9f657bf5-d29e-4490-b0a2-dfb7706f652a"
+          class="result-img"
+          alt="..."
+        />
+      </div>
+      <div class="col-4 .col-xs-1">
+        <img
+          src="https://firebasestorage.googleapis.com/v0/b/depano-ai.appspot.com/o/App%2FHomePage%2F204703172.png?alt=media&token=85c6aabe-560c-4fe0-b716-d2de98c4bbc3"
+          class="result-img"
+          alt="..."
+        />
+      </div>
+      <div class="col-6 .col-xs-1">
+        <img
+          src="https://firebasestorage.googleapis.com/v0/b/depano-ai.appspot.com/o/App%2FHomePage%2F1179166747.png?alt=media&token=90a0a320-3696-4eeb-b7d0-ebf6ac9c10ef"
+          class="result-img2"
+          alt="..."
+        />
+      </div>
+      <div class="col-6 .col-xs-1">
+        <img
+          src="https://firebasestorage.googleapis.com/v0/b/depano-ai.appspot.com/o/App%2FHomePage%2F2331169412.png?alt=media&token=80585088-ef0b-44e6-8607-f7b10980102b"
+          class="result-img2"
+          alt="..."
+        />
+      </div>
+      <div class="col-3 .col-xs-1">
+        <img
+          src="https://firebasestorage.googleapis.com/v0/b/depano-ai.appspot.com/o/App%2FHomePage%2F2063408731.png?alt=media&token=f23bac64-1e0e-43a9-aa8d-3f44b6b6fd4d"
+          class="result-img3"
+          alt="..."
+        />
+      </div>
+      <div class="col-3 .col-xs-1">
+        <img
+          src="https://firebasestorage.googleapis.com/v0/b/depano-ai.appspot.com/o/App%2FHomePage%2F860254096.png?alt=media&token=2b7819de-df63-40cc-b134-970524872a14"
+          class="result-img3"
+          alt="..."
+        />
+      </div>
+      <div class="col-3 .col-xs-1">
+        <img
+          src="https://firebasestorage.googleapis.com/v0/b/depano-ai.appspot.com/o/App%2FHomePage%2F1775046177.png?alt=media&token=d83e80b3-3598-436c-99c2-aaa165230ac0"
+          class="result-img3"
+          alt="..."
+        />
+      </div>
+      <div class="col-3 .col-xs-1">
+        <img
+          src="https://firebasestorage.googleapis.com/v0/b/depano-ai.appspot.com/o/App%2FHomePage%2F3914749211.png?alt=media&token=d8d4bfea-1ba7-47f1-92fa-0f8c48cc5167"
+          class="result-img3"
+          alt="..."
+        />
+      </div>
+    </div>
+  </div>
+
+  <div class="row sevices-ctn justify-content-center">
+    <div class="col">
+      <div class="row">
+        <p class="services-heading">Our vision</p>
+      </div>
+
+      <div class="row">
+        <p class="services-description">
+          Empowering Creativity, Transforming Fashion
         </p>
       </div>
 
-      <div class="row">
-        <button type="button" class="start-btn btn" (click)="getStarted()">
-          Get started
-        </button>
-        <button type="button" class="info-btn btn">Learn more</button>
-      </div>
-    </div>
-    <div class="col-6 .col-md-4">
-      <img src="./assets/home_pic.png" class="home-img" alt="..." />
-    </div>
-  </div>
+      <div class="row justify-content-center">
+        <div class="col-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Innovation at the Core</h5>
+              <p class="card-text">
+                We aim to lead fashion technology by evolving our AI algorithms
+                and tools to provide designers with advanced and efficient
+                solutions.
+              </p>
+            </div>
+          </div>
+        </div>
 
-  <div class="row">
-    <div class="col">
-      <h1 class="output-heading">Create styles like..</h1>
-    </div>
-  </div>
-  <div class="output-ctn row justify-content-center">
-    <div class="col-3 .col-xs-1">
-      <img src="./assets/result.jpg" class="result-img" alt="..." />
-    </div>
-    <div class="col-3 .col-xs-1">
-      <img src="./assets/result.jpg" class="result-img" alt="..." />
-    </div>
-    <div class="col-3 .col-xs-1">
-      <img src="./assets/result.jpg" class="result-img" alt="..." />
-    </div>
-    <div class="col-3 .col-xs-1">
-      <img src="./assets/result.jpg" class="result-img" alt="..." />
-    </div>
-    <div class="col-3 .col-xs-1">
-      <img src="./assets/result.jpg" class="result-img" alt="..." />
-    </div>
-    <div class="col-3 .col-xs-1">
-      <img src="./assets/result.jpg" class="result-img" alt="..." />
-    </div>
-    <div class="col-3 .col-xs-1">
-      <img src="./assets/result.jpg" class="result-img" alt="..." />
-    </div>
-    <div class="col-3 .col-xs-1">
-      <img src="./assets/result.jpg" class="result-img" alt="..." />
+        <div class="col-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Democratizing Fashion Design</h5>
+              <p class="card-text">
+                Our vision is to make high-quality fashion design accessible to
+                all with powerful, affordable, and user-friendly tools.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Sustainability and Efficiency</h5>
+              <p class="card-text">
+                We promote sustainable fashion by reducing waste through
+                optimized design processes and minimal physical samples.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

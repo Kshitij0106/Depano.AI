@@ -9,6 +9,7 @@ import { CheckedAttributesService } from '../services/checked-attributes.service
 })
 export class CategoryListComponent {
   @Input() categoryList: Subcategory[] = [];
+  @Input() categoryKey: string = '';
   @Input() showCheckBox: boolean = false;
   @Output() selectedCategory = new EventEmitter<Subcategory>();
   category!: Subcategory;

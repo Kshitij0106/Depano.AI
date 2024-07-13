@@ -34,6 +34,7 @@
     <div class="col">
       <div class="category-list">
         <app-category-list
+          [categoryKey]="categoryListType"
           [categoryList]="categoryLists"
           [showCheckBox]="showCheckBox"
           (selectedCategory)="categorySelected($event)"

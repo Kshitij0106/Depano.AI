@@ -17,7 +17,7 @@ export class HeaderComponent implements OnInit {
   @Input() source: string = '';
 
   colorStart: string = '#444543';
-  colorEnd: string = '#c9c8c8';
+  colorEnd: string = '#c1bebe';
 
   loggedInUser: User = {
     name: '',

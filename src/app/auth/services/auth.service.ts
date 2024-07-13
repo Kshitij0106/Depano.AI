@@ -14,8 +14,8 @@ export class AuthService {
 
   isLoggedIn(): boolean {
     if (
-      localStorage.getItem('status')?.match('loggedIn') &&
-      localStorage.getItem('user') !== ''
+      sessionStorage.getItem('status')?.match('loggedIn') &&
+      sessionStorage.getItem('user') !== ''
     ) {
       return true;
     }
@@ -23,12 +23,12 @@ export class AuthService {
   }
 
   logOut() {
-    localStorage.clear();
+    sessionStorage.clear();
   }
 
   saveUserInfo(email: string) {
-    localStorage.setItem('status', 'loggedIn');
-    localStorage.setItem('user', email);
+    sessionStorage.setItem('status', 'loggedIn');
+    sessionStorage.setItem('user', email);
   }
 
   login(userAuth: UserAuth): Observable<Auth> {

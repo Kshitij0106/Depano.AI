@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
+import { ImageResponse } from '../models/imageResponse';
 
 interface Prompt {
   category: string;
@@ -42,16 +43,18 @@ export class PromptService {
    *
    * @returns {Observable<any>} - An observable containing the server's response, which includes generated images.
    */
-  sendPrompt(): Observable<any> {
+  sendPrompt(email: string): Observable<ImageResponse> {
     let userInput = this.getPrompt();
-    return this.http.post<any>(
-      environment.gateway + 'prompts/create/' + this.getGender(),
+    return this.http.post<ImageResponse>(
+      environment.gateway + 'prompts/create/' + this.getGender() + '/' + email,
       userInput
     );
   }
 
-  regenerate(): Observable<any> {
-    return this.http.get<any>(environment.gateway + 'prompts/regenerate');
+  regenerate(email: string): Observable<ImageResponse> {
+    return this.http.get<ImageResponse>(
+      environment.gateway + 'prompts/regenerate/' + email
+    );
   }
 
   public getPrompt() {

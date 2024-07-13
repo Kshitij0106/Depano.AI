@@ -11,7 +11,11 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
   public getUser(): Observable<User> {
-    const email = localStorage.getItem('user');
+    const email = sessionStorage.getItem('user');
     return this.http.get<User>(environment.gateway + 'users' + '/' + email);
+  }
+
+  public getEmail(): string | null {
+    return sessionStorage.getItem('user');
   }
 }

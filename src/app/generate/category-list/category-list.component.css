@@ -39,3 +39,18 @@
   letter-spacing: 0.15em;
   text-align: center;
 }
+
+.card-color {
+  height: 130px;
+  width: 120px;
+  margin-left: 40px;
+  border-radius: 20%;
+  align-items: center;
+}
+
+.attribute-img {
+  padding: 40px;
+  /* object-fit: cover; */
+  height: 220px;
+  width: 200px;
+}

@@ -28,6 +28,7 @@ export class CategoryComponent implements OnInit {
   public showGenerateButton: boolean = false;
   hideUserPrompt: boolean = false;
   public showCheckBox: boolean = false;
+  public categoryListType: string = '';
 
   // breadcrumbs!: Map<string, string>;
   // list: string[] = [];
@@ -89,6 +90,7 @@ export class CategoryComponent implements OnInit {
    * @param {Category} category - The category to check.
    */
   checkCategory(category: Category) {
+    this.categoryListType = this.selectedCategory.key;
     if (
       this.selectedCategory.key === 'gender' ||
       this.selectedCategory.key === 'wear' ||

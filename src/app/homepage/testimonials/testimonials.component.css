@@ -33,9 +33,15 @@
   padding-left: 70px;
   padding-right: 70px;
   color: #ffffff;
+  font-family: Roboto;
+  font-weight: 400;
+  font-size: 18px;
 }
 
 .source {
   margin-top: 60px;
   text-align: right;
+  font-family: Roboto;
+  font-weight: 400;
+  font-size: 18px;
 }

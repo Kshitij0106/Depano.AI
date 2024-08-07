@@ -1,0 +1,42 @@
+.heading {
+  font-family: Inter;
+  font-size: 48px;
+  font-weight: 700;
+  text-align: center;
+  color: #ffffff;
+}
+
+.description {
+  margin-top: 10px;
+  font-family: Roboto;
+  font-size: 22px;
+  font-weight: 500;
+  text-align: center;
+  color: #ffffff;
+}
+
+.card {
+  margin-top: 40px;
+  width: 360px;
+  height: 200px;
+  padding: 20px;
+  border-radius: 5%;
+  text-align: left;
+  background: #171717;
+}
+
+.card-title {
+  font-family: Roboto;
+  font-weight: 600;
+  font-size: 22px;
+  margin-bottom: 10px;
+  color: #ffffff;
+}
+
+.card-text {
+  margin-top: 25px;
+  font-family: Roboto;
+  font-weight: 400;
+  font-size: 18px;
+  color: #ffffff;
+}

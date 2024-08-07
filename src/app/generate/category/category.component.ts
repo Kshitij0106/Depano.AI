@@ -148,12 +148,14 @@ export class CategoryComponent implements OnInit {
       newCategoryList.push(
         {
           name: 'Westernwear',
-          image: '',
+          image:
+            'https://firebasestorage.googleapis.com/v0/b/depano-ai.appspot.com/o/App%2FCategory%2FMen%2FTop%2FWestern%2Fcoats.png?alt=media&token=594f7144-44e4-4313-8454-bb156a32601c',
           code: 'western',
         },
         {
           name: 'Indianwear',
-          image: '',
+          image:
+            'https://firebasestorage.googleapis.com/v0/b/depano-ai.appspot.com/o/App%2FCategory%2FMen%2FBottom%2FIndian%2Flungi.png?alt=media&token=20a4ae95-b8fc-41c8-8de0-82b39fd78f93',
           code: 'indian',
         }
       );

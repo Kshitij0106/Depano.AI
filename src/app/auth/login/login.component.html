@@ -1,12 +1,11 @@
 <div class="ctn container-fluid">
-  <div class="row">
-    <div class="col-8">
-      <img src="./assets/home_pic.png" class="img" alt="..." />
-      <div class="overlay title-overlay">
-        <h6 class="title" (click)="openHome()">{{ title }}</h6>
-      </div>
+  <div class="row title-ctn">
+    <div class="col-10">
+      <h6 class="title" (click)="openHome()">{{ title }}</h6>
     </div>
-    <div class="col-4">
+  </div>
+  <div class="row">
+    <div class="col-6">
       <div class="container">
         <div class="heading row">
           <label>Sign In</label>
@@ -44,7 +43,7 @@
                   </div>
                 </div>
 
-                <div class="mb-3">
+                <div class="mb-2">
                   <input
                     placeholder="Password"
                     type="password"
@@ -64,15 +63,20 @@
                   </div>
                 </div>
 
-                <div class="mb-3 form-check">
-                  <!-- <input
-                  type="checkbox"
-                  class="check-box form-check-input"
-                  id="remember"
-                />
-                <label class="check-input form-check-label" for="remember-input"
-                  >Remember me</label
-                > -->
+                <!-- <div class="mb-3 form-check">
+                  <input
+                    type="checkbox"
+                    class="check-box form-check-input"
+                    id="remember"
+                  />
+                  <label
+                    class="check-input form-check-label"
+                    for="remember-input"
+                    >Remember me</label
+                  >
+                </div> -->
+
+                <div>
                   <button
                     type="button"
                     class="forgot-btn btn"
@@ -82,22 +86,26 @@
                   </button>
                 </div>
 
-                <button
-                  type="submit"
-                  class="login-btn btn"
-                  (click)="validate()"
-                  [disabled]="userform.invalid"
-                >
-                  Sign in
-                </button>
+                <div>
+                  <button
+                    type="submit"
+                    class="login-btn btn"
+                    (click)="validate()"
+                    [disabled]="userform.invalid"
+                  >
+                    Sign in
+                  </button>
+                </div>
 
-                <button
-                  type="submit"
-                  class="create-acc-btn btn"
-                  (click)="goToSignUp()"
-                >
-                  Create account
-                </button>
+                <div>
+                  <button
+                    type="submit"
+                    class="create-acc-btn btn"
+                    (click)="goToSignUp()"
+                  >
+                    Create account
+                  </button>
+                </div>
               </div>
 
               <div *ngIf="otp && !otpSent && !otpChecked">
@@ -136,7 +144,7 @@
                   (click)="generateOtp()"
                   [disabled]="userform.invalid"
                 >
-                  Generate Otp
+                  Verify
                 </button>
               </div>
 
@@ -246,6 +254,13 @@
           </div>
         </div>
       </div>
+    </div>
+    <div class="col-6">
+      <img
+        src="https://firebasestorage.googleapis.com/v0/b/depano-ai.appspot.com/o/App%2Fsign-in.png?alt=media&token=af0dfd5b-04d4-427f-9c2d-f123e9ff2343"
+        class="img"
+        alt="..."
+      />
     </div>
   </div>
 </div>

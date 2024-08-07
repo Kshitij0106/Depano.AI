@@ -1,12 +1,11 @@
 <div class="ctn container-fluid">
-  <div class="row">
-    <div class="col-8">
-      <img src="./assets/home_pic.png" class="img" alt="..." />
-      <div class="overlay title-overlay">
-        <h6 class="title" (click)="openHome()">{{ title }}</h6>
-      </div>
+  <div class="row title-ctn">
+    <div class="col-10">
+      <h6 class="title" (click)="openHome()">{{ title }}</h6>
     </div>
-    <div class="col-4">
+  </div>
+  <div class="row">
+    <div class="col-6">
       <div class="container">
         <div class="heading row">
           <label>Sign Up</label>
@@ -106,22 +105,26 @@
                   </div>
                 </div>
 
-                <button
-                  type="submit"
-                  class="login-btn btn"
-                  (click)="generateOtp()"
-                  [disabled]="signUpForm.invalid"
-                >
-                  Generate Otp
-                </button>
+                <div>
+                  <button
+                    type="submit"
+                    class="login-btn btn"
+                    (click)="generateOtp()"
+                    [disabled]="signUpForm.invalid"
+                  >
+                    Verify
+                  </button>
+                </div>
 
-                <button
-                  type="submit"
-                  class="create-acc-btn btn"
-                  (click)="goToLogin()"
-                >
-                  Already have an account ?
-                </button>
+                <div>
+                  <button
+                    type="submit"
+                    class="create-acc-btn btn"
+                    (click)="goToLogin()"
+                  >
+                    Already have an account ?
+                  </button>
+                </div>
 
                 <div *ngIf="passError" class="pass-error" role="alert">
                   <p>
@@ -177,6 +180,14 @@
           </div>
         </div>
       </div>
+    </div>
+
+    <div class="col-6">
+      <img
+        src="https://firebasestorage.googleapis.com/v0/b/depano-ai.appspot.com/o/App%2Fsign-up.png?alt=media&token=69a0eef0-eaec-47db-abb7-20cc7514b9c9"
+        class="img"
+        alt="..."
+      />
     </div>
   </div>
 </div>

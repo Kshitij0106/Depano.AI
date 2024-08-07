@@ -54,7 +54,11 @@ export class HeaderComponent implements OnInit {
    */
   openHome() {
     this.emptyData();
-    this.router.navigate(['home']);
+    if (this.source === 'category') {
+      this.router.navigate(['gender']);
+    } else {
+      this.router.navigate(['home']);
+    }
   }
 
   /**

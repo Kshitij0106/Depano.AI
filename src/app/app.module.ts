@@ -23,11 +23,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UserService } from './services/user.service';
 import { AuthService } from './auth/services/auth.service';
 import { CheckedAttributesService } from './generate/services/checked-attributes.service';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
+    FooterComponent,
     HomeComponent,
     CategoryComponent,
     CategoryListComponent,

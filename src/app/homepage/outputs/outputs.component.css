@@ -15,6 +15,7 @@
   width: 400px;
   height: 360px;
   border-radius: 5%;
+  object-fit: cover;
 }
 
 .result-img2 {
@@ -22,11 +23,12 @@
   width: 615px;
   height: 480px;
   border-radius: 5%;
-  object-fit: fill;
+  object-fit: cover;
 }
 
 .result-img3 {
   width: 300px;
   height: 330px;
   border-radius: 5%;
+  object-fit: cover;
 }

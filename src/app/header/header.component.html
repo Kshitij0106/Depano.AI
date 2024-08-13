@@ -4,7 +4,7 @@
       <h6 class="title" (click)="openHome()">{{ title }}</h6>
     </div>
 
-    <div class="col-2">
+    <div *ngIf="showProfile" class="col-2">
       <div class="btn-group">
         <button
           type="button"

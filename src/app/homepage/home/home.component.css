@@ -30,12 +30,12 @@ body {
 }
 
 .overlay {
+  margin-top: 60px;
   position: absolute;
 }
 
 .img-overlay {
   padding-left: 60px;
-  padding-top: 20px;
   left: 0;
   top: 0;
 }
@@ -44,7 +44,7 @@ body {
   font-family: Inter;
   font-size: 51px;
   font-weight: 700;
-  padding-top: 190px;
+  padding-top: 140px;
   line-height: 18.75px;
   letter-spacing: 0.04em;
   text-align: center;
@@ -63,7 +63,7 @@ body {
 }
 
 .btns {
-  margin-top: 60px;
+  margin-top: 50px;
   justify-content: center;
 }
 

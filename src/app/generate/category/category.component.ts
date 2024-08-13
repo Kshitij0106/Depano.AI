@@ -263,7 +263,10 @@ export class CategoryComponent implements OnInit {
       }
     } else {
       // If the user is selecting attributes, route to previous category
-      this.setPrompt(this.selectedCategory.key, this.userInput);
+      this.setPrompt(
+        this.selectedCategory.key,
+        this.userInput + ' ' + this.selectedCategory.key
+      );
       this.getCategory(this.selectedClothCode);
       this.changeCategoryRoute(this.selectedClothCode);
       // add selected attribute to a list

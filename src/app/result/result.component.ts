@@ -47,6 +47,7 @@ export class ResultComponent {
     this.promptService.sendPrompt(this.email).subscribe((result) => {
       if (result.status === 'Success') {
         this.image = result.url;
+        this.userService.updateCredits();
       } else {
         this.toastr.error(result.message);
       }
@@ -58,6 +59,7 @@ export class ResultComponent {
     this.promptService.regenerate(this.email).subscribe((result) => {
       if (result.status === 'Success') {
         this.image = result.url;
+        this.userService.updateCredits();
       } else {
         this.toastr.error(result.message);
       }

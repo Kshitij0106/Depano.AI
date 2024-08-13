@@ -1,0 +1,82 @@
+.heading {
+  font-family: Inter;
+  font-size: 48px;
+  font-weight: 700;
+  text-align: center;
+  color: #ffffff;
+}
+
+.description {
+  margin-top: 10px;
+  font-family: Roboto;
+  font-size: 22px;
+  font-weight: 500;
+  text-align: center;
+  color: #ffffff;
+}
+
+.card {
+  margin-top: 40px;
+  width: 400px;
+  height: 340px;
+  padding: 20px;
+  border-radius: 5%;
+  text-align: left;
+  background: #171717;
+}
+
+.card-title {
+  font-family: Roboto;
+  font-weight: 600;
+  font-size: 22px;
+  margin-bottom: 10px;
+  color: #ffffff;
+  cursor: pointer;
+  cursor: hand;
+}
+
+.card-text {
+  margin-top: 55px;
+  font-family: Roboto;
+  font-weight: 400;
+  font-size: 18px;
+  color: #ffffff;
+}
+
+.bar {
+  position: absolute;
+  margin-top: 10px;
+  height: 5px;
+  width: 150px;
+}
+
+.emptybar {
+  background-color: #2e3033;
+  width: 100%;
+  height: 100%;
+}
+
+.filledbar {
+  position: absolute;
+  top: 0px;
+  z-index: 3;
+  width: 0px;
+  height: 100%;
+  background: rgb(0, 154, 217);
+  background: linear-gradient(
+    90deg,
+    rgba(23, 23, 23, 1) 0%,
+    rgba(46, 46, 46, 1) 65%,
+    rgba(217, 217, 217, 1) 100%
+  );
+}
+
+.card:hover {
+  transform: translateY(-20px);
+  transition: 0.4s ease-out;
+}
+
+.card:hover .filledbar {
+  width: 120px;
+  transition: 0.4s ease-out;
+}

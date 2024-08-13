@@ -6,11 +6,11 @@
   font-family: Roboto;
   font-style: normal;
   font-weight: 600;
-  font-size: 20.8093px;
+  font-size: 18px;
   line-height: 25px;
   text-align: center;
   letter-spacing: 0.12em;
-  color: #000000;
+  color: #62808f;
   margin-top: 20px;
   margin-bottom: 70px;
 }
@@ -36,7 +36,9 @@
   line-height: 25px;
   text-align: start;
   letter-spacing: 0.12em;
-  color: #727272;
+  color: #62808f;
+  padding-left: 10px;
+  padding-top: 10px;
 }
 
 .btn {
@@ -49,7 +51,7 @@
   width: 115px;
   text-align: center;
   color: #ffffff;
-  background: #000000;
+  background: #62808f;
   border-radius: 7px;
   float: right;
   margin-top: -60px;

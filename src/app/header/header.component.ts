@@ -15,6 +15,7 @@ import { User } from '../models/user';
 export class HeaderComponent implements OnInit {
   title = 'DEPANO AI';
   @Input() source: string = '';
+  showProfile: boolean = true;
 
   colorStart: string = '#444543';
   colorEnd: string = '#c1bebe';
@@ -35,6 +36,26 @@ export class HeaderComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.checkProfile();
+    this.updateCredits();
+  }
+
+  checkProfile() {
+    if (this.source === 'home' && !this.authService.isLoggedIn()) {
+      this.showProfile = false;
+    } else {
+      this.showProfile = true;
+      this.getUser();
+    }
+  }
+
+  updateCredits() {
+    this.userService.refreshCredits.subscribe(() => {
+      this.getUser();
+    });
+  }
+
+  getUser() {
     this.userService.getUser().subscribe((user) => {
       this.loggedInUser.name = user.name;
       this.loggedInUser.email = user.email;
@@ -57,6 +78,7 @@ export class HeaderComponent implements OnInit {
     if (this.source === 'category') {
       this.router.navigate(['gender']);
     } else {
+      this.checkProfile();
       this.router.navigate(['home']);
     }
   }

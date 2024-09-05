@@ -17,6 +17,15 @@
         </ol>
       </nav>
     </div>
+    <div *ngIf="showRemoveAttributeType" class="col">
+      <button
+        type="button"
+        class="btn skip-btn"
+        (click)="onRemoveSelectedAttribute()"
+      >
+        Remove
+      </button>
+    </div>
     <div *ngIf="showGenerateButton; else showSkip" class="col">
       <button type="button" class="btn skip-btn" (click)="generate()">
         Generate

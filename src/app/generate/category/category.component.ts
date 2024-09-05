@@ -28,10 +28,8 @@ export class CategoryComponent implements OnInit {
   public showGenerateButton: boolean = false;
   hideUserPrompt: boolean = false;
   public showCheckBox: boolean = false;
+  public showRemoveAttributeType: boolean = false;
   public categoryListType: string = '';
-
-  // breadcrumbs!: Map<string, string>;
-  // list: string[] = [];
 
   constructor(
     private router: Router,
@@ -108,6 +106,12 @@ export class CategoryComponent implements OnInit {
     } else {
       this.showGenerateButton = false;
       this.showCheckBox = false;
+    }
+
+    if (!this.selectedCategory.next) {
+      this.showRemoveAttributeType = true;
+    } else {
+      this.showRemoveAttributeType = false;
     }
   }
 
@@ -234,7 +238,7 @@ export class CategoryComponent implements OnInit {
       this.changeCategoryRoute(subCategory.code);
     } else {
       // If the user is selecting attribute, route to previous category
-      this.categoryService.getAttribute(subCategory.code).subscribe();
+      this.categoryService.saveAttributeValue(subCategory.code).subscribe();
       this.getCategory(this.selectedClothCode);
       this.changeCategoryRoute(this.selectedClothCode);
       // add selected attribute to a list
@@ -286,6 +290,12 @@ export class CategoryComponent implements OnInit {
     if (key.length > 0 && userInput.length) {
       this.promptService.addToPrompt(key, userInput);
     }
+  }
+
+  onRemoveSelectedAttribute() {
+    this.categoryService
+      .removeAttributeValue(this.selectedCategory.key)
+      .subscribe();
   }
 
   /**

@@ -16,16 +16,16 @@
 }
 
 .description {
-  margin-top: 10px;
+  margin-top: 70px;
   font-family: Roboto;
-  font-size: 22px;
-  font-weight: 500;
+  font-size: 48px;
+  font-weight: 700;
   text-align: left;
   color: #ffffff;
 }
 
 .card {
-  margin-top: 40px;
+  margin-top: 20px;
   width: 360px;
   height: 200px;
   padding: 20px;

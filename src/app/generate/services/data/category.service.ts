@@ -36,8 +36,19 @@ export class CategoryService {
       );
   }
 
-  public getAttribute(category: string): Observable<any> {
+  public saveAttributeValue(category: string): Observable<any> {
     return this.http.get(
+      environment.gateway +
+        this.getGender() +
+        '/' +
+        'attributes' +
+        '/' +
+        category
+    );
+  }
+
+  public removeAttributeValue(category: string) {
+    return this.http.delete(
       environment.gateway +
         this.getGender() +
         '/' +

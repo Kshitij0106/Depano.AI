@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { HostListener } from '@angular/core';
-import { Location } from '@angular/common';
 import { Category } from '../models/category';
 import { PromptService } from '../services/prompt.service';
 import { Subcategory } from '../models/subcategory';
@@ -19,17 +17,23 @@ import { CheckedAttributesService } from '../services/checked-attributes.service
 })
 export class CategoryComponent implements OnInit {
   private category: string = '';
-  public selectedCategoryKey: string = '';
+  private selectedCategory!: Category;
+  // Cloth selected by user. Route to previous category after selecting attribute
   private selectedClothCode: string = '';
-  public selectedCategory!: Category;
-  categoryLists: Subcategory[] = [];
-  subcategory: Subcategory[] = [];
-  private userInput: string = '';
   public showGenerateButton: boolean = false;
-  hideUserPrompt: boolean = false;
+
+  public categoryLists: Subcategory[] = [];
+  // Determine type of category
+  public categoryKey: string = '';
   public showCheckBox: boolean = false;
-  public showRemoveAttributeType: boolean = false;
-  public categoryListType: string = '';
+  // To check whether the selected category is attribute or value
+  public attributeListType: string = '';
+  // Code of the selected attribute
+  public selectedCategoryCode: string = '';
+
+  // Name used in user input prompt
+  public selectedCategoryName: string = '';
+  public hideUserPrompt: boolean = false;
 
   constructor(
     private router: Router,
@@ -37,8 +41,7 @@ export class CategoryComponent implements OnInit {
     private categoryService: CategoryService,
     private promptService: PromptService,
     private checkAttributeService: CheckedAttributesService,
-    private breadcrumbService: BreadcrumbService,
-    private location: Location
+    private breadcrumbService: BreadcrumbService
   ) {}
 
   /**
@@ -47,6 +50,7 @@ export class CategoryComponent implements OnInit {
    */
   ngOnInit(): void {
     this.getCategory(this.getRoute());
+    this.disableBackButton();
   }
 
   /**
@@ -88,7 +92,7 @@ export class CategoryComponent implements OnInit {
    * @param {Category} category - The category to check.
    */
   checkCategory(category: Category) {
-    this.categoryListType = this.selectedCategory.key;
+    this.categoryKey = this.selectedCategory.key;
     if (
       this.selectedCategory.key === 'gender' ||
       this.selectedCategory.key === 'wear' ||
@@ -109,9 +113,12 @@ export class CategoryComponent implements OnInit {
     }
 
     if (!this.selectedCategory.next) {
-      this.showRemoveAttributeType = true;
+      this.showCheckBox = true;
+      this.attributeListType = 'value';
+      this.selectedCategoryCode = this.selectedCategory.code;
     } else {
-      this.showRemoveAttributeType = false;
+      this.attributeListType = 'attribute';
+      this.selectedCategoryCode = '';
     }
   }
 
@@ -178,12 +185,26 @@ export class CategoryComponent implements OnInit {
               this.getCategory('optional');
             } else {
               if (cat.key === 'type') {
-                const currentCategory = this.selectedCategory.code
-                  .split('-')
-                  .at(0);
                 const gender = this.promptService.getGender();
-                this.getCategory(gender + '-' + currentCategory);
-                this.changeCategoryRoute(gender + '-' + currentCategory);
+                // if only top or bottom or dress is selected
+                if (
+                  this.selectedCategory.code == 'top' ||
+                  this.selectedCategory.code == 'bottom' ||
+                  this.selectedCategory.code == 'dress-wear'
+                ) {
+                  const currentCategory = this.selectedCategory.code
+                    .split('-')
+                    .at(0);
+                  this.getCategory(gender + '-' + currentCategory);
+                  this.changeCategoryRoute(gender + '-' + currentCategory);
+                } else if (
+                  // if only western or indian wear is selected
+                  this.selectedCategory.code == 'indian' ||
+                  this.selectedCategory.code == 'western'
+                ) {
+                  this.getCategory(gender + '-' + 'wear');
+                  this.changeCategoryRoute(gender + '-' + 'wear');
+                }
               }
               if (cat.key === 'style') {
                 this.hideUserPrompt = false;
@@ -211,6 +232,7 @@ export class CategoryComponent implements OnInit {
           });
         }
       } else {
+        // If the user is selecting attribute, route to previous category
         this.getCategory(this.selectedClothCode);
         this.changeCategoryRoute(this.selectedClothCode);
       }
@@ -224,7 +246,7 @@ export class CategoryComponent implements OnInit {
    */
   categorySelected(subCategory: Subcategory) {
     this.category = subCategory.code;
-    this.selectedCategoryKey = subCategory.name;
+    this.selectedCategoryName = subCategory.name;
     if (this.selectedCategory.next) {
       // If the user is selecting categories
       if (this.selectedCategory.key !== 'type') {
@@ -244,7 +266,7 @@ export class CategoryComponent implements OnInit {
       // add selected attribute to a list
       this.checkAttributeService.addSelectedAttribute(
         this.selectedCategory.code,
-        true
+        subCategory.code
       );
     }
   }
@@ -254,29 +276,39 @@ export class CategoryComponent implements OnInit {
    * @param {string} input - The input entered by user in text box.
    */
   inputSelected(input: string) {
-    this.userInput = input;
     if (this.selectedCategory.next) {
-      if (this.selectedCategory.key === 'style') {
+      if (
+        this.selectedCategory.key === 'gender' &&
+        this.breadcrumbService.getBreadcrumbs().length == 1
+      ) {
+        this.setPrompt('type', input);
+        this.getCategory('optional');
+      } else {
         // If the user is selecting categories
         // Set the 'user-input' prompt
-        const currentCategory = this.selectedCategory.code.split('-').at(0);
+        this.setPrompt('type', input);
         const gender = this.promptService.getGender();
-        this.setPrompt('type', this.userInput);
-        this.getCategory(gender + '-' + currentCategory);
-        this.changeCategoryRoute(gender + '-' + currentCategory);
+        if (this.selectedCategory.key === 'style') {
+          this.getCategory(gender + '-' + 'wear');
+          this.changeCategoryRoute(gender + '-' + 'wear');
+        } else if (this.selectedCategory.key === 'wear') {
+          const currentCategory = this.selectedCategory.code.split('-').at(0);
+          this.getCategory(gender + '-' + currentCategory);
+          this.changeCategoryRoute(gender + '-' + currentCategory);
+        }
       }
     } else {
       // If the user is selecting attributes, route to previous category
       this.setPrompt(
         this.selectedCategory.key,
-        this.userInput + ' ' + this.selectedCategory.key
+        input + ' ' + this.selectedCategory.key
       );
       this.getCategory(this.selectedClothCode);
       this.changeCategoryRoute(this.selectedClothCode);
       // add selected attribute to a list
       this.checkAttributeService.addSelectedAttribute(
-        this.selectedCategory.key,
-        true
+        this.selectedCategory.code,
+        input
       );
     }
   }
@@ -292,10 +324,12 @@ export class CategoryComponent implements OnInit {
     }
   }
 
-  onRemoveSelectedAttribute() {
-    this.categoryService
-      .removeAttributeValue(this.selectedCategory.key)
-      .subscribe();
+  /**
+   * Removes the selected attribute from the list.
+   * @param {string} code - The category selected by the user.
+   */
+  onRemoveSelectedAttribute(code: string) {
+    this.categoryService.removeAttributeValue(code).subscribe();
   }
 
   /**
@@ -317,19 +351,14 @@ export class CategoryComponent implements OnInit {
     });
   }
 
-  /**
-   * Navigates to the previous category.
-   */
-  previousCategory() {
-    this.location.back();
-  }
+  disableBackButton() {
+    // Add an initial dummy state
+    history.pushState(null, '', window.location.href);
 
-  /**
-   * Removes the last breadcrumb when back button is pressed.
-   */
-  @HostListener('window:popstate', ['$event'])
-  onPopState() {
-    this.getCategory(this.getRoute());
-    this.breadcrumbService.removeBreadcrumb();
+    // Listen for back and forward buttons (popstate event)
+    window.addEventListener('popstate', (event) => {
+      // Replace the state to prevent the back button from navigating
+      history.pushState(null, '', window.location.href);
+    });
   }
 }

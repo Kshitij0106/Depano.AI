@@ -40,6 +40,9 @@ export class HeaderComponent implements OnInit {
     this.updateCredits();
   }
 
+  /**
+   * Show Profile dropdown on homepage only if logged in.
+   */
   checkProfile() {
     if (this.source === 'home' && !this.authService.isLoggedIn()) {
       this.showProfile = false;
@@ -49,12 +52,18 @@ export class HeaderComponent implements OnInit {
     }
   }
 
+  /**
+   * Update credits after successfull generation of image.
+   */
   updateCredits() {
     this.userService.refreshCredits.subscribe(() => {
       this.getUser();
     });
   }
 
+  /**
+   * Get user data from DB from user details stored in session storage.
+   */
   getUser() {
     this.userService.getUser().subscribe((user) => {
       this.loggedInUser.name = user.name;
@@ -63,6 +72,9 @@ export class HeaderComponent implements OnInit {
     });
   }
 
+  /**
+   * @returns {string} - Background color code depending on the page.
+   */
   get background(): string {
     if (this.source === 'gender') {
       return `linear-gradient(${this.colorStart}, ${this.colorEnd})`;
@@ -71,7 +83,7 @@ export class HeaderComponent implements OnInit {
   }
 
   /**
-   * Navigates to homepage.
+   * Navigates to homepage or gender page if logged in.
    */
   openHome() {
     this.emptyData();
@@ -92,6 +104,9 @@ export class HeaderComponent implements OnInit {
     this.checkAttributeService.emptyCheckedAttributesList();
   }
 
+  /**
+   * Log out.
+   */
   logOut() {
     this.authService.logOut();
     this.openHome();

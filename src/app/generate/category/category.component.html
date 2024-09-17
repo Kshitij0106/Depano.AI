@@ -17,15 +17,6 @@
         </ol>
       </nav>
     </div>
-    <div *ngIf="showRemoveAttributeType" class="col">
-      <button
-        type="button"
-        class="btn skip-btn"
-        (click)="onRemoveSelectedAttribute()"
-      >
-        Remove
-      </button>
-    </div>
     <div *ngIf="showGenerateButton; else showSkip" class="col">
       <button type="button" class="btn skip-btn" (click)="generate()">
         Generate
@@ -43,18 +34,21 @@
     <div class="col">
       <div class="category-list">
         <app-category-list
-          [categoryKey]="categoryListType"
           [categoryList]="categoryLists"
+          [categoryKey]="categoryKey"
           [showCheckBox]="showCheckBox"
+          [attributeListType]="attributeListType"
+          [selectedCategoryCode]="selectedCategoryCode"
           (selectedCategory)="categorySelected($event)"
+          (removeCategory)="onRemoveSelectedAttribute($event)"
         ></app-category-list>
       </div>
 
       <div class="user-input">
         <app-user-input
-          [key]="selectedCategoryKey"
+          [categoryName]="selectedCategoryName"
+          [hideUserPrompt]="hideUserPrompt"
           (userInput)="inputSelected($event)"
-          [userPrompt]="hideUserPrompt"
         ></app-user-input>
       </div>
     </div>

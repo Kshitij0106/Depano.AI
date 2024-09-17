@@ -40,6 +40,8 @@ export class LoginComponent {
   confirmPassword: string = '';
   cnfrmPassError: boolean = false;
 
+  rememberUser: boolean = false;
+
   constructor(
     private router: Router,
     private authService: AuthService,
@@ -48,12 +50,15 @@ export class LoginComponent {
 
   /**
    * Navigates to homepage.
-   * Empties the breadcrumb list.
    */
   openHome() {
     this.router.navigate(['home']);
   }
 
+  /**
+   * Validates the user's email format using a regular expression (regex).
+   * Sets emailError `true` if the email format is valid according to the regex pattern, otherwise `false`.
+   */
   checkEmail() {
     if (!this.emailRegex.test(this.userAuth.email)) {
       this.emailError = true;
@@ -62,7 +67,13 @@ export class LoginComponent {
     }
   }
 
+  /**
+   * Validates the provided input data according to predefined rules or criteria.
+   */
   validate() {
+    if (this.rememberUser) {
+      this.authService.rememberUserInfo(this.userAuth.email);
+    }
     this.authService.login(this.userAuth).subscribe((result) => {
       if (result.status === 'Success') {
         this.authService.saveUserInfo(this.userAuth.email);
@@ -78,6 +89,9 @@ export class LoginComponent {
     this.otp = true;
   }
 
+  /**
+   * Generates a One-Time Password (OTP) to be sent to the user's email or phone for verification purposes.
+   */
   generateOtp() {
     this.changePasswordUser.email = this.userAuth.email;
     this.authService
@@ -92,6 +106,9 @@ export class LoginComponent {
       });
   }
 
+  /**
+   * Verifies the One-Time Password (OTP) provided by the user against the generated OTP.
+   */
   verifyOtp() {
     this.changePasswordUser.email = this.userAuth.email;
     this.authService
@@ -106,6 +123,10 @@ export class LoginComponent {
       });
   }
 
+  /**
+   * Changes the user's password by calling the authentication service.
+   * This method typically requires the user to provide their current password and a new password.
+   */
   changePassword() {
     if (this.passwordRegex.test(this.changePasswordUser.password)) {
       if (this.changePasswordUser.password !== this.confirmPassword) {
@@ -129,6 +150,9 @@ export class LoginComponent {
     }
   }
 
+  /**
+   * Resets all the user data in form.
+   */
   afterPasswordChange() {
     this.userAuth.email = '';
     this.changePasswordUser.email = '';
@@ -139,6 +163,9 @@ export class LoginComponent {
     this.otpChecked = false;
   }
 
+  /**
+   * Navigates to Sign up page.
+   */
   goToSignUp() {
     this.router.navigate(['signup']);
   }

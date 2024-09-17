@@ -18,15 +18,17 @@
         <ul class="dropdown-menu">
           <li>
             <button class="dropdown-item" type="button">
-              <i class="bi bi-person item-icon"></i>
-              {{ this.loggedInUser.credits }} {{ "Credits" }}
+              <i class="item-icon bi-person-circle"></i>
+              <span class="item-text"
+                >{{ this.loggedInUser.credits }} {{ "Credits" }}</span
+              >
             </button>
           </li>
           <li><hr class="dropdown-divider" /></li>
           <li>
             <button class="dropdown-item" type="button" (click)="logOut()">
-              <i class="bi bi-box-arrow-left item-icon"></i>
-              Log out
+              <i class="item-icon bi-box-arrow-left"></i>
+              <span class="item-text">Log Out</span>
             </button>
           </li>
         </ul>

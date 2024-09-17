@@ -14,9 +14,9 @@ import {
   styleUrls: ['./user-input.component.css'],
 })
 export class UserInputComponent implements OnInit {
+  @Input() hideUserPrompt!: boolean;
+  @Input() categoryName!: string;
   @Output() userInput = new EventEmitter<string>();
-  @Input() userPrompt!: boolean;
-  @Input() key!: string;
   @ViewChild('userInputCategory') userInputRef!: ElementRef;
 
   constructor() {}

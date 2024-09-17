@@ -3,7 +3,7 @@ import { Category } from '../../models/category';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import { PromptService } from '../prompt.service';
-import { environment } from '../../../../environments/environment';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -36,6 +36,12 @@ export class CategoryService {
       );
   }
 
+  /**
+   * Saves value of the attributes selected by user.
+   *
+   * @param {string} category - The main category for which information is requested.
+   * @returns {Observable<any>} - An observable containing the category information.
+   */
   public saveAttributeValue(category: string): Observable<any> {
     return this.http.get(
       environment.gateway +
@@ -47,6 +53,11 @@ export class CategoryService {
     );
   }
 
+  /**
+   * Removes value of the attributes selected by user.
+   *
+   * @param {string} category - The main category for which information is requested.
+   */
   public removeAttributeValue(category: string) {
     return this.http.delete(
       environment.gateway +

@@ -46,6 +46,10 @@ export class SignupComponent {
     this.router.navigate(['home']);
   }
 
+  /**
+   * Validates the user's email format using a regular expression (regex).
+   * Sets emailError `true` if the email format is valid according to the regex pattern, otherwise `false`.
+   */
   checkEmail() {
     if (!this.emailRegex.test(this.signUpUser.email)) {
       this.emailError = true;
@@ -54,6 +58,9 @@ export class SignupComponent {
     }
   }
 
+  /**
+   * Generates a One-Time Password (OTP) to be sent to the user's email for verification purposes.
+   */
   generateOtp() {
     this.signUpUser.otp = '';
     if (this.passwordRegex.test(this.signUpUser.password)) {
@@ -75,6 +82,9 @@ export class SignupComponent {
     }
   }
 
+  /**
+   * Verifies the One-Time Password (OTP) provided by the user against the generated OTP.
+   */
   verifyOtp() {
     this.authService.register(this.signUpUser).subscribe((result) => {
       if (result.status === 'Success') {
@@ -87,6 +97,9 @@ export class SignupComponent {
     });
   }
 
+  /**
+   * Navigates to login page.
+   */
   goToLogin() {
     this.router.navigate(['login']);
   }

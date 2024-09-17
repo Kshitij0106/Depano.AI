@@ -8,13 +8,23 @@
         <div class="card-body">
           <div class="form-check">
             <input
+              *ngIf="this.attributeListType === 'attribute'"
               class="attribute-check form-check-input"
               type="checkbox"
               id="flexCheckChecked"
-              checked
               readonly
               [hidden]="!showCheckBox || !checkAttribute(category.code)"
               [checked]="checkAttribute(category.code)"
+            />
+            <input
+              *ngIf="this.attributeListType === 'value'"
+              class="attribute-check form-check-input"
+              type="checkbox"
+              id="flexCheckChecked"
+              [hidden]="!showCheckBox || category.code !== selectedCode"
+              [checked]="
+                checkAttribute(category.code) || category.code === selectedCode
+              "
             />
           </div>
           <div *ngIf="this.categoryKey === 'color'" class="color-container">
@@ -29,11 +39,42 @@
             src="{{ category.image }}"
           />
           <img
-            *ngIf="this.categoryKey !== 'color' && this.categoryKey !== 'type'"
+            *ngIf="
+              this.attributeListType === 'value' && this.categoryKey !== 'color'
+            "
+            class="attribute-value-img"
+            src="{{ category.image }}"
+          />
+          <img
+            *ngIf="
+              this.categoryKey !== 'color' &&
+              this.categoryKey !== 'type' &&
+              this.attributeListType !== 'value'
+            "
             class="category-img"
             src="{{ category.image }}"
           />
           <h6 class="category-title">{{ category.name }}</h6>
+        </div>
+        <div class="card-hover-overlay">
+          <button
+            *ngIf="
+              this.attributeListType === 'value' &&
+              category.code !== selectedCode
+            "
+            class="btn"
+          >
+            <i class="action-icon bi-plus-lg"></i>
+          </button>
+          <button
+            *ngIf="
+              this.attributeListType === 'value' &&
+              category.code === selectedCode
+            "
+            class="btn"
+          >
+            <i class="action-icon bi-x-lg"></i>
+          </button>
         </div>
       </div>
     </ng-container>

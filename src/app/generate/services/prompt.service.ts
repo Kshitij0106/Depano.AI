@@ -41,7 +41,8 @@ export class PromptService {
   /**
    * Sends a prompt to the API for image generation based on user prompts.
    *
-   * @returns {Observable<any>} - An observable containing the server's response, which includes generated images.
+   * @param email - The email of the user.
+   * @returns {Observable<ImageResponse>} - An observable containing the server's response, which includes generated images.
    */
   sendPrompt(email: string): Observable<ImageResponse> {
     let userInput = this.getPrompt();
@@ -51,14 +52,16 @@ export class PromptService {
     );
   }
 
+  /**
+   * Sends a request again to the API for image generation based on user prompts.
+   *
+   * @param email - The email of the user.
+   * @returns {Observable<ImageResponse>} - An observable containing the server's response, which includes generated images.
+   */
   regenerate(email: string): Observable<ImageResponse> {
     return this.http.get<ImageResponse>(
       environment.gateway + 'prompts/regenerate/' + email
     );
-  }
-
-  public getPrompt() {
-    return this.userPrompts;
   }
 
   /**
@@ -70,5 +73,9 @@ export class PromptService {
     this.http
       .get(environment.gateway + this.getGender() + '/' + 'refresh')
       .subscribe();
+  }
+
+  public getPrompt() {
+    return this.userPrompts;
   }
 }

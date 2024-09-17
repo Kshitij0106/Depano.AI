@@ -73,18 +73,18 @@ body {
   width: 250px;
 }
 
-/* .check-box {
+.check-box {
   margin-top: 5px;
   margin-left: 2px;
   border-width: 1px;
-  border-color: #000000;
+  border-color: #524f4f;
 }
 
 .check-input {
   padding-left: 10px;
   font-family: Roboto;
   color: #545050;
-} */
+}
 
 .forgot-btn {
   float: right;
@@ -115,10 +115,6 @@ body {
   font-weight: 600;
   line-height: 18.75px;
   letter-spacing: 0.06em;
-}
-
-.otp-state {
-  /* margin-top: 100px; */
 }
 
 .pass-error {

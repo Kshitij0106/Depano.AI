@@ -126,4 +126,5 @@ body {
   border-radius: 20px;
   width: 570px;
   height: 600px;
+  max-width: 100%; /* Ensures the image does not exceed its container's width */
 }

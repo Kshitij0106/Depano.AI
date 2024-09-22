@@ -17,6 +17,14 @@ body {
   background: #ffffff;
 }
 
+.c {
+  display: flex;
+  flex-direction: column; /* Ensures items stack vertically on smaller screens */
+  justify-content: center; /* Vertically center form and image */
+  align-items: center; /* Horizontally center form and image */
+  /* height: 100vh; */
+}
+
 .title-ctn {
   background: #ffffff;
   padding-bottom: 20px;
@@ -128,4 +136,12 @@ body {
   max-width: 100%;
   height: auto;
   object-fit: cover;
+  max-height: 80vh;
+}
+
+@media (min-width: 768px) {
+  .c {
+    flex-direction: row; /* Form and image side-by-side on larger screens */
+    justify-content: space-between;
+  }
 }

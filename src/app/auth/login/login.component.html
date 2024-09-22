@@ -4,13 +4,13 @@
       <h6 class="title" (click)="openHome()">{{ title }}</h6>
     </div>
   </div>
-  <div class="c row align-items-start">
+  <div class="content row align-items-start">
     <div class="col-12 col-md-6 mb-3">
-      <div class="container p-3">
+      <div class="login-form p-3">
         <div class="heading row mb-3">
           <label>Sign In</label>
         </div>
-        <div class="row">
+        <div class="form-ctn row">
           <div class="mb-3">
             <form #userform="ngForm">
               <div *ngIf="!otp">

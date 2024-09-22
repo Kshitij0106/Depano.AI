@@ -17,6 +17,14 @@ body {
   background: #ffffff;
 }
 
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* height: 100vh; */
+}
+
 .title-ctn {
   background: #ffffff;
   padding-bottom: 20px;
@@ -38,13 +46,12 @@ body {
   cursor: hand;
 }
 
-.container {
+.signup-form {
   flex-direction: column;
   margin: 0 auto;
   align-items: center;
-  margin-top: 130px;
+  margin-top: 80px;
   display: flex;
-  justify-content: center;
 }
 
 .heading {
@@ -133,4 +140,13 @@ body {
   max-width: 100%;
   height: auto;
   object-fit: cover;
+  max-height: 80vh;
+}
+
+@media (min-width: 768px) {
+  .content {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
 }

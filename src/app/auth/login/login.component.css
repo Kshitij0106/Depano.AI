@@ -17,11 +17,11 @@ body {
   background: #ffffff;
 }
 
-.c {
+.content {
   display: flex;
-  flex-direction: column; /* Ensures items stack vertically on smaller screens */
-  justify-content: center; /* Vertically center form and image */
-  align-items: center; /* Horizontally center form and image */
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   /* height: 100vh; */
 }
 
@@ -46,11 +46,11 @@ body {
   cursor: hand;
 }
 
-.container {
+.login-form {
   flex-direction: column;
   margin: 0 auto;
   align-items: center;
-  margin-top: 130px;
+  margin-top: 100px;
   display: flex;
 }
 
@@ -140,8 +140,9 @@ body {
 }
 
 @media (min-width: 768px) {
-  .c {
-    flex-direction: row; /* Form and image side-by-side on larger screens */
+  .content {
+    flex-direction: row;
     justify-content: space-between;
+    align-items: center;
   }
 }

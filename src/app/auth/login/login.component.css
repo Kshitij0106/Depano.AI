@@ -42,9 +42,8 @@ body {
   flex-direction: column;
   margin: 0 auto;
   align-items: center;
-  margin-top: 180px;
+  margin-top: 130px;
   display: flex;
-  justify-content: center;
 }
 
 .heading {
@@ -126,8 +125,7 @@ body {
 .img {
   margin-left: 60px;
   border-radius: 30px;
-  width: 570px;
-  height: 600px;
-  min-height: 500px;
+  max-width: 100%;
+  height: auto;
   object-fit: cover;
 }

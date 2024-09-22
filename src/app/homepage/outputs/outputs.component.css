@@ -12,32 +12,23 @@
 
 .result-img {
   margin-bottom: 20px;
-  /* width: 400px;
-  height: 360px; */
   border-radius: 5%;
   object-fit: cover;
   max-width: 100%;
   height: auto;
-  max-height: 80vh;
 }
 
 .result-img2 {
   margin-bottom: 20px;
-  /* width: 615px;
-  height: 480px; */
   border-radius: 5%;
   object-fit: cover;
   max-width: 100%;
   height: auto;
-  max-height: 80vh;
 }
 
 .result-img3 {
-  /* width: 300px;
-  height: 330px; */
   border-radius: 5%;
   object-fit: cover;
   max-width: 100%;
   height: auto;
-  max-height: 80vh;
 }

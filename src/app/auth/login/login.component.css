@@ -39,10 +39,12 @@ body {
 }
 
 .container {
-  width: 320px;
+  flex-direction: column;
+  margin: 0 auto;
   align-items: center;
   margin-top: 180px;
-  margin-left: 200px;
+  display: flex;
+  justify-content: center;
 }
 
 .heading {
@@ -123,8 +125,9 @@ body {
 
 .img {
   margin-left: 60px;
-  border-radius: 20px;
+  border-radius: 30px;
   width: 570px;
   height: 600px;
-  max-width: 100%; /* Ensures the image does not exceed its container's width */
+  min-height: 500px;
+  object-fit: cover;
 }

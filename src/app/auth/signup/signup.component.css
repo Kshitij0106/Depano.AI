@@ -39,10 +39,12 @@ body {
 }
 
 .container {
-  width: 320px;
+  flex-direction: column;
+  margin: 0 auto;
   align-items: center;
-  margin-top: 130px;
-  margin-left: 200px;
+  margin-top: 180px;
+  display: flex;
+  justify-content: center;
 }
 
 .heading {
@@ -121,17 +123,15 @@ body {
   margin-top: 5px;
 }
 
-.otp-state {
-  /* margin-top: 100px; */
-}
-
 .pass-error {
   margin-top: 10px;
 }
 
 .img {
   margin-left: 60px;
-  border-radius: 20px;
+  border-radius: 30px;
   width: 570px;
   height: 600px;
+  min-height: 500px;
+  object-fit: cover;
 }

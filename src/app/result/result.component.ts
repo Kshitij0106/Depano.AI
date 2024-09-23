@@ -4,7 +4,6 @@ import { BreadcrumbService } from '../services/breadcrumb.service';
 import { Router } from '@angular/router';
 import { CheckedAttributesService } from '../generate/services/checked-attributes.service';
 import { UserService } from '../services/user.service';
-import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-result',
@@ -14,13 +13,13 @@ import { ToastrService } from 'ngx-toastr';
 export class ResultComponent implements OnInit {
   image!: string;
   email!: string;
+  result: string = '';
 
   constructor(
     private promptService: PromptService,
     private userService: UserService,
     private breadcrumbService: BreadcrumbService,
     private checkAttributeService: CheckedAttributesService,
-    private toastr: ToastrService,
     private router: Router
   ) {
     this.getUserData();
@@ -53,9 +52,16 @@ export class ResultComponent implements OnInit {
     this.promptService.sendPrompt(this.email).subscribe((result) => {
       this.image = result.url;
       if (result.status === 'Success') {
+        this.result = 'success';
         this.userService.updateCredits();
       } else {
-        this.toastr.error(result.message);
+        if (result.message.includes('network')) {
+          this.result = 'networkIssue';
+        } else if (result.message.includes('credits')) {
+          this.result = 'creditsIssue';
+        } else if (result.message.includes('banned')) {
+          this.result = 'bannedIssue';
+        }
       }
     });
   }
@@ -70,7 +76,13 @@ export class ResultComponent implements OnInit {
       if (result.status === 'Success') {
         this.userService.updateCredits();
       } else {
-        this.toastr.error(result.message);
+        if (result.message.includes('network')) {
+          this.result = 'networkIssue';
+        } else if (result.message.includes('credits')) {
+          this.result = 'creditsIssue';
+        } else if (result.message.includes('banned')) {
+          this.result = 'bannedIssue';
+        }
       }
     });
   }

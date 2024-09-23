@@ -1,7 +1,9 @@
 <app-header [source]="'result'"></app-header>
 <div class="container container-fluid">
-  <div class="row">
-    <div class="col-9">
+  <div class="row mb-3">
+    <div
+      class="col-12 col-md-9 d-flex justify-content-center justify-content-md-start mb-2"
+    >
       <button
         type="button"
         class="start-btn btn-outline-danger"
@@ -11,7 +13,9 @@
         Start again
       </button>
     </div>
-    <div class="col-3">
+    <div
+      class="col-12 col-md-3 d-flex justify-content-center justify-content-md-end mb-2"
+    >
       <button
         type="button"
         class="regen-btn btn-outline-danger"
@@ -21,24 +25,88 @@
         Regenerate
       </button>
     </div>
-    <!-- <div class="col-1">
+    <!-- <div class="col-6 col-md-1 d-flex justify-content-center">
       <button type="button" class="share-btn btn-outline-danger">
         <i class="bi bi-share-fill"></i>
       </button>
     </div>
-    <div class="col-1">
+    <div class="col-6 col-md-1 d-flex justify-content-center">
       <button type="button" class="download-btn btn-outline-danger">
         <i class="bi bi-download"></i>
       </button>
     </div> -->
   </div>
-  <div class="row">
-    <div class="col-12">
-      <img class="img" src="{{ image }}" />
+  <div *ngIf="this.result === 'success'" class="row">
+    <div class="col-12 d-flex justify-content-center align-items-center">
+      <img class="img img-fluid" src="{{ image }}" />
     </div>
   </div>
-  <div class="row">
-    <div class="col"></div>
-    <div class="col"></div>
+
+  <div
+    *ngIf="this.result === 'networkIssue'"
+    class="row error d-flex justify-content-center align-items-center"
+  >
+    <div class="row align-items-center">
+      <div class="col-12 col-md-6 mb-3 mb-md-0 ps-md-5">
+        <h1 class="error-txt mb-3">Uh-oh! 🌐 Network Error</h1>
+        <p class="error-txt text-md-start">
+          It seems we're having trouble connecting right now. Please check your
+          internet connection and try again. <br />
+          If the problem persists, we'll be here when you're back online.
+          <br />Things you can try:
+        </p>
+        <ul class="ms-md-4 text-md-start">
+          <li>Ensure you're connected to the internet.</li>
+          <li>Refresh this page or reopen the app.</li>
+          <li>Try again in a few moments.</li>
+        </ul>
+      </div>
+
+      <div class="col-12 col-md-6 d-flex justify-content-center">
+        <img class="img-fluid" src="{{ image }}" />
+      </div>
+    </div>
+  </div>
+
+  <div
+    *ngIf="this.result === 'creditsIssue'"
+    class="error d-flex justify-content-center align-items-center"
+  >
+    <div class="row align-items-center">
+      <div class="col-12 col-md-6 mb-3 mb-md-0 ps-md-5">
+        <h1 class="error-txt mb-3">Oh no! 😕 You're out of credits</h1>
+        <p class="error-txt">
+          It looks like you've run out of credits to continue. To keep exploring
+          and using all our features, you can easily top up your credits or
+          upgrade to a plan that suits your needs.
+        </p>
+      </div>
+
+      <div class="col-12 col-md-6 d-flex justify-content-center">
+        <img class="img-fluid" src="{{ image }}" />
+      </div>
+    </div>
+  </div>
+
+  <div
+    *ngIf="this.result === 'bannedIssue'"
+    class="error d-flex justify-content-center align-items-center"
+  >
+    <div class="row align-items-center">
+      <div class="col-12 col-md-6 mb-3 mb-md-0 ps-md-5">
+        <h1 class="error-txt mb-3">Oops! 🚫</h1>
+        <p class="error-txt">
+          It looks like your input contains a word or phrase that isn't allowed.
+          <br />
+          To keep our platform safe and inclusive for everyone, we kindly ask
+          you to revise your input. If you believe this is an error, feel free
+          to contact support. <br />Try again with different wording!
+        </p>
+      </div>
+
+      <div class="col-12 col-md-6 d-flex justify-content-center">
+        <img class="img-fluid" src="{{ image }}" />
+      </div>
+    </div>
   </div>
 </div>

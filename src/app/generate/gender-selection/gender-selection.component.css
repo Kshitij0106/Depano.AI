@@ -31,14 +31,15 @@ body {
   bottom: 0;
   width: 40%;
   opacity: 0;
-  height: 675px;
+  height: calc(100vh - 60px);
   margin-top: 60px;
-  padding-top: 300px;
+  align-items: center;
   overflow: hidden;
   backdrop-filter: blur(2px) brightness(100%);
   transition: all 0.3s ease-in-out;
   cursor: pointer;
   cursor: hand;
+  display: flex;
 }
 
 .card-women:hover .women-overlay {
@@ -49,7 +50,7 @@ body {
   font-weight: bold;
   text-align: left;
   font-family: Roboto;
-  padding-left: 100px;
+  padding-left: 70px;
   font-style: italic;
   font-size: 66px;
   letter-spacing: 0.12em;
@@ -67,12 +68,17 @@ body {
   top: 0;
   right: 0;
   width: 40%;
+  opacity: 0;
   margin-top: 60px;
-  height: 675px;
-  padding-top: 300px;
+  height: calc(100vh - 60px);
+  align-items: center;
   overflow: hidden;
   backdrop-filter: blur(2px) brightness(100%);
   transition: all 0.3s ease-in-out;
+  display: flex;
+  cursor: pointer;
+  cursor: hand;
+  justify-content: flex-end;
 }
 
 .card-men:hover .men-overlay {
@@ -80,9 +86,9 @@ body {
 }
 
 .card-title-men {
+  padding-right: 70px;
   font-weight: bold;
   text-align: right;
-  padding-right: 70px;
   font-family: Roboto;
   font-style: italic;
   font-size: 66px;
@@ -91,5 +97,14 @@ body {
 }
 
 .img {
-  height: 675px;
+  width: 100%;
+  height: calc(100vh - 60px);
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+  .card-title-men,
+  .card-title-women {
+    font-size: 33px;
+  }
 }

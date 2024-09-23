@@ -1,22 +1,20 @@
 <app-header [source]="'home'"></app-header>
 <div class="ctn container-fluid">
-  <div class="row home-cnt justify-content-center">
-    <div class="col">
+  <div class="row">
+    <div class="col-12">
       <img
         src="https://firebasestorage.googleapis.com/v0/b/depano-ai.appspot.com/o/App%2Fhomepage.png?alt=media&token=651869ad-96b9-4d6d-9801-af36193d10ec"
-        class="img"
+        class="img img-fluid"
         alt="..."
       />
-      <div class="row overlay img-overlay">
-        <div class="row">
-          <p class="txt">Revolutionizing Fashion with AI</p>
-        </div>
-        <div class="row">
-          <p class="description">
-            Empowering Designers to Create, Innovate, and Inspire
-          </p>
-        </div>
-        <div class="row btns">
+      <div
+        class="row overlay img-overlay position-absolute d-flex flex-column justify-content-center align-items-center text-center"
+      >
+        <p class="txt">Revolutionizing Fashion with AI</p>
+        <p class="description">
+          Empowering Designers to Create, Innovate, and Inspire
+        </p>
+        <div class="row btns justify-content-center">
           <button type="button" class="start-btn btn" (click)="getStarted()">
             Get started
           </button>

@@ -43,7 +43,7 @@
   </div>
 
   <div
-    *ngIf="this.result === 'networkIssue'"
+    *ngIf="this.result === 'networkIssue' && this.error"
     class="row error d-flex justify-content-center align-items-center"
   >
     <div class="row align-items-center">
@@ -69,7 +69,7 @@
   </div>
 
   <div
-    *ngIf="this.result === 'creditsIssue'"
+    *ngIf="this.result === 'creditIssue' && this.error"
     class="error d-flex justify-content-center align-items-center"
   >
     <div class="row align-items-center">
@@ -89,7 +89,7 @@
   </div>
 
   <div
-    *ngIf="this.result === 'bannedIssue'"
+    *ngIf="this.result === 'bannedIssue' && this.error"
     class="error d-flex justify-content-center align-items-center"
   >
     <div class="row align-items-center">

@@ -14,6 +14,7 @@ export class ResultComponent implements OnInit {
   image!: string;
   email!: string;
   result: string = '';
+  error: boolean = false;
 
   constructor(
     private promptService: PromptService,
@@ -53,12 +54,14 @@ export class ResultComponent implements OnInit {
       this.image = result.url;
       if (result.status === 'Success') {
         this.result = 'success';
+        this.error = false;
         this.userService.updateCredits();
       } else {
+        this.error = true;
         if (result.message.includes('network')) {
           this.result = 'networkIssue';
         } else if (result.message.includes('credits')) {
-          this.result = 'creditsIssue';
+          this.result = 'creditIssue';
         } else if (result.message.includes('banned')) {
           this.result = 'bannedIssue';
         }
@@ -74,12 +77,15 @@ export class ResultComponent implements OnInit {
     this.promptService.regenerate(this.email).subscribe((result) => {
       this.image = result.url;
       if (result.status === 'Success') {
+        this.result = 'success';
+        this.error = false;
         this.userService.updateCredits();
       } else {
+        this.error = true;
         if (result.message.includes('network')) {
           this.result = 'networkIssue';
         } else if (result.message.includes('credits')) {
-          this.result = 'creditsIssue';
+          this.result = 'creditIssue';
         } else if (result.message.includes('banned')) {
           this.result = 'bannedIssue';
         }

@@ -86,6 +86,13 @@ export class CategoryComponent implements OnInit {
   }
 
   /**
+   * Loads and sets the 'list of subcategories' for the currently selected category.
+   */
+  loadCategoryList() {
+    this.categoryLists = this.selectedCategory.subCategories;
+  }
+
+  /**
    * Checks if the user prompt box is shown or not.
    * Check whether to show skip or generate button.
    * Set the Selected clothing code.
@@ -120,13 +127,6 @@ export class CategoryComponent implements OnInit {
       this.attributeListType = 'attribute';
       this.selectedCategoryCode = '';
     }
-  }
-
-  /**
-   * Loads and sets the 'list of subcategories' for the currently selected category.
-   */
-  loadCategoryList() {
-    this.categoryLists = this.selectedCategory.subCategories;
   }
 
   /**
@@ -186,24 +186,28 @@ export class CategoryComponent implements OnInit {
             } else {
               if (cat.key === 'type') {
                 const gender = this.promptService.getGender();
-                // if only top or bottom or dress is selected
+                const currentCategory = this.selectedCategory.code
+                  .split('-')
+                  .at(0);
                 if (
-                  this.selectedCategory.code == 'top' ||
-                  this.selectedCategory.code == 'bottom' ||
-                  this.selectedCategory.code == 'dress-wear'
+                  this.selectedCategory.code === 'top' ||
+                  this.selectedCategory.code === 'bottom' ||
+                  this.selectedCategory.code === 'dress-wear'
                 ) {
-                  const currentCategory = this.selectedCategory.code
-                    .split('-')
-                    .at(0);
+                  // if only top or bottom or dress is selected
                   this.getCategory(gender + '-' + currentCategory);
                   this.changeCategoryRoute(gender + '-' + currentCategory);
                 } else if (
                   // if only western or indian wear is selected
-                  this.selectedCategory.code == 'indian' ||
-                  this.selectedCategory.code == 'western'
+                  this.selectedCategory.code === 'indian' ||
+                  this.selectedCategory.code === 'western'
                 ) {
                   this.getCategory(gender + '-' + 'wear');
                   this.changeCategoryRoute(gender + '-' + 'wear');
+                } else {
+                  // when cloth-type is skipped
+                  this.getCategory(gender + '-' + currentCategory);
+                  this.changeCategoryRoute(gender + '-' + currentCategory);
                 }
               }
               if (cat.key === 'style') {

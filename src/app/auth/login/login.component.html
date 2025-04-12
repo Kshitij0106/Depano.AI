@@ -63,7 +63,7 @@
                   </div>
                 </div>
 
-                <div class="mb-3 form-check">
+                <!-- <div class="mb-3 form-check">
                   <input
                     type="checkbox"
                     class="check-box form-check-input"
@@ -82,7 +82,7 @@
                   >
                     Forgot password?
                   </button>
-                </div>
+                </div> -->
 
                 <div>
                   <button
@@ -169,22 +169,26 @@
                   </div>
                 </div>
 
-                <button
-                  type="submit"
-                  class="login-btn btn"
-                  (click)="verifyOtp()"
-                  [disabled]="userform.invalid"
-                >
-                  Submit
-                </button>
+                <div>
+                  <button
+                    type="submit"
+                    class="login-btn btn"
+                    (click)="verifyOtp()"
+                    [disabled]="userform.invalid"
+                  >
+                    Submit
+                  </button>
+                </div>
 
-                <button
-                  type="submit"
-                  class="create-acc-btn btn"
-                  (click)="generateOtp()"
-                >
-                  Resend OTP
-                </button>
+                <div>
+                  <button
+                    type="submit"
+                    class="create-acc-btn btn"
+                    (click)="generateOtp()"
+                  >
+                    Resend OTP
+                  </button>
+                </div>
               </div>
 
               <div *ngIf="otp && otpSent && otpChecked" class="otp-state">

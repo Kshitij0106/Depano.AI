@@ -97,7 +97,7 @@ export class AuthService {
    */
   forgotPasswordRequest(user: SignUpUser): Observable<Auth> {
     return this.http.put<Auth>(
-      environment.gateway + 'users/forgotPasswordRequest',
+      environment.gateway + 'auth/forgotPasswordRequest',
       user
     );
   }
@@ -110,7 +110,7 @@ export class AuthService {
    */
   forgotPasswordRequestVerification(user: SignUpUser): Observable<Auth> {
     return this.http.put<Auth>(
-      environment.gateway + 'users/forgotPassword/otp',
+      environment.gateway + 'auth/forgotPassword/otp',
       user
     );
   }
@@ -124,7 +124,7 @@ export class AuthService {
    */
   changePassword(user: SignUpUser): Observable<Auth> {
     return this.http.put<Auth>(
-      environment.gateway + 'users/resetPassword',
+      environment.gateway + 'auth/resetPassword',
       user
     );
   }

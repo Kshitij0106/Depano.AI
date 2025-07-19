@@ -1,0 +1,37 @@
+<div class="container container-fluid editor-container">
+
+  <div class="action-buttons">
+    <button class="btn secondary" (click)="undoLastMask()" [disabled]="!drawnPaths.length">
+      Undo Last
+    </button>
+
+    <button class="btn secondary" (click)="resetCanvas()">
+      Reset
+    </button>
+  </div>
+
+  <div class="canvas-wrapper">
+    <canvas #canvasEl class="canvas-style"></canvas>
+  </div>
+
+  <div *ngIf="drawMode" class="prompt-footer">
+    <input
+      type="text"
+      [(ngModel)]="userPrompt"
+      placeholder="Describe your edit (e.g., add sunglasses, remove background)..."
+    />
+    <button
+      class="btn primary"
+      [disabled]="!userPrompt.trim() || !drawnPaths.length"
+      (click)="generateImage()"
+    >
+      Generate Image
+    </button>
+  </div>
+
+  <div *ngIf="maskPreviewUrl" class="preview">
+    <h3>Preview of Masked Area</h3>
+    <img [src]="maskPreviewUrl" alt="Masked preview" />
+  </div>
+
+</div>

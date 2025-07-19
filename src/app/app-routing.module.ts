@@ -7,6 +7,7 @@ import { GenderSelectionComponent } from './generate/gender-selection/gender-sel
 import { CategoryComponent } from './generate/category/category.component';
 import { ResultComponent } from './result/result.component';
 import { authGuard } from './auth/guard/auth.guard';
+import { EditComponent } from './edit/edit.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -23,7 +24,14 @@ const routes: Routes = [
     component: CategoryComponent,
     canActivate: [authGuard],
   },
-  { path: 'result', component: ResultComponent, canActivate: [authGuard] },
+  { path: 'result', 
+    component: ResultComponent, 
+    // canActivate: [authGuard] 
+  },
+  { path: 'edit', 
+    component: EditComponent, 
+    // canActivate: [authGuard] 
+  },
   { path: '**', redirectTo: '/home' },
 ];
 

@@ -28,6 +28,8 @@ import { NgxUiLoaderHttpModule, NgxUiLoaderModule } from 'ngx-ui-loader';
 import { FormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { EditComponent } from './edit/edit.component';
+import { EditService } from './services/edit.service';
 
 @NgModule({
   declarations: [
@@ -46,6 +48,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     CategoryListComponent,
     UserInputComponent,
     ResultComponent,
+    EditComponent
   ],
   imports: [
     BrowserModule,
@@ -64,6 +67,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     PromptService,
     BreadcrumbService,
     CheckedAttributesService,
+    EditService
   ],
   bootstrap: [AppComponent],
 })

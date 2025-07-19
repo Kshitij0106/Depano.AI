@@ -4,6 +4,7 @@ import { BreadcrumbService } from '../services/breadcrumb.service';
 import { Router } from '@angular/router';
 import { CheckedAttributesService } from '../generate/services/checked-attributes.service';
 import { UserService } from '../services/user.service';
+import { EditService } from '../services/edit.service';
 
 @Component({
   selector: 'app-result',
@@ -16,15 +17,21 @@ export class ResultComponent implements OnInit {
   result: string = '';
   error: boolean = false;
 
+  editMode: boolean = false;
+
   constructor(
     private promptService: PromptService,
     private userService: UserService,
     private breadcrumbService: BreadcrumbService,
     private checkAttributeService: CheckedAttributesService,
+    private editService: EditService,
     private router: Router
   ) {
     this.getUserData();
     this.sendRequest();
+
+    this.image= "https://hips.hearstapps.com/hmg-prod/images/guest-is-seen-wearing-white-mini-skirt-polo-outside-lacoste-news-photo-1684172383.jpg";
+
   }
 
   ngOnInit(): void {
@@ -111,5 +118,13 @@ export class ResultComponent implements OnInit {
       // Replace the state to prevent the back button from navigating
       history.pushState(null, '', window.location.href);
     });
+  }
+
+  edit(){
+    console.log("EditMode Activated!");
+    
+    this.editMode = !this.editMode;
+    this.editService.setImageUrl(this.image);
+    this.router.navigate(['edit']);
   }
 }

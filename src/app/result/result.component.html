@@ -2,7 +2,7 @@
 <div class="container container-fluid">
   <div class="row mb-3">
     <div
-      class="col-12 col-md-9 d-flex justify-content-center justify-content-md-start mb-2"
+      class="col-12 col-md-5 d-flex justify-content-center justify-content-md-start mb-2"
     >
       <button
         type="button"
@@ -13,6 +13,20 @@
         Start again
       </button>
     </div>
+
+    <div
+      class="col-12 col-md-4 d-flex justify-content-center justify-content-md-start mb-2"
+    >
+      <button
+        type="button"
+        class="edit-btn btn-outline-danger"
+        (click)="edit()"
+      >
+        <i class="bi bi-pencil fa-xs" aria-hidden="true"></i>
+        {{ editMode ? 'Disable Draw Mode' : 'Enable Draw Mode' }}
+      </button>
+    </div>
+
     <div
       class="col-12 col-md-3 d-flex justify-content-center justify-content-md-end mb-2"
     >
@@ -36,7 +50,8 @@
       </button>
     </div> -->
   </div>
-  <div *ngIf="this.result === 'success'" class="row">
+  <div 
+  class="row">
     <div class="col-12 d-flex justify-content-center align-items-center">
       <img class="img img-fluid" src="{{ image }}" />
     </div>

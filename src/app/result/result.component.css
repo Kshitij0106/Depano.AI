@@ -114,3 +114,15 @@ body {
   line-height: 29.05px;
   text-align: left;
 }
+
+.edit-btn {
+  background-color: #e2e6ea;
+  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  padding: 10px;
+}
+
+.edit-btn:hover:enabled {
+  background-color: #d6d8db;
+}

@@ -1,6 +1,6 @@
-<div class="container container-fluid editor-container">
+<div class="container mt-2">
 
-  <div class="action-buttons">
+  <div class="action-buttons mt-2">
     <button class="btn secondary" (click)="undoLastMask()" [disabled]="!drawnPaths.length">
       Undo Last
     </button>
@@ -10,9 +10,10 @@
     </button>
   </div>
 
-  <div class="canvas-wrapper">
+  <div class="canvas-wrapper ">
     <canvas #canvasEl class="canvas-style"></canvas>
   </div>
+
 
   <div *ngIf="drawMode" class="prompt-footer">
     <input
@@ -28,10 +29,4 @@
       Generate Image
     </button>
   </div>
-
-  <div *ngIf="maskPreviewUrl" class="preview">
-    <h3>Preview of Masked Area</h3>
-    <img [src]="maskPreviewUrl" alt="Masked preview" />
-  </div>
-
 </div>

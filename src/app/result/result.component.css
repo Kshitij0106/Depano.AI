@@ -116,11 +116,19 @@ body {
 }
 
 .edit-btn {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 25px;
+  text-align: center;
+  letter-spacing: 0.08em;
+  color: #000000;
   background-color: #e2e6ea;
-  color: #333;
-  border: 1px solid #ccc;
-  border-radius: 12px;
-  padding: 10px;
+  border-radius: 10px;
+  height: 50px;
+  width: 200px;
+  margin-top: 10px;
 }
 
 .edit-btn:hover:enabled {

@@ -57,12 +57,13 @@ export class EditComponent implements OnInit {
     });
 
     this.canvas.isDrawingMode = this.drawMode;
-    this.canvas.freeDrawingBrush.width = 10;
+    this.canvas.freeDrawingBrush.width = 15;
     this.canvas.freeDrawingBrush.color = 'rgba(255, 255, 255, 0.8)';
   }
 
   /** Load original image onto canvas */
   private loadUserImage(): void {
+    // this.imageUrl = "https://cdn.shopify.com/s/files/1/0682/3755/8034/files/1_e25df779-5e6b-430d-8670-8feef1cc0a01.webp?v=1737267876";
     fabric.Image.fromURL(
       this.imageUrl,
       (img) => {
@@ -72,6 +73,11 @@ export class EditComponent implements OnInit {
         this.canvas.setWidth(img.width!);
         this.canvas.setHeight(img.height!);
         this.canvas.add(img);
+
+        const maxHeight = window.innerHeight * 0.65;
+        const scaleRatio = img.height! > maxHeight ? maxHeight / img.height! : 1;
+
+        this.canvas.setZoom(scaleRatio);
       },
       { crossOrigin: 'anonymous' }
     );
@@ -117,41 +123,33 @@ export class EditComponent implements OnInit {
 
     // Save mask as data URL
     this.maskPreviewUrl = maskCanvas.toDataURL('image/png');
-    console.log('Generated Mask URL:', this.maskPreviewUrl);
   }
 
   /** Send original image URL, mask blob, and prompt to server */
-  async sendToServer(): Promise<void> {
-    try {
-      const formData = new FormData();
+async sendToServer(): Promise<void> {
+  try {
+    const formData = await this.editService.prepareEditFormData(
+      this.imageUrl,
+      this.maskPreviewUrl,
+      this.userPrompt
+    );
 
-      const maskBlob = await (await fetch(this.maskPreviewUrl)).blob();
-      console.log('Masked Image Blob URL:', URL.createObjectURL(maskBlob));
-
-      formData.append('originalImage', this.imageUrl); // original is just a URL
-      formData.append('maskedImage', maskBlob, 'mask.png');
-      formData.append('prompt', this.userPrompt);
-
-      console.log("Form Data => ", {
-        originalImage: formData.get('originalImage'),
-        maskedImage: formData.get('maskedImage'),
-        prompt: this.userPrompt
-      });
-
-      this.editService.sendImageData(this.email, formData).subscribe({
-        next: (response) => {
-          console.log('Server Response:', response);
-          this.loadUserImageFromURL(response.url);
-        },
-        error: (err) => {
-          console.error('Upload Failed:', err);
-          alert('Failed to send edit request.');
-        }
-      });
-    } catch (err) {
-      console.error('Error preparing data:', err);
-    }
+    this.editService.sendImageData(this.email, formData).subscribe({
+      next: (response) => {
+        console.log('Server Response:', response);
+        const editedImageUrl = this.editService.convertByteArrayToDataUrl(response.url);
+        this.loadUserImageFromURL(editedImageUrl);
+      },
+      error: (err) => {
+        console.error('Upload Failed:', err);
+        alert('Failed to send edit request.');
+      }
+    });
+  } catch (err) {
+    console.error('Error preparing data:', err);
   }
+}
+
 
   /** Load new image (response) after edit */
   private loadUserImageFromURL(url: string): void {
@@ -170,6 +168,11 @@ export class EditComponent implements OnInit {
         this.canvas.setWidth(img.width!);
         this.canvas.setHeight(img.height!);
         this.canvas.add(img);
+
+        const maxHeight = window.innerHeight * 0.65; // 65vh
+        const scaleRatio = img.height! > maxHeight ? maxHeight / img.height! : 1;
+
+        this.canvas.setZoom(scaleRatio);
       },
       { crossOrigin: 'anonymous' }
     );

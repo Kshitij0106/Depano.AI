@@ -29,9 +29,6 @@ export class ResultComponent implements OnInit {
   ) {
     this.getUserData();
     this.sendRequest();
-
-    this.image= "https://hips.hearstapps.com/hmg-prod/images/guest-is-seen-wearing-white-mini-skirt-polo-outside-lacoste-news-photo-1684172383.jpg";
-
   }
 
   ngOnInit(): void {

@@ -32,6 +32,8 @@ export class ResultComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.image =
+      'https://cdn.shopify.com/s/files/1/0682/3755/8034/files/1_e25df779-5e6b-430d-8670-8feef1cc0a01.webp?v=1737267876';
     this.disableBackButton();
   }
 
@@ -117,9 +119,9 @@ export class ResultComponent implements OnInit {
     });
   }
 
-  edit(){
-    console.log("EditMode Activated!");
-    
+  edit() {
+    console.log('EditMode Activated!');
+
     this.editMode = !this.editMode;
     this.editService.setImageUrl(this.image);
     this.router.navigate(['edit']);

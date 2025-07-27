@@ -23,7 +23,7 @@
         (click)="edit()"
       >
         <i class="bi bi-pencil fa-xs" aria-hidden="true"></i>
-        {{ editMode ? 'Disable Draw Mode' : 'Enable Draw Mode' }}
+        {{ editMode ? "Disable Draw Mode" : "Enable Draw Mode" }}
       </button>
     </div>
 
@@ -50,9 +50,8 @@
       </button>
     </div> -->
   </div>
-  
-  <div *ngIf="this.result === 'success'"
-  class="row">
+
+  <div *ngIf="this.result === 'success'" class="row">
     <div class="col-12 d-flex justify-content-center align-items-center">
       <img class="img img-fluid" src="{{ image }}" />
     </div>

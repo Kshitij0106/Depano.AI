@@ -24,13 +24,11 @@ const routes: Routes = [
     component: CategoryComponent,
     canActivate: [authGuard],
   },
-  { path: 'result', 
-    component: ResultComponent, 
-    canActivate: [authGuard] 
-  },
-  { path: 'edit', 
-    component: EditComponent, 
-    // canActivate: [authGuard] 
+  { path: 'result', component: ResultComponent, canActivate: [authGuard] },
+  {
+    path: 'edit',
+    component: EditComponent,
+    // canActivate: [authGuard]
   },
   { path: '**', redirectTo: '/home' },
 ];

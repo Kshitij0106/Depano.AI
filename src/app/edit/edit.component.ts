@@ -4,7 +4,6 @@ import {
   HostListener,
   OnInit,
   ViewChild,
-  AfterViewInit,
 } from '@angular/core';
 import { fabric } from 'fabric';
 import { EditService } from '../services/edit.service';
@@ -15,26 +14,28 @@ import { UserService } from '../services/user.service';
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.css'],
 })
-export class EditComponent implements OnInit, AfterViewInit {
+export class EditComponent implements OnInit {
   @ViewChild('canvasEl', { static: true })
   canvasEl!: ElementRef<HTMLCanvasElement>;
 
   @ViewChild('canvasContainer', { static: true })
   canvasContainer!: ElementRef<HTMLDivElement>;
 
-  canvas!: fabric.Canvas;
-  image =
-    'https://firebasestorage.googleapis.com/v0/b/depano-ai.appspot.com/o/1216112402.jpg?alt=media&token=e8d905b0-2417-49fe-9c23-caf8af7c3db4';
-  devicePixelRatio: number = window.devicePixelRatio || 1;
-  maskImageUrl: string = '';
-
-  email: string = '';
-  userPrompt: string = '';
-
   originalImageWidth = 0;
   originalImageHeight = 0;
   imageScale = 1;
   drawnPaths: fabric.Path[] = [];
+
+  devicePixelRatio: number = window.devicePixelRatio || 1;
+
+  canvas!: fabric.Canvas;
+  image: string = '';
+  maskImageUrl: string = '';
+  email: string = '';
+  userPrompt: string = '';
+
+  // image =
+  //   'https://firebasestorage.googleapis.com/v0/b/depano-ai.appspot.com/o/1216112402.jpg?alt=media&token=e8d905b0-2417-49fe-9c23-caf8af7c3db4';
 
   constructor(
     private editService: EditService,
@@ -42,18 +43,22 @@ export class EditComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit(): void {
-    // Initialize any data here if needed
-  }
-
-  ngAfterViewInit(): void {
-    this.initializeCanvas();
-    this.loadImage(this.image);
     this.initializeUser();
+    this.initializeCanvas();
+    this.getImage();
   }
 
   @HostListener('window:resize', ['$event'])
   onResize(event: Event): void {
     this.resizeCanvas();
+  }
+
+  private getImage() {
+    this.editService.imageUrl.subscribe((image) => {
+      this.image = image;
+      console.log('Image URL from service:', this.image);
+    });
+    this.loadImage(this.image);
   }
 
   /** Initialize email and image URL */
@@ -115,7 +120,6 @@ export class EditComponent implements OnInit, AfterViewInit {
       (fabricImg) => {
         this.originalImageWidth = fabricImg.width || 0;
         this.originalImageHeight = fabricImg.height || 0;
-        console.log(this.canvas.getWidth(), this.canvas.getHeight());
 
         const canvasWidth = this.canvas.getWidth();
         const canvasHeight = this.canvas.getHeight();
@@ -148,7 +152,7 @@ export class EditComponent implements OnInit, AfterViewInit {
   /** Trigger mask generation and send data to backend */
   generateImage(): void {
     this.generateMask();
-    // this.sendToServer();
+    this.sendToServer();
   }
 
   generateMask(): void {
@@ -196,7 +200,7 @@ export class EditComponent implements OnInit, AfterViewInit {
       const formData = await this.editService.prepareEditFormData(
         this.image,
         this.maskImageUrl,
-        'add fringes'
+        this.userPrompt
       );
       this.editService
         .sendImageData(this.email, formData)
@@ -205,7 +209,6 @@ export class EditComponent implements OnInit, AfterViewInit {
             console.log('Image edited successfully:', result);
             const base64 = result.url;
             const editedImageUrl = `data:image/png;base64,${base64}`;
-            console.log('Edited image URL:', editedImageUrl);
             this.loadImage(editedImageUrl);
           }
         });

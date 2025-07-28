@@ -1,4 +1,5 @@
-<div class="container mt-2">
+<app-header [source]="'result'"></app-header>
+<div class="container container-fluid mt-2">
   <div class="action-buttons mt-4">
     <button
       class="btn secondary"
@@ -23,26 +24,35 @@
       <canvas #canvasEl style="border-radius: 30px"></canvas>
     </div>
 
-    <img
+    <!-- <img
       *ngIf="maskImageUrl"
       [src]="maskImageUrl"
       alt="Mask"
       style="width: 55vh; height: 65vh"
     />
+  </div> -->
   </div>
-</div>
 
-<div class="prompt-footer" *ngIf="drawnPaths.length > 0">
-  <input
-    type="text"
-    [(ngModel)]="userPrompt"
-    placeholder="Describe your edit (e.g., add pocket, remove sleeve)..."
-  />
-  <button
-    class="btn primary"
-    [disabled]="!userPrompt.trim() || !drawnPaths.length"
-    (click)="generateImage()"
-  >
-    Generate Image
-  </button>
+  <div *ngIf="drawnPaths.length > 0" class="prompt-footer">
+    <!-- <div class="user-input">
+      <app-user-input
+        [categoryName]="this.userPrompt"
+        [hideUserPrompt]="false"
+        (userInput)="inputSelected($event)"
+      ></app-user-input>
+    </div> -->
+
+    <input
+      type="text"
+      [(ngModel)]="userPrompt"
+      placeholder="Describe your edit (e.g., add pocket, remove sleeve)..."
+    />
+    <button
+      class="btn primary"
+      [disabled]="!userPrompt.trim() || !drawnPaths.length"
+      (click)="generateImage()"
+    >
+      Generate Image
+    </button>
+  </div>
 </div>

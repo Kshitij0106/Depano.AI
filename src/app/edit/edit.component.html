@@ -13,6 +13,7 @@
   </div>
 
   <div
+    *ngIf="this.result === 'success'"
     style="
       display: flex;
       gap: 20px;
@@ -33,15 +34,53 @@
   </div> -->
   </div>
 
-  <div *ngIf="drawnPaths.length > 0" class="prompt-footer">
-    <!-- <div class="user-input">
-      <app-user-input
-        [categoryName]="this.userPrompt"
-        [hideUserPrompt]="false"
-        (userInput)="inputSelected($event)"
-      ></app-user-input>
-    </div> -->
+  <div
+    *ngIf="this.result === 'networkIssue' && this.error"
+    class="row error d-flex justify-content-center align-items-center"
+  >
+    <div class="row align-items-center">
+      <div class="col-12 col-md-6 mb-3 mb-md-0 ps-md-5">
+        <h1 class="error-txt mb-3">Uh-oh! 🌐 Network Error</h1>
+        <p class="error-txt text-md-start">
+          It seems we're having trouble connecting right now. Please check your
+          internet connection and try again. <br />
+          If the problem persists, we'll be here when you're back online.
+          <br />Things you can try:
+        </p>
+        <ul class="ms-md-4 text-md-start">
+          <li>Ensure you're connected to the internet.</li>
+          <li>Refresh this page or reopen the app.</li>
+          <li>Try again in a few moments.</li>
+        </ul>
+      </div>
 
+      <div class="col-12 col-md-6 d-flex justify-content-center">
+        <img class="img-fluid" src="{{ image }}" />
+      </div>
+    </div>
+  </div>
+
+  <div
+    *ngIf="this.result === 'creditIssue' && this.error"
+    class="error d-flex justify-content-center align-items-center"
+  >
+    <div class="row align-items-center">
+      <div class="col-12 col-md-6 mb-3 mb-md-0 ps-md-5">
+        <h1 class="error-txt mb-3">Oh no! 😕 You're out of credits</h1>
+        <p class="error-txt">
+          It looks like you've run out of credits to continue. To keep exploring
+          and using all our features, you can easily top up your credits or
+          upgrade to a plan that suits your needs.
+        </p>
+      </div>
+
+      <div class="col-12 col-md-6 d-flex justify-content-center">
+        <img class="img-fluid" src="{{ image }}" />
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="drawnPaths.length > 0" class="prompt-footer">
     <input
       type="text"
       [(ngModel)]="userPrompt"

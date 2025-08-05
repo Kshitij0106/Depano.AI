@@ -34,8 +34,8 @@ export class EditComponent implements OnInit {
   email: string = '';
   userPrompt: string = '';
 
-  // image =
-  //   'https://firebasestorage.googleapis.com/v0/b/depano-ai.appspot.com/o/1216112402.jpg?alt=media&token=e8d905b0-2417-49fe-9c23-caf8af7c3db4';
+  result: string = '';
+  error: boolean = false;
 
   constructor(
     private editService: EditService,
@@ -56,8 +56,8 @@ export class EditComponent implements OnInit {
   private getImage() {
     this.editService.imageUrl.subscribe((image) => {
       this.image = image;
-      console.log('Image URL from service:', this.image);
     });
+    this.result = 'success';
     this.loadImage(this.image);
   }
 
@@ -206,10 +206,22 @@ export class EditComponent implements OnInit {
         .sendImageData(this.email, formData)
         .subscribe((result) => {
           if (result.status === 'Success') {
-            console.log('Image edited successfully:', result);
+            this.result = 'success';
+            this.error = false;
             const base64 = result.url;
             const editedImageUrl = `data:image/png;base64,${base64}`;
             this.loadImage(editedImageUrl);
+            this.image = editedImageUrl;
+          } else {
+            this.error = true;
+            if (
+              result.status === 'SERVICE_UNAVAILABLE' ||
+              result.status === 'INTERNAL_SERVER_ERROR'
+            ) {
+              this.result = 'networkIssue';
+            } else if (result.status === 'PAYMENT_REQUIRED') {
+              this.result = 'creditIssue';
+            }
           }
         });
     } catch (err) {

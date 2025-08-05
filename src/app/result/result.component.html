@@ -101,26 +101,4 @@
       </div>
     </div>
   </div>
-
-  <div
-    *ngIf="this.result === 'bannedIssue' && this.error"
-    class="error d-flex justify-content-center align-items-center"
-  >
-    <div class="row align-items-center">
-      <div class="col-12 col-md-6 mb-3 mb-md-0 ps-md-5">
-        <h1 class="error-txt mb-3">Oops! 🚫</h1>
-        <p class="error-txt">
-          It looks like your input contains a word or phrase that isn't allowed.
-          <br />
-          To keep our platform safe and inclusive for everyone, we kindly ask
-          you to revise your input. If you believe this is an error, feel free
-          to contact support. <br />Try again with different wording!
-        </p>
-      </div>
-
-      <div class="col-12 col-md-6 d-flex justify-content-center">
-        <img class="img-fluid" src="{{ image }}" />
-      </div>
-    </div>
-  </div>
 </div>

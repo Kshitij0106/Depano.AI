@@ -2,6 +2,7 @@ import {
   Component,
   ElementRef,
   HostListener,
+  OnDestroy,
   OnInit,
   ViewChild,
 } from '@angular/core';
@@ -15,7 +16,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.css'],
 })
-export class EditComponent implements OnInit {
+export class EditComponent implements OnInit, OnDestroy {
   @ViewChild('canvasEl', { static: true })
   canvasEl!: ElementRef<HTMLCanvasElement>;
 
@@ -248,5 +249,9 @@ export class EditComponent implements OnInit {
     this.maskImageUrl = '';
     this.userPrompt = '';
     this.loadImage(this.image);
+  }
+
+  ngOnDestroy(): void {
+    this.editService.imageUrl.unsubscribe();
   }
 }

@@ -114,4 +114,8 @@ export class HeaderComponent implements OnInit {
     this.authService.logOut();
     this.openHome();
   }
+
+  ngOnDestroy(): void {
+    this.userService.refreshCredits.unsubscribe();
+  }
 }

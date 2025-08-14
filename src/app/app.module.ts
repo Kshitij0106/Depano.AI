@@ -18,12 +18,14 @@ import { CategoryComponent } from './generate/category/category.component';
 import { CategoryListComponent } from './generate/category-list/category-list.component';
 import { UserInputComponent } from './generate/user-input/user-input.component';
 import { ResultComponent } from './result/result.component';
+import { EditComponent } from './edit/edit.component';
 import { AuthService } from './auth/services/auth.service';
 import { UserService } from './services/user.service';
 import { CategoryService } from './generate/services/data/category.service';
 import { PromptService } from './generate/services/prompt.service';
 import { BreadcrumbService } from './services/breadcrumb.service';
 import { CheckedAttributesService } from './generate/services/checked-attributes.service';
+import { EditService } from './services/edit.service';
 import { NgxUiLoaderHttpModule, NgxUiLoaderModule } from 'ngx-ui-loader';
 import { FormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
@@ -46,6 +48,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     CategoryListComponent,
     UserInputComponent,
     ResultComponent,
+    EditComponent,
   ],
   imports: [
     BrowserModule,
@@ -64,6 +67,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     PromptService,
     BreadcrumbService,
     CheckedAttributesService,
+    EditService,
   ],
   bootstrap: [AppComponent],
 })

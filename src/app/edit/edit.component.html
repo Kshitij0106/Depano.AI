@@ -1,60 +1,36 @@
 <app-header [source]="'result'"></app-header>
-<div class="container container-fluid">
-  <div class="row mb-3">
-    <div
-      class="col-12 col-md-5 d-flex justify-content-center justify-content-md-start mb-2"
+<div class="container container-fluid mt-2">
+  <div class="action-buttons mt-4">
+    <button
+      class="btn secondary"
+      (click)="undoLastMask()"
+      [disabled]="!drawnPaths.length"
     >
-      <button
-        type="button"
-        class="start-btn btn-outline-danger"
-        (click)="openHome()"
-      >
-        <i class="fa fa-retweet fa-xs" aria-hidden="true"></i>
-        Start again
-      </button>
-    </div>
+      Undo Last
+    </button>
 
-    <div
-      *ngIf="this.result === 'success'"
-      class="col-12 col-md-4 d-flex justify-content-center justify-content-md-start mb-2"
-    >
-      <button
-        type="button"
-        class="edit-btn btn-outline-danger"
-        (click)="editImage()"
-      >
-        <i class="bi bi-pencil fa-xs" aria-hidden="true">Edit</i>
-      </button>
-    </div>
-
-    <div
-      class="col-12 col-md-3 d-flex justify-content-center justify-content-md-end mb-2"
-    >
-      <button
-        type="button"
-        class="regen-btn btn-outline-danger"
-        (click)="regenerate()"
-      >
-        <i class="bi bi-arrow-clockwise"></i>
-        Regenerate
-      </button>
-    </div>
-    <!-- <div class="col-6 col-md-1 d-flex justify-content-center">
-      <button type="button" class="share-btn btn-outline-danger">
-        <i class="bi bi-share-fill"></i>
-      </button>
-    </div>
-    <div class="col-6 col-md-1 d-flex justify-content-center">
-      <button type="button" class="download-btn btn-outline-danger">
-        <i class="bi bi-download"></i>
-      </button>
-    </div> -->
+    <button class="btn secondary" (click)="resetCanvas()">Reset</button>
   </div>
 
-  <div *ngIf="this.result === 'success'" class="row">
-    <div class="col-12 d-flex justify-content-center align-items-center">
-      <img class="img img-fluid" src="{{ image }}" />
+  <div
+    style="
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      flex-direction: column;
+    "
+  >
+    <div #canvasContainer id="canvasContainer" style="border-radius: 30px">
+      <canvas #canvasEl style="border-radius: 30px"></canvas>
     </div>
+
+    <!-- <img
+      *ngIf="maskImageUrl"
+      [src]="maskImageUrl"
+      alt="Mask"
+      style="width: 55vh; height: 65vh"
+    />
+  </div> -->
   </div>
 
   <div
@@ -101,5 +77,20 @@
         <img class="img-fluid" src="{{ image }}" />
       </div>
     </div>
+  </div>
+
+  <div *ngIf="drawnPaths.length > 0" class="prompt-footer">
+    <input
+      type="text"
+      [(ngModel)]="userPrompt"
+      placeholder="Describe your edit (e.g., add pocket, remove sleeve)..."
+    />
+    <button
+      class="btn primary"
+      [disabled]="!userPrompt.trim() || !drawnPaths.length"
+      (click)="generateImage()"
+    >
+      Generate Image
+    </button>
   </div>
 </div>

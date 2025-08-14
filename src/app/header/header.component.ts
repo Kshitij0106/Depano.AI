@@ -6,6 +6,7 @@ import { CheckedAttributesService } from '../generate/services/checked-attribute
 import { AuthService } from '../auth/services/auth.service';
 import { UserService } from '../services/user.service';
 import { User } from '../models/user';
+import { EditService } from '../services/edit.service';
 
 @Component({
   selector: 'app-header',
@@ -32,6 +33,7 @@ export class HeaderComponent implements OnInit {
     private userService: UserService,
     private breadcrumbService: BreadcrumbService,
     private promptService: PromptService,
+    private editService: EditService,
     private checkAttributeService: CheckedAttributesService
   ) {}
 
@@ -99,6 +101,7 @@ export class HeaderComponent implements OnInit {
    * Empties the data.
    */
   emptyData() {
+    this.editService.imageUrl.next('');
     this.promptService.emptyPrompt();
     this.breadcrumbService.emptyBreadcrumbList();
     this.checkAttributeService.emptyCheckedAttributesList();

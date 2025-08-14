@@ -8,6 +8,7 @@ import {
 import { fabric } from 'fabric';
 import { EditService } from '../services/edit.service';
 import { UserService } from '../services/user.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-edit',
@@ -202,9 +203,9 @@ export class EditComponent implements OnInit {
         this.maskImageUrl,
         this.userPrompt
       );
-      this.editService
-        .sendImageData(this.email, formData)
-        .subscribe((result) => {
+      this.editService.editImage(this.email, formData).subscribe({
+        next: (result) => {
+          this.image = result.url;
           if (result.status === 'Success') {
             this.result = 'success';
             this.error = false;
@@ -212,18 +213,22 @@ export class EditComponent implements OnInit {
             const editedImageUrl = `data:image/png;base64,${base64}`;
             this.loadImage(editedImageUrl);
             this.image = editedImageUrl;
-          } else {
-            this.error = true;
-            if (
-              result.status === 'SERVICE_UNAVAILABLE' ||
-              result.status === 'INTERNAL_SERVER_ERROR'
-            ) {
-              this.result = 'networkIssue';
-            } else if (result.status === 'PAYMENT_REQUIRED') {
-              this.result = 'creditIssue';
-            }
+            this.userService.updateCredits();
           }
-        });
+        },
+        error: (err: HttpErrorResponse) => {
+          this.image = err.error.url;
+          this.error = true;
+          if (
+            err.error?.status === 'SERVICE_UNAVAILABLE' ||
+            err.error?.status === 'INTERNAL_SERVER_ERROR'
+          ) {
+            this.result = 'networkIssue';
+          } else if (err.error?.status === 'PAYMENT_REQUIRED') {
+            this.result = 'creditIssue';
+          }
+        },
+      });
     } catch (err) {
       console.error('Error preparing data:', err);
     }

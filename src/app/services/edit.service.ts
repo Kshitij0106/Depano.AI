@@ -12,7 +12,7 @@ export class EditService {
 
   constructor(private http: HttpClient) {}
 
-  sendImageData(email: string, formData: FormData): Observable<ImageResponse> {
+  editImage(email: string, formData: FormData): Observable<ImageResponse> {
     return this.http.post<ImageResponse>(
       environment.gateway + 'edit/' + email,
       formData

@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { CheckedAttributesService } from '../generate/services/checked-attributes.service';
 import { UserService } from '../services/user.service';
 import { EditService } from '../services/edit.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-result',
@@ -58,23 +59,27 @@ export class ResultComponent {
    * Sends a request to the prompt service to retrieve image and updates the 'image' property accordingly.
    */
   sendRequest() {
-    this.promptService.sendPrompt(this.email).subscribe((result) => {
-      this.image = result.url;
-      if (result.status === 'Success') {
-        this.result = 'success';
-        this.error = false;
-        this.userService.updateCredits();
-      } else {
+    this.promptService.sendPrompt(this.email).subscribe({
+      next: (result) => {
+        this.image = result.url;
+        if (result.status === 'Success') {
+          this.result = 'success';
+          this.error = false;
+          this.userService.updateCredits();
+        }
+      },
+      error: (err: HttpErrorResponse) => {
+        this.image = err.error.url;
         this.error = true;
         if (
-          result.status === 'SERVICE_UNAVAILABLE' ||
-          result.status === 'INTERNAL_SERVER_ERROR'
+          err.error?.status === 'SERVICE_UNAVAILABLE' ||
+          err.error?.status === 'INTERNAL_SERVER_ERROR'
         ) {
           this.result = 'networkIssue';
-        } else if (result.status === 'PAYMENT_REQUIRED') {
+        } else if (err.error?.status === 'PAYMENT_REQUIRED') {
           this.result = 'creditIssue';
         }
-      }
+      },
     });
   }
 
@@ -83,23 +88,27 @@ export class ResultComponent {
    */
   regenerate() {
     this.getUserData();
-    this.promptService.regenerate(this.email).subscribe((result) => {
-      this.image = result.url;
-      if (result.status === 'Success') {
-        this.result = 'success';
-        this.error = false;
-        this.userService.updateCredits();
-      } else {
+    this.promptService.sendPrompt(this.email).subscribe({
+      next: (result) => {
+        this.image = result.url;
+        if (result.status === 'Success') {
+          this.result = 'success';
+          this.error = false;
+          this.userService.updateCredits();
+        }
+      },
+      error: (err: HttpErrorResponse) => {
+        this.image = err.error.url;
         this.error = true;
         if (
-          result.status === 'SERVICE_UNAVAILABLE' ||
-          result.status === 'INTERNAL_SERVER_ERROR'
+          err.error?.status === 'SERVICE_UNAVAILABLE' ||
+          err.error?.status === 'INTERNAL_SERVER_ERROR'
         ) {
           this.result = 'networkIssue';
-        } else if (result.status === 'PAYMENT_REQUIRED') {
+        } else if (err.error?.status === 'PAYMENT_REQUIRED') {
           this.result = 'creditIssue';
         }
-      }
+      },
     });
   }
 

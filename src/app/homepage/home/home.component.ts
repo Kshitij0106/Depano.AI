@@ -1,11 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/services/auth.service';
+import { HeaderComponent } from 'src/app/header/header.component';
+import { AboutComponent } from '../about/about.component';
+import { TestimonialsComponent } from '../testimonials/testimonials.component';
+import { VisionComponent } from '../vision/vision.component';
+import { OutputsComponent } from '../outputs/outputs.component';
+import { FooterComponent } from 'src/app/footer/footer.component';
 
 @Component({
+  standalone: true,
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
+  imports: [
+    HeaderComponent,
+    FooterComponent,
+    AboutComponent,
+    TestimonialsComponent,
+    VisionComponent,
+    OutputsComponent,
+  ],
 })
 export class HomeComponent implements OnInit {
   title = 'DEPANO AI';

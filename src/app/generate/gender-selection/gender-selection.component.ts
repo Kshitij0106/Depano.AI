@@ -2,11 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BreadcrumbService } from 'src/app/services/breadcrumb.service';
 import { PromptService } from '../services/prompt.service';
+import { HeaderComponent } from 'src/app/header/header.component';
 
 @Component({
+  standalone: true,
   selector: 'app-gender-selection',
   templateUrl: './gender-selection.component.html',
   styleUrls: ['./gender-selection.component.css'],
+  imports: [HeaderComponent],
 })
 export class GenderSelectionComponent implements OnInit {
   title = 'Depano AI';

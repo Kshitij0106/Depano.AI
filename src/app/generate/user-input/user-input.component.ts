@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
   Component,
   ElementRef,
@@ -9,9 +10,11 @@ import {
 } from '@angular/core';
 
 @Component({
+  standalone: true,
   selector: 'app-user-input',
   templateUrl: './user-input.component.html',
   styleUrls: ['./user-input.component.css'],
+  imports: [CommonModule],
 })
 export class UserInputComponent implements OnInit {
   @Input() hideUserPrompt!: boolean;

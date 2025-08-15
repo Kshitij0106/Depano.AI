@@ -6,15 +6,20 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { fabric } from 'fabric';
+import { Canvas, FabricImage, PencilBrush, Path } from 'fabric';
 import { EditService } from '../services/edit.service';
 import { UserService } from '../services/user.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { HeaderComponent } from '../header/header.component';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
+  standalone: true,
   selector: 'app-edit',
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.css'],
+  imports: [HeaderComponent, FormsModule, CommonModule],
 })
 export class EditComponent implements OnInit, OnDestroy {
   @ViewChild('canvasEl', { static: true })
@@ -26,11 +31,12 @@ export class EditComponent implements OnInit, OnDestroy {
   originalImageWidth = 0;
   originalImageHeight = 0;
   imageScale = 1;
-  drawnPaths: fabric.Path[] = [];
+  drawnPaths: Path[] = [];
 
   devicePixelRatio: number = window.devicePixelRatio || 1;
 
-  canvas!: fabric.Canvas;
+  canvas!: Canvas;
+
   image: string = '';
   maskImageUrl: string = '';
   email: string = '';
@@ -69,7 +75,7 @@ export class EditComponent implements OnInit, OnDestroy {
   }
 
   private initializeCanvas(): void {
-    this.canvas = new fabric.Canvas(this.canvasEl.nativeElement, {
+    this.canvas = new Canvas(this.canvasEl.nativeElement, {
       backgroundColor: 'white',
       selection: false,
       preserveObjectStacking: true,
@@ -83,7 +89,7 @@ export class EditComponent implements OnInit, OnDestroy {
 
     this.resizeCanvas();
 
-    this.canvas.freeDrawingBrush = new fabric.PencilBrush(this.canvas);
+    this.canvas.freeDrawingBrush = new PencilBrush(this.canvas);
     this.canvas.freeDrawingBrush.color = 'white';
     this.canvas.freeDrawingBrush.width = 8 / this.devicePixelRatio;
     this.canvas.isDrawingMode = true;
@@ -113,51 +119,53 @@ export class EditComponent implements OnInit, OnDestroy {
     this.canvas.renderAll();
   }
 
-  loadImage(imageUrl: string): void {
+  async loadImage(imageUrl: string): Promise<void> {
     this.canvas.clear();
     this.drawnPaths = [];
 
-    fabric.Image.fromURL(
-      imageUrl,
-      (fabricImg) => {
-        this.originalImageWidth = fabricImg.width || 0;
-        this.originalImageHeight = fabricImg.height || 0;
+    try {
+      const fabricImg = await FabricImage.fromURL(imageUrl, {
+        crossOrigin: 'anonymous',
+      });
 
-        const canvasWidth = this.canvas.getWidth();
-        const canvasHeight = this.canvas.getHeight();
+      this.originalImageWidth = fabricImg.width || 0;
+      this.originalImageHeight = fabricImg.height || 0;
 
-        const scaleX = canvasWidth / (fabricImg.width || 1);
-        const scaleY = canvasHeight / (fabricImg.height || 1);
-        this.imageScale = Math.max(scaleX, scaleY);
+      const canvasWidth = this.canvas.getWidth();
+      const canvasHeight = this.canvas.getHeight();
 
-        const offsetX =
-          (canvasWidth - (fabricImg.width || 0) * this.imageScale) / 2;
-        const offsetY =
-          (canvasHeight - (fabricImg.height || 0) * this.imageScale) / 2;
+      const scaleX = canvasWidth / (fabricImg.width || 1);
+      const scaleY = canvasHeight / (fabricImg.height || 1);
+      this.imageScale = Math.max(scaleX, scaleY);
 
-        fabricImg.set({
-          scaleX: this.imageScale,
-          scaleY: this.imageScale,
-          left: offsetX,
-          top: offsetY,
-          selectable: false,
-          evented: false,
-        });
+      const offsetX =
+        (canvasWidth - (fabricImg.width || 0) * this.imageScale) / 2;
+      const offsetY =
+        (canvasHeight - (fabricImg.height || 0) * this.imageScale) / 2;
 
-        this.canvas.add(fabricImg);
-        this.canvas.renderAll();
-      },
-      { crossOrigin: 'anonymous' }
-    );
+      fabricImg.set({
+        scaleX: this.imageScale,
+        scaleY: this.imageScale,
+        left: offsetX,
+        top: offsetY,
+        selectable: false,
+        evented: false,
+      });
+
+      this.canvas.add(fabricImg);
+      this.canvas.renderAll();
+    } catch (err) {
+      console.error('Error loading image:', err);
+    }
   }
 
   /** Trigger mask generation and send data to backend */
-  generateImage(): void {
-    this.generateMask();
+  async generateImage() {
+    await this.generateMask();
     this.sendToServer();
   }
 
-  generateMask(): void {
+  async generateMask(): Promise<void> {
     const vh = Math.max(
       document.documentElement.clientHeight || 0,
       window.innerHeight || 0
@@ -174,21 +182,26 @@ export class EditComponent implements OnInit, OnDestroy {
     ctx.fillStyle = 'black';
     ctx.fillRect(0, 0, width, height);
 
-    const tempCanvas = new fabric.Canvas(null, {
+    // Create an offscreen HTMLCanvasElement
+    const htmlCanvas = document.createElement('canvas');
+    htmlCanvas.width = width;
+    htmlCanvas.height = height;
+
+    // Create Fabric Canvas with it
+    const tempCanvas = new Canvas(htmlCanvas, {
       width,
       height,
     });
 
-    this.canvas.getObjects().forEach((obj) => {
-      if (obj.type === 'path') {
-        const clonedPath = fabric.util.object.clone(obj) as fabric.Path;
-        clonedPath.set({
-          fill: 'white',
-          selectable: false,
-        });
-        tempCanvas.add(clonedPath);
-      }
-    });
+    await Promise.all(
+      this.canvas.getObjects().map(async (obj) => {
+        if (obj.type === 'path') {
+          const cloned = await (obj as Path).clone();
+          cloned.set({ fill: 'white', selectable: false, evented: false });
+          tempCanvas.add(cloned);
+        }
+      })
+    );
 
     tempCanvas.renderAll();
     ctx.drawImage(tempCanvas.getElement(), 0, 0, width, height);
@@ -252,6 +265,8 @@ export class EditComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.editService.imageUrl.unsubscribe();
+    if (this.canvas) {
+      this.canvas.dispose();
+    }
   }
 }

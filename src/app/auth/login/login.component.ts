@@ -1,14 +1,18 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { UserAuth } from '../models/userAuth';
 import { ToastrService } from 'ngx-toastr';
 import { SignUpUser } from '../models/signUpUser';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
+  standalone: true,
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
+  imports: [FormsModule, CommonModule],
 })
 export class LoginComponent {
   title = 'DEPANO AI';

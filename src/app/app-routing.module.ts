@@ -1,38 +1,52 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './auth/login/login.component';
-import { SignupComponent } from './auth/signup/signup.component';
-import { HomeComponent } from './homepage/home/home.component';
-import { GenderSelectionComponent } from './generate/gender-selection/gender-selection.component';
-import { CategoryComponent } from './generate/category/category.component';
-import { ResultComponent } from './result/result.component';
-import { EditComponent } from './edit/edit.component';
 import { authGuard } from './auth/guard/auth.guard';
+import { HomeComponent } from './homepage/home/home.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
-  { path: 'home', component: HomeComponent },
-  { path: 'login', component: LoginComponent },
-  // { path: 'signup', component: SignupComponent },
+  {
+    path: 'home',
+    loadComponent: () =>
+      import('./homepage/home/home.component').then((m) => m.HomeComponent),
+  },
+  {
+    path: 'login',
+    loadComponent: () =>
+      import('./auth/login/login.component').then((m) => m.LoginComponent),
+  },
+  // {
+  //   path: 'signup',
+  //   loadComponent: () =>
+  //     import('./auth/signup/signup.component').then((m) => m.SignupComponent),
+  // },
   {
     path: 'gender',
-    component: GenderSelectionComponent,
     canActivate: [authGuard],
+    loadComponent: () =>
+      import('./generate/gender-selection/gender-selection.component').then(
+        (m) => m.GenderSelectionComponent
+      ),
   },
   {
     path: 'generate/:category',
-    component: CategoryComponent,
     canActivate: [authGuard],
+    loadComponent: () =>
+      import('./generate/category/category.component').then(
+        (m) => m.CategoryComponent
+      ),
   },
   {
     path: 'result',
-    component: ResultComponent,
     canActivate: [authGuard],
+    loadComponent: () =>
+      import('./result/result.component').then((m) => m.ResultComponent),
   },
   {
     path: 'edit',
-    component: EditComponent,
     canActivate: [authGuard],
+    loadComponent: () =>
+      import('./edit/edit.component').then((m) => m.EditComponent),
   },
   { path: '**', redirectTo: '/home' },
 ];

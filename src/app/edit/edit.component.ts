@@ -10,11 +10,16 @@ import { fabric } from 'fabric';
 import { EditService } from '../services/edit.service';
 import { UserService } from '../services/user.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { HeaderComponent } from '../header/header.component';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
+  standalone: true,
   selector: 'app-edit',
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.css'],
+  imports: [HeaderComponent, FormsModule, CommonModule],
 })
 export class EditComponent implements OnInit, OnDestroy {
   @ViewChild('canvasEl', { static: true })
@@ -253,5 +258,8 @@ export class EditComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.editService.imageUrl.unsubscribe();
+    if (this.canvas) {
+      this.canvas.dispose();
+    }
   }
 }

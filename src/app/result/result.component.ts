@@ -6,11 +6,15 @@ import { CheckedAttributesService } from '../generate/services/checked-attribute
 import { UserService } from '../services/user.service';
 import { EditService } from '../services/edit.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { HeaderComponent } from '../header/header.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
+  standalone: true,
   selector: 'app-result',
   templateUrl: './result.component.html',
   styleUrls: ['./result.component.css'],
+  imports: [HeaderComponent, CommonModule],
 })
 export class ResultComponent {
   image!: string;

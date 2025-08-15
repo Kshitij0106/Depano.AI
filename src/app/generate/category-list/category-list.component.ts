@@ -1,11 +1,14 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Subcategory } from '../models/subcategory';
 import { CheckedAttributesService } from '../services/checked-attributes.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
+  standalone: true,
   selector: 'app-category-list',
   templateUrl: './category-list.component.html',
   styleUrls: ['./category-list.component.css'],
+  imports: [CommonModule],
 })
 export class CategoryListComponent {
   @Input() categoryList: Subcategory[] = [];

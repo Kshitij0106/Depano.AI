@@ -9,11 +9,24 @@ import {
 } from 'src/app/services/breadcrumb.service';
 import { CategoryService } from '../services/data/category.service';
 import { CheckedAttributesService } from '../services/checked-attributes.service';
+import { CommonModule } from '@angular/common';
+import { HeaderComponent } from 'src/app/header/header.component';
+import { CategoryListComponent } from '../category-list/category-list.component';
+import { UserInputComponent } from '../user-input/user-input.component';
+import { AppRoutingModule } from 'src/app/app-routing.module';
 
 @Component({
+  standalone: true,
   selector: 'app-category',
   templateUrl: './category.component.html',
   styleUrls: ['./category.component.css'],
+  imports: [
+    HeaderComponent,
+    CategoryListComponent,
+    UserInputComponent,
+    CommonModule,
+    AppRoutingModule,
+  ],
 })
 export class CategoryComponent implements OnInit {
   private category: string = '';

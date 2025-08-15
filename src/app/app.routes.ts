@@ -1,9 +1,8 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { ApplicationConfig } from '@angular/core';
 import { authGuard } from './auth/guard/auth.guard';
-import { HomeComponent } from './homepage/home/home.component';
+import { provideRouter, Routes } from '@angular/router';
 
-const routes: Routes = [
+export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   {
     path: 'home',
@@ -51,8 +50,6 @@ const routes: Routes = [
   { path: '**', redirectTo: '/home' },
 ];
 
-@NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule],
-})
-export class AppRoutingModule {}
+export const appConfig: ApplicationConfig = {
+  providers: [provideRouter(routes)],
+};

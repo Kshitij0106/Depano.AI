@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router, RouterLink } from '@angular/router';
 import { Category } from '../models/category';
 import { PromptService } from '../services/prompt.service';
 import { Subcategory } from '../models/subcategory';
@@ -13,7 +13,6 @@ import { CommonModule } from '@angular/common';
 import { HeaderComponent } from 'src/app/header/header.component';
 import { CategoryListComponent } from '../category-list/category-list.component';
 import { UserInputComponent } from '../user-input/user-input.component';
-import { AppRoutingModule } from 'src/app/app-routing.module';
 
 @Component({
   standalone: true,
@@ -25,7 +24,7 @@ import { AppRoutingModule } from 'src/app/app-routing.module';
     CategoryListComponent,
     UserInputComponent,
     CommonModule,
-    AppRoutingModule,
+    RouterLink,
   ],
 })
 export class CategoryComponent implements OnInit {

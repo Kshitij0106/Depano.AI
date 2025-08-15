@@ -4,13 +4,19 @@ import { BreadcrumbService } from '../services/breadcrumb.service';
 import { Router } from '@angular/router';
 import { CheckedAttributesService } from '../generate/services/checked-attributes.service';
 import { UserService } from '../services/user.service';
+import { EditService } from '../services/edit.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { HeaderComponent } from '../header/header.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
+  standalone: true,
   selector: 'app-result',
   templateUrl: './result.component.html',
   styleUrls: ['./result.component.css'],
+  imports: [HeaderComponent, CommonModule],
 })
-export class ResultComponent implements OnInit {
+export class ResultComponent {
   image!: string;
   email!: string;
   result: string = '';
@@ -21,14 +27,11 @@ export class ResultComponent implements OnInit {
     private userService: UserService,
     private breadcrumbService: BreadcrumbService,
     private checkAttributeService: CheckedAttributesService,
+    private editService: EditService,
     private router: Router
   ) {
     this.getUserData();
-    this.sendRequest();
-  }
-
-  ngOnInit(): void {
-    this.disableBackButton();
+    this.getImage();
   }
 
   /**
@@ -46,26 +49,41 @@ export class ResultComponent implements OnInit {
     this.email = this.userService.getEmail() || '';
   }
 
+  getImage() {
+    if (this.editService.imageUrl.value === '') {
+      this.sendRequest();
+    } else {
+      this.image = this.editService.imageUrl.value;
+      this.result = 'success';
+      this.error = false;
+    }
+  }
+
   /**
    * Sends a request to the prompt service to retrieve image and updates the 'image' property accordingly.
    */
   sendRequest() {
-    this.promptService.sendPrompt(this.email).subscribe((result) => {
-      this.image = result.url;
-      if (result.status === 'Success') {
-        this.result = 'success';
-        this.error = false;
-        this.userService.updateCredits();
-      } else {
-        this.error = true;
-        if (result.message.includes('network')) {
-          this.result = 'networkIssue';
-        } else if (result.message.includes('credits')) {
-          this.result = 'creditIssue';
-        } else if (result.message.includes('banned')) {
-          this.result = 'bannedIssue';
+    this.promptService.sendPrompt(this.email).subscribe({
+      next: (result) => {
+        this.image = result.url;
+        if (result.status === 'Success') {
+          this.result = 'success';
+          this.error = false;
+          this.userService.updateCredits();
         }
-      }
+      },
+      error: (err: HttpErrorResponse) => {
+        this.image = err.error.url;
+        this.error = true;
+        if (
+          err.error?.status === 'SERVICE_UNAVAILABLE' ||
+          err.error?.status === 'INTERNAL_SERVER_ERROR'
+        ) {
+          this.result = 'networkIssue';
+        } else if (err.error?.status === 'PAYMENT_REQUIRED') {
+          this.result = 'creditIssue';
+        }
+      },
     });
   }
 
@@ -74,42 +92,42 @@ export class ResultComponent implements OnInit {
    */
   regenerate() {
     this.getUserData();
-    this.promptService.regenerate(this.email).subscribe((result) => {
-      this.image = result.url;
-      if (result.status === 'Success') {
-        this.result = 'success';
-        this.error = false;
-        this.userService.updateCredits();
-      } else {
-        this.error = true;
-        if (result.message.includes('network')) {
-          this.result = 'networkIssue';
-        } else if (result.message.includes('credits')) {
-          this.result = 'creditIssue';
-        } else if (result.message.includes('banned')) {
-          this.result = 'bannedIssue';
+    this.promptService.sendPrompt(this.email).subscribe({
+      next: (result) => {
+        this.image = result.url;
+        if (result.status === 'Success') {
+          this.result = 'success';
+          this.error = false;
+          this.userService.updateCredits();
         }
-      }
+      },
+      error: (err: HttpErrorResponse) => {
+        this.image = err.error.url;
+        this.error = true;
+        if (
+          err.error?.status === 'SERVICE_UNAVAILABLE' ||
+          err.error?.status === 'INTERNAL_SERVER_ERROR'
+        ) {
+          this.result = 'networkIssue';
+        } else if (err.error?.status === 'PAYMENT_REQUIRED') {
+          this.result = 'creditIssue';
+        }
+      },
     });
+  }
+
+  editImage() {
+    this.editService.imageUrl.next(this.image);
+    this.router.navigate(['edit']);
   }
 
   /**
    * Empties the data.
    */
   emptyData() {
+    this.editService.imageUrl.next('');
     this.promptService.emptyPrompt();
     this.breadcrumbService.emptyBreadcrumbList();
     this.checkAttributeService.emptyCheckedAttributesList();
-  }
-
-  disableBackButton() {
-    // Add an initial dummy state
-    history.pushState(null, '', window.location.href);
-
-    // Listen for back and forward buttons (popstate event)
-    window.addEventListener('popstate', (event) => {
-      // Replace the state to prevent the back button from navigating
-      history.pushState(null, '', window.location.href);
-    });
   }
 }

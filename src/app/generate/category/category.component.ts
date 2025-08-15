@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router, RouterLink } from '@angular/router';
 import { Category } from '../models/category';
 import { PromptService } from '../services/prompt.service';
 import { Subcategory } from '../models/subcategory';
@@ -9,11 +9,23 @@ import {
 } from 'src/app/services/breadcrumb.service';
 import { CategoryService } from '../services/data/category.service';
 import { CheckedAttributesService } from '../services/checked-attributes.service';
+import { CommonModule } from '@angular/common';
+import { HeaderComponent } from 'src/app/header/header.component';
+import { CategoryListComponent } from '../category-list/category-list.component';
+import { UserInputComponent } from '../user-input/user-input.component';
 
 @Component({
+  standalone: true,
   selector: 'app-category',
   templateUrl: './category.component.html',
   styleUrls: ['./category.component.css'],
+  imports: [
+    HeaderComponent,
+    CategoryListComponent,
+    UserInputComponent,
+    CommonModule,
+    RouterLink,
+  ],
 })
 export class CategoryComponent implements OnInit {
   private category: string = '';

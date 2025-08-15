@@ -6,11 +6,15 @@ import { CheckedAttributesService } from '../generate/services/checked-attribute
 import { AuthService } from '../auth/services/auth.service';
 import { UserService } from '../services/user.service';
 import { User } from '../models/user';
+import { EditService } from '../services/edit.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
+  standalone: true,
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css'],
+  imports: [CommonModule],
 })
 export class HeaderComponent implements OnInit {
   title = 'DEPANO AI';
@@ -32,6 +36,7 @@ export class HeaderComponent implements OnInit {
     private userService: UserService,
     private breadcrumbService: BreadcrumbService,
     private promptService: PromptService,
+    private editService: EditService,
     private checkAttributeService: CheckedAttributesService
   ) {}
 
@@ -99,6 +104,7 @@ export class HeaderComponent implements OnInit {
    * Empties the data.
    */
   emptyData() {
+    this.editService.imageUrl.next('');
     this.promptService.emptyPrompt();
     this.breadcrumbService.emptyBreadcrumbList();
     this.checkAttributeService.emptyCheckedAttributesList();

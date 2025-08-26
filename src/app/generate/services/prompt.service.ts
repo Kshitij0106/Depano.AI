@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
-import { ImageResponse } from '../models/imageResponse';
+import { ImageResponse } from '../models/imageResponse.model';
 
 interface Prompt {
   category: string;
@@ -41,13 +41,13 @@ export class PromptService {
   /**
    * Sends a prompt to the API for image generation based on user prompts.
    *
-   * @param email - The email of the user.
+   * @param userId - The uid of the user.
    * @returns {Observable<ImageResponse>} - An observable containing the server's response, which includes generated images.
    */
-  sendPrompt(email: string): Observable<ImageResponse> {
+  sendPrompt(userId: string): Observable<ImageResponse> {
     let userInput = this.getPrompt();
     return this.http.post<ImageResponse>(
-      environment.gateway + 'prompts/create/' + this.getGender() + '/' + email,
+      environment.gateway + 'prompts/create/' + this.getGender() + '/' + userId,
       userInput
     );
   }
@@ -55,12 +55,12 @@ export class PromptService {
   /**
    * Sends a request again to the API for image generation based on user prompts.
    *
-   * @param email - The email of the user.
+   * @param userId - The uid of the user.
    * @returns {Observable<ImageResponse>} - An observable containing the server's response, which includes generated images.
    */
-  regenerate(email: string): Observable<ImageResponse> {
+  regenerate(userId: string): Observable<ImageResponse> {
     return this.http.get<ImageResponse>(
-      environment.gateway + 'prompts/regenerate/' + email
+      environment.gateway + 'prompts/regenerate/' + userId
     );
   }
 

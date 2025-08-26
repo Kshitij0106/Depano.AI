@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router, RouterLink } from '@angular/router';
-import { Category } from '../models/category';
+import { Category } from '../models/category.model';
 import { PromptService } from '../services/prompt.service';
-import { Subcategory } from '../models/subcategory';
+import { Subcategory } from '../models/subcategory.model';
 import {
   BreadcrumbService,
   breadcrumb,

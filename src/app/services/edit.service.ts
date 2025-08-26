@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ImageResponse } from '../generate/models/imageResponse';
+import { ImageResponse } from '../generate/models/imageResponse.model';
 import { environment } from 'src/environments/environment';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 
@@ -12,9 +12,9 @@ export class EditService {
 
   constructor(private http: HttpClient) {}
 
-  editImage(email: string, formData: FormData): Observable<ImageResponse> {
+  editImage(userId: string, formData: FormData): Observable<ImageResponse> {
     return this.http.post<ImageResponse>(
-      environment.gateway + 'edit/' + email,
+      environment.gateway + 'edit/' + userId,
       formData
     );
   }

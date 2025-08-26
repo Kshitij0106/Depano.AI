@@ -39,7 +39,7 @@ export class EditComponent implements OnInit, OnDestroy {
 
   image: string = '';
   maskImageUrl: string = '';
-  email: string = '';
+  userId: string = '';
   userPrompt: string = '';
 
   result: string = '';
@@ -69,9 +69,9 @@ export class EditComponent implements OnInit, OnDestroy {
     this.loadImage(this.image);
   }
 
-  /** Initialize email and image URL */
+  /** Initialize user and image URL */
   private initializeUser(): void {
-    this.email = this.userService.getEmail() || '';
+    this.userId = this.userService.getUserId() || '';
   }
 
   private initializeCanvas(): void {
@@ -217,7 +217,7 @@ export class EditComponent implements OnInit, OnDestroy {
         this.maskImageUrl,
         this.userPrompt
       );
-      this.editService.editImage(this.email, formData).subscribe({
+      this.editService.editImage(this.userId, formData).subscribe({
         next: (result) => {
           this.image = result.url;
           if (result.status === 'Success') {

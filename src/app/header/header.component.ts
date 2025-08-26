@@ -5,7 +5,7 @@ import { PromptService } from '../generate/services/prompt.service';
 import { CheckedAttributesService } from '../generate/services/checked-attributes.service';
 import { AuthService } from '../auth/services/auth.service';
 import { UserService } from '../services/user.service';
-import { User } from '../models/user';
+import { User } from '../models/user.model';
 import { EditService } from '../services/edit.service';
 import { CommonModule } from '@angular/common';
 
@@ -25,8 +25,8 @@ export class HeaderComponent implements OnInit {
   colorEnd: string = '#c1bebe';
 
   loggedInUser: User = {
-    name: '',
-    email: '',
+    userId: '',
+    userName: '',
     credits: '',
   };
 
@@ -71,8 +71,8 @@ export class HeaderComponent implements OnInit {
    */
   getUser() {
     this.userService.getUser().subscribe((user) => {
-      this.loggedInUser.name = user.name;
-      this.loggedInUser.email = user.email;
+      this.loggedInUser.userId = user.userId;
+      this.loggedInUser.userName = user.userName;
       this.loggedInUser.credits = user.credits;
     });
   }

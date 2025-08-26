@@ -13,53 +13,32 @@
         <div class="form-ctn row">
           <div class="mb-3">
             <form #userform="ngForm">
-              <div *ngIf="!otp">
+              <div *ngIf="!otpSent">
                 <div class="mb-3">
                   <input
-                    placeholder="Email"
-                    type="email"
+                    placeholder="Mobile Number"
+                    type="number"
                     class="txt-input form-control"
-                    id="emailId"
-                    [(ngModel)]="userAuth.email"
-                    name="email"
+                    id="mobileId"
+                    [(ngModel)]="otpSendRequest.mobileNumber"
+                    name="mobileNumber"
                     required
-                    #userId="ngModel"
-                    (keyup)="checkEmail()"
+                    #mobileId="ngModel"
                   />
                   <div
-                    *ngIf="userId.invalid && userId.touched"
+                    *ngIf="mobileId.invalid && mobileId.touched"
                     class="invalid-error alert-danger"
                     role="alert"
                   >
-                    Email/Phone can't be empty!
+                    Phone can't be empty!
                   </div>
 
                   <div
-                    *ngIf="emailError"
+                    *ngIf="mobileError"
                     class="invalid-error alert-danger"
                     role="alert"
                   >
-                    Invalid email format!
-                  </div>
-                </div>
-
-                <div class="mb-2">
-                  <input
-                    placeholder="Password"
-                    type="password"
-                    class="txt-input form-control"
-                    id="password"
-                    [(ngModel)]="userAuth.password"
-                    name="password"
-                    required
-                    #userPass="ngModel"
-                  />
-                  <div
-                    *ngIf="userPass.invalid && userPass.touched"
-                    class="invalid-error alert-danger"
-                    role="alert"
-                  >
-                    Password can't be empty!
+                    Invalid mobile number!
                   </div>
                 </div>
 
@@ -74,28 +53,20 @@
                   <label class="check-input form-check-label" for="rememberId"
                     >Remember me</label
                   >
-
-                  <button
-                    type="button"
-                    class="forgot-btn btn"
-                    (click)="forgotPassword()"
-                  >
-                    Forgot password?
-                  </button>
                 </div> -->
 
                 <div>
                   <button
                     type="submit"
                     class="login-btn btn"
-                    (click)="validate()"
+                    (click)="generateOtp()"
                     [disabled]="userform.invalid"
                   >
                     Sign in
                   </button>
                 </div>
 
-                <!-- <div>
+                <div>
                   <button
                     type="submit"
                     class="create-acc-btn btn"
@@ -103,57 +74,36 @@
                   >
                     Create account
                   </button>
-                </div> -->
-              </div>
-
-              <div *ngIf="otp && !otpSent && !otpChecked">
-                <div class="mb-3">
-                  <input
-                    placeholder="Email"
-                    type="email"
-                    class="txt-input form-control"
-                    id="emailId"
-                    [(ngModel)]="userAuth.email"
-                    name="email"
-                    required
-                    #userId="ngModel"
-                    (keyup)="checkEmail()"
-                  />
-                  <div
-                    *ngIf="userId.invalid && userId.touched"
-                    class="invalid-error alert-danger"
-                    role="alert"
-                  >
-                    Email/Phone can't be empty!
-                  </div>
-
-                  <div
-                    *ngIf="emailError"
-                    class="invalid-error alert-danger"
-                    role="alert"
-                  >
-                    Invalid email format!
-                  </div>
                 </div>
-
-                <button
-                  type="submit"
-                  class="login-btn btn"
-                  (click)="generateOtp()"
-                  [disabled]="userform.invalid"
-                >
-                  Verify
-                </button>
               </div>
 
-              <div *ngIf="otp && otpSent && !otpChecked" class="otp-state">
+              <div *ngIf="otpSent && !otpChecked" class="otp-state">
                 <div class="mb-3">
+                  <div class="mb-3">
+                    <input
+                      placeholder="Name"
+                      type="text"
+                      class="txt-input form-control"
+                      id="name"
+                      [(ngModel)]="otpValidateRequest.userName"
+                      name="name"
+                      #userName="ngModel"
+                    />
+                    <div
+                      *ngIf="userName.invalid && userName.touched"
+                      class="invalid-error alert-danger"
+                      role="alert"
+                    >
+                      Name can't be empty!
+                    </div>
+                  </div>
+
                   <input
                     placeholder="Otp"
-                    type="text"
+                    type="number"
                     class="txt-input form-control"
                     id="otpId"
-                    [(ngModel)]="changePasswordUser.otp"
+                    [(ngModel)]="otpValidateRequest.otp"
                     name="otp"
                     required
                     minlength="6"
@@ -173,7 +123,7 @@
                   <button
                     type="submit"
                     class="login-btn btn"
-                    (click)="verifyOtp()"
+                    (click)="validateOtp()"
                     [disabled]="userform.invalid"
                   >
                     Submit
@@ -188,68 +138,6 @@
                   >
                     Resend OTP
                   </button>
-                </div>
-              </div>
-
-              <div *ngIf="otp && otpSent && otpChecked" class="otp-state">
-                <div class="mb-3">
-                  <input
-                    placeholder="Password"
-                    type="password"
-                    class="txt-input form-control"
-                    id="passwordId"
-                    [(ngModel)]="changePasswordUser.password"
-                    name="password"
-                    required
-                    #userPass="ngModel"
-                  />
-                  <div
-                    *ngIf="userPass.invalid && userPass.touched"
-                    class="invalid-error alert-danger"
-                    role="alert"
-                  >
-                    Password can't be empty!
-                  </div>
-                </div>
-
-                <div class="mb-3">
-                  <input
-                    placeholder="Confirm Password"
-                    type="password"
-                    class="txt-input form-control"
-                    id="cnfrmPassId"
-                    [(ngModel)]="confirmPassword"
-                    name="confirm"
-                    required
-                    #userCnfrm="ngModel"
-                  />
-                  <div
-                    *ngIf="
-                      (userCnfrm.invalid && userCnfrm.touched) || cnfrmPassError
-                    "
-                    class="invalid-error alert-danger"
-                    role="alert"
-                  >
-                    Passwords don't match!
-                  </div>
-                </div>
-
-                <button
-                  type="submit"
-                  class="login-btn btn"
-                  (click)="changePassword()"
-                  [disabled]="userform.invalid"
-                >
-                  Submit
-                </button>
-
-                <div *ngIf="passError" class="pass-error" role="alert">
-                  <p>
-                    Password must be at least 8 characters long. Contains at
-                    least:<br />
-                    One lowercase letter, uppercase letter, digit & special
-                    character.
-                  </p>
                 </div>
               </div>
             </form>

@@ -18,7 +18,7 @@ import { CommonModule } from '@angular/common';
 })
 export class ResultComponent {
   image!: string;
-  email!: string;
+  userId!: string;
   result: string = '';
   error: boolean = false;
 
@@ -46,7 +46,7 @@ export class ResultComponent {
    * Get user data from details stored in session storage.
    */
   getUserData() {
-    this.email = this.userService.getEmail() || '';
+    this.userId = this.userService.getUserId() || '';
   }
 
   getImage() {
@@ -63,7 +63,7 @@ export class ResultComponent {
    * Sends a request to the prompt service to retrieve image and updates the 'image' property accordingly.
    */
   sendRequest() {
-    this.promptService.sendPrompt(this.email).subscribe({
+    this.promptService.sendPrompt(this.userId).subscribe({
       next: (result) => {
         this.image = result.url;
         if (result.status === 'Success') {
@@ -92,7 +92,7 @@ export class ResultComponent {
    */
   regenerate() {
     this.getUserData();
-    this.promptService.sendPrompt(this.email).subscribe({
+    this.promptService.regenerate(this.userId).subscribe({
       next: (result) => {
         this.image = result.url;
         if (result.status === 'Success') {

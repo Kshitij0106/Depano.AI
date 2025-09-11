@@ -61,9 +61,11 @@ export class HeaderComponent implements OnInit {
    * Update credits after successfull generation of image.
    */
   updateCredits() {
-    this.userService.refreshCredits.subscribe(() => {
-      this.getUser();
-    });
+    if (this.authService.isLoggedIn()) {
+      this.userService.refreshCredits.subscribe(() => {
+        this.getUser();
+      });
+    }
   }
 
   /**
@@ -114,7 +116,7 @@ export class HeaderComponent implements OnInit {
    * Log out.
    */
   logOut() {
-    this.authService.logOut();
+    this.authService.logout();
     this.openHome();
   }
 }

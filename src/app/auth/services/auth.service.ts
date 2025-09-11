@@ -11,46 +11,9 @@ import { OtpResponse } from '../models/otpResponse.model';
   providedIn: 'root',
 })
 export class AuthService {
+  private accessToken: string | null = null;
+
   constructor(private http: HttpClient) {}
-
-  /**
-   * Retrieves logged in user information from the session storage.
-   */
-  isLoggedIn(): boolean {
-    if (
-      (sessionStorage.getItem('status')?.match('loggedIn') &&
-        sessionStorage.getItem('user') !== '') ||
-      (localStorage.getItem('status')?.match('loggedIn') &&
-        localStorage.getItem('user') !== '')
-    ) {
-      return true;
-    }
-    return false;
-  }
-
-  /**
-   * Deletes logged in user information from the session storage.
-   */
-  logOut() {
-    sessionStorage.clear();
-    localStorage.clear();
-  }
-
-  /**
-   * Saves user information in session storage.
-   */
-  saveUserInfo(userId: string) {
-    sessionStorage.setItem('status', 'loggedIn');
-    sessionStorage.setItem('user', userId);
-  }
-
-  /**
-   * Saves user information in local storage for remembering even if browser is closed.
-   */
-  rememberUserInfo(userId: string) {
-    localStorage.setItem('status', 'loggedIn');
-    localStorage.setItem('user', userId);
-  }
 
   /**
    * Registers a new user by sending their details to the server.
@@ -75,6 +38,45 @@ export class AuthService {
     return this.http.post<Auth>(
       environment.gateway + 'auth/validate-otp',
       otpValidateRequest
+    );
+  }
+
+  refreshToken(): Observable<Auth> {
+    return this.http.post<Auth>(environment.gateway + 'auth/refresh', {});
+  }
+
+  /**
+   * Deletes logged in user information from the session storage.
+   */
+  logout() {
+    this.clearUserInfo();
+    return this.http.post<Auth>(environment.gateway + 'auth/logout', {});
+  }
+
+  getToken(): string | null {
+    return this.accessToken;
+  }
+
+  /**
+   * Saves user information in session storage.
+   */
+  saveUserInfo(userId: string, token: string) {
+    this.accessToken = token;
+    sessionStorage.setItem('user', userId);
+    sessionStorage.setItem('isLoggedIn', 'true');
+  }
+
+  clearUserInfo() {
+    sessionStorage.clear();
+    this.accessToken = null;
+  }
+
+  /**
+   * Checks if the user is logged in by verifying the presence and validity of a JWT token in session storage.
+   */
+  isLoggedIn(): boolean {
+    return (
+      !!this.accessToken || sessionStorage.getItem('isLoggedIn') === 'true'
     );
   }
 }

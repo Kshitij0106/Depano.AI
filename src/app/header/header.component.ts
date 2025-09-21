@@ -72,7 +72,7 @@ export class HeaderComponent implements OnInit {
    * Get user data from DB from user details stored in session storage.
    */
   getUser() {
-    this.userService.getUser().subscribe((user) => {
+    this.userService.getMyUserDetails().subscribe((user) => {
       this.loggedInUser.userId = user.userId;
       this.loggedInUser.userName = user.userName;
       this.loggedInUser.credits = user.credits;

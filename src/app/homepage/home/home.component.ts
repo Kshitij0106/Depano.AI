@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/auth/services/auth.service';
 import { HeaderComponent } from 'src/app/header/header.component';
 import { AboutComponent } from '../about/about.component';
 import { TestimonialsComponent } from '../testimonials/testimonials.component';
 import { VisionComponent } from '../vision/vision.component';
 import { OutputsComponent } from '../outputs/outputs.component';
 import { FooterComponent } from 'src/app/footer/footer.component';
+import { UserService } from 'src/app/services/user.service';
+import { AuthService } from 'src/app/auth/services/auth.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   standalone: true,
@@ -25,7 +27,11 @@ import { FooterComponent } from 'src/app/footer/footer.component';
 export class HomeComponent implements OnInit {
   title = 'DEPANO AI';
 
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private userService: UserService
+  ) {}
 
   ngOnInit(): void {
     this.disableBackButton();
@@ -40,7 +46,18 @@ export class HomeComponent implements OnInit {
     if (this.authService.isLoggedIn()) {
       this.router.navigate(['gender']);
     } else {
-      this.router.navigate(['login']);
+      this.userService.getMyUserDetails().subscribe({
+        next: () => {
+          this.router.navigate(['gender']);
+        },
+        error: (err: HttpErrorResponse) => {
+          if (err.error?.status === 'UNAUTHORIZED') {
+            this.router.navigate(['login']);
+          } else if (err.error?.status === 'SERVICE_UNAVAILABLE') {
+            // load error screen
+          }
+        },
+      });
     }
   }
 

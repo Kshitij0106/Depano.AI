@@ -61,16 +61,18 @@ export class HeaderComponent implements OnInit {
    * Update credits after successfull generation of image.
    */
   updateCredits() {
-    this.userService.refreshCredits.subscribe(() => {
-      this.getUser();
-    });
+    if (this.authService.isLoggedIn()) {
+      this.userService.refreshCredits.subscribe(() => {
+        this.getUser();
+      });
+    }
   }
 
   /**
    * Get user data from DB from user details stored in session storage.
    */
   getUser() {
-    this.userService.getUser().subscribe((user) => {
+    this.userService.getMyUserDetails().subscribe((user) => {
       this.loggedInUser.userId = user.userId;
       this.loggedInUser.userName = user.userName;
       this.loggedInUser.credits = user.credits;
@@ -114,7 +116,7 @@ export class HeaderComponent implements OnInit {
    * Log out.
    */
   logOut() {
-    this.authService.logOut();
+    this.authService.logout();
     this.openHome();
   }
 }

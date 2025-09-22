@@ -16,10 +16,9 @@ export class UserService {
    * A getter that retrieves the user id form session storage.
    * @returns {Observable<User>} - An observable containing the user information.
    */
-  public getUser(): Observable<User> {
-    const userId =
-      sessionStorage.getItem('user') || localStorage.getItem('user');
-    return this.http.get<User>(environment.gateway + 'users' + '/' + userId);
+  public getMyUserDetails(): Observable<User> {
+    const userId = sessionStorage.getItem('user');
+    return this.http.get<User>(environment.gateway + 'users' + '/me');
   }
 
   /**
@@ -27,7 +26,7 @@ export class UserService {
    * @returns {string} - user id of the logged in user.
    */
   public getUserId(): string | null {
-    return sessionStorage.getItem('user') || localStorage.getItem('user');
+    return sessionStorage.getItem('user');
   }
 
   /**

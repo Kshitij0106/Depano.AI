@@ -7,10 +7,12 @@ export const authGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthService);
   const router = inject(Router);
   const toastr = inject(ToastrService);
-  if (!authService.isLoggedIn()) {
-    toastr.error('Log in first !');
-    router.navigate(['/home']);
+
+  if (authService.isLoggedIn()) {
+    return true;
+  } else {
+    toastr.error('Please log in first!');
+    router.navigate(['/login']);
     return false;
   }
-  return true;
 };

@@ -66,16 +66,13 @@ export class LoginComponent {
    * Validates the One-Time Password (OTP) provided by the user against the generated OTP.
    */
   validateOtp() {
-    // if (this.rememberUser) {
-    //   this.authService.rememberUserInfo(this.userAuth.mobileNumber);
-    // }
     this.otpValidateRequest.mobileNumber = this.otpSendRequest.mobileNumber;
     this.authService
       .validateOtp(this.otpValidateRequest)
       .subscribe((result) => {
         if (result.status === 'Success') {
           this.otpChecked = true;
-          this.authService.saveUserInfo(result.userId);
+          this.authService.saveUserInfo(result.userId, result.accessToken);
           this.toastr.success(result.message);
           this.router.navigate(['gender']);
         } else {

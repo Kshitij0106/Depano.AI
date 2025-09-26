@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { OtpValidateRequest } from '../models/otpValidateRequest.model';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   standalone: true,
@@ -29,7 +30,6 @@ export class LoginComponent {
 
   mobileError: boolean = false;
 
-  otp: boolean = false;
   otpSent: boolean = false;
   otpChecked: boolean = false;
 
@@ -38,6 +38,7 @@ export class LoginComponent {
   constructor(
     private router: Router,
     private authService: AuthService,
+    private userService: UserService,
     private toastr: ToastrService
   ) {}
 
@@ -72,9 +73,10 @@ export class LoginComponent {
       .subscribe((result) => {
         if (result.status === 'Success') {
           this.otpChecked = true;
-          this.authService.saveUserInfo(result.userId, result.accessToken);
+          this.authService.saveToken(result.accessToken);
           this.toastr.success(result.message);
           this.router.navigate(['gender']);
+          this.userService.updateUserDetails();
         } else {
           this.toastr.error(result.message);
         }

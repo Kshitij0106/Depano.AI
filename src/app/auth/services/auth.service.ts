@@ -6,6 +6,7 @@ import { Auth } from '../models/auth.model';
 import { OtpSendRequest } from '../models/otpSendRequest.model';
 import { OtpValidateRequest } from '../models/otpValidateRequest.model';
 import { OtpResponse } from '../models/otpResponse.model';
+import { UserService } from 'src/app/services/user.service';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +14,7 @@ import { OtpResponse } from '../models/otpResponse.model';
 export class AuthService {
   private accessToken: string | null = null;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private userService: UserService) {}
 
   /**
    * Registers a new user by sending their details to the server.
@@ -48,7 +49,7 @@ export class AuthService {
   /**
    * Deletes logged in user information from the session storage.
    */
-  logout() {
+  logout(): Observable<any> {
     this.clearUserInfo();
     return this.http.post<Auth>(environment.gateway + 'auth/logout', {});
   }
@@ -60,15 +61,16 @@ export class AuthService {
   /**
    * Saves user information in session storage.
    */
-  saveUserInfo(userId: string, token: string) {
+  saveToken(token: string) {
     this.accessToken = token;
-    sessionStorage.setItem('user', userId);
     sessionStorage.setItem('isLoggedIn', 'true');
   }
 
   clearUserInfo() {
     sessionStorage.clear();
+    localStorage.clear();
     this.accessToken = null;
+    this.userService.clearUserDetails();
   }
 
   /**

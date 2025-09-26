@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 import { ImageResponse } from '../models/imageResponse.model';
+import { UserService } from 'src/app/services/user.service';
 
 interface Prompt {
   category: string;
@@ -16,7 +17,7 @@ export class PromptService {
   private gender: string = '';
   private userPrompts: Prompt[] = [];
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private userService: UserService) {}
 
   /**
    * Adds a key-value pair to the user prompt map.
@@ -44,10 +45,14 @@ export class PromptService {
    * @param userId - The uid of the user.
    * @returns {Observable<ImageResponse>} - An observable containing the server's response, which includes generated images.
    */
-  sendPrompt(userId: string): Observable<ImageResponse> {
+  sendPrompt(): Observable<ImageResponse> {
     let userInput = this.getPrompt();
     return this.http.post<ImageResponse>(
-      environment.gateway + 'prompts/create/' + this.getGender() + '/' + userId,
+      environment.gateway +
+        'prompts/create/' +
+        this.getGender() +
+        '/' +
+        this.userService.getUserId(),
       userInput
     );
   }
@@ -58,9 +63,9 @@ export class PromptService {
    * @param userId - The uid of the user.
    * @returns {Observable<ImageResponse>} - An observable containing the server's response, which includes generated images.
    */
-  regenerate(userId: string): Observable<ImageResponse> {
+  regenerate(): Observable<ImageResponse> {
     return this.http.get<ImageResponse>(
-      environment.gateway + 'prompts/regenerate/' + userId
+      environment.gateway + 'prompts/regenerate/' + this.userService.getUserId()
     );
   }
 
@@ -71,7 +76,7 @@ export class PromptService {
   emptyPrompt() {
     this.userPrompts = [];
     this.http
-      .get(environment.gateway + this.getGender() + '/' + 'refresh')
+      .delete(environment.gateway + this.getGender() + '/reset-prompt')
       .subscribe();
   }
 

@@ -8,7 +8,11 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class UserService {
-  public refreshCredits = new BehaviorSubject<any>(null);
+  public userDetails = new BehaviorSubject<User>({
+    userId: '',
+    userName: '',
+    credits: '',
+  });
 
   constructor(private http: HttpClient) {}
 
@@ -17,7 +21,6 @@ export class UserService {
    * @returns {Observable<User>} - An observable containing the user information.
    */
   public getMyUserDetails(): Observable<User> {
-    const userId = sessionStorage.getItem('user');
     return this.http.get<User>(environment.gateway + 'users' + '/me');
   }
 
@@ -26,13 +29,24 @@ export class UserService {
    * @returns {string} - user id of the logged in user.
    */
   public getUserId(): string | null {
-    return sessionStorage.getItem('user');
+    return this.userDetails.value.userId;
+  }
+
+  public getUserName(): string {
+    return localStorage.getItem('user') || '';
   }
 
   /**
    * Update credits after successfull generation of image.
    */
-  public updateCredits() {
-    this.refreshCredits.next(true);
+  public updateUserDetails() {
+    this.getMyUserDetails().subscribe((user) => {
+      localStorage.setItem('user', user.userName);
+      this.userDetails.next(user);
+    });
+  }
+
+  public clearUserDetails() {
+    this.userDetails.next({ userId: '', userName: '', credits: '' });
   }
 }

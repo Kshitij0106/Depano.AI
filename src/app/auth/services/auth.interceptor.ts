@@ -10,42 +10,58 @@ import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, filter, switchMap, take } from 'rxjs/operators';
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
+import { UserService } from 'src/app/services/user.service';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   private isRefreshing = false;
-  private refreshTokenSubject: BehaviorSubject<string | null> =
-    new BehaviorSubject<string | null>(null);
+  private refreshTokenSubject = new BehaviorSubject<string | null>(null);
 
-  constructor(private authService: AuthService, private router: Router) {}
+  private unprotectedEndpoints = [
+    '/auth/generate-otp',
+    '/auth/validate-otp',
+    '/auth/refresh',
+    '/auth/logout',
+  ];
+
+  constructor(
+    private authService: AuthService,
+    private userService: UserService,
+    private router: Router
+  ) {}
 
   intercept(
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    if (request.url.includes('/auth/refresh')) {
-      const refreshReq = request.clone({ withCredentials: true });
-      return next.handle(refreshReq);
-    }
+    const isUnprotected = this.unprotectedEndpoints.some((url) =>
+      request.url.includes(url)
+    );
 
-    const token = this.authService.getToken();
     let authReq = request;
 
-    if (token) {
-      authReq = request.clone({
-        setHeaders: { Authorization: `Bearer ${token}` },
-        withCredentials: true, // Important to include cookies (refresh token)
-      });
-    } else {
+    if (isUnprotected) {
       authReq = request.clone({ withCredentials: true });
+    } else {
+      const token = this.authService.getToken();
+      if (token) {
+        authReq = request.clone({
+          setHeaders: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
+        });
+      } else {
+        authReq = request.clone({ withCredentials: true });
+      }
     }
 
     return next.handle(authReq).pipe(
       catchError((error: HttpErrorResponse) => {
-        if (error.status === 401) {
-          return this.handle401Error(request, next);
+        if (error.status === 401 && !isUnprotected) {
+          // Silently retry /me endpoint to avoid logout during home page check
+          if (request.url.includes('/me')) {
+            return this.handle401Error(authReq, next, true);
+          }
+          return this.handle401Error(authReq, next, false);
         }
         return throwError(() => error);
       })
@@ -54,7 +70,8 @@ export class AuthInterceptor implements HttpInterceptor {
 
   private handle401Error(
     request: HttpRequest<any>,
-    next: HttpHandler
+    next: HttpHandler,
+    silentRetry: boolean
   ): Observable<HttpEvent<any>> {
     if (!this.isRefreshing) {
       this.isRefreshing = true;
@@ -65,11 +82,9 @@ export class AuthInterceptor implements HttpInterceptor {
           this.isRefreshing = false;
 
           if (response.accessToken) {
-            this.authService.saveUserInfo(
-              response.userId,
-              response.accessToken
-            );
+            this.authService.saveToken(response.accessToken);
             this.refreshTokenSubject.next(response.accessToken);
+            this.userService.updateUserDetails();
 
             const newReq = request.clone({
               setHeaders: { Authorization: `Bearer ${response.accessToken}` },
@@ -79,18 +94,24 @@ export class AuthInterceptor implements HttpInterceptor {
             return next.handle(newReq);
           }
 
-          this.authService.logout();
-          this.router.navigate(['/login']);
+          this.forceLogout();
           return throwError(() => new Error('Refresh token failed'));
         }),
         catchError((err) => {
           this.isRefreshing = false;
-          this.authService.logout();
-          this.router.navigate(['/login']);
+
+          if (err.status === 401) {
+            this.forceLogout();
+          } else {
+            // show error page
+            console.warn('Refresh failed (not due to auth):', err.message);
+          }
+
           return throwError(() => err);
         })
       );
     } else {
+      // Queue requests until refresh completes
       return this.refreshTokenSubject.pipe(
         filter((token) => token != null),
         take(1),
@@ -103,5 +124,10 @@ export class AuthInterceptor implements HttpInterceptor {
         })
       );
     }
+  }
+
+  private forceLogout() {
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
 }

@@ -9,6 +9,7 @@ import { FooterComponent } from 'src/app/footer/footer.component';
 import { UserService } from 'src/app/services/user.service';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { User } from 'src/app/models/user.model';
 
 @Component({
   standalone: true,
@@ -47,7 +48,8 @@ export class HomeComponent implements OnInit {
       this.router.navigate(['gender']);
     } else {
       this.userService.getMyUserDetails().subscribe({
-        next: () => {
+        next: (user: User) => {
+          this.userService.userDetails.next(user);
           this.router.navigate(['gender']);
         },
         error: (err: HttpErrorResponse) => {

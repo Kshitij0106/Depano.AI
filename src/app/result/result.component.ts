@@ -18,7 +18,6 @@ import { CommonModule } from '@angular/common';
 })
 export class ResultComponent {
   image!: string;
-  userId!: string;
   result: string = '';
   error: boolean = false;
 
@@ -30,7 +29,6 @@ export class ResultComponent {
     private editService: EditService,
     private router: Router
   ) {
-    this.getUserData();
     this.getImage();
   }
 
@@ -40,13 +38,6 @@ export class ResultComponent {
   openHome() {
     this.emptyData();
     this.router.navigate(['gender']);
-  }
-
-  /**
-   * Get user data from details stored in session storage.
-   */
-  getUserData() {
-    this.userId = this.userService.getUserId() || '';
   }
 
   getImage() {
@@ -63,13 +54,13 @@ export class ResultComponent {
    * Sends a request to the prompt service to retrieve image and updates the 'image' property accordingly.
    */
   sendRequest() {
-    this.promptService.sendPrompt(this.userId).subscribe({
+    this.promptService.sendPrompt().subscribe({
       next: (result) => {
         this.image = result.url;
         if (result.status === 'Success') {
           this.result = 'success';
           this.error = false;
-          this.userService.updateCredits();
+          this.userService.updateUserDetails();
         }
       },
       error: (err: HttpErrorResponse) => {
@@ -91,14 +82,14 @@ export class ResultComponent {
    * Sends a request again to the prompt service to retrieve image and updates the 'image' property accordingly.
    */
   regenerate() {
-    this.getUserData();
-    this.promptService.regenerate(this.userId).subscribe({
+    // this.getUserData();
+    this.promptService.regenerate().subscribe({
       next: (result) => {
         this.image = result.url;
         if (result.status === 'Success') {
           this.result = 'success';
           this.error = false;
-          this.userService.updateCredits();
+          this.userService.updateUserDetails();
         }
       },
       error: (err: HttpErrorResponse) => {

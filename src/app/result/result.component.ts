@@ -19,6 +19,7 @@ import { CommonModule } from '@angular/common';
 export class ResultComponent {
   image!: string;
   result: string = '';
+  promptId: string = '';
   error: boolean = false;
 
   constructor(
@@ -56,15 +57,15 @@ export class ResultComponent {
   sendRequest() {
     this.promptService.sendPrompt().subscribe({
       next: (result) => {
-        this.image = result.url;
         if (result.status === 'Success') {
+          this.image = result.url;
+          this.promptId = result.promptId;
           this.result = 'success';
           this.error = false;
           this.userService.updateUserDetails();
         }
       },
       error: (err: HttpErrorResponse) => {
-        this.image = err.error.url;
         this.error = true;
         if (
           err.error?.status === 'SERVICE_UNAVAILABLE' ||
@@ -82,18 +83,17 @@ export class ResultComponent {
    * Sends a request again to the prompt service to retrieve image and updates the 'image' property accordingly.
    */
   regenerate() {
-    // this.getUserData();
-    this.promptService.regenerate().subscribe({
+    this.promptService.regenerate(this.promptId).subscribe({
       next: (result) => {
-        this.image = result.url;
         if (result.status === 'Success') {
+          this.image = result.url;
+          this.promptId = result.promptId;
           this.result = 'success';
           this.error = false;
           this.userService.updateUserDetails();
         }
       },
       error: (err: HttpErrorResponse) => {
-        this.image = err.error.url;
         this.error = true;
         if (
           err.error?.status === 'SERVICE_UNAVAILABLE' ||
@@ -116,6 +116,7 @@ export class ResultComponent {
    * Empties the data.
    */
   emptyData() {
+    this.promptId = '';
     this.editService.imageUrl.next('');
     this.promptService.emptyPrompt();
     this.breadcrumbService.emptyBreadcrumbList();

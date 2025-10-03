@@ -212,8 +212,8 @@ export class EditComponent implements OnInit, OnDestroy {
       );
       this.editService.editImage(formData).subscribe({
         next: (result) => {
-          this.image = result.url;
           if (result.status === 'Success') {
+            this.image = result.url;
             this.result = 'success';
             this.error = false;
             const base64 = result.url;
@@ -224,7 +224,6 @@ export class EditComponent implements OnInit, OnDestroy {
           }
         },
         error: (err: HttpErrorResponse) => {
-          this.image = err.error.url;
           this.error = true;
           if (
             err.error?.status === 'SERVICE_UNAVAILABLE' ||

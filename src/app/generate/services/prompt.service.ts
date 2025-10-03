@@ -42,17 +42,12 @@ export class PromptService {
   /**
    * Sends a prompt to the API for image generation based on user prompts.
    *
-   * @param userId - The uid of the user.
    * @returns {Observable<ImageResponse>} - An observable containing the server's response, which includes generated images.
    */
   sendPrompt(): Observable<ImageResponse> {
     let userInput = this.getPrompt();
     return this.http.post<ImageResponse>(
-      environment.gateway +
-        'prompts/create/' +
-        this.getGender() +
-        '/' +
-        this.userService.getUserId(),
+      environment.gateway + 'prompts',
       userInput
     );
   }
@@ -60,12 +55,13 @@ export class PromptService {
   /**
    * Sends a request again to the API for image generation based on user prompts.
    *
-   * @param userId - The uid of the user.
+   * @param promptId - The id of the prompt.
    * @returns {Observable<ImageResponse>} - An observable containing the server's response, which includes generated images.
    */
-  regenerate(): Observable<ImageResponse> {
-    return this.http.get<ImageResponse>(
-      environment.gateway + 'prompts/regenerate/' + this.userService.getUserId()
+  regenerate(promptId: string): Observable<ImageResponse> {
+    return this.http.post<ImageResponse>(
+      environment.gateway + 'prompts/' + promptId + '/regenerate',
+      {}
     );
   }
 

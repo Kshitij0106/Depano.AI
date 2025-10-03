@@ -17,7 +17,7 @@ export class AuthInterceptor implements HttpInterceptor {
   private isRefreshing = false;
   private refreshTokenSubject = new BehaviorSubject<string | null>(null);
 
-  private unprotectedEndpoints = [
+  private publicPaths = [
     '/auth/generate-otp',
     '/auth/validate-otp',
     '/auth/refresh',
@@ -34,7 +34,7 @@ export class AuthInterceptor implements HttpInterceptor {
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    const isUnprotected = this.unprotectedEndpoints.some((url) =>
+    const isUnprotected = this.publicPaths.some((url) =>
       request.url.includes(url)
     );
 

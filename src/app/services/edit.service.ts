@@ -14,8 +14,8 @@ export class EditService {
   constructor(private http: HttpClient, private userService: UserService) {}
 
   editImage(formData: FormData): Observable<ImageResponse> {
-    return this.http.post<ImageResponse>(
-      environment.gateway + 'edit/' + this.userService.getUserId(),
+    return this.http.put<ImageResponse>(
+      environment.gateway + 'edit/image',
       formData
     );
   }

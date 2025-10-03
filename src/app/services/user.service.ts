@@ -24,14 +24,6 @@ export class UserService {
     return this.http.get<User>(environment.gateway + 'users' + '/me');
   }
 
-  /**
-   * A getter that retrieves the user id form session storage.
-   * @returns {string} - user id of the logged in user.
-   */
-  public getUserId(): string | null {
-    return this.userDetails.value.userId;
-  }
-
   public getUserName(): string {
     return localStorage.getItem('user') || '';
   }

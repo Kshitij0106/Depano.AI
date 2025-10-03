@@ -18,8 +18,8 @@ import { CommonModule } from '@angular/common';
 })
 export class ResultComponent {
   image!: string;
-  email!: string;
   result: string = '';
+  promptId: string = '';
   error: boolean = false;
 
   constructor(
@@ -30,7 +30,6 @@ export class ResultComponent {
     private editService: EditService,
     private router: Router
   ) {
-    this.getUserData();
     this.getImage();
   }
 
@@ -40,13 +39,6 @@ export class ResultComponent {
   openHome() {
     this.emptyData();
     this.router.navigate(['gender']);
-  }
-
-  /**
-   * Get user data from details stored in session storage.
-   */
-  getUserData() {
-    this.email = this.userService.getEmail() || '';
   }
 
   getImage() {
@@ -63,17 +55,17 @@ export class ResultComponent {
    * Sends a request to the prompt service to retrieve image and updates the 'image' property accordingly.
    */
   sendRequest() {
-    this.promptService.sendPrompt(this.email).subscribe({
+    this.promptService.sendPrompt().subscribe({
       next: (result) => {
-        this.image = result.url;
         if (result.status === 'Success') {
+          this.image = result.url;
+          this.promptId = result.promptId;
           this.result = 'success';
           this.error = false;
-          this.userService.updateCredits();
+          this.userService.updateUserDetails();
         }
       },
       error: (err: HttpErrorResponse) => {
-        this.image = err.error.url;
         this.error = true;
         if (
           err.error?.status === 'SERVICE_UNAVAILABLE' ||
@@ -91,18 +83,17 @@ export class ResultComponent {
    * Sends a request again to the prompt service to retrieve image and updates the 'image' property accordingly.
    */
   regenerate() {
-    this.getUserData();
-    this.promptService.sendPrompt(this.email).subscribe({
+    this.promptService.regenerate(this.promptId).subscribe({
       next: (result) => {
-        this.image = result.url;
         if (result.status === 'Success') {
+          this.image = result.url;
+          this.promptId = result.promptId;
           this.result = 'success';
           this.error = false;
-          this.userService.updateCredits();
+          this.userService.updateUserDetails();
         }
       },
       error: (err: HttpErrorResponse) => {
-        this.image = err.error.url;
         this.error = true;
         if (
           err.error?.status === 'SERVICE_UNAVAILABLE' ||
@@ -125,6 +116,7 @@ export class ResultComponent {
    * Empties the data.
    */
   emptyData() {
+    this.promptId = '';
     this.editService.imageUrl.next('');
     this.promptService.emptyPrompt();
     this.breadcrumbService.emptyBreadcrumbList();

@@ -5,7 +5,7 @@ import { PromptService } from '../generate/services/prompt.service';
 import { CheckedAttributesService } from '../generate/services/checked-attributes.service';
 import { AuthService } from '../auth/services/auth.service';
 import { UserService } from '../services/user.service';
-import { User } from '../models/user';
+import { User } from '../models/user.model';
 import { EditService } from '../services/edit.service';
 import { CommonModule } from '@angular/common';
 
@@ -25,8 +25,8 @@ export class HeaderComponent implements OnInit {
   colorEnd: string = '#c1bebe';
 
   loggedInUser: User = {
-    name: '',
-    email: '',
+    userId: '',
+    userName: '',
     credits: '',
   };
 
@@ -42,7 +42,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.checkProfile();
-    this.updateCredits();
+    this.updateUserDetails();
   }
 
   /**
@@ -53,28 +53,21 @@ export class HeaderComponent implements OnInit {
       this.showProfile = false;
     } else {
       this.showProfile = true;
-      this.getUser();
     }
   }
 
   /**
    * Update credits after successfull generation of image.
    */
-  updateCredits() {
-    this.userService.refreshCredits.subscribe(() => {
-      this.getUser();
-    });
-  }
-
-  /**
-   * Get user data from DB from user details stored in session storage.
-   */
-  getUser() {
-    this.userService.getUser().subscribe((user) => {
-      this.loggedInUser.name = user.name;
-      this.loggedInUser.email = user.email;
-      this.loggedInUser.credits = user.credits;
-    });
+  updateUserDetails() {
+    if (this.authService.isLoggedIn()) {
+      this.userService.userDetails.subscribe((user) => {
+        this.loggedInUser.userId = user.userId;
+        this.loggedInUser.userName =
+          user.userName || this.userService.getUserName();
+        this.loggedInUser.credits = user.credits;
+      });
+    }
   }
 
   /**
@@ -104,17 +97,21 @@ export class HeaderComponent implements OnInit {
    * Empties the data.
    */
   emptyData() {
-    this.editService.imageUrl.next('');
-    this.promptService.emptyPrompt();
-    this.breadcrumbService.emptyBreadcrumbList();
-    this.checkAttributeService.emptyCheckedAttributesList();
+    if (this.source !== 'gender') {
+      this.promptService.emptyPrompt();
+      this.editService.imageUrl.next('');
+      this.breadcrumbService.emptyBreadcrumbList();
+      this.checkAttributeService.emptyCheckedAttributesList();
+    }
   }
 
   /**
    * Log out.
    */
-  logOut() {
-    this.authService.logOut();
+  logout() {
     this.openHome();
+    this.authService.logout().subscribe(() => {
+      this.userService.clearUserDetails();
+    });
   }
 }

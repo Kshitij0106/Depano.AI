@@ -16,7 +16,7 @@
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
-            {{ this.loggedInUser.name }}
+            {{ this.loggedInUser.userName }}
             <i class="profile-icon fas fa-angle-down"></i>
           </button>
           <ul class="dropdown-menu">
@@ -30,7 +30,7 @@
             </li>
             <li><hr class="dropdown-divider" /></li>
             <li>
-              <button class="dropdown-item" type="button" (click)="logOut()">
+              <button class="dropdown-item" type="button" (click)="logout()">
                 <i class="item-icon bi-box-arrow-left"></i>
                 <span class="item-text">Log Out</span>
               </button>

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Subcategory } from '../models/subcategory';
+import { Subcategory } from '../models/subcategory.model';
 import { CheckedAttributesService } from '../services/checked-attributes.service';
 import { CommonModule } from '@angular/common';
 

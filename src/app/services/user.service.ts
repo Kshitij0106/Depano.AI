@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { User } from '../models/user';
+import { User } from '../models/user.model';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
@@ -8,32 +8,37 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class UserService {
-  public refreshCredits = new BehaviorSubject<any>(null);
+  public userDetails = new BehaviorSubject<User>({
+    userId: '',
+    userName: '',
+    credits: '',
+  });
 
   constructor(private http: HttpClient) {}
 
   /**
-   * A getter that retrieves the email form session storage.
+   * A getter that retrieves the user id form session storage.
    * @returns {Observable<User>} - An observable containing the user information.
    */
-  public getUser(): Observable<User> {
-    const email =
-      sessionStorage.getItem('user') || localStorage.getItem('user');
-    return this.http.get<User>(environment.gateway + 'users' + '/' + email);
+  public getMyUserDetails(): Observable<User> {
+    return this.http.get<User>(environment.gateway + 'users' + '/me');
   }
 
-  /**
-   * A getter that retrieves the email form session storage.
-   * @returns {string} - email of the logged in user.
-   */
-  public getEmail(): string | null {
-    return sessionStorage.getItem('user') || localStorage.getItem('user');
+  public getUserName(): string {
+    return localStorage.getItem('user') || '';
   }
 
   /**
    * Update credits after successfull generation of image.
    */
-  public updateCredits() {
-    this.refreshCredits.next(true);
+  public updateUserDetails() {
+    this.getMyUserDetails().subscribe((user) => {
+      localStorage.setItem('user', user.userName);
+      this.userDetails.next(user);
+    });
+  }
+
+  public clearUserDetails() {
+    this.userDetails.next({ userId: '', userName: '', credits: '' });
   }
 }

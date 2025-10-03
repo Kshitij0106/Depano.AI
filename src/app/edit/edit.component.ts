@@ -39,7 +39,6 @@ export class EditComponent implements OnInit, OnDestroy {
 
   image: string = '';
   maskImageUrl: string = '';
-  email: string = '';
   userPrompt: string = '';
 
   result: string = '';
@@ -51,7 +50,6 @@ export class EditComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.initializeUser();
     this.initializeCanvas();
     this.getImage();
   }
@@ -67,11 +65,6 @@ export class EditComponent implements OnInit, OnDestroy {
     });
     this.result = 'success';
     this.loadImage(this.image);
-  }
-
-  /** Initialize email and image URL */
-  private initializeUser(): void {
-    this.email = this.userService.getEmail() || '';
   }
 
   private initializeCanvas(): void {
@@ -217,21 +210,20 @@ export class EditComponent implements OnInit, OnDestroy {
         this.maskImageUrl,
         this.userPrompt
       );
-      this.editService.editImage(this.email, formData).subscribe({
+      this.editService.editImage(formData).subscribe({
         next: (result) => {
-          this.image = result.url;
           if (result.status === 'Success') {
+            this.image = result.url;
             this.result = 'success';
             this.error = false;
             const base64 = result.url;
             const editedImageUrl = `data:image/png;base64,${base64}`;
             this.loadImage(editedImageUrl);
             this.image = editedImageUrl;
-            this.userService.updateCredits();
+            this.userService.updateUserDetails();
           }
         },
         error: (err: HttpErrorResponse) => {
-          this.image = err.error.url;
           this.error = true;
           if (
             err.error?.status === 'SERVICE_UNAVAILABLE' ||

@@ -1,5 +1,6 @@
 export interface Auth {
-  email: string;
+  userId: string;
+  accessToken: string;
   status: string;
   message: string;
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Category } from '../../models/category';
+import { Category } from '../../models/category.model';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import { PromptService } from '../prompt.service';
@@ -28,7 +28,9 @@ export class CategoryService {
    */
   public getCategory(category: string): Observable<Category> {
     return this.http
-      .get<Category>(environment.gateway + this.getGender() + '/' + category)
+      .get<Category>(
+        environment.gateway + this.getGender() + '/categories/' + category
+      )
       .pipe(
         map((response) => {
           return response;
@@ -43,13 +45,9 @@ export class CategoryService {
    * @returns {Observable<any>} - An observable containing the category information.
    */
   public saveAttributeValue(category: string): Observable<any> {
-    return this.http.get(
-      environment.gateway +
-        this.getGender() +
-        '/' +
-        'attributes' +
-        '/' +
-        category
+    return this.http.post(
+      environment.gateway + this.getGender() + '/attributes/' + category,
+      {}
     );
   }
 

@@ -1,4 +1,150 @@
-<div class="row">
+<section #sectionRef class="section">
+  <div class="container">
+    <!-- Section Header -->
+    <div
+      #headerRef
+      class="header"
+      [@fadeSlideIn]="isInView ? { value: '*' } : { value: 'void' }"
+    >
+      <h2 class="heading">Create exquisite styles such as...</h2>
+      <div
+        class="heading-line"
+        [@lineAnimation]="isInView ? { value: '*' } : { value: 'void' }"
+      ></div>
+    </div>
+
+    <!-- Gallery Container -->
+    <div class="gallery-container relative">
+      <!-- Navigation Arrows -->
+      <div
+        class="arrow-left"
+        [@arrowLeftAnimation]="isInView ? { value: '*' } : { value: 'void' }"
+      >
+        <button
+          class="arrow-button"
+          [ngClass]="{ disabled: !canScrollLeft }"
+          (click)="scrollToDirection('left')"
+          [disabled]="!canScrollLeft"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="m15 18-6-6 6-6" />
+          </svg>
+        </button>
+      </div>
+
+      <div
+        class="arrow-right"
+        [@arrowRightAnimation]="isInView ? { value: '*' } : { value: 'void' }"
+      >
+        <button
+          class="arrow-button"
+          [ngClass]="{ disabled: !canScrollRight }"
+          (click)="scrollToDirection('right')"
+          [disabled]="!canScrollRight"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="m9 18 6-6-6-6" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Scrollable Gallery -->
+      <div
+        #scrollRef
+        class="gallery-scroll"
+        (scroll)="checkScrollButtons()"
+        [@galleryFadeIn]="isInView ? { value: '*' } : { value: 'void' }"
+        [@cardAnimation]="isInView ? { value: '*' } : { value: 'void' }"
+      >
+        <div
+          *ngFor="let category of styleCategories; let i = index"
+          class="card group"
+        >
+          <!-- Background Image -->
+          <div class="image-container">
+            <img
+              [src]="category.image"
+              [alt]="category.name + ' fashion style'"
+              class="image"
+            />
+            <!-- Dark overlay -->
+            <div class="dark-overlay"></div>
+            <!-- Hover overlay -->
+            <div class="hover-overlay"></div>
+          </div>
+
+          <!-- Content -->
+          <div class="content">
+            <div class="content-inner group-hover:-translate-y-2.5">
+              <h3 class="title">{{ category.name }}</h3>
+              <p
+                class="description group-hover:opacity-100 group-hover:translate-y-0"
+              >
+                {{ category.description }}
+              </p>
+            </div>
+            <!-- Explore indicator -->
+            <div
+              class="explore group-hover:opacity-100 group-hover:translate-y-0"
+            >
+              <span class="explore-text">Explore Style</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="m9 18 6-6-6-6" />
+              </svg>
+            </div>
+          </div>
+
+          <!-- Shimmer effect -->
+          <div class="shimmer"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scroll indicator dots -->
+    <div
+      class="dots"
+      [@dotsFadeIn]="isInView ? { value: '*' } : { value: 'void' }"
+    >
+      <div
+        *ngFor="let category of styleCategories; let i = index"
+        class="dot"
+        [style.animation-delay]="i * 0.5 + 's'"
+      ></div>
+    </div>
+  </div>
+</section>
+
+<!-- <div class="row">
   <div class="col">
     <div class="row">
       <h1 class="heading">Create exquisite styles such as</h1>
@@ -70,4 +216,4 @@
       />
     </div>
   </div>
-</div>
+</div> -->

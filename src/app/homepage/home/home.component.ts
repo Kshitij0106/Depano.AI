@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HeaderComponent } from 'src/app/header/header.component';
 import { AboutComponent } from '../about/about.component';
-import { TestimonialsComponent } from '../testimonials/testimonials.component';
 import { VisionComponent } from '../vision/vision.component';
 import { OutputsComponent } from '../outputs/outputs.component';
 import { FooterComponent } from 'src/app/footer/footer.component';
@@ -10,6 +9,7 @@ import { UserService } from 'src/app/services/user.service';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { User } from 'src/app/models/user.model';
+import { FeatureComponent } from '../feature/feature.component';
 
 @Component({
   standalone: true,
@@ -17,12 +17,11 @@ import { User } from 'src/app/models/user.model';
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
   imports: [
-    HeaderComponent,
-    FooterComponent,
     AboutComponent,
-    TestimonialsComponent,
-    VisionComponent,
+    FeatureComponent,
     OutputsComponent,
+    VisionComponent,
+    FooterComponent,
   ],
 })
 export class HomeComponent implements OnInit {
@@ -61,6 +60,14 @@ export class HomeComponent implements OnInit {
         },
       });
     }
+  }
+
+  signup() {
+    this.router.navigate(['signup']);
+  }
+
+  login() {
+    this.router.navigate(['login']);
   }
 
   disableBackButton() {

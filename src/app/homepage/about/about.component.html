@@ -1,4 +1,61 @@
-<div class="row">
+<section class="about-section">
+  <div class="container">
+    <div class="content">
+      <!-- Left Content -->
+      <div class="text">
+        <h2>Innovative AI Fashion Design, Simplified</h2>
+        <p>
+          We believe that creativity should never be constrained by technical
+          limitations. Our AI-powered platform transforms the way fashion
+          designers conceptualize, create, and bring their visions to life.
+        </p>
+        <p>
+          From initial sketches to full collections, our intelligent tools
+          understand the nuances of fashion design— color theory, silhouette
+          proportions, fabric behaviors, and trend forecasting—empowering you to
+          focus on what matters most: your creative vision.
+        </p>
+        <p>
+          Join thousands of designers who have already revolutionized their
+          workflow with AI that thinks like a designer, but works at the speed
+          of technology.
+        </p>
+
+        <!-- Stats -->
+        <div class="stats">
+          <div>
+            <div class="number">10K+</div>
+            <div class="label">Designers</div>
+          </div>
+          <div>
+            <div class="number">50M+</div>
+            <div class="label">Designs Created</div>
+          </div>
+          <div>
+            <div class="number">95%</div>
+            <div class="label">Time Saved</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Collage -->
+      <div class="collage">
+        <div class="collage-bg"></div>
+        <div class="images">
+          <div
+            class="img-box"
+            *ngFor="let image of mockupImages"
+            [ngClass]="image.className"
+          >
+            <img [src]="image.src" [alt]="image.alt" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- <div class="row">
   <div class="col-12 text-center">
     <div class="row">
       <p class="heading">Innovative AI Fashion Design Simplified</p>
@@ -81,4 +138,4 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->

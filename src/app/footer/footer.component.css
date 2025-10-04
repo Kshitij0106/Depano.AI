@@ -4,6 +4,379 @@
   box-sizing: border-box;
 }
 
+.footer {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(to bottom right, #1a202c, #2d3748, #000);
+  color: #a0aec0;
+  font-family: "Inter", sans-serif;
+}
+
+/* Animated Background */
+.background-animations {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.bg-circle {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.1;
+  filter: blur(40px);
+  animation: pulse 8s ease-in-out infinite;
+}
+
+.bg-circle.top-left {
+  top: 5rem;
+  left: 5rem;
+  width: 8rem;
+  height: 8rem;
+  background: linear-gradient(135deg, #f472b6, #f97316);
+}
+
+.bg-circle.bottom-right {
+  bottom: 8rem;
+  right: 5rem;
+  width: 10rem;
+  height: 10rem;
+  background: linear-gradient(225deg, #f97316, #f472b6);
+  animation-delay: 1s;
+}
+
+.bg-circle.center-left {
+  top: 50%;
+  left: 25%;
+  width: 6rem;
+  height: 6rem;
+  background: linear-gradient(45deg, #f59e0b, #f472b6);
+  animation-delay: 0.5s;
+}
+
+.bg-circle.top-right {
+  top: 4rem;
+  right: 25%;
+  width: 7rem;
+  height: 7rem;
+  background: linear-gradient(135deg, #f472b6, #f97316);
+  animation-delay: 0.7s;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+/* Footer Content */
+.footer-content {
+  position: relative;
+  z-index: 10;
+}
+
+.footer-container {
+  max-width: 1140px;
+  margin: 0 10rem 0 auto;
+  padding: 4rem 2rem;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 3rem;
+}
+
+.brand-section {
+  color: #e2e8f0;
+}
+
+.brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.brand-logo i {
+  font-size: 1.5rem;
+  color: #f472b6;
+}
+
+.brand-name {
+  font-family: "Playfair Display", serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  background: linear-gradient(to right, #f472b6, #f97316);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.brand-description {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+}
+
+.contact-info {
+  margin-bottom: 1.5rem;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.contact-item i {
+  font-size: 1.25rem;
+  color: #f472b6;
+}
+
+.social-media h4 {
+  font-family: "Playfair Display", serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.social-icons {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.social-btn {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.social-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.pink-purple {
+  background: linear-gradient(to bottom right, #f472b6, #9333ea);
+}
+.blue {
+  background: linear-gradient(to bottom right, #60a5fa, #3b82f6);
+}
+.blue-dark {
+  background: linear-gradient(to bottom right, #3b82f6, #1e40af);
+}
+.blue-deep {
+  background: linear-gradient(to bottom right, #2563eb, #1e40af);
+}
+.red {
+  background: linear-gradient(to bottom right, #ef4444, #dc2626);
+}
+
+.footer-section h4 {
+  font-family: "Playfair Display", serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 1rem;
+}
+
+.nav-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.nav-item {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #a0aec0;
+  text-decoration: none;
+  font-size: 0.875rem;
+  transition: color 0.3s ease, transform 0.3s ease;
+  background: transparent;
+  padding: 0.25rem 0;
+}
+
+.nav-item:hover {
+  cursor: pointer;
+
+  color: #fff;
+  transform: translateX(0.25rem);
+}
+
+.nav-item i {
+  font-size: 1rem;
+  color: #f9a8d4;
+}
+
+.account-actions {
+  margin-top: 1.5rem;
+}
+
+.btn {
+  width: 100%;
+  padding: 0.5rem 1.25rem;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: "Inter", sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin: 0.825rem 0;
+}
+
+.primary-btn {
+  background: linear-gradient(to right, #f472b6, #f97316);
+  color: #fff;
+}
+
+.primary-btn:hover {
+  background: linear-gradient(to right, #ec4899, #f59e0b);
+  transform: scale(1.02);
+}
+
+.secondary-btn {
+  background: transparent;
+  border: 1px solid #4a5568;
+  color: #a0aec0;
+}
+
+.secondary-btn:hover {
+  background: #2d3748;
+  color: #fff;
+}
+
+.separator {
+  border: 0;
+  height: 1px;
+  background: #4a5568;
+  margin: 3rem 0;
+  gap: 3rem;
+}
+
+.footer-bottom {
+  display: flex;
+  flex-direction: row;
+  gap: 1.5rem;
+  padding-top: 1.5rem;
+}
+
+.bottom-left,
+.bottom-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.made-with {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.made-with i {
+  color: #f472b6;
+  animation: pulse 1.5s infinite;
+}
+
+.copyright {
+  font-size: 0.75rem;
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.status-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  background: #10b981;
+  border-radius: 50%;
+  animation: pulse 1.5s infinite;
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.link-item {
+  color: #a0aec0;
+  font-size: 0.75rem;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.link-item:hover {
+  color: #fff;
+}
+
+.separator-dot {
+  font-size: 0.75rem;
+}
+
+/* Responsive Design */
+@media (min-width: 1024px) {
+  .footer-grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .footer-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .brand-section {
+    grid-column: span 1;
+  }
+
+  .footer-container {
+    padding: 2rem 1rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .footer-bottom {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .social-icons {
+    justify-content: center;
+  }
+
+  .nav-item {
+    justify-content: center;
+  }
+}
+
+/* * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
   overflow: hidden;
   align-items: center;
@@ -37,4 +410,4 @@ body {
   color: #ffffff;
   font-size: 13px;
   text-decoration: none;
-}
+} */

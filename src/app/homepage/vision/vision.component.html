@@ -1,4 +1,51 @@
-<div class="row">
+<section #sectionRef class="section">
+  <!-- Background with blurred fashion imagery -->
+  <div class="background">
+    <div class="overlay-gradient"></div>
+    <div class="overlay-gradient-secondary"></div>
+    <div class="decorative-blur top-left"></div>
+    <div class="decorative-blur bottom-right"></div>
+    <div class="decorative-blur center"></div>
+  </div>
+
+  <!-- Content -->
+  <div class="content">
+    <!-- Section Header -->
+    <div
+      class="header"
+      [@fadeSlideIn]="isInView ? { value: '*' } : { value: 'void' }"
+    >
+      <h2 class="heading">Our Vision</h2>
+      <div
+        class="heading-line"
+        [@lineAnimation]="isInView ? { value: '*' } : { value: 'void' }"
+      ></div>
+      <p
+        class="subheading"
+        [@textFadeIn]="isInView ? { value: '*' } : { value: 'void' }"
+      >
+        Shaping the future of fashion through the convergence of artificial
+        intelligence and human creativity
+      </p>
+    </div>
+
+    <!-- Vision Cards Grid -->
+    <div
+      class="grid"
+      [@cardAnimation]="isInView ? { value: '*' } : { value: 'void' }"
+    >
+      <div *ngFor="let card of visionCards" class="vision-card">
+        <div class="card-content">
+          <h3 class="title">{{ card.title }}</h3>
+          <div class="decorative-line"></div>
+          <p class="statement">{{ card.statement }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- <div class="row">
   <div class="col-12">
     <div class="row">
       <p class="heading">Have a look at the three pillars of our vision</p>
@@ -59,4 +106,4 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->

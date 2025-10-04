@@ -1,4 +1,240 @@
+.section {
+  position: relative;
+  padding: 5rem 0;
+  overflow: hidden;
+  min-height: 100vh;
+}
+
+.background {
+  position: absolute;
+  inset: 0;
+  min-height: 100%;
+}
+
+.background-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.3;
+}
+
+.overlay-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(250, 250, 250, 0.9),
+    rgba(250, 250, 250, 0.8),
+    rgba(250, 250, 250, 0.9)
+  );
+}
+
+.overlay-gradient-secondary {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    rgba(255, 245, 229, 0.5),
+    rgba(255, 228, 230, 0.3),
+    rgba(255, 236, 179, 0.5)
+  );
+}
+
+.decorative-blur {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(3rem);
+}
+
+.decorative-blur.top-left {
+  top: 5rem;
+  left: 5rem;
+  width: 10rem;
+  height: 10rem;
+  background: linear-gradient(
+    to bottom right,
+    rgba(255, 237, 213, 0.2),
+    rgba(255, 228, 230, 0.2)
+  );
+  opacity: 0.2;
+}
+
+.decorative-blur.bottom-right {
+  bottom: 5rem;
+  right: 5rem;
+  width: 15rem;
+  height: 15rem;
+  background: linear-gradient(
+    to bottom right,
+    rgba(255, 234, 167, 0.15),
+    rgba(255, 218, 185, 0.15)
+  );
+  opacity: 0.15;
+}
+
+.decorative-blur.center {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 20rem;
+  height: 20rem;
+  background: linear-gradient(
+    to bottom right,
+    rgba(255, 228, 230, 0.1),
+    rgba(255, 218, 185, 0.1)
+  );
+  opacity: 0.1;
+}
+
+.content {
+  position: relative;
+  z-index: 10;
+  max-width: 56rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.header {
+  margin-bottom: 4rem;
+}
+
 .heading {
+  font-size: 2.25rem;
+  color: #1e293b;
+  margin-bottom: 1rem;
+  font-family: "Playfair Display", serif;
+}
+
+@media (min-width: 768px) {
+  .heading {
+    font-size: 3rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .heading {
+    font-size: 3.75rem;
+  }
+}
+
+.heading-line {
+  height: 0.25rem;
+  background: linear-gradient(to right, #fb923c, #fb7185);
+  margin: 0 auto 1.5rem;
+  border-radius: 9999px;
+  width: 8rem;
+}
+
+.subheading {
+  margin-top: 0;
+  color: #1e293b;
+  max-width: 32rem;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 1rem;
+  font-family: "Inter", sans-serif;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 2rem;
+  padding: 0 1rem;
+}
+
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.vision-card {
+  position: relative;
+  min-height: 300px;
+  background: transparent;
+  padding: 1rem;
+}
+.vision-card:hover {
+  backdrop-filter: blur(1.875rem);
+  transform: scale(1.05);
+  transition: transform 0.5s ease-out;
+}
+
+.card-content {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.title {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #1e293b;
+  font-family: "Playfair Display", serif;
+}
+
+.title:hover {
+  transform: scale(1.05);
+  transition: transform 0.5s ease-out;
+}
+
+.decorative-line {
+  width: 3rem;
+  height: 0.125rem;
+  margin-bottom: 1.5rem;
+  background: #e5e7eb;
+  border-radius: 9999px;
+}
+
+.statement {
+  font-size: 0.875rem;
+  color: #64748b;
+  max-width: 15rem;
+  margin: 0 auto;
+  font-family: "Inter", sans-serif;
+}
+
+@media (min-width: 768px) {
+  .statement {
+    font-size: 1rem;
+  }
+}
+
+.dots {
+  display: flex;
+  justify-content: center;
+  margin-top: 4rem;
+  gap: 1rem;
+}
+
+.dot {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 9999px;
+  background-color: #d1d5db;
+  animation: pulse 2s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+}
+
+/* .heading {
   font-family: Inter;
   font-size: 48px;
   font-weight: 700;
@@ -68,4 +304,4 @@
 .card:hover .filledbar {
   width: 120px;
   transition: 0.4s ease-out;
-}
+} */

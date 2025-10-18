@@ -26,19 +26,7 @@
           (click)="scrollToDirection('left')"
           [disabled]="!canScrollLeft"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path d="m15 18-6-6 6-6" />
-          </svg>
+          <lucide-icon name="chevron-left"></lucide-icon>
         </button>
       </div>
 
@@ -52,19 +40,7 @@
           (click)="scrollToDirection('right')"
           [disabled]="!canScrollRight"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path d="m9 18 6-6-6-6" />
-          </svg>
+          <lucide-icon name="chevron-right"></lucide-icon>
         </button>
       </div>
 
@@ -108,19 +84,11 @@
               class="explore group-hover:opacity-100 group-hover:translate-y-0"
             >
               <span class="explore-text">Explore Style</span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path d="m9 18 6-6-6-6" />
-              </svg>
+              <lucide-icon
+                name="chevron-right"
+                [size]="18"
+                [strokeWidth]="2"
+              ></lucide-icon>
             </div>
           </div>
 
@@ -143,77 +111,3 @@
     </div>
   </div>
 </section>
-
-<!-- <div class="row">
-  <div class="col">
-    <div class="row">
-      <h1 class="heading">Create exquisite styles such as</h1>
-    </div>
-  </div>
-
-  <div class="row result-row">
-    <div class="col-4 .col-xs-1">
-      <img
-        src="https://firebasestorage.googleapis.com/v0/b/depano-ai.appspot.com/o/App%2FHomePage%2F1179166747.png?alt=media&token=90a0a320-3696-4eeb-b7d0-ebf6ac9c10ef"
-        class="result-img"
-        alt="..."
-      />
-    </div>
-    <div class="col-4 .col-xs-1">
-      <img
-        src="https://firebasestorage.googleapis.com/v0/b/depano-ai.appspot.com/o/App%2FHomePage%2F1381583102.png?alt=media&token=9f657bf5-d29e-4490-b0a2-dfb7706f652a"
-        class="result-img"
-        alt="..."
-      />
-    </div>
-    <div class="col-4 .col-xs-1">
-      <img
-        src="https://firebasestorage.googleapis.com/v0/b/depano-ai.appspot.com/o/App%2FHomePage%2F204703172.png?alt=media&token=85c6aabe-560c-4fe0-b716-d2de98c4bbc3"
-        class="result-img"
-        alt="..."
-      />
-    </div>
-    <div class="col-6 .col-xs-1">
-      <img
-        src="https://firebasestorage.googleapis.com/v0/b/depano-ai.appspot.com/o/App%2FHomePage%2F136500795.png?alt=media&token=759202a0-a1c4-47c4-a6e8-4bfe786bfc24"
-        class="result-img2"
-        alt="..."
-      />
-    </div>
-    <div class="col-6 .col-xs-1">
-      <img
-        src="https://firebasestorage.googleapis.com/v0/b/depano-ai.appspot.com/o/App%2FHomePage%2F2331169412.png?alt=media&token=80585088-ef0b-44e6-8607-f7b10980102b"
-        class="result-img2"
-        alt="..."
-      />
-    </div>
-    <div class="col-3 .col-xs-1">
-      <img
-        src="https://firebasestorage.googleapis.com/v0/b/depano-ai.appspot.com/o/App%2FHomePage%2F2063408731.png?alt=media&token=f23bac64-1e0e-43a9-aa8d-3f44b6b6fd4d"
-        class="result-img3"
-        alt="..."
-      />
-    </div>
-    <div class="col-3 .col-xs-1">
-      <img
-        src="https://firebasestorage.googleapis.com/v0/b/depano-ai.appspot.com/o/App%2FHomePage%2F860254096.png?alt=media&token=2b7819de-df63-40cc-b134-970524872a14"
-        class="result-img3"
-        alt="..."
-      />
-    </div>
-    <div class="col-3 .col-xs-1">
-      <img
-        src="https://firebasestorage.googleapis.com/v0/b/depano-ai.appspot.com/o/App%2FHomePage%2F1775046177.png?alt=media&token=d83e80b3-3598-436c-99c2-aaa165230ac0"
-        class="result-img3"
-        alt="..."
-      />
-    </div>
-    <div class="col-3 .col-xs-1">
-      <img
-        src="https://firebasestorage.googleapis.com/v0/b/depano-ai.appspot.com/o/App%2FHomePage%2F3914749211.png?alt=media&token=d8d4bfea-1ba7-47f1-92fa-0f8c48cc5167"
-        class="result-img3"
-        alt="..."
-      />
-    </div>
-  </div>
-</div> -->

@@ -15,13 +15,14 @@ import {
   HostListener,
   ViewChild,
 } from '@angular/core';
+import { LucideAngularModule } from 'lucide-angular';
 
 @Component({
   standalone: true,
   selector: 'app-outputs',
   templateUrl: './outputs.component.html',
   styleUrl: './outputs.component.css',
-  imports: [CommonModule],
+  imports: [CommonModule, LucideAngularModule],
   animations: [
     trigger('fadeSlideIn', [
       state('void', style({ opacity: 0, transform: 'translateY(50px)' })),

@@ -14,6 +14,18 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./auth/login/login.component').then((m) => m.LoginComponent),
   },
+  // {
+  //   path: 'signup',
+  //   loadComponent: () =>
+  //     import('./auth/signup/signup.component').then((m) => m.SignupComponent),
+  // },
+  // {
+  //   path: 'category-selection',
+  //   loadComponent: () =>
+  //     import('./category-selection/category-selection.component').then(
+  //       (m) => m.DashboardComponent
+  //     ),
+  // },
   {
     path: 'gender',
     canActivate: [authGuard],
@@ -41,6 +53,12 @@ export const routes: Routes = [
     canActivate: [authGuard],
     loadComponent: () =>
       import('./edit/edit.component').then((m) => m.EditComponent),
+  },
+  {
+    path: 'sketch-to-image',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./sketch/upload/upload.component').then((m) => m.UploadComponent),
   },
   { path: '**', redirectTo: '/home' },
 ];

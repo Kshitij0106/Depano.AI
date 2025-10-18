@@ -1,9 +1,11 @@
 <div class="fixed-buttons">
   <button class="sign-in-btn" (click)="login()">
-    <i class="fas fa-sign-in-alt"></i>Sign In
+    <lucide-icon name="log-in" [size]="16" [strokeWidth]="2"></lucide-icon>
+    Sign In
   </button>
   <button class="sign-up-btn" (click)="signup()">
-    <i class="fas fa-user-plus"></i> Sign Up
+    <lucide-icon name="user-plus" [size]="16" [strokeWidth]="2"></lucide-icon>
+    Sign Up
   </button>
 </div>
 
@@ -39,16 +41,16 @@
   </section>
 
   <div class="row content justify-content-center">
-    <div class="about-component">
+    <div>
       <app-about></app-about>
     </div>
-    <div class="home-component">
+    <div>
       <app-feature></app-feature>
     </div>
-    <div class="home-component">
+    <div>
       <app-outputs></app-outputs>
     </div>
-    <div class="home-component">
+    <div>
       <app-vision></app-vision>
     </div>
   </div>
@@ -57,49 +59,3 @@
     <app-footer></app-footer>
   </div>
 </div>
-
-<!-- <app-header [source]="'home'"></app-header>
-<div class="ctn container-fluid">
-  <div class="row">
-    <div class="col-12">
-      <img
-        src="https://firebasestorage.googleapis.com/v0/b/depano-ai.appspot.com/o/App%2Fhomepage.png?alt=media&token=651869ad-96b9-4d6d-9801-af36193d10ec"
-        class="img img-fluid"
-        alt="..."
-      />
-      <div
-        class="row overlay img-overlay position-absolute d-flex flex-column justify-content-center align-items-center text-center"
-      >
-        <p class="txt">Revolutionizing Fashion with AI</p>
-        <p class="description">
-          Empowering Designers to Create, Innovate, and Inspire
-        </p>
-        <div class="row btns justify-content-center">
-          <button type="button" class="start-btn btn" (click)="getStarted()">
-            Get started
-          </button>
-          <button type="button" class="info-btn btn">Learn more</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="row content justify-content-center">
-    <div class="about-component">
-      <app-about></app-about>
-    </div>
-    <div class="home-component">
-      <app-outputs></app-outputs>
-    </div>
-    <div class="home-component">
-      <app-vision></app-vision>
-    </div>
-    <div class="home-component">
-      <app-testimonials></app-testimonials>
-    </div>
-  </div>
-
-  <div class="footer-component justify-content-center">
-    <app-footer></app-footer>
-  </div>
-</div> -->

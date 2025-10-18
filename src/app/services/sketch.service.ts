@@ -7,31 +7,25 @@ import { BehaviorSubject, Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class EditService {
-  public imageUrl = new BehaviorSubject<string>('');
+export class SketchService {
+  public sketchUrl = new BehaviorSubject<string>('');
 
   constructor(private http: HttpClient) {}
 
-  editImage(formData: FormData): Observable<ImageResponse> {
+  sketchToImage(formData: FormData): Observable<ImageResponse> {
     return this.http.put<ImageResponse>(
-      environment.gateway + 'edit/image',
+      environment.gateway + 'sketch/image',
       formData
     );
   }
 
-  async prepareEditFormData(
-    imageUrl: string,
-    maskUrl: string,
-    prompt: string
-  ): Promise<FormData> {
+  async prepareEditFormData(sketch: string, prompt: string): Promise<FormData> {
     const formData = new FormData();
 
     try {
-      const imageBlob = await this.fetchBlobFromUrl(imageUrl);
-      const maskBlob = await this.fetchBlobFromUrl(maskUrl);
+      const sketchBlob = await this.fetchBlobFromUrl(sketch);
 
-      formData.append('image', imageBlob, 'image.png');
-      formData.append('mask', maskBlob, 'mask.png');
+      formData.append('image', sketchBlob, 'sketch.png');
       formData.append('prompt', prompt);
 
       return formData;

@@ -9,13 +9,14 @@ import {
 } from '@angular/animations';
 import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import { LucideAngularModule } from 'lucide-angular';
 
 @Component({
   selector: 'app-feature',
   standalone: true,
   templateUrl: './feature.component.html',
   styleUrl: './feature.component.css',
-  imports: [CommonModule],
+  imports: [CommonModule, LucideAngularModule],
   animations: [
     trigger('fadeSlideIn', [
       state('hidden', style({ opacity: 0, transform: 'translateY(30px)' })),
@@ -63,25 +64,25 @@ export class FeatureComponent implements AfterViewInit {
 
   features = [
     {
-      icon: 'book-open',
+      icon: 'BookOpen',
       title: 'Smart Sketching',
       description:
         'Transform rough concepts into detailed fashion illustrations with AI-powered sketch enhancement and style refinement tools.',
     },
     {
-      icon: 'scissors',
+      icon: 'Scissors',
       title: 'Pattern Generation',
       description:
-        'Create complex patterns and technical flats instantly. Our AI understands garment construction and fit for perfect results.',
+        'Create complex and technical patterns instantly. Our AI understands cloth construction and fit for perfect results.',
     },
     {
-      icon: 'shirt',
+      icon: 'Shirt',
       title: 'Style Curation',
       description:
         'Generate complete look books and seasonal collections with intelligent color matching and trend forecasting capabilities.',
     },
     {
-      icon: 'users',
+      icon: 'Users',
       title: 'Virtual Fitting',
       description:
         'Visualize designs on diverse body types and sizes with realistic fabric draping and movement simulation technology.',

@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { HeaderComponent } from 'src/app/header/header.component';
 import { AboutComponent } from '../about/about.component';
 import { VisionComponent } from '../vision/vision.component';
 import { OutputsComponent } from '../outputs/outputs.component';
@@ -10,6 +9,7 @@ import { AuthService } from 'src/app/auth/services/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { User } from 'src/app/models/user.model';
 import { FeatureComponent } from '../feature/feature.component';
+import { LucideAngularModule } from 'lucide-angular';
 
 @Component({
   standalone: true,
@@ -22,9 +22,10 @@ import { FeatureComponent } from '../feature/feature.component';
     OutputsComponent,
     VisionComponent,
     FooterComponent,
+    LucideAngularModule,
   ],
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
   title = 'DEPANO AI';
 
   constructor(
@@ -32,10 +33,6 @@ export class HomeComponent implements OnInit {
     private authService: AuthService,
     private userService: UserService
   ) {}
-
-  ngOnInit(): void {
-    this.disableBackButton();
-  }
 
   /**
    * Initiates the user flow by checking the login status.
@@ -68,16 +65,5 @@ export class HomeComponent implements OnInit {
 
   login() {
     this.router.navigate(['login']);
-  }
-
-  disableBackButton() {
-    // Add an initial dummy state
-    history.pushState(null, '', window.location.href);
-
-    // Listen for back and forward buttons (popstate event)
-    window.addEventListener('popstate', (event) => {
-      // Replace the state to prevent the back button from navigating
-      history.pushState(null, '', window.location.href);
-    });
   }
 }

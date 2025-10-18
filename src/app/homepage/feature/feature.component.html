@@ -16,72 +16,31 @@
         <div class="icon-container">
           <div class="icon">
             <ng-container [ngSwitch]="feature.icon">
-              <svg
-                *ngSwitchCase="'book-open'"
-                xmlns="http://www.w3.org/2000/svg"
-                width="32"
-                height="32"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
-                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
-              </svg>
-              <svg
-                *ngSwitchCase="'scissors'"
-                xmlns="http://www.w3.org/2000/svg"
-                width="32"
-                height="32"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <circle cx="6" cy="6" r="3" />
-                <path d="M8.12 8.12 12 12" />
-                <path d="M20 4 8.12 15.88" />
-                <circle cx="6" cy="18" r="3" />
-                <path d="M14.8 14.8 20 20" />
-              </svg>
-              <svg
-                *ngSwitchCase="'shirt'"
-                xmlns="http://www.w3.org/2000/svg"
-                width="32"
-                height="32"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path
-                  d="M20.38 3.46L16 2a4 4 0 01-8 0L3.62 3.46a2 2 0 00-1.34 2.23l.58 3.47a1 1 0 00.99.84H4v10a4 4 0 004 4h8a4 4 0 004-4V10h.15a1 1 0 00.99-.84l.58-3.47a2 2 0 00-1.34-2.23z"
-                />
-              </svg>
-              <svg
-                *ngSwitchCase="'users'"
-                xmlns="http://www.w3.org/2000/svg"
-                width="32"
-                height="32"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-                <circle cx="9" cy="7" r="4" />
-                <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
-                <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-              </svg>
+              <lucide-icon
+                *ngSwitchCase="'BookOpen'"
+                name="book-open"
+                [size]="32"
+                [strokeWidth]="2"
+              ></lucide-icon>
+              <lucide-icon
+                *ngSwitchCase="'Scissors'"
+                name="scissors"
+                [size]="32"
+                [strokeWidth]="2"
+              ></lucide-icon>
+              <lucide-icon
+                *ngSwitchCase="'Shirt'"
+                name="shirt"
+                [size]="32"
+                [strokeWidth]="2"
+              ></lucide-icon>
+
+              <lucide-icon
+                *ngSwitchCase="'Users'"
+                name="users"
+                [size]="32"
+                [strokeWidth]="2"
+              ></lucide-icon>
             </ng-container>
           </div>
         </div>

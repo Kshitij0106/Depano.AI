@@ -1,5 +1,5 @@
 .section {
-  padding: 5rem 0;
+  padding: 8.25rem 0;
   background: linear-gradient(to bottom, #ffffff, #f9fafb, #ffffff);
   overflow: hidden;
 }
@@ -108,7 +108,6 @@
   height: 500px;
   border-radius: 1.5rem;
   overflow: hidden;
-  cursor: pointer;
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
     0 8px 10px -6px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease-out;
@@ -172,7 +171,8 @@
 }
 
 .content-inner {
-  transition: transform 0.3s;
+  transition: transform 0.3s ease-out;
+  position: relative;
 }
 
 .title {
@@ -181,6 +181,16 @@
   margin-bottom: 1rem;
   text-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
   font-family: "Playfair Display", serif;
+  transition: none;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0 1rem 3rem 0rem;
+  font-family: "Playfair Display", serif;
+  text-align: left;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 @media (min-width: 768px) {
@@ -189,14 +199,32 @@
   }
 }
 
+@media (min-width: 640px) {
+  .title {
+    font-size: 3.5rem;
+  }
+}
+
+@media (min-width: 368px) {
+  .title {
+    font-size: 3.5rem;
+  }
+}
+
 .description {
   color: rgba(255, 255, 255, 0.9);
-  font-size: 1.125rem;
+  font-size: 1rem;
   line-height: 1.625;
   opacity: 0;
   transform: translateY(1rem);
   transition: all 0.3s 0.1s;
   font-family: "Inter", sans-serif;
+  margin-bottom: 0;
+}
+
+.group:hover .description {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .explore {
@@ -206,13 +234,19 @@
   color: rgba(255, 255, 255, 0.8);
   opacity: 0;
   transform: translateY(1rem);
-  transition: all 0.3s 0.2s;
+  transition: all 0.3s ease-out 0.2s;
+  font-family: "Inter", sans-serif;
 }
 
 .explore-text {
   font-size: 0.875rem;
   margin-right: 0.5rem;
   font-family: "Inter", sans-serif;
+}
+
+.group:hover .explore {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .shimmer {
@@ -238,6 +272,10 @@
   to {
     transform: translateX(100%);
   }
+}
+
+.group:hover .content-inner {
+  transform: translateY(-0.625rem);
 }
 
 .dots {
@@ -269,38 +307,3 @@
     transform: scale(1);
   }
 }
-
-/* .heading {
-  font-family: Inter;
-  font-size: 48px;
-  font-weight: 700;
-  text-align: left;
-  color: #ffffff;
-}
-
-.result-row {
-  margin-top: 40px;
-}
-
-.result-img {
-  margin-bottom: 20px;
-  border-radius: 5%;
-  object-fit: cover;
-  max-width: 100%;
-  height: auto;
-}
-
-.result-img2 {
-  margin-bottom: 20px;
-  border-radius: 5%;
-  object-fit: cover;
-  max-width: 100%;
-  height: auto;
-}
-
-.result-img3 {
-  border-radius: 5%;
-  object-fit: cover;
-  max-width: 100%;
-  height: auto;
-} */

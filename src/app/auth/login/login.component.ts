@@ -77,7 +77,7 @@ export class LoginComponent implements OnInit {
         if (result.status === 'Success') {
           this.authService.saveToken(result.accessToken);
           this.toastr.success(result.message);
-          this.router.navigate(['gender']);
+          this.router.navigate(['mode-select']);
           this.userService.updateUserDetails();
         } else {
           this.toastr.error(result.message);

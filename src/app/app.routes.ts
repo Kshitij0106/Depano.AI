@@ -19,13 +19,14 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./auth/signup/signup.component').then((m) => m.SignupComponent),
   },
-  // {
-  //   path: 'category-selection',
-  //   loadComponent: () =>
-  //     import('./category-selection/category-selection.component').then(
-  //       (m) => m.DashboardComponent
-  //     ),
-  // },
+  {
+    path: 'mode-select',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./mode-select/mode-select.component').then(
+        (m) => m.ModeSelectComponent
+      ),
+  },
   {
     path: 'gender',
     canActivate: [authGuard],

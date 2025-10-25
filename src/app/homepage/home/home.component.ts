@@ -41,12 +41,12 @@ export class HomeComponent {
    */
   getStarted() {
     if (this.authService.isLoggedIn()) {
-      this.router.navigate(['gender']);
+      this.router.navigate(['mode-select']);
     } else {
       this.userService.getMyUserDetails().subscribe({
         next: (user: User) => {
           this.userService.userDetails.next(user);
-          this.router.navigate(['gender']);
+          this.router.navigate(['mode-select']);
         },
         error: (err: HttpErrorResponse) => {
           if (err.error?.status === 'UNAUTHORIZED') {

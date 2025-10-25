@@ -16,7 +16,7 @@ import { LucideAngularModule } from 'lucide-angular';
   styleUrls: ['./login.component.css'],
   imports: [FormsModule, CommonModule, LucideAngularModule],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
   otpSendRequest: OtpSendRequest = {
     mobileNumber: '',
   };
@@ -38,19 +38,6 @@ export class LoginComponent implements OnInit {
     private userService: UserService,
     private toastr: ToastrService
   ) {}
-
-  // /**
-  //  * Navigates to homepage.
-  //  */
-  // openHome() {
-  //   this.router.navigate(['home']);
-  // }
-
-  ngOnInit(): void {
-    if (this.authService.isLoggedIn()) {
-      this.router.navigate(['gender']);
-    }
-  }
 
   /**
    * Generates a One-Time Password (OTP) to be sent to the user's phone for verification purposes.

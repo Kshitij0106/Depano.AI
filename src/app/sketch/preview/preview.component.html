@@ -1,21 +1,11 @@
 <div class="result-container">
   <div class="result-header">
     <div class="success-logo">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="32"
-        height="32"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        class="icon icon-check-circle"
-      >
-        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-        <polyline points="22 4 12 14.01 9 11.01"></polyline>
-      </svg>
+      <lucide-icon
+        name="circle-check-big"
+        [size]="24"
+        [strokeWidth]="2"
+      ></lucide-icon>
     </div>
     <h2 class="result-title">Your Design is Ready!</h2>
     <p class="result-subtitle">
@@ -65,26 +55,11 @@
           *ngIf="generatedImage; else placeholderGenerated"
         />
         <ng-template #placeholderGenerated>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="48"
-            height="48"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="icon icon-sparkles"
-          >
-            <path
-              d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"
-            ></path>
-            <path d="M5 3v4"></path>
-            <path d="M19 17v4"></path>
-            <path d="M3 5h4"></path>
-            <path d="M17 19h4"></path>
-          </svg>
+          <lucide-icon
+            name="sparkles"
+            [size]="24"
+            [strokeWidth]="2"
+          ></lucide-icon>
           <p>Photorealistic Result</p>
         </ng-template>
       </div>
@@ -93,61 +68,15 @@
 
   <div class="action-buttons">
     <button class="download-button" (click)="handleDownload()">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="20"
-        height="20"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        class="icon icon-download"
-      >
-        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-        <polyline points="7 10 12 15 17 10"></polyline>
-        <line x1="12" y1="17" x2="12" y2="3"></line>
-      </svg>
+      <lucide-icon name="download" [size]="18" [strokeWidth]="2"></lucide-icon>
       Download HD Image
     </button>
     <button class="share-button" (click)="handleShare()">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="20"
-        height="20"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        class="icon icon-share"
-      >
-        <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
-        <polyline points="16 6 12 2 8 6"></polyline>
-        <line x1="12" y1="2" x2="12" y2="15"></line>
-      </svg>
+      <lucide-icon name="share-2" [size]="18" [strokeWidth]="2"></lucide-icon>
       Share Design
     </button>
     <button class="another-button" (click)="handleStartOver()">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="20"
-        height="20"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        class="icon icon-refresh"
-      >
-        <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 3"></path>
-        <path d="M21 3v7h-7"></path>
-        <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L3 21"></path>
-        <path d="M3 21v-7h7"></path>
-      </svg>
+      <lucide-icon name="repeat" [size]="18" [strokeWidth]="2"></lucide-icon>
       Create Another
     </button>
   </div>

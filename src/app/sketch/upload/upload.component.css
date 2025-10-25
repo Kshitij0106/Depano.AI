@@ -19,31 +19,6 @@
   inset: 0;
 }
 
-.back-button-container {
-  position: absolute;
-  top: 2rem;
-  left: 1rem;
-  z-index: 20;
-}
-
-.back-button {
-  display: flex;
-  align-items: center;
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(4px);
-  border: 1px solid #e5e7eb;
-  padding: 0.2rem 0.825rem;
-  border-radius: 0.525rem;
-  font-size: 0.875rem;
-  color: #374151;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-
-.back-button:hover {
-  background: rgba(255, 255, 255, 0.9);
-}
-
 .content {
   max-width: 96rem;
   margin: 0 auto;
@@ -78,7 +53,7 @@
   font-size: 1.875rem;
   font-weight: 600;
   background: linear-gradient(to right, #9333ea, #db2777);
-  -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
@@ -545,4 +520,12 @@
   50% {
     opacity: 0.5;
   }
+}
+
+.error-message {
+  color: #e63946;
+  font-size: 13px;
+  margin-top: 8px;
+  text-align: center;
+  font-family: "Inter", sans-serif;
 }

@@ -16,13 +16,23 @@
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
-            {{ this.loggedInUser.userName }}
-            <i class="profile-icon fas fa-angle-down"></i>
+            {{ getUsername(this.loggedInUser.userName) }}
+            <lucide-icon
+              class="profile-icon"
+              name="chevron-down"
+              [size]="18"
+              [strokeWidth]="2"
+            ></lucide-icon>
           </button>
           <ul class="dropdown-menu">
             <li>
               <button class="dropdown-item" type="button">
-                <i class="item-icon bi-person-circle"></i>
+                <lucide-icon
+                  class="item-icon"
+                  name="circle-user-round"
+                  [size]="20"
+                  [strokeWidth]="2"
+                ></lucide-icon>
                 <span class="item-text"
                   >{{ this.loggedInUser.credits }} {{ "Credits" }}</span
                 >
@@ -31,7 +41,12 @@
             <li><hr class="dropdown-divider" /></li>
             <li>
               <button class="dropdown-item" type="button" (click)="logout()">
-                <i class="item-icon bi-box-arrow-left"></i>
+                <lucide-icon
+                  class="item-icon"
+                  name="log-out"
+                  [size]="20"
+                  [strokeWidth]="2"
+                ></lucide-icon>
                 <span class="item-text">Log Out</span>
               </button>
             </li>

@@ -8,13 +8,14 @@ import { UserService } from '../services/user.service';
 import { User } from '../models/user.model';
 import { EditService } from '../services/edit.service';
 import { CommonModule } from '@angular/common';
+import { LucideAngularModule } from 'lucide-angular';
 
 @Component({
   standalone: true,
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css'],
-  imports: [CommonModule],
+  imports: [CommonModule, LucideAngularModule],
 })
 export class HeaderComponent implements OnInit {
   title = 'DEPANO AI';
@@ -68,6 +69,25 @@ export class HeaderComponent implements OnInit {
         this.loggedInUser.credits = user.credits;
       });
     }
+  }
+
+  /**
+   * Truncates username to 10 characters with ellipsis if longer
+   */
+  getUsername(name: string): string {
+    if (!name) return '';
+
+    const fullname = name.trim().split(' ');
+    const firstName = fullname[0] || '';
+    const lastName = fullname.length > 1 ? fullname[1] : '';
+
+    let displayName = firstName;
+
+    if (firstName.length < 4 && lastName) {
+      displayName = `${firstName} ${lastName}`;
+    }
+
+    return displayName.length > 10 ? displayName.substring(0, 10) : displayName;
   }
 
   /**

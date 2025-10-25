@@ -8,13 +8,14 @@ import { EditService } from '../services/edit.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { HeaderComponent } from '../header/header.component';
 import { CommonModule } from '@angular/common';
+import { LucideAngularModule } from 'lucide-angular';
 
 @Component({
   standalone: true,
   selector: 'app-result',
   templateUrl: './result.component.html',
   styleUrls: ['./result.component.css'],
-  imports: [HeaderComponent, CommonModule],
+  imports: [HeaderComponent, CommonModule, LucideAngularModule],
 })
 export class ResultComponent {
   image!: string;

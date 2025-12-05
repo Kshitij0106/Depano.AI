@@ -1,22 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { AuthService } from '../services/auth.service';
-import { OtpSendRequest } from '../models/otpSendRequest.model';
-import { ToastrService } from 'ngx-toastr';
-import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { OtpValidateRequest } from '../models/otpValidateRequest.model';
-import { UserService } from 'src/app/services/user.service';
+import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { AuthService } from '../services/auth.service';
 import { LucideAngularModule } from 'lucide-angular';
+import { UserService } from 'src/app/services/user.service';
+import { OtpValidateRequest } from '../models/otpValidateRequest.model';
+import { OtpSendRequest } from '../models/otpSendRequest.model';
 
 @Component({
   standalone: true,
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'],
-  imports: [FormsModule, CommonModule, LucideAngularModule],
+  selector: 'app-signup',
+  templateUrl: './signup.component.html',
+  styleUrls: ['./signup.component.css'],
+  imports: [CommonModule, FormsModule, LucideAngularModule],
 })
-export class LoginComponent {
+export class SignupComponent implements OnInit {
   otpSendRequest: OtpSendRequest = {
     mobileNumber: '',
   };
@@ -30,14 +30,22 @@ export class LoginComponent {
 
   mobileError: boolean = false;
 
-  otpSent: boolean = false;
+  acceptTerms = false;
 
+  otpSent: boolean = false;
+  resendTimer = 0;
   constructor(
-    private router: Router,
     private authService: AuthService,
-    private userService: UserService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router: Router,
+    private userService: UserService
   ) {}
+
+  ngOnInit(): void {
+    if (this.authService.isLoggedIn()) {
+      this.router.navigate(['gender']);
+    }
+  }
 
   /**
    * Generates a One-Time Password (OTP) to be sent to the user's phone for verification purposes.
@@ -46,9 +54,9 @@ export class LoginComponent {
     this.authService.generateOtp(this.otpSendRequest).subscribe((result) => {
       if (result.status === 'Success') {
         this.otpSent = true;
-        this.toastr.success('An OTP has been sent to your mobile number.');
+        this.toastr.success('OTP sent successfully to your mobile number.');
       } else {
-        this.toastr.error(result.message);
+        this.toastr.error(result.message || 'Failed to send OTP.');
       }
     });
   }
@@ -64,7 +72,7 @@ export class LoginComponent {
         if (result.status === 'Success') {
           this.authService.saveToken(result.accessToken);
           this.toastr.success(result.message);
-          this.router.navigate(['mode-select']);
+          this.router.navigate(['gender']);
           this.userService.updateUserDetails();
         } else {
           this.toastr.error(result.message);
@@ -72,10 +80,18 @@ export class LoginComponent {
       });
   }
 
+  goToLogin() {
+    this.router.navigate(['login']);
+  }
+
   /**
-   * Navigates to Sign up page.
+   * Resend OTP.
    */
-  goToSignUp() {
-    this.router.navigate(['signup']);
+  resendOtp(): void {
+    if (this.resendTimer > 0) {
+      this.toastr.info(`Please wait ${this.resendTimer}s before resending.`);
+      return;
+    }
+    this.generateOtp();
   }
 }

@@ -1,108 +1,3 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  overflow-x: hidden;
-  font-family: "Inter", sans-serif;
-}
-
-.ctn {
-  min-width: 100%;
-  background: #ffffff;
-}
-
-.content {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.title-ctn {
-  background: #ffffff;
-  padding-bottom: 20px;
-}
-
-.invalid-error {
-  color: red;
-  margin-left: 2px;
-  width: 250px;
-}
-
-.invalid-error,
-.text-red-500.text-sm.font-inter.mt-1 {
-  font-size: 12px !important;
-  line-height: 1.3 !important;
-  margin-top: 2px !important;
-}
-
-.check-box {
-  margin-top: 5px;
-  margin-left: 2px;
-  border-width: 1px;
-  border-color: #524f4f;
-}
-
-.check-input {
-  padding-left: 10px;
-  font-family: Roboto;
-  color: #545050;
-}
-
-.forgot-btn {
-  float: right;
-  text-align: right;
-  font-family: Roboto;
-}
-
-.login-btn {
-  width: 320px;
-  height: 42px;
-  margin-top: 15px;
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 20.8093px;
-  line-height: 25px;
-  letter-spacing: 0.02em;
-  text-align: center;
-  color: #ffffff;
-  background-color: black;
-  border-radius: 4px;
-}
-
-.create-acc-btn {
-  text-decoration: none;
-  font-family: Roboto;
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 18.75px;
-  letter-spacing: 0.06em;
-}
-
-.pass-error {
-  margin-top: 10px;
-}
-
-.img {
-  margin-left: 60px;
-  border-radius: 30px;
-  max-width: 100%;
-  height: auto;
-  object-fit: cover;
-  max-height: 80vh;
-}
-
-@media (min-width: 768px) {
-  .content {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-  }
-}
 .font-playfair {
   font-family: "Playfair Display", serif;
 }
@@ -372,10 +267,6 @@ body {
   background-color: #f3f4f6;
 }
 
-.small {
-  font: 0.525rem;
-}
-
 .rounded-xl {
   border-radius: 0.75rem;
   border: none;
@@ -571,6 +462,13 @@ body {
   font-weight: 500;
 }
 
+.invalid-error,
+.text-red-500.text-sm.font-inter.mt-1 {
+  font-size: 12px !important;
+  line-height: 1.3 !important;
+  margin-top: 2px !important;
+}
+
 .sm\:text-base {
   @media (min-width: 640px) {
     font-size: 1rem;
@@ -710,6 +608,7 @@ button[type="button"].inline {
 button[type="button"].inline:focus {
   outline: none;
 }
+
 .pink-icon {
   color: #ec4899;
 }
@@ -730,107 +629,129 @@ button[type="button"].inline:focus {
     padding: 1.5rem;
   }
 }
-@media (max-width: 1023px) {
+
+.resend-otp-btn {
+  border: none;
+  background: none;
+}
+
+/* Add this to your signup component CSS - Replace the existing media queries */
+
+@media (max-width: 640px) {
+  /* Force parent container to be vertical */
   .min-h-screen {
     min-height: auto;
-    padding-top: 2rem;
-    padding-bottom: 2rem;
   }
 
-  .flex {
-    flex-direction: column;
+  .min-h-screen > .relative.z-10.flex {
+    flex-direction: column !important;
+    align-items: stretch;
   }
 
-  .lg\:w-1\/2 {
-    width: 100%;
-  }
-
-  .p-8 {
-    padding: 1.5rem;
-  }
-
-  .text-2xl {
-    font-size: 1.25rem;
-  }
-
-  .xl\:text-5xl {
-    font-size: 2rem;
-  }
-}
-@media (max-width: 640px) {
-  /* Make main container vertical */
-  .min-h-screen > .relative > .flex {
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    padding: 1.5rem;
-  }
-
-  /* Left section (Depano AI content) */
-  .lg\:flex {
+  /* Left section (Depano AI branding) - show at top center */
+  .hidden.lg\:flex {
     display: flex !important;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    width: 100%;
-    margin-bottom: 1.5rem;
-  }
-
-  .left-hidden {
-    display: none;
-  }
-
-  /* Hide right section background or extra spacing */
-  .lg\:w-1\/2 {
     width: 100% !important;
+    padding: 2rem 1.5rem 1rem 1.5rem !important;
+    margin-bottom: 0;
   }
 
-  /* Form card */
-  .w-full.max-w-md {
-    margin: 0 auto;
+  /* Hide the detailed feature descriptions on mobile */
+  .left-hidden {
+    display: none !important;
   }
 
-  /* Optional: reduce padding for compact mobile view */
-  .p-8 {
+  /* Right section (form) */
+  .w-full.lg\:w-1\/2 {
+    width: 100% !important;
+    padding: 0 1.5rem 2rem 1.5rem !important;
+  }
+
+  /* Form card adjustments */
+  .bg-white\/80.backdrop-blur-xl {
     padding: 1.5rem !important;
+  }
+
+  /* Logo and title adjustments for mobile */
+  .logo-icon {
+    width: 2.5rem !important;
+    height: 2.5rem !important;
+  }
+
+  .font-playfair.text-2xl {
+    font-size: 1.25rem !important;
+  }
+
+  .xl\:text-5xl {
+    font-size: 1.5rem !important;
   }
 }
 
 @media (max-width: 1024px) {
-  /* Make main container vertical */
-  .min-h-screen > .relative > .flex {
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    padding: 1.5rem;
+  /* Tablet view */
+  .min-h-screen > .relative.z-10.flex {
+    flex-direction: column !important;
   }
 
-  /* Left section (Depano AI content) */
-  .lg\:flex {
+  .hidden.lg\:flex {
     display: flex !important;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    width: 100%;
-    margin-bottom: 1.5rem;
+    width: 100% !important;
+    padding: 3rem 2rem 2rem 2rem !important;
   }
 
   .left-hidden {
-    display: none;
+    display: none !important;
   }
 
-  /* Hide right section background or extra spacing */
+  .w-full.lg\:w-1\/2 {
+    width: 100% !important;
+    padding: 0 2rem 3rem 2rem !important;
+  }
+}
+/* Fix alignment for mobile and tablet */
+@media (max-width: 1024px) {
+  /* Target left section (Depano AI content) */
+  .hidden.lg\:flex {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    width: 100% !important;
+    margin: 0 auto 1rem auto !important;
+    padding: 2rem 1rem 1rem 1rem !important;
+  }
+
+  /* Make logo and text centered */
+  .hidden.lg\:flex .flex.items-center {
+    justify-content: center !important;
+  }
+
+  .hidden.lg\:flex h2 {
+    text-align: center !important;
+    margin: 0 auto 0.5rem auto !important;
+  }
+
+  .hidden.lg\:flex p {
+    text-align: center !important;
+    margin: 0 auto !important;
+  }
+}
+
+/* Ensure proper stacking on all small devices */
+@media (max-width: 1023px) {
   .lg\:w-1\/2 {
     width: 100% !important;
   }
 
-  /* Form card */
-  .w-full.max-w-md {
-    margin: 0 auto;
-  }
-
-  /* Optional: reduce padding for compact mobile view */
-  .p-8 {
-    padding: 1.5rem !important;
+  .px-16 {
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
   }
 }

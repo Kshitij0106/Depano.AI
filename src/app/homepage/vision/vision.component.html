@@ -1,62 +1,46 @@
-<div class="row">
-  <div class="col-12">
-    <div class="row">
-      <p class="heading">Have a look at the three pillars of our vision</p>
+<section #sectionRef class="section">
+  <!-- Background with blurred fashion imagery -->
+  <div class="background">
+    <div class="overlay-gradient"></div>
+    <div class="overlay-gradient-secondary"></div>
+    <div class="decorative-blur top-left"></div>
+    <div class="decorative-blur bottom-right"></div>
+    <div class="decorative-blur center"></div>
+  </div>
+
+  <!-- Content -->
+  <div class="content">
+    <!-- Section Header -->
+    <div
+      class="header"
+      [@fadeSlideIn]="isInView ? { value: '*' } : { value: 'void' }"
+    >
+      <h2 class="heading">Our Vision</h2>
+      <div
+        class="heading-line"
+        [@lineAnimation]="isInView ? { value: '*' } : { value: 'void' }"
+      ></div>
+      <p
+        class="subheading"
+        [@textFadeIn]="isInView ? { value: '*' } : { value: 'void' }"
+      >
+        Shaping the future of fashion through the convergence of artificial
+        intelligence and human creativity
+      </p>
     </div>
 
-    <div class="row justify-content-center">
-      <div class="col-12 col-sm-6 col-md-4 mb-4">
-        <div class="card h-100">
-          <div class="card-body">
-            <h3 class="card-title">Revolutionizing Fashion Industry</h3>
-            <div class="bar">
-              <div class="emptybar"></div>
-              <div class="filledbar"></div>
-            </div>
-            <p class="card-text">
-              To revolutionize the fashion industry by providing innovative
-              AI-powered tools that enable designers and students to
-              effortlessly transform their creative visions into stunning,
-              market-ready designs
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-12 col-sm-6 col-md-4 mb-4">
-        <div class="card h-100">
-          <div class="card-body">
-            <h3 class="card-title">
-              Empowering Creativity at Affordable Prices
-            </h3>
-            <div class="bar">
-              <div class="emptybar"></div>
-              <div class="filledbar"></div>
-            </div>
-            <p class="card-text">
-              To empower creativity and innovation in fashion design by making
-              advanced design technology accessible and affordable for everyone,
-              from novice designers to seasoned professionals
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-12 col-sm-6 col-md-4 mb-4">
-        <div class="card h-100">
-          <div class="card-body">
-            <h3 class="card-title">Sustainability and Efficiency</h3>
-            <div class="bar">
-              <div class="emptybar"></div>
-              <div class="filledbar"></div>
-            </div>
-            <p class="card-text">
-              To promote sustainable fashion by reducing waste through optimized
-              design processes and minimizing the need for physical samples
-            </p>
-          </div>
+    <!-- Vision Cards Grid -->
+    <div
+      class="grid"
+      [@cardAnimation]="isInView ? { value: '*' } : { value: 'void' }"
+    >
+      <div *ngFor="let card of visionCards" class="vision-card">
+        <div class="card-content">
+          <h3 class="title">{{ card.title }}</h3>
+          <div class="decorative-line"></div>
+          <p class="statement">{{ card.statement }}</p>
         </div>
       </div>
     </div>
   </div>
-</div>
+</section>

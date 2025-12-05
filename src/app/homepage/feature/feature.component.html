@@ -1,0 +1,66 @@
+<section #sectionRef class="section">
+  <div class="container">
+    <div
+      class="heading-container"
+      [@fadeSlideIn]="isVisible ? 'visible' : 'hidden'"
+    >
+      <h2 class="heading">Powerful Features for Fashion Innovators</h2>
+      <div
+        class="heading-line"
+        [@lineAnimation]="isVisible ? 'visible' : 'hidden'"
+      ></div>
+    </div>
+
+    <div class="grid" [@featuresAnimation]="isVisible ? 'visible' : 'hidden'">
+      <div *ngFor="let feature of features" class="feature-card group">
+        <div class="icon-container">
+          <div class="icon">
+            <ng-container [ngSwitch]="feature.icon">
+              <lucide-icon
+                *ngSwitchCase="'BookOpen'"
+                name="book-open"
+                [size]="32"
+                [strokeWidth]="2"
+              ></lucide-icon>
+              <lucide-icon
+                *ngSwitchCase="'Scissors'"
+                name="scissors"
+                [size]="32"
+                [strokeWidth]="2"
+              ></lucide-icon>
+              <lucide-icon
+                *ngSwitchCase="'Shirt'"
+                name="shirt"
+                [size]="32"
+                [strokeWidth]="2"
+              ></lucide-icon>
+
+              <lucide-icon
+                *ngSwitchCase="'Users'"
+                name="users"
+                [size]="32"
+                [strokeWidth]="2"
+              ></lucide-icon>
+            </ng-container>
+          </div>
+        </div>
+
+        <div class="content">
+          <h3 class="title">{{ feature.title }}</h3>
+          <p class="description">{{ feature.description }}</p>
+        </div>
+
+        <div class="bottom-line"></div>
+      </div>
+    </div>
+
+    <div class="bottom-decoration" [@fadeIn]="isVisible ? 'visible' : 'hidden'">
+      <div class="dots-container">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+    </div>
+  </div>
+</section>

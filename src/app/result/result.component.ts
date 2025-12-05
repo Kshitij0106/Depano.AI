@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { PromptService } from '../generate/services/prompt.service';
 import { BreadcrumbService } from '../services/breadcrumb.service';
 import { Router } from '@angular/router';
@@ -8,13 +8,15 @@ import { EditService } from '../services/edit.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { HeaderComponent } from '../header/header.component';
 import { CommonModule } from '@angular/common';
+import { LucideAngularModule } from 'lucide-angular';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   standalone: true,
   selector: 'app-result',
   templateUrl: './result.component.html',
   styleUrls: ['./result.component.css'],
-  imports: [HeaderComponent, CommonModule],
+  imports: [HeaderComponent, CommonModule, LucideAngularModule],
 })
 export class ResultComponent {
   image!: string;
@@ -28,7 +30,8 @@ export class ResultComponent {
     private breadcrumbService: BreadcrumbService,
     private checkAttributeService: CheckedAttributesService,
     private editService: EditService,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) {
     this.getImage();
   }
@@ -63,6 +66,7 @@ export class ResultComponent {
           this.result = 'success';
           this.error = false;
           this.userService.updateUserDetails();
+          this.toastr.success(result.message);
         }
       },
       error: (err: HttpErrorResponse) => {
@@ -71,8 +75,10 @@ export class ResultComponent {
           err.error?.status === 'SERVICE_UNAVAILABLE' ||
           err.error?.status === 'INTERNAL_SERVER_ERROR'
         ) {
+          this.toastr.error('networkIssue');
           this.result = 'networkIssue';
         } else if (err.error?.status === 'PAYMENT_REQUIRED') {
+          this.toastr.error('creditIssue');
           this.result = 'creditIssue';
         }
       },

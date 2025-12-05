@@ -1,20 +1,67 @@
-<div class="ctn container-fluid">
-  <div class="footer-content row">
-    <div class="footer-content-column col-12 col-md-4 mb-3 mb-md-0">
-      <p><a class="item link-opacity-10" href="/home">Home</a></p>
-      <p><a class="item link-opacity-10">Pricing</a></p>
-      <p><a class="item link-opacity-10">Testimonials</a></p>
-    </div>
+<footer class="footer">
+  <div class="footer-content">
+    <div class="footer-container">
+      <div class="footer-grid">
+        <!-- Brand Section -->
+        <div class="brand-section">
+          <div class="brand-logo">
+            <i-lucide
+              class="logo-icon"
+              name="Sparkles"
+              [size]="24"
+              [strokeWidth]="2"
+            ></i-lucide>
+            <span class="brand-name">Depano AI</span>
+          </div>
+          <p class="brand-description">
+            Revolutionizing fashion design with cutting-edge AI technology.
+            Create stunning, photorealistic fashion designs from sketches and
+            concepts in seconds.
+          </p>
+        </div>
 
-    <div class="footer-content-column col-12 col-md-4 mb-3 mb-md-0">
-      <p><a class="item link-opacity-10">Instagram</a></p>
-      <p><a class="item link-opacity-10">X (Formerly Twitter)</a></p>
-    </div>
+        <!-- Company -->
+        <div class="footer-section">
+          <h4>Company</h4>
+          <nav class="nav-list">
+            <a (click)="onNavigate?.('about')" class="nav-item">
+              <span>About Us</span>
+            </a>
+            <a (click)="onNavigate?.('vision')" class="nav-item">
+              <span>Our Vision</span>
+            </a>
+            <a (click)="onNavigate?.('features')" class="nav-item">
+              <span>Features</span>
+            </a>
+            <a (click)="onNavigate?.('features')" class="nav-item">
+              <span>Pricing</span>
+            </a>
+          </nav>
+        </div>
 
-    <div class="footer-content-column col-12 col-md-4">
-      <p><a class="item link-opacity-10">Privacy Policy</a></p>
-      <p><a class="item link-opacity-10">Terms of use</a></p>
-      <p><a class="item link-opacity-10">Contact Us</a></p>
+        <!-- Support & Legal -->
+        <div class="footer-section">
+          <h4>Support & Legal</h4>
+          <nav class="nav-list">
+            <a (click)="handleLinkClick('Help Center')" class="nav-item">
+              <i class="fas fa-question-circle" aria-hidden="true"></i>
+              <span>Help Center</span>
+            </a>
+            <a (click)="handleLinkClick('Contact Support')" class="nav-item">
+              <i class="fas fa-envelope" aria-hidden="true"></i>
+              <span>Contact Support</span>
+            </a>
+            <a (click)="handleLinkClick('Privacy Policy')" class="nav-item">
+              <i class="fas fa-shield-alt" aria-hidden="true"></i>
+              <span>Privacy Policy</span>
+            </a>
+            <a (click)="handleLinkClick('Terms of Service')" class="nav-item">
+              <i class="fas fa-file-alt" aria-hidden="true"></i>
+              <span>Terms of Service</span>
+            </a>
+          </nav>
+        </div>
+      </div>
     </div>
   </div>
-</div>
+</footer>

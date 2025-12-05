@@ -13,6 +13,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { HeaderComponent } from '../header/header.component';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   standalone: true,
@@ -46,7 +47,8 @@ export class EditComponent implements OnInit, OnDestroy {
 
   constructor(
     private editService: EditService,
-    private userService: UserService
+    private userService: UserService,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -221,6 +223,7 @@ export class EditComponent implements OnInit, OnDestroy {
             this.loadImage(editedImageUrl);
             this.image = editedImageUrl;
             this.userService.updateUserDetails();
+            this.toastr.success(result.message);
           }
         },
         error: (err: HttpErrorResponse) => {
@@ -229,8 +232,10 @@ export class EditComponent implements OnInit, OnDestroy {
             err.error?.status === 'SERVICE_UNAVAILABLE' ||
             err.error?.status === 'INTERNAL_SERVER_ERROR'
           ) {
+            this.toastr.error('networkIssue');
             this.result = 'networkIssue';
           } else if (err.error?.status === 'PAYMENT_REQUIRED') {
+            this.toastr.error('creditIssue');
             this.result = 'creditIssue';
           }
         },

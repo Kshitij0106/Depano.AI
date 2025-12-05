@@ -98,7 +98,7 @@ body {
 
 .img {
   width: 100%;
-  height: calc(100vh - 60px);
+  height: 100vh;
 }
 
 /* Media query for smaller screens */

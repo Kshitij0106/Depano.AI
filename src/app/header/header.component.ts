@@ -8,13 +8,14 @@ import { UserService } from '../services/user.service';
 import { User } from '../models/user.model';
 import { EditService } from '../services/edit.service';
 import { CommonModule } from '@angular/common';
+import { LucideAngularModule } from 'lucide-angular';
 
 @Component({
   standalone: true,
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css'],
-  imports: [CommonModule],
+  imports: [CommonModule, LucideAngularModule],
 })
 export class HeaderComponent implements OnInit {
   title = 'DEPANO AI';
@@ -71,13 +72,22 @@ export class HeaderComponent implements OnInit {
   }
 
   /**
-   * @returns {string} - Background color code depending on the page.
+   * Truncates username to 10 characters with ellipsis if longer
    */
-  get background(): string {
-    if (this.source === 'gender') {
-      return `linear-gradient(${this.colorStart}, ${this.colorEnd})`;
+  getUsername(name: string): string {
+    if (!name) return '';
+
+    const fullname = name.trim().split(' ');
+    const firstName = fullname[0] || '';
+    const lastName = fullname.length > 1 ? fullname[1] : '';
+
+    let displayName = firstName;
+
+    if (firstName.length < 4 && lastName) {
+      displayName = `${firstName} ${lastName}`;
     }
-    return '#ece7e7';
+
+    return displayName.length > 10 ? displayName.substring(0, 10) : displayName;
   }
 
   /**
@@ -86,7 +96,7 @@ export class HeaderComponent implements OnInit {
   openHome() {
     this.emptyData();
     if (this.source === 'category') {
-      this.router.navigate(['gender']);
+      this.router.navigate(['mode-select']);
     } else {
       this.checkProfile();
       this.router.navigate(['home']);

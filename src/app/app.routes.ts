@@ -1,5 +1,6 @@
 import { ApplicationConfig } from '@angular/core';
 import { authGuard } from './auth/guard/auth.guard';
+import { authRedirectGuard } from './auth/guard/auth-redirect.guard';
 import { provideRouter, Routes } from '@angular/router';
 
 export const routes: Routes = [
@@ -11,8 +12,23 @@ export const routes: Routes = [
   },
   {
     path: 'login',
+    canActivate: [authRedirectGuard],
     loadComponent: () =>
       import('./auth/login/login.component').then((m) => m.LoginComponent),
+  },
+  {
+    path: 'signup',
+    canActivate: [authRedirectGuard],
+    loadComponent: () =>
+      import('./auth/signup/signup.component').then((m) => m.SignupComponent),
+  },
+  {
+    path: 'mode-select',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./mode-select/mode-select.component').then(
+        (m) => m.ModeSelectComponent
+      ),
   },
   {
     path: 'gender',
@@ -41,6 +57,12 @@ export const routes: Routes = [
     canActivate: [authGuard],
     loadComponent: () =>
       import('./edit/edit.component').then((m) => m.EditComponent),
+  },
+  {
+    path: 'sketch-to-image',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./sketch/upload/upload.component').then((m) => m.UploadComponent),
   },
   { path: '**', redirectTo: '/home' },
 ];

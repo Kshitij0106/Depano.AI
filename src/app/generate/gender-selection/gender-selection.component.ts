@@ -1,17 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { PromptService } from 'src/app/generate/services/prompt.service';
 import { BreadcrumbService } from 'src/app/services/breadcrumb.service';
-import { PromptService } from '../services/prompt.service';
-import { HeaderComponent } from 'src/app/header/header.component';
 
 @Component({
   standalone: true,
   selector: 'app-gender-selection',
   templateUrl: './gender-selection.component.html',
   styleUrls: ['./gender-selection.component.css'],
-  imports: [HeaderComponent],
 })
-export class GenderSelectionComponent implements OnInit {
+export class GenderSelectionComponent {
   title = 'Depano AI';
 
   constructor(
@@ -19,10 +17,6 @@ export class GenderSelectionComponent implements OnInit {
     private promptService: PromptService,
     private breadcrumbService: BreadcrumbService
   ) {}
-
-  ngOnInit(): void {
-    this.disableBackButton();
-  }
 
   /**
    * Opens a specific category, adds it to the breadcrumb list, sets the gender prompt,

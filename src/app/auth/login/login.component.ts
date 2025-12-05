@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { OtpSendRequest } from '../models/otpSendRequest.model';
@@ -7,17 +7,16 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { OtpValidateRequest } from '../models/otpValidateRequest.model';
 import { UserService } from 'src/app/services/user.service';
+import { LucideAngularModule } from 'lucide-angular';
 
 @Component({
   standalone: true,
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, LucideAngularModule],
 })
 export class LoginComponent {
-  title = 'DEPANO AI';
-
   otpSendRequest: OtpSendRequest = {
     mobileNumber: '',
   };
@@ -26,14 +25,12 @@ export class LoginComponent {
     mobileNumber: '',
     userName: '',
     otp: '',
+    email: '',
   };
 
   mobileError: boolean = false;
 
   otpSent: boolean = false;
-  otpChecked: boolean = false;
-
-  rememberUser: boolean = false;
 
   constructor(
     private router: Router,
@@ -41,13 +38,6 @@ export class LoginComponent {
     private userService: UserService,
     private toastr: ToastrService
   ) {}
-
-  /**
-   * Navigates to homepage.
-   */
-  openHome() {
-    this.router.navigate(['home']);
-  }
 
   /**
    * Generates a One-Time Password (OTP) to be sent to the user's phone for verification purposes.
@@ -72,10 +62,9 @@ export class LoginComponent {
       .validateOtp(this.otpValidateRequest)
       .subscribe((result) => {
         if (result.status === 'Success') {
-          this.otpChecked = true;
           this.authService.saveToken(result.accessToken);
           this.toastr.success(result.message);
-          this.router.navigate(['gender']);
+          this.router.navigate(['mode-select']);
           this.userService.updateUserDetails();
         } else {
           this.toastr.error(result.message);

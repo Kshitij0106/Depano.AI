@@ -1,0 +1,301 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(to bottom right, #fffaf0, #fdf2f8, #fffbeb);
+  font-family: "Inter", sans-serif;
+}
+
+.container {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+.content {
+  width: 100%;
+  max-width: 96rem;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.title {
+  font-family: "Playfair Display", serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #111827;
+  line-height: 1.1;
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+  .title {
+    font-size: 2.5rem;
+  }
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  color: #4b5563;
+  line-height: 1.625;
+  max-width: 42rem;
+  margin: 0 auto;
+}
+
+.cards-grid {
+  display: grid;
+  gap: 2.25rem;
+  max-width: 52rem;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .cards-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.card {
+  position: relative;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 5px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  transition: all 0.5s;
+  cursor: pointer;
+  border-radius: 1rem;
+  text-align: center;
+}
+
+.card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.card.selected {
+  transform: scale(1.02);
+}
+
+.card-gender.selected {
+  box-shadow: 0 0 0 2px #ec4899;
+}
+
+.card-sketch-to-image.selected {
+  box-shadow: 0 0 0 2px #a855f7;
+}
+
+.card-bg-gradient {
+  position: absolute;
+  inset: 0;
+  opacity: 0.7;
+  transition: opacity 0.5s;
+}
+
+.card:hover .card-bg-gradient {
+  opacity: 1;
+}
+
+.card-gender .card-bg-gradient {
+  background: linear-gradient(
+    to bottom right,
+    rgba(236, 72, 153, 0.5),
+    rgba(249, 115, 22, 0.3),
+    rgba(251, 191, 36, 0.5)
+  );
+}
+
+.card-sketch-to-image .card-bg-gradient {
+  background: linear-gradient(
+    to bottom right,
+    rgba(168, 85, 247, 0.5),
+    rgba(236, 72, 153, 0.3),
+    rgba(99, 102, 241, 0.5)
+  );
+}
+
+.card-blob {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(24px);
+}
+
+.card-blob1 {
+  top: 1rem;
+  right: 1rem;
+  width: 5rem;
+  height: 5rem;
+}
+
+.card-gender .card-blob1 {
+  background: linear-gradient(
+    to bottom right,
+    rgba(236, 72, 153, 0.2),
+    rgba(249, 115, 22, 0.2)
+  );
+}
+
+.card-sketch-to-image .card-blob1 {
+  background: linear-gradient(
+    to bottom right,
+    rgba(168, 85, 247, 0.2),
+    rgba(236, 72, 153, 0.2)
+  );
+}
+
+.card-blob2 {
+  bottom: 1.5rem;
+  left: 1.5rem;
+  width: 4rem;
+  height: 4rem;
+}
+
+.card-gender .card-blob2 {
+  background: linear-gradient(
+    to bottom right,
+    rgba(249, 115, 22, 0.2),
+    rgba(236, 72, 153, 0.2)
+  );
+}
+
+.card-sketch-to-image .card-blob2 {
+  background: linear-gradient(
+    to bottom right,
+    rgba(236, 72, 153, 0.2),
+    rgba(168, 85, 247, 0.2)
+  );
+}
+
+.card-content {
+  position: relative;
+  z-index: 10;
+  padding: 2rem;
+}
+
+.icon-container {
+  width: 4rem;
+  height: 4rem;
+  background: linear-gradient(to bottom right, #ec4899, #f97316);
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+  transition: transform 0.3s;
+  color: white;
+}
+
+.card-sketch-to-image .icon-container {
+  background: linear-gradient(to bottom right, #a855f7, #ec4899);
+}
+
+.card:hover .icon-container {
+  transform: scale(1.1);
+}
+
+.card-title {
+  font-family: "Playfair Display", serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 1rem;
+}
+
+.card-description {
+  color: #4b5563;
+  line-height: 1.625;
+  margin-bottom: 1.5rem;
+}
+
+.features {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  font-size: 0.875rem;
+  color: #374151;
+}
+
+.feature-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 9999px;
+}
+
+.dot-pink {
+  background-color: #ec4899;
+}
+
+.dot-orange {
+  background-color: #f97316;
+}
+
+.dot-amber {
+  background-color: #fbbf24;
+}
+
+.dot-purple {
+  background-color: #a855f7;
+}
+
+.dot-indigo {
+  background-color: #6366f1;
+}
+
+.card-button {
+  width: 100%;
+  height: 3rem;
+  background: linear-gradient(to right, #ec4899, #f97316);
+  color: white;
+  border-radius: 0.75rem;
+  font-weight: 500;
+  transition: all 0.3s;
+  border: none;
+  cursor: pointer;
+}
+
+.card-sketch-to-image .card-button {
+  background: linear-gradient(to right, #a855f7, #ec4899);
+}
+
+.card-button:hover {
+  background: linear-gradient(to right, #db2777, #ea580c);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.card-sketch-to-image .card-button:hover {
+  background: linear-gradient(to right, #9333ea, #db2777);
+}
+
+.button-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}

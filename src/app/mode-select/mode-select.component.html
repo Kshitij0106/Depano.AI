@@ -1,0 +1,109 @@
+<app-header [source]="'mode-select'"></app-header>
+<div class="container">
+  <div class="content">
+    <div class="header">
+      <h1 class="title">Choose Your Creative Path</h1>
+      <p class="subtitle">
+        Select how you'd like to create your next fashion masterpiece with our
+        AI-powered design platform
+      </p>
+    </div>
+
+    <!-- Category Cards -->
+    <div class="cards-grid">
+      <!-- Men/Women Category -->
+      <div
+        class="card card-gender"
+        [class.selected]="selectedCategory === 'gender'"
+        (click)="handleCategorySelect('gender')"
+      >
+        <div class="card-content">
+          <div class="icon-container">
+            <i-lucide name="users" [size]="24" [strokeWidth]="3"></i-lucide>
+          </div>
+          <h3 class="card-title">Men & Women Fashion</h3>
+          <p class="card-description">
+            Create stunning fashion designs for men and women. Choose from
+            various categories, styles, and let AI bring your vision to life.
+          </p>
+          <div class="features">
+            <div class="feature-item">
+              <div class="feature-dot dot-pink"></div>
+              <span>Gender-specific design options</span>
+            </div>
+            <div class="feature-item">
+              <div class="feature-dot dot-orange"></div>
+              <span>Multiple clothing categories</span>
+            </div>
+            <div class="feature-item">
+              <div class="feature-dot dot-amber"></div>
+              <span>Style customization</span>
+            </div>
+          </div>
+          <button class="card-button" (click)="handleCategorySelect('gender')">
+            <span class="button-text">
+              Start Designing
+              <lucide-icon
+                name="arrow-right"
+                [size]="16"
+                [strokeWidth]="2"
+              ></lucide-icon>
+            </span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Sketch to Image Category -->
+      <div
+        class="card card-sketch-to-image"
+        [class.selected]="selectedCategory === 'sketch-to-image'"
+        (click)="handleCategorySelect('sketch-to-image')"
+      >
+        <div class="card-content">
+          <div class="icon-container">
+            <lucide-icon
+              name="palette"
+              class="pink-icon"
+              [size]="24"
+              [strokeWidth]="3"
+            ></lucide-icon>
+          </div>
+          <h3 class="card-title">Sketch to Image</h3>
+          <p class="card-description">
+            Upload your fashion sketches and watch AI transform them into
+            photorealistic designs. Perfect for bringing hand-drawn concepts to
+            life.
+          </p>
+          <div class="features">
+            <div class="feature-item">
+              <div class="feature-dot dot-purple"></div>
+              <span>Upload hand-drawn sketches</span>
+            </div>
+            <div class="feature-item">
+              <div class="feature-dot dot-pink"></div>
+              <span>AI-powered image generation</span>
+            </div>
+            <div class="feature-item">
+              <div class="feature-dot dot-indigo"></div>
+              <span>Photorealistic results</span>
+            </div>
+          </div>
+          <button
+            class="card-button"
+            (click)="handleCategorySelect('sketch-to-image')"
+          >
+            <span class="button-text">
+              Upload Sketch
+              <lucide-icon
+                name="camera"
+                class="pink-icon"
+                [size]="16"
+                [strokeWidth]="2.5"
+              ></lucide-icon>
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

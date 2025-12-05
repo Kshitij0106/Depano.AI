@@ -2,19 +2,16 @@ html {
   background: #ffffff;
 }
 
-/* width */
 ::-webkit-scrollbar {
   width: 10px;
 }
 
-/* Track */
 ::-webkit-scrollbar-track {
-  background: #eeeded;
+  background: linear-gradient(to bottom, #f9fafb, #ffffff);
   border-radius: 8px;
-  margin-block: 20px;
+  margin-block: 15px;
 }
 
-/* Handle */
 ::-webkit-scrollbar-thumb {
   background: #1e1e1e;
   border-radius: 8px;

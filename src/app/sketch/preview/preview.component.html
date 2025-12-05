@@ -1,0 +1,74 @@
+<div class="result-container">
+  <div class="result-header">
+    <div class="success-logo">
+      <lucide-icon
+        name="circle-check-big"
+        [size]="24"
+        [strokeWidth]="2"
+      ></lucide-icon>
+    </div>
+    <h2 class="result-title">Your Design is Ready!</h2>
+    <p class="result-subtitle">
+      AI has transformed your sketch into a stunning photorealistic design
+    </p>
+  </div>
+
+  <div class="result-grid">
+    <div class="result-card">
+      <h3 class="result-card-title">Original Sketch</h3>
+      <div class="image-container">
+        <img
+          [src]="originalPreview"
+          alt="Original Sketch"
+          class="result-image"
+          *ngIf="originalPreview; else placeholderOriginal"
+        />
+        <ng-template #placeholderOriginal>
+          <span class="button-text">
+            Your uploaded sketch
+            <lucide-icon
+              name="camera"
+              class="pink-icon"
+              [size]="16"
+              [strokeWidth]="2.5"
+            ></lucide-icon>
+          </span>
+        </ng-template>
+      </div>
+    </div>
+    <div class="result-card">
+      <h3 class="result-card-title">AI Generated Design</h3>
+      <div class="image-container">
+        <img
+          [src]="generatedImage"
+          alt="AI Generated Design"
+          class="result-image"
+          *ngIf="generatedImage; else placeholderGenerated"
+        />
+        <ng-template #placeholderGenerated>
+          <lucide-icon
+            name="sparkles"
+            [size]="24"
+            [strokeWidth]="2"
+          ></lucide-icon>
+          <p>Photorealistic Result</p>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+
+  <div class="action-buttons">
+    <button class="download-button" (click)="handleDownload()">
+      <lucide-icon name="download" [size]="18" [strokeWidth]="2"></lucide-icon>
+      Download HD Image
+    </button>
+    <button class="share-button" (click)="handleShare()">
+      <lucide-icon name="share-2" [size]="18" [strokeWidth]="2"></lucide-icon>
+      Share Design
+    </button>
+    <button class="another-button" (click)="handleStartOver()">
+      <lucide-icon name="repeat" [size]="18" [strokeWidth]="2"></lucide-icon>
+      Create Another
+    </button>
+  </div>
+</div>

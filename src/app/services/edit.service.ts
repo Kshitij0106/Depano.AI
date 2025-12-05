@@ -2,8 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ImageResponse } from '../generate/models/imageResponse.model';
 import { environment } from 'src/environments/environment';
-import { BehaviorSubject, Observable, of } from 'rxjs';
-import { UserService } from './user.service';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +10,7 @@ import { UserService } from './user.service';
 export class EditService {
   public imageUrl = new BehaviorSubject<string>('');
 
-  constructor(private http: HttpClient, private userService: UserService) {}
+  constructor(private http: HttpClient) {}
 
   editImage(formData: FormData): Observable<ImageResponse> {
     return this.http.put<ImageResponse>(

@@ -1,45 +1,61 @@
-<app-header [source]="'home'"></app-header>
+<div class="fixed-buttons">
+  <button class="sign-in-btn" (click)="login()">
+    <lucide-icon name="log-in" [size]="16" [strokeWidth]="2"></lucide-icon>
+    Sign In
+  </button>
+  <button class="sign-up-btn" (click)="signup()">
+    <lucide-icon name="user-plus" [size]="16" [strokeWidth]="2"></lucide-icon>
+    Sign Up
+  </button>
+</div>
+
 <div class="ctn container-fluid">
-  <div class="row">
-    <div class="col-12">
-      <img
-        src="https://firebasestorage.googleapis.com/v0/b/depano-ai.appspot.com/o/App%2Fhomepage.png?alt=media&token=651869ad-96b9-4d6d-9801-af36193d10ec"
-        class="img img-fluid"
-        alt="..."
-      />
-      <div
-        class="row overlay img-overlay position-absolute d-flex flex-column justify-content-center align-items-center text-center"
-      >
-        <p class="txt">Revolutionizing Fashion with AI</p>
-        <p class="description">
-          Empowering Designers to Create, Innovate, and Inspire
-        </p>
-        <div class="row btns justify-content-center">
-          <button type="button" class="start-btn btn" (click)="getStarted()">
-            Get started
-          </button>
-          <button type="button" class="info-btn btn">Learn more</button>
-        </div>
+  <section class="hero-section">
+    <!-- Gradient Background -->
+    <div class="background">
+      <div class="texture-overlay-1"></div>
+      <div class="texture-overlay-2"></div>
+      <div class="texture-overlay-3"></div>
+    </div>
+
+    <!-- Floating Elements -->
+    <div class="floating-element top-left"></div>
+    <div class="floating-element bottom-right"></div>
+    <div class="floating-element center"></div>
+
+    <!-- Content Container -->
+    <div class="content-container">
+      <h2 class="headline">Revolutionizing <br />Fashion with AI</h2>
+      <p class="subheadline">
+        Empowering Designers to Create, Innovate, and Inspire
+      </p>
+      <button class="cta-button" (click)="getStarted()">
+        Start Designing Now
+      </button>
+    </div>
+    <div class="scroll-indicator">
+      <div class="scroll-border">
+        <div class="scroll-dot"></div>
       </div>
     </div>
-  </div>
+  </section>
 
   <div class="row content justify-content-center">
-    <div class="about-component">
+    <div>
       <app-about></app-about>
     </div>
-    <div class="home-component">
+    <div>
+      <app-feature></app-feature>
+    </div>
+    <div>
       <app-outputs></app-outputs>
     </div>
-    <div class="home-component">
+    <div>
       <app-vision></app-vision>
-    </div>
-    <div class="home-component">
-      <app-testimonials></app-testimonials>
     </div>
   </div>
 
-  <div class="footer-component justify-content-center">
+  <div class="justify-content-center">
     <app-footer></app-footer>
   </div>
 </div>

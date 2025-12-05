@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TestimonialsComponent } from './testimonials.component';
+import { ModeSelectComponent } from './mode-select.component';
 
-describe('TestimonialsComponent', () => {
-  let component: TestimonialsComponent;
-  let fixture: ComponentFixture<TestimonialsComponent>;
+describe('ModeSelectComponent', () => {
+  let component: ModeSelectComponent;
+  let fixture: ComponentFixture<ModeSelectComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TestimonialsComponent]
+      imports: [ModeSelectComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(TestimonialsComponent);
+    fixture = TestBed.createComponent(ModeSelectComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,20 +1,12 @@
-// import { Component } from '@angular/core';
-
-// @Component({
-//   standalone: true,
-//   selector: 'app-footer',
-//   templateUrl: './footer.component.html',
-//   styleUrl: './footer.component.css',
-// })
-// export class FooterComponent {}
-
 import { Component, Input } from '@angular/core';
+import { LucideAngularModule } from 'lucide-angular';
 
 @Component({
   standalone: true,
   selector: 'app-footer',
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.css',
+  imports: [LucideAngularModule],
 })
 export class FooterComponent {
   @Input() onNavigate?: (section: string) => void;

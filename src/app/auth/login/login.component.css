@@ -5,7 +5,7 @@
 }
 
 body {
-  overflow-x: hidden; /* Changed from hidden to allow vertical scroll if needed */
+  overflow-x: hidden;
   font-family: "Inter", sans-serif;
 }
 
@@ -26,56 +26,17 @@ body {
   padding-bottom: 20px;
 }
 
-.title {
-  font-family: Noto Sans;
-  font-size: 19px;
-  font-weight: 600;
-  line-height: 19.07px;
-  letter-spacing: 0.15em;
-  text-align: left;
-  margin-left: 60px;
-  padding-top: 20px;
-  font-style: normal;
-  color: #000000;
-  width: 200px;
-  cursor: pointer;
-  cursor: hand;
-}
-
-.login-form {
-  flex-direction: column;
-  margin: 0 auto;
-  align-items: center;
-  margin-top: 100px;
-  display: flex;
-}
-
-.heading {
-  font-family: Noto Sans;
-  font-size: 19px;
-  font-weight: 600;
-  line-height: 19.07px;
-  letter-spacing: 0.15em;
-  font-style: normal;
-  color: #000000;
-  margin-bottom: 10px;
-}
-
-.txt-input {
-  width: 320px;
-  height: 39px;
-  padding: 10px;
-  margin-top: 20px;
-  border-color: rgb(190, 186, 186);
-  border-radius: 4px;
-  font-family: Roboto;
-  letter-spacing: 0.02em;
-}
-
 .invalid-error {
   color: red;
   margin-left: 2px;
   width: 250px;
+}
+
+.invalid-error,
+.text-red-500.text-sm.font-inter.mt-1 {
+  font-size: 12px !important;
+  line-height: 1.3 !important;
+  margin-top: 2px !important;
 }
 
 .check-box {

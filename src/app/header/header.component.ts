@@ -91,22 +91,12 @@ export class HeaderComponent implements OnInit {
   }
 
   /**
-   * @returns {string} - Background color code depending on the page.
-   */
-  get background(): string {
-    if (this.source === 'gender') {
-      return `linear-gradient(${this.colorStart}, ${this.colorEnd})`;
-    }
-    return '#ece7e7';
-  }
-
-  /**
    * Navigates to homepage or gender page if logged in.
    */
   openHome() {
     this.emptyData();
     if (this.source === 'category') {
-      this.router.navigate(['gender']);
+      this.router.navigate(['mode-select']);
     } else {
       this.checkProfile();
       this.router.navigate(['home']);

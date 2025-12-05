@@ -13,19 +13,17 @@ export class SketchService {
   constructor(private http: HttpClient) {}
 
   sketchToImage(formData: FormData): Observable<ImageResponse> {
-    return this.http.put<ImageResponse>(
+    return this.http.post<ImageResponse>(
       environment.gateway + 'sketch/image',
       formData
     );
   }
 
-  async prepareEditFormData(sketch: string, prompt: string): Promise<FormData> {
+  async prepareSketchFormData(sketch: File, prompt: string): Promise<FormData> {
     const formData = new FormData();
 
     try {
-      const sketchBlob = await this.fetchBlobFromUrl(sketch);
-
-      formData.append('image', sketchBlob, 'sketch.png');
+      formData.append('sketch', sketch, 'sketch.png');
       formData.append('prompt', prompt);
 
       return formData;
@@ -33,11 +31,5 @@ export class SketchService {
       console.error('Error fetching blobs:', err);
       throw err;
     }
-  }
-
-  private async fetchBlobFromUrl(url: string): Promise<Blob> {
-    const response = await fetch(url);
-    if (!response.ok) throw new Error(`Failed to fetch ${url}`);
-    return await response.blob();
   }
 }

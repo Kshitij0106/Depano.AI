@@ -1,13 +1,22 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { PreviewComponent } from '../preview/preview.component';
 import { LucideAngularModule } from 'lucide-angular';
+import { SketchService } from 'src/app/services/sketch.service';
+import { UserService } from 'src/app/services/user.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
+import { HeaderComponent } from 'src/app/header/header.component';
 
 @Component({
   selector: 'app-upload',
   standalone: true,
-  imports: [CommonModule, PreviewComponent, LucideAngularModule],
+  imports: [
+    HeaderComponent,
+    CommonModule,
+    PreviewComponent,
+    LucideAngularModule,
+  ],
   templateUrl: './upload.component.html',
   styleUrl: './upload.component.css',
 })
@@ -16,9 +25,13 @@ export class UploadComponent {
   uploadedFile: File | null = null;
   dragActive = false;
   generatedImageUrl: string | null = null;
-  errorMessage: string | null = null;
+  userPrompt: string = 'convert sketch into dress';
 
-  constructor(private ngxService: NgxUiLoaderService) {}
+  constructor(
+    private sketchService: SketchService,
+    private userService: UserService,
+    private toastr: ToastrService
+  ) {}
 
   private readonly allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
   private readonly maxFileSizeMB = 10;
@@ -61,17 +74,15 @@ export class UploadComponent {
    *  Validate file type and size
    */
   private validateAndSetFile(file: File): void {
-    this.errorMessage = null;
-
     if (!this.allowedTypes.includes(file.type)) {
-      this.errorMessage = 'Only JPG, JPEG, or PNG files are allowed.';
+      this.toastr.error('Only JPG, JPEG, or PNG files are allowed.');
       this.uploadedFile = null;
       return;
     }
 
     const fileSizeMB = file.size / (1024 * 1024);
     if (fileSizeMB > this.maxFileSizeMB) {
-      this.errorMessage = `File size exceeds ${this.maxFileSizeMB}MB limit.`;
+      this.toastr.error(`File size exceeds ${this.maxFileSizeMB}MB limit.`);
       this.uploadedFile = null;
       return;
     }
@@ -79,26 +90,108 @@ export class UploadComponent {
     this.uploadedFile = file;
   }
 
-  handleGenerateImage(): void {
+  resizeImageToStabilityLimit(file: File): Promise<Blob> {
+    const MAX_PIXELS = 9_437_184; // 3072 x 3072
+
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      const reader = new FileReader();
+
+      reader.onload = (e: any) => {
+        img.src = e.target.result;
+      };
+
+      img.onload = () => {
+        const width = img.width;
+        const height = img.height;
+        const currentPixels = width * height;
+
+        // If already within limit, return original
+        if (currentPixels <= MAX_PIXELS) {
+          return resolve(file);
+        }
+
+        // Scale factor
+        const scale = Math.sqrt(MAX_PIXELS / currentPixels);
+
+        const newWidth = Math.floor(width * scale);
+        const newHeight = Math.floor(height * scale);
+
+        const canvas = document.createElement('canvas');
+        canvas.width = newWidth;
+        canvas.height = newHeight;
+
+        const ctx = canvas.getContext('2d')!;
+        ctx.drawImage(img, 0, 0, newWidth, newHeight);
+
+        canvas.toBlob(
+          (blob) => {
+            if (blob) resolve(blob);
+            else reject('Canvas Blob conversion failed');
+          },
+          file.type,
+          0.92 // compression quality
+        );
+      };
+
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
+  async handleGenerateImage(): Promise<void> {
     if (!this.uploadedFile) {
-      alert('Please upload a sketch first');
+      this.toastr.error('Please upload a sketch first');
       return;
     }
 
-    this.ngxService.start();
-    const formData = new FormData();
-    formData.append('sketch', this.uploadedFile);
-    setTimeout(() => {
-      this.step = 'design-preview';
-      this.ngxService.stop();
-    }, 2000);
+    try {
+      const resizedBlob = await this.resizeImageToStabilityLimit(
+        this.uploadedFile
+      );
+
+      const resizedImage = new File([resizedBlob], this.uploadedFile.name, {
+        type: this.uploadedFile.type,
+      });
+
+      const formData = await this.sketchService.prepareSketchFormData(
+        resizedImage,
+        this.userPrompt
+      );
+
+      this.sketchService.sketchToImage(formData).subscribe({
+        next: (result) => {
+          if (result.status === 'Success') {
+            const base64 = result.url;
+            this.generatedImageUrl = `data:image/png;base64,${base64}`;
+            // this.result = 'success';
+            this.userService.updateUserDetails();
+            this.step = 'design-preview';
+            this.toastr.success(result.message);
+          }
+        },
+        error: (err: HttpErrorResponse) => {
+          // this.error = true;
+          // if (
+          //   err.error?.status === 'SERVICE_UNAVAILABLE' ||
+          //   err.error?.status === 'INTERNAL_SERVER_ERROR'
+          // ) {
+          // this.toastr.success('networkIssue');
+          //   this.result = 'networkIssue';
+          // } else if (err.error?.status === 'PAYMENT_REQUIRED') {
+          //   this.result = 'creditIssue';
+          // }
+        },
+      });
+    } catch (error) {
+      this.toastr.error('An error occurred while processing the image.');
+    }
   }
 
   handleStartOver(): void {
     this.step = 'upload';
     this.uploadedFile = null;
     this.generatedImageUrl = null;
-    this.errorMessage = null;
   }
 
   handleDownload(): void {

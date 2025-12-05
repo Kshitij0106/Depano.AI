@@ -96,7 +96,6 @@
   flex-direction: column;
   gap: 2rem;
   margin: 0 5rem;
-
   width: 30rem;
 }
 
@@ -111,7 +110,7 @@
 }
 
 .upload-card {
-  padding: 2rem;
+  padding: 1.5rem;
 }
 
 .upload-title {
@@ -307,6 +306,7 @@
 .features-section {
   display: flex;
   flex-direction: column;
+  gap: 2rem;
 }
 
 .features-card {
@@ -318,7 +318,6 @@
   border-radius: 1rem;
   padding: 1.5rem;
   width: 32rem;
-  /* margin: 0 5rem; */
 }
 
 .features-title {
@@ -327,11 +326,13 @@
   font-weight: 700;
   color: #111827;
   margin-bottom: 1.5rem;
+  gap: 0.75rem;
 }
 
 .feature-item {
   display: flex;
   align-items: flex-start;
+  margin-top: 0.1rem;
   gap: 1rem;
 }
 

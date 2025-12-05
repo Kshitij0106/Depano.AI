@@ -59,11 +59,43 @@ export class HomeComponent {
     }
   }
 
-  signup() {
-    this.router.navigate(['signup']);
+  login() {
+    if (this.authService.isLoggedIn()) {
+      this.router.navigate(['mode-select']);
+    } else {
+      this.userService.getMyUserDetails().subscribe({
+        next: (user: User) => {
+          this.userService.userDetails.next(user);
+          this.router.navigate(['mode-select']);
+        },
+        error: (err: HttpErrorResponse) => {
+          if (err.error?.status === 'UNAUTHORIZED') {
+            this.router.navigate(['login']);
+          } else if (err.error?.status === 'SERVICE_UNAVAILABLE') {
+            // load error screen
+          }
+        },
+      });
+    }
   }
 
-  login() {
-    this.router.navigate(['login']);
+  signup() {
+    if (this.authService.isLoggedIn()) {
+      this.router.navigate(['mode-select']);
+    } else {
+      this.userService.getMyUserDetails().subscribe({
+        next: (user: User) => {
+          this.userService.userDetails.next(user);
+          this.router.navigate(['mode-select']);
+        },
+        error: (err: HttpErrorResponse) => {
+          if (err.error?.status === 'UNAUTHORIZED') {
+            this.router.navigate(['signup']);
+          } else if (err.error?.status === 'SERVICE_UNAVAILABLE') {
+            // load error screen
+          }
+        },
+      });
+    }
   }
 }

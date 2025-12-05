@@ -1,7 +1,8 @@
+<app-header [source]="'sketch'"></app-header>
 <div class="container">
   <div class="content" *ngIf="step === 'upload'">
     <div class="header">
-      <div class="logo-container">
+      <!-- <div class="logo-container">
         <div class="logo-icon">
           <lucide-icon
             name="palette"
@@ -11,7 +12,7 @@
           ></lucide-icon>
         </div>
         <span class="logo-text">Sketch to Image</span>
-      </div>
+      </div> -->
       <h1 class="title">Transform Sketches into Reality</h1>
       <p class="subtitle">
         Upload your fashion sketches and watch our AI transform them into
@@ -43,7 +44,7 @@
           >
             <input
               type="file"
-              accept="image/*"
+              accept="image/png,image/jpeg,image/jpg"
               (change)="handleFileSelect($event)"
               class="file-input"
             />
@@ -79,8 +80,6 @@
             </ng-template>
           </div>
 
-          <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
-
           <button
             *ngIf="uploadedFile"
             class="generate-button"
@@ -101,7 +100,7 @@
         </div>
 
         <!-- Tips -->
-        <div class="tips-card">
+        <div class="card tips-card">
           <h4 class="tips-title">Tips for Better Results</h4>
           <div class="tips-list">
             <div class="tip-item">

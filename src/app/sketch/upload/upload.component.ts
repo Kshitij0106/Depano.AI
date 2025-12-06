@@ -25,7 +25,8 @@ export class UploadComponent {
   uploadedFile: File | null = null;
   dragActive = false;
   generatedImageUrl: string | null = null;
-  userPrompt: string = 'convert sketch into dress';
+  userPrompt: string =
+    'Full length realistic image standing in a fashion photoshoot, studio lighting, high resolution, looking at the camera, crystal clear, 8K UHD, highly detailed glossy eyes, legal. Make sure the footwear is visible.';
 
   constructor(
     private sketchService: SketchService,

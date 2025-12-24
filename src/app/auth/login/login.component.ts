@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { OtpValidateRequest } from '../models/otpValidateRequest.model';
 import { UserService } from 'src/app/services/user.service';
 import { LucideAngularModule } from 'lucide-angular';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   standalone: true,
@@ -42,34 +43,52 @@ export class LoginComponent {
   /**
    * Generates a One-Time Password (OTP) to be sent to the user's phone for verification purposes.
    */
-  generateOtp() {
-    this.authService.generateOtp(this.otpSendRequest).subscribe((result) => {
-      if (result.status === 'Success') {
-        this.otpSent = true;
-        this.toastr.success('An OTP has been sent to your mobile number.');
-      } else {
-        this.toastr.error(result.message);
-      }
+  authenticateUser() {
+    this.authService.authenticateUser(this.otpSendRequest).subscribe({
+      next: (result) => {
+        if (result.status === 'Success') {
+          this.otpSent = true;
+          this.toastr.success('An OTP has been sent to your mobile number.');
+        }
+      },
+      error: (err: HttpErrorResponse) => {
+        if (
+          err.error?.status === 'SERVICE_UNAVAILABLE' ||
+          err.error?.status === 'INTERNAL_SERVER_ERROR'
+        ) {
+          // this.result = 'networkIssue';
+        } else if (err.error?.status === 'NOT_FOUND') {
+          this.toastr.error(err.error?.message);
+        }
+      },
     });
   }
 
   /**
    * Validates the One-Time Password (OTP) provided by the user against the generated OTP.
    */
-  validateOtp() {
+  verifyOtp() {
     this.otpValidateRequest.mobileNumber = this.otpSendRequest.mobileNumber;
-    this.authService
-      .validateOtp(this.otpValidateRequest)
-      .subscribe((result) => {
+    this.authService.verifyOtp(this.otpValidateRequest).subscribe({
+      next: (result) => {
         if (result.status === 'Success') {
           this.authService.saveToken(result.accessToken);
           this.toastr.success(result.message);
           this.router.navigate(['mode-select']);
           this.userService.updateUserDetails();
-        } else {
-          this.toastr.error(result.message);
         }
-      });
+      },
+      error: (err: HttpErrorResponse) => {
+        if (
+          err.error?.status === 'SERVICE_UNAVAILABLE' ||
+          err.error?.status === 'INTERNAL_SERVER_ERROR'
+        ) {
+          // this.result = 'networkIssue';
+        } else if (err.error?.status === 'BAD_REQUEST') {
+          this.toastr.error(err.error?.message);
+        }
+      },
+    });
   }
 
   /**

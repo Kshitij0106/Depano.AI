@@ -1,12 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BreadcrumbService } from '../services/breadcrumb.service';
-import { PromptService } from '../generate/services/prompt.service';
+import { ImageService } from '../services/image.service';
 import { CheckedAttributesService } from '../generate/services/checked-attributes.service';
 import { AuthService } from '../auth/services/auth.service';
 import { UserService } from '../services/user.service';
 import { User } from '../models/user.model';
-import { EditService } from '../services/edit.service';
 import { CommonModule } from '@angular/common';
 import { LucideAngularModule } from 'lucide-angular';
 
@@ -26,7 +25,6 @@ export class HeaderComponent implements OnInit {
   colorEnd: string = '#c1bebe';
 
   loggedInUser: User = {
-    userId: '',
     userName: '',
     credits: '',
   };
@@ -36,8 +34,7 @@ export class HeaderComponent implements OnInit {
     private authService: AuthService,
     private userService: UserService,
     private breadcrumbService: BreadcrumbService,
-    private promptService: PromptService,
-    private editService: EditService,
+    private imageService: ImageService,
     private checkAttributeService: CheckedAttributesService
   ) {}
 
@@ -63,7 +60,6 @@ export class HeaderComponent implements OnInit {
   updateUserDetails() {
     if (this.authService.isLoggedIn()) {
       this.userService.userDetails.subscribe((user) => {
-        this.loggedInUser.userId = user.userId;
         this.loggedInUser.userName =
           user.userName || this.userService.getUserName();
         this.loggedInUser.credits = user.credits;
@@ -108,8 +104,9 @@ export class HeaderComponent implements OnInit {
    */
   emptyData() {
     if (this.source !== 'gender') {
-      this.promptService.emptyPrompt();
-      this.editService.imageUrl.next('');
+      this.imageService.clearPromptId();
+      this.imageService.emptyPrompt();
+      this.imageService.imageUrl.next('');
       this.breadcrumbService.emptyBreadcrumbList();
       this.checkAttributeService.emptyCheckedAttributesList();
     }

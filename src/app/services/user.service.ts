@@ -9,7 +9,6 @@ import { environment } from 'src/environments/environment';
 })
 export class UserService {
   public userDetails = new BehaviorSubject<User>({
-    userId: '',
     userName: '',
     credits: '',
   });
@@ -39,6 +38,6 @@ export class UserService {
   }
 
   public clearUserDetails() {
-    this.userDetails.next({ userId: '', userName: '', credits: '' });
+    this.userDetails.next({ userName: '', credits: '' });
   }
 }

@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PreviewComponent } from '../preview/preview.component';
 import { LucideAngularModule } from 'lucide-angular';
-import { SketchService } from 'src/app/services/sketch.service';
+import { ImageService } from 'src/app/services/image.service';
 import { UserService } from 'src/app/services/user.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
@@ -29,7 +29,7 @@ export class UploadComponent {
     'Full length realistic image standing in a fashion photoshoot, studio lighting, high resolution, looking at the camera, crystal clear, 8K UHD, highly detailed glossy eyes, legal. Make sure the footwear is visible.';
 
   constructor(
-    private sketchService: SketchService,
+    private imageService: ImageService,
     private userService: UserService,
     private toastr: ToastrService
   ) {}
@@ -155,12 +155,12 @@ export class UploadComponent {
         type: this.uploadedFile.type,
       });
 
-      const formData = await this.sketchService.prepareSketchFormData(
+      const formData = await this.imageService.prepareSketchFormData(
         resizedImage,
         this.userPrompt
       );
 
-      this.sketchService.sketchToImage(formData).subscribe({
+      this.imageService.sketchToImage(formData).subscribe({
         next: (result) => {
           if (result.status === 'Success') {
             const base64 = result.url;

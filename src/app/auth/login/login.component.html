@@ -162,6 +162,7 @@
                   type="tel"
                   maxlength="10"
                   minlength="10"
+                  pattern="\d{10}"
                   placeholder="+91 99999-00000"
                   [(ngModel)]="otpSendRequest.mobileNumber"
                   name="mobileNumber"
@@ -170,18 +171,20 @@
                   required
                 />
                 <div
-                  *ngIf="mobileId.invalid && mobileId.touched"
-                  class="invalid-error text-danger small mt-1"
+                  id="mobile-error"
+                  *ngIf="
+                    mobileId.invalid && (mobileId.dirty || mobileId.touched)
+                  "
+                  class="invalid-error text-red-500 text-sm font-inter mt-1"
                   role="alert"
                 >
-                  Phone can't be empty!
-                </div>
-                <div
-                  *ngIf="mobileError"
-                  class="invalid-error text-danger small mt-1"
-                  role="alert"
-                >
-                  Invalid mobile number!
+                  <span *ngIf="mobileId.errors?.['required']"
+                    >Phone is required.</span
+                  >
+                  <span
+                    *ngIf="mobileId.errors?.['pattern'] || mobileId.errors?.['minlength'] || mobileId.errors?.['maxlength']"
+                    >Invalid mobile number!</span
+                  >
                 </div>
               </div>
 
@@ -189,7 +192,7 @@
                 type="submit"
                 class="w-full h-12 btn-background-clr from-pink-500 to-orange-500 hover:from-pink-600 hover:to-orange-600 text-white rounded-xl font-inter font-medium transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 [disabled]="userform.invalid"
-                (click)="generateOtp()"
+                (click)="authenticateUser()"
               >
                 <div
                   class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"
@@ -266,7 +269,7 @@
               <button
                 type="submit"
                 class="w-full h-12 btn-background-clr from-pink-500 to-orange-500 hover:from-pink-600 hover:to-orange-600 text-white rounded-xl font-inter font-medium transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-                (click)="validateOtp()"
+                (click)="verifyOtp()"
                 [disabled]="userform.invalid"
               >
                 <div

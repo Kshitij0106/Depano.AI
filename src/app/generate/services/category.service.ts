@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
-import { Category } from '../../models/category.model';
+import { Category } from '../models/category.model';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
-import { PromptService } from '../prompt.service';
+import { ImageService } from 'src/app/services/image.service';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CategoryService {
-  constructor(private http: HttpClient, private promptService: PromptService) {}
+  constructor(private http: HttpClient, private imageService: ImageService) {}
 
   /**
    * Retrieves the selected gender from the prompt service.
@@ -17,7 +17,7 @@ export class CategoryService {
    * @returns {string} - The user's selected gender, or an empty string if not available.
    */
   private getGender(): string {
-    return this.promptService.getGender();
+    return this.imageService.getGender();
   }
 
   /**
@@ -29,7 +29,7 @@ export class CategoryService {
   public getCategory(category: string): Observable<Category> {
     return this.http
       .get<Category>(
-        environment.gateway + this.getGender() + '/categories/' + category
+        environment.gateway + 'categories/' + this.getGender() + '/' + category
       )
       .pipe(
         map((response) => {
@@ -46,7 +46,7 @@ export class CategoryService {
    */
   public saveAttributeValue(category: string): Observable<any> {
     return this.http.post(
-      environment.gateway + this.getGender() + '/attributes/' + category,
+      environment.gateway + 'categories/attributes/' + category,
       {}
     );
   }
@@ -58,12 +58,7 @@ export class CategoryService {
    */
   public removeAttributeValue(category: string) {
     return this.http.delete(
-      environment.gateway +
-        this.getGender() +
-        '/' +
-        'attributes' +
-        '/' +
-        category
+      environment.gateway + 'categories/attributes/' + category
     );
   }
 }

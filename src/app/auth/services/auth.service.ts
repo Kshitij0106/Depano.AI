@@ -22,9 +22,22 @@ export class AuthService {
    * @param {OtpSendRequest} otpSendRequest - The user's registration details, including necessary information such as username and mobile number.
    * @returns {Observable<Auth>} - An observable containing the authentication response.
    */
-  generateOtp(otpSendRequest: OtpSendRequest): Observable<OtpResponse> {
+  authenticateUser(otpSendRequest: OtpSendRequest): Observable<OtpResponse> {
     return this.http.post<OtpResponse>(
-      environment.gateway + 'auth/generate-otp',
+      environment.gateway + 'auth/login/otp',
+      otpSendRequest
+    );
+  }
+
+  /**
+   * Registers a new user by sending their details to the server.
+   *
+   * @param {OtpSendRequest} otpSendRequest - The user's registration details, including necessary information such as username and mobile number.
+   * @returns {Observable<Auth>} - An observable containing the authentication response.
+   */
+  registerUser(otpSendRequest: OtpSendRequest): Observable<OtpResponse> {
+    return this.http.post<OtpResponse>(
+      environment.gateway + 'auth/signup/otp',
       otpSendRequest
     );
   }
@@ -35,9 +48,9 @@ export class AuthService {
    * @param {OtpValidateRequest} otpValidateRequest - The user's registration details, including necessary information such as username and mobile number.
    * @returns {Observable<Auth>} - An observable containing the authentication response.
    */
-  validateOtp(otpValidateRequest: OtpValidateRequest): Observable<Auth> {
+  verifyOtp(otpValidateRequest: OtpValidateRequest): Observable<Auth> {
     return this.http.post<Auth>(
-      environment.gateway + 'auth/validate-otp',
+      environment.gateway + 'auth/verify',
       otpValidateRequest
     );
   }

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { PromptService } from 'src/app/generate/services/prompt.service';
+import { ImageService } from 'src/app/services/image.service';
 import { BreadcrumbService } from 'src/app/services/breadcrumb.service';
 
 @Component({
@@ -14,7 +14,7 @@ export class GenderSelectionComponent {
 
   constructor(
     private router: Router,
-    private promptService: PromptService,
+    private imageService: ImageService,
     private breadcrumbService: BreadcrumbService
   ) {}
 
@@ -25,8 +25,8 @@ export class GenderSelectionComponent {
    */
   openCategory(category: string) {
     this.breadcrumbService.addBreadcrumb(category.toLowerCase(), category);
-    this.promptService.setGender(category.toLowerCase());
-    this.promptService.addToPrompt('gender', category.toLowerCase());
+    this.imageService.setGender(category.toLowerCase());
+    // this.imageService.addToPrompt('gender', category.toLowerCase());
     this.router.navigate(['generate', category.toLowerCase()]);
   }
 

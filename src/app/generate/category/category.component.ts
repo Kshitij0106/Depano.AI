@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router, RouterLink } from '@angular/router';
 import { Category } from '../models/category.model';
-import { PromptService } from '../services/prompt.service';
 import { Subcategory } from '../models/subcategory.model';
 import {
   BreadcrumbService,
   breadcrumb,
 } from 'src/app/services/breadcrumb.service';
-import { CategoryService } from '../services/data/category.service';
+import { CategoryService } from '../services/category.service';
+import { ImageService } from 'src/app/services/image.service';
 import { CheckedAttributesService } from '../services/checked-attributes.service';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from 'src/app/header/header.component';
@@ -51,7 +51,7 @@ export class CategoryComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private categoryService: CategoryService,
-    private promptService: PromptService,
+    private imageService: ImageService,
     private checkAttributeService: CheckedAttributesService,
     private breadcrumbService: BreadcrumbService
   ) {}
@@ -197,7 +197,7 @@ export class CategoryComponent implements OnInit {
               this.getCategory('optional');
             } else {
               if (cat.key === 'type') {
-                const gender = this.promptService.getGender();
+                const gender = this.imageService.getGender();
                 const currentCategory = this.selectedCategory.code
                   .split('-')
                   .at(0);
@@ -303,7 +303,7 @@ export class CategoryComponent implements OnInit {
         // If the user is selecting categories
         // Set the 'user-input' prompt
         this.setPrompt('type', input);
-        const gender = this.promptService.getGender();
+        const gender = this.imageService.getGender();
         if (this.selectedCategory.key === 'style') {
           this.getCategory(gender + '-' + 'wear');
           this.changeCategoryRoute(gender + '-' + 'wear');
@@ -336,7 +336,7 @@ export class CategoryComponent implements OnInit {
    */
   setPrompt(key: string, userInput: string) {
     if (key.length > 0 && userInput.length) {
-      this.promptService.addToPrompt(key, userInput);
+      this.imageService.addToPrompt(key, userInput);
     }
   }
 

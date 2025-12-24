@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
-import { PromptService } from '../generate/services/prompt.service';
+import { ImageService } from '../services/image.service';
 import { BreadcrumbService } from '../services/breadcrumb.service';
 import { Router } from '@angular/router';
 import { CheckedAttributesService } from '../generate/services/checked-attributes.service';
 import { UserService } from '../services/user.service';
-import { EditService } from '../services/edit.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { HeaderComponent } from '../header/header.component';
 import { CommonModule } from '@angular/common';
@@ -21,15 +20,13 @@ import { ToastrService } from 'ngx-toastr';
 export class ResultComponent {
   image!: string;
   result: string = '';
-  promptId: string = '';
   error: boolean = false;
 
   constructor(
-    private promptService: PromptService,
+    private imageService: ImageService,
     private userService: UserService,
     private breadcrumbService: BreadcrumbService,
     private checkAttributeService: CheckedAttributesService,
-    private editService: EditService,
     private router: Router,
     private toastr: ToastrService
   ) {
@@ -45,26 +42,26 @@ export class ResultComponent {
   }
 
   getImage() {
-    if (this.editService.imageUrl.value === '') {
-      this.sendRequest();
+    if (this.imageService.imageUrl.value === '') {
+      this.generateImage();
     } else {
-      this.image = this.editService.imageUrl.value;
+      this.image = this.imageService.imageUrl.value;
       this.result = 'success';
       this.error = false;
     }
   }
 
   /**
-   * Sends a request to the prompt service to retrieve image and updates the 'image' property accordingly.
+   * Sends a request to the generate image.
    */
-  sendRequest() {
-    this.promptService.sendPrompt().subscribe({
+  generateImage() {
+    this.imageService.generateImage().subscribe({
       next: (result) => {
         if (result.status === 'Success') {
           this.image = result.url;
-          this.promptId = result.promptId;
           this.result = 'success';
           this.error = false;
+          this.imageService.setPromptId(result.promptId);
           this.userService.updateUserDetails();
           this.toastr.success(result.message);
         }
@@ -89,11 +86,11 @@ export class ResultComponent {
    * Sends a request again to the prompt service to retrieve image and updates the 'image' property accordingly.
    */
   regenerate() {
-    this.promptService.regenerate(this.promptId).subscribe({
+    const promptId = this.getPromptId();
+    this.imageService.regenerateImage(promptId).subscribe({
       next: (result) => {
         if (result.status === 'Success') {
           this.image = result.url;
-          this.promptId = result.promptId;
           this.result = 'success';
           this.error = false;
           this.userService.updateUserDetails();
@@ -114,17 +111,26 @@ export class ResultComponent {
   }
 
   editImage() {
-    this.editService.imageUrl.next(this.image);
+    this.imageService.imageUrl.next(this.image);
     this.router.navigate(['edit']);
+  }
+
+  getPromptId(): string {
+    const promptId = localStorage.getItem('promptId');
+    if (!promptId || promptId.trim().length === 0) {
+      this.result = 'networkIssue';
+      throw new Error('PromptId missing or invalid');
+    }
+    return promptId;
   }
 
   /**
    * Empties the data.
    */
   emptyData() {
-    this.promptId = '';
-    this.editService.imageUrl.next('');
-    this.promptService.emptyPrompt();
+    this.imageService.clearPromptId();
+    this.imageService.imageUrl.next('');
+    this.imageService.emptyPrompt();
     this.breadcrumbService.emptyBreadcrumbList();
     this.checkAttributeService.emptyCheckedAttributesList();
   }

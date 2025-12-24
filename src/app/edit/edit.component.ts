@@ -7,7 +7,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Canvas, FabricImage, PencilBrush, Path } from 'fabric';
-import { EditService } from '../services/edit.service';
+import { ImageService } from '../services/image.service';
 import { UserService } from '../services/user.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { HeaderComponent } from '../header/header.component';
@@ -46,7 +46,7 @@ export class EditComponent implements OnInit, OnDestroy {
   error: boolean = false;
 
   constructor(
-    private editService: EditService,
+    private imageService: ImageService,
     private userService: UserService,
     private toastr: ToastrService
   ) {}
@@ -62,7 +62,7 @@ export class EditComponent implements OnInit, OnDestroy {
   }
 
   private getImage() {
-    this.editService.imageUrl.subscribe((image) => {
+    this.imageService.imageUrl.subscribe((image) => {
       this.image = image;
     });
     this.result = 'success';
@@ -207,12 +207,12 @@ export class EditComponent implements OnInit, OnDestroy {
   /** Send original image URL, mask blob, and prompt to server */
   async sendToServer(): Promise<void> {
     try {
-      const formData = await this.editService.prepareEditFormData(
+      const formData = await this.imageService.prepareEditFormData(
         this.image,
         this.maskImageUrl,
         this.userPrompt
       );
-      this.editService.editImage(formData).subscribe({
+      this.imageService.editImage(formData).subscribe({
         next: (result) => {
           if (result.status === 'Success') {
             this.image = result.url;

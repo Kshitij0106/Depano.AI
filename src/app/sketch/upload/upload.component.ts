@@ -7,6 +7,7 @@ import { UserService } from 'src/app/services/user.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { HeaderComponent } from 'src/app/header/header.component';
+import { UserInputComponent } from 'src/app/generate/user-input/user-input.component';
 
 @Component({
   selector: 'app-upload',
@@ -16,6 +17,7 @@ import { HeaderComponent } from 'src/app/header/header.component';
     CommonModule,
     PreviewComponent,
     LucideAngularModule,
+    UserInputComponent,
   ],
   templateUrl: './upload.component.html',
   styleUrl: './upload.component.css',
@@ -31,8 +33,15 @@ export class UploadComponent {
   constructor(
     private imageService: ImageService,
     private userService: UserService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
   ) {}
+
+  public selectedCategoryName: string = 'Or describe something custom';
+  public hideUserPrompt: boolean = false;
+
+  inputSelected(input: string) {
+    this.handleUserPrompt(input);
+  }
 
   private readonly allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
   private readonly maxFileSizeMB = 10;
@@ -131,7 +140,7 @@ export class UploadComponent {
             else reject('Canvas Blob conversion failed');
           },
           file.type,
-          0.92 // compression quality
+          0.92, // compression quality
         );
       };
 
@@ -148,7 +157,7 @@ export class UploadComponent {
 
     try {
       const resizedBlob = await this.resizeImageToStabilityLimit(
-        this.uploadedFile
+        this.uploadedFile,
       );
 
       const resizedImage = new File([resizedBlob], this.uploadedFile.name, {
@@ -157,7 +166,7 @@ export class UploadComponent {
 
       const formData = await this.imageService.prepareSketchFormData(
         resizedImage,
-        this.userPrompt
+        this.userPrompt,
       );
 
       this.imageService.sketchToImage(formData).subscribe({
@@ -201,5 +210,10 @@ export class UploadComponent {
 
   handleShare(): void {
     alert('Share link copied! Share your creation with others');
+  }
+
+  handleUserPrompt(prompt: string) {
+    this.userPrompt = prompt;
+    console.log(this.userPrompt);
   }
 }

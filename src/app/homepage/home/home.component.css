@@ -42,7 +42,8 @@
   position: absolute;
   inset: 0;
   opacity: 0.05;
-  background: radial-gradient(
+  background:
+    radial-gradient(
       circle at 25% 25%,
       rgba(255, 127, 80, 0.3) 0%,
       transparent 50%
@@ -107,7 +108,9 @@
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  font-family: Playfair Display, serif;
+  font-family:
+    Playfair Display,
+    serif;
   animation: fade-in 1s ease-out;
   font-style: Bold;
   font-size: 84px;
@@ -123,7 +126,9 @@
   max-width: 64rem;
   margin-left: auto;
   margin-right: auto;
-  font-family: sPlayfair Display, serif;
+  font-family:
+    sPlayfair Display,
+    serif;
   line-height: 1.5;
   animation: fade-in 1s ease-out 0.3s both;
 }
@@ -139,13 +144,16 @@
   cursor: pointer;
   transition: all 0.3s;
   font-family: "Playfair Display", serif;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15),
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.15),
     0 0 0 1px rgba(255, 255, 255, 0.1);
 }
 
 .cta-button:hover {
   background: #374151;
-  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.25), 0 0 40px rgba(255, 255, 255, 0.1);
+  box-shadow:
+    0 25px 80px rgba(0, 0, 0, 0.25),
+    0 0 40px rgba(255, 255, 255, 0.1);
   transform: scale(1.05);
 }
 
@@ -177,7 +185,8 @@
   height: 0.75rem;
   background: #9ca3af;
   border-radius: 9999px;
-  animation: scroll-dot 2s ease-in-out infinite,
+  animation:
+    scroll-dot 2s ease-in-out infinite,
     fade-dot 2s ease-in-out infinite;
 }
 

@@ -31,8 +31,15 @@ export class HomeComponent {
   constructor(
     private router: Router,
     private authService: AuthService,
-    private userService: UserService
+    private userService: UserService,
   ) {}
+
+  /**
+   * Check if user is logged in
+   */
+  isUserLoggedIn(): boolean {
+    return this.authService.isLoggedIn();
+  }
 
   /**
    * Initiates the user flow by checking the login status.

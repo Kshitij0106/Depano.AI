@@ -3,18 +3,33 @@
   <div class="row">
     <div class="col">
       <nav class="crumb">
-        <ol class="breadcrumb">
-          <ng-container *ngFor="let crumb of breadcrumbsList">
-            <li class="breadcrumb-item">
-              <a
-                class="category-link"
-                [routerLink]="['/generate', crumb.key]"
-                (click)="goToBreadcrumb(crumb.key)"
-                >{{ crumb.value }}</a
+        <div class="breadcrumb-pill">
+          <a class="back-link" [routerLink]="['/generate']">
+            <lucide-icon
+              name="arrow-left"
+              [size]="14"
+              [strokeWidth]="2"
+            ></lucide-icon>
+            <span>Back</span>
+          </a>
+
+          <div class="breadcrumb-list-wrapper">
+            <ol class="breadcrumb">
+              <ng-container
+                *ngFor="let crumb of breadcrumbsList; let i = index"
               >
-            </li>
-          </ng-container>
-        </ol>
+                <li class="breadcrumb-item">
+                  <a
+                    class="category-link"
+                    [routerLink]="['/generate', crumb.key]"
+                    (click)="goToBreadcrumb(crumb.key)"
+                    >{{ crumb.value }}</a
+                  >
+                </li>
+              </ng-container>
+            </ol>
+          </div>
+        </div>
       </nav>
     </div>
     <div *ngIf="showGenerateButton; else showSkip" class="col">

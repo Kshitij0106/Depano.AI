@@ -10,6 +10,7 @@ import { CategoryService } from '../services/category.service';
 import { ImageService } from 'src/app/services/image.service';
 import { CheckedAttributesService } from '../services/checked-attributes.service';
 import { CommonModule } from '@angular/common';
+import { LucideAngularModule } from 'lucide-angular';
 import { HeaderComponent } from 'src/app/header/header.component';
 import { CategoryListComponent } from '../category-list/category-list.component';
 import { UserInputComponent } from '../user-input/user-input.component';
@@ -25,6 +26,7 @@ import { UserInputComponent } from '../user-input/user-input.component';
     UserInputComponent,
     CommonModule,
     RouterLink,
+    LucideAngularModule,
   ],
 })
 export class CategoryComponent implements OnInit {
@@ -53,7 +55,7 @@ export class CategoryComponent implements OnInit {
     private categoryService: CategoryService,
     private imageService: ImageService,
     private checkAttributeService: CheckedAttributesService,
-    private breadcrumbService: BreadcrumbService
+    private breadcrumbService: BreadcrumbService,
   ) {}
 
   /**
@@ -180,7 +182,7 @@ export class CategoryComponent implements OnInit {
           image:
             'https://firebasestorage.googleapis.com/v0/b/depano-ai.appspot.com/o/App%2FCategory%2FMen%2FBottom%2FIndian%2Flungi.png?alt=media&token=20a4ae95-b8fc-41c8-8de0-82b39fd78f93',
           code: 'indian',
-        }
+        },
       );
     } else {
       if (this.selectedCategory.next) {
@@ -232,7 +234,7 @@ export class CategoryComponent implements OnInit {
                   if (cat.key === 'type') {
                     // Finding the attribute in the exisitng list
                     const duplicate = newCategoryList.find(
-                      (item) => item.name === cat.subCategories[j].name
+                      (item) => item.name === cat.subCategories[j].name,
                     );
                     if (!duplicate) {
                       newCategoryList.push(cat.subCategories[j]);
@@ -269,7 +271,7 @@ export class CategoryComponent implements OnInit {
         // Only adding if not attribute
         this.breadcrumbService.addBreadcrumb(
           subCategory.code,
-          subCategory.name
+          subCategory.name,
         );
       }
       this.getCategory(subCategory.code);
@@ -282,7 +284,7 @@ export class CategoryComponent implements OnInit {
       // add selected attribute to a list
       this.checkAttributeService.addSelectedAttribute(
         this.selectedCategory.code,
-        subCategory.code
+        subCategory.code,
       );
     }
   }
@@ -317,14 +319,14 @@ export class CategoryComponent implements OnInit {
       // If the user is selecting attributes, route to previous category
       this.setPrompt(
         this.selectedCategory.key,
-        input + ' ' + this.selectedCategory.key
+        input + ' ' + this.selectedCategory.key,
       );
       this.getCategory(this.selectedClothCode);
       this.changeCategoryRoute(this.selectedClothCode);
       // add selected attribute to a list
       this.checkAttributeService.addSelectedAttribute(
         this.selectedCategory.code,
-        input
+        input,
       );
     }
   }

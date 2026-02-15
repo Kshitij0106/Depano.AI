@@ -4,7 +4,6 @@
   box-sizing: border-box;
 }
 
-/* avoid hiding page overflow globally; keep horizontal overflow in check */
 body {
   overflow-x: hidden;
 }
@@ -35,7 +34,7 @@ body {
   max-width: 100%;
 }
 
-.breadcrumb-pill .back-link {
+.breadcrumb-pill {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
@@ -46,8 +45,8 @@ body {
 }
 
 .breadcrumb-list-wrapper {
-  padding-left: 12px;
   overflow: hidden;
+  padding-right: 12px;
 }
 
 .breadcrumb-list-wrapper .breadcrumb {
@@ -81,7 +80,7 @@ body {
 
 .category-link {
   text-decoration: none;
-  color: #e11d48; /* pink for active part */
+  color: #e11d48;
   font-family: Roboto, sans-serif;
   font-weight: 600;
   font-size: 14px;
@@ -114,6 +113,7 @@ body {
 }
 
 .user-input {
+  margin-top: 50px;
   padding-left: 100px;
   padding-right: 100px;
 }

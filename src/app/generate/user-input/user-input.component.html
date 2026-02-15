@@ -1,16 +1,18 @@
 <div *ngIf="!hideUserPrompt" class="prompt-wrapper mt-3">
-  <label class="prompt-label"> Or describe something custom </label>
+  <label class="prompt-label"> Add your own {{ categoryName }} </label>
 
   <div class="prompt-box">
     <textarea
       class="prompt-input"
       placeholder="E.g., 'Vintage-inspired leather jacket with modern details', 'Sustainable casual wear', etc."
       #userInputCategory
+      [(ngModel)]="userInputCategory.value"
     ></textarea>
     <button
       for="userInput"
       type="submit"
       class="prompt-btn"
+      [disabled]="!userInputCategory.value.trim()"
       (click)="onSubmit(userInputCategory.value)"
     >
       Submit

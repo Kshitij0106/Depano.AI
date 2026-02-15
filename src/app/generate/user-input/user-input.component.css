@@ -20,14 +20,13 @@
 
 .prompt-input {
   width: 100%;
-  /* min-height: 140px; */
-  padding: 10px 18px 0px 18px;
+  padding: 19px 18px 0px 18px;
   border-radius: 14px;
   border: 0.5px solid #e5e7eb;
   background: #f7faff;
   font-family: Inter, Roboto, sans-serif;
   font-size: 14px;
-  line-height: 22px;
+  line-height: 20px;
   resize: none;
 }
 
@@ -38,18 +37,20 @@
 
 .prompt-btn {
   position: absolute;
-  bottom: 14px;
+  bottom: 17px;
   right: 14px;
   padding: 8px 18px;
   font-size: 13px;
-  border-radius: 999px;
-  border: none;
-  cursor: pointer;
-  background: #f1f5f9;
-  color: #374151;
+  border-radius: 14px;
+  color: #ffffff;
   transition: #f1f5f9 0.2s ease;
+  font-family: Roboto;
+  background-color: black;
 }
 
-.prompt-btn:hover {
-  background: #e5e7eb;
+.prompt-btn:disabled {
+  background-color: #e5e7eb;
+  color: #9ca3af;
+  border: 1px solid transparent;
+  cursor: not-allowed;
 }

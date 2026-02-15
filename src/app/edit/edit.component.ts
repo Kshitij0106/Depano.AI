@@ -14,13 +14,14 @@ import { HeaderComponent } from '../header/header.component';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
+import { UserInputComponent } from '../generate/user-input/user-input.component';
 
 @Component({
   standalone: true,
   selector: 'app-edit',
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.css'],
-  imports: [HeaderComponent, FormsModule, CommonModule],
+  imports: [HeaderComponent, FormsModule, CommonModule, UserInputComponent],
 })
 export class EditComponent implements OnInit, OnDestroy {
   @ViewChild('canvasEl', { static: true })
@@ -45,10 +46,13 @@ export class EditComponent implements OnInit, OnDestroy {
   result: string = '';
   error: boolean = false;
 
+  selectedCategoryName: string = '';
+  hideUserPrompt: boolean = false;
+
   constructor(
     private imageService: ImageService,
     private userService: UserService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
   ) {}
 
   ngOnInit(): void {
@@ -95,7 +99,7 @@ export class EditComponent implements OnInit, OnDestroy {
 
     const vh = Math.max(
       document.documentElement.clientHeight || 0,
-      window.innerHeight || 0
+      window.innerHeight || 0,
     );
     const width = (55 * vh) / 100; // 55vh in pixels
     const height = (65 * vh) / 100; // 65vh in pixels
@@ -163,7 +167,7 @@ export class EditComponent implements OnInit, OnDestroy {
   async generateMask(): Promise<void> {
     const vh = Math.max(
       document.documentElement.clientHeight || 0,
-      window.innerHeight || 0
+      window.innerHeight || 0,
     );
     const width = (55 * vh) / 100;
     const height = (65 * vh) / 100;
@@ -195,7 +199,7 @@ export class EditComponent implements OnInit, OnDestroy {
           cloned.set({ fill: 'white', selectable: false, evented: false });
           tempCanvas.add(cloned);
         }
-      })
+      }),
     );
 
     tempCanvas.renderAll();
@@ -210,7 +214,7 @@ export class EditComponent implements OnInit, OnDestroy {
       const formData = await this.imageService.prepareEditFormData(
         this.image,
         this.maskImageUrl,
-        this.userPrompt
+        this.userPrompt,
       );
       this.imageService.editImage(formData).subscribe({
         next: (result) => {
@@ -265,5 +269,9 @@ export class EditComponent implements OnInit, OnDestroy {
     if (this.canvas) {
       this.canvas.dispose();
     }
+  }
+
+  inputSelected(event: any) {
+    // Handle user input as needed
   }
 }

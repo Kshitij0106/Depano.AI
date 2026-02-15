@@ -162,14 +162,12 @@
       </div>
     </div>
     <!-- Full width user prompt below the cards -->
-    <div class="full-user-input mt-5">
-      <div class="user-input-card card">
-        <app-user-input
-          [categoryName]="selectedCategoryName"
-          [hideUserPrompt]="hideUserPrompt"
-          (userInput)="inputSelected($event)"
-        ></app-user-input>
-      </div>
+    <div class="full-user-input">
+      <app-user-input
+        [categoryName]="selectedCategoryName"
+        [hideUserPrompt]="hideUserPrompt"
+        (userInput)="inputSelected($event)"
+      ></app-user-input>
     </div>
   </div>
 </div>

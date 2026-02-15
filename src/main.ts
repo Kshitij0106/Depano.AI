@@ -23,6 +23,7 @@ import {
   CircleCheckBig,
   CircleUserRound,
   Clock,
+  Download,
   Facebook,
   FileImage,
   FileText,
@@ -119,7 +120,8 @@ bootstrapApplication(AppComponent, {
         Repeat2,
         SquarePen,
         RotateCcw,
-      })
+        Download,
+      }),
     ),
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],

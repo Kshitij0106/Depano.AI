@@ -1,0 +1,62 @@
+<section class="error-wrapper">
+  <div class="error-header">
+    <div class="emoji">{{ config.emoji }}</div>
+
+    <div class="badge">Error {{ config.code }}</div>
+
+    <h1>{{ config.title }}</h1>
+
+    <p>
+      {{ errorMessage || config.description }}
+    </p>
+
+    <p *ngIf="config.subtitle" class="subtitle">
+      {{ config.subtitle }}
+    </p>
+
+    <p *ngIf="config.cta" class="cta">
+      {{ config.cta }}
+    </p>
+  </div>
+
+  <div class="error-card">
+    <!-- OUT OF CREDITS -->
+    <ng-container *ngIf="errorType === 'out-of-credits'; else otherErrors">
+      <button class="btn-primary" (click)="topUp.emit()">Top Up Credits</button>
+      <button class="btn-outline" (click)="viewPlans.emit()">View Plans</button>
+      <button class="btn-ghost" (click)="goHome.emit()">Back to Home</button>
+    </ng-container>
+
+    <!-- OTHER ERRORS -->
+    <ng-template #otherErrors>
+      <div *ngIf="troubleshootingSteps.length > 0" class="steps">
+        <div
+          *ngFor="let step of troubleshootingSteps; let i = index"
+          class="step"
+        >
+          <span class="number">{{ i + 1 }}</span>
+          {{ step }}
+        </div>
+      </div>
+
+      <button
+        class="btn-primary"
+        (click)="handleRetry()"
+        [disabled]="isRetrying"
+      >
+        {{ isRetrying ? "Retrying..." : "Try Again" }}
+      </button>
+
+      <button class="btn-outline" (click)="goHome.emit()">Back to Home</button>
+
+      <button class="btn-ghost" (click)="contactSupport.emit()">
+        Contact Support
+      </button>
+    </ng-template>
+  </div>
+
+  <!-- DEV DEBUG -->
+  <div *ngIf="errorMessage && false" class="debug">
+    <pre>{{ errorMessage }}</pre>
+  </div>
+</section>

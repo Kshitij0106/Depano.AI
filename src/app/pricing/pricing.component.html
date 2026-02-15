@@ -1,0 +1,74 @@
+<app-header [source]="'result'"></app-header>
+
+<section class="pricing-wrapper">
+  <!-- Navigation -->
+  <div class="nav-bar">
+    <!-- <button class="btn-outline" (click)="onHome()">Back to Home</button> -->
+
+    <button *ngIf="isLoggedIn" class="btn-primary" (click)="onDashboard()">
+      Dashboard
+    </button>
+  </div>
+
+  <!-- Header -->
+  <div class="header">
+    <h1>Choose Your Creative Journey</h1>
+    <p>
+      Select the perfect plan to bring your fashion design vision to life with
+      AI-powered creativity.
+    </p>
+  </div>
+
+  <!-- Pricing Cards -->
+  <div class="cards">
+    <div
+      *ngFor="let plan of plans"
+      class="card justify-items-center"
+      [class.popular]="plan.popular"
+    >
+      <div *ngIf="plan.popular" class="badge">Most Popular</div>
+
+      <div class="icon">{{ plan.icon }}</div>
+      <h3>{{ plan.name }}</h3>
+
+      <div class="price">
+        <span class="amount">{{ plan.price }}</span>
+        <span class="period">/ {{ plan.period }}</span>
+      </div>
+
+      <div class="images">
+        {{ plan.images }}
+      </div>
+
+      <p class="description">
+        {{ plan.description }}
+      </p>
+
+      <ul class="features">
+        <li *ngFor="let feature of plan.features">✔ {{ feature }}</li>
+      </ul>
+
+      <button class="btn-primary full-width" (click)="onSelect(plan)">
+        {{ plan.cta }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Bottom Info -->
+  <div class="bottom-info">
+    <div class="info-card">
+      <h4>Instant Activation</h4>
+      <p>Start designing immediately after subscribing.</p>
+    </div>
+
+    <div class="info-card">
+      <h4>Cancel Anytime</h4>
+      <p>Flexible plans with no long-term commitment.</p>
+    </div>
+
+    <div class="info-card">
+      <h4>Upgrade Anytime</h4>
+      <p>Easily upgrade as your needs grow.</p>
+    </div>
+  </div>
+</section>

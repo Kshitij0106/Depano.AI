@@ -1,55 +1,43 @@
 <app-header [source]="'result'"></app-header>
 <div class="container container-fluid">
-  <div class="row mb-3">
-    <div
-      class="col-12 col-md-5 d-flex justify-content-center justify-content-md-start mb-2"
-    >
-      <button
-        type="button"
-        class="start-btn btn-outline-danger"
-        (click)="openHome()"
-      >
-        <lucide-icon name="repeat-2"></lucide-icon>
-        Start again
-      </button>
-    </div>
+  <!-- Title Section -->
+  <div class="result-header" *ngIf="this.result === 'success'">
+    <h1 class="result-title">Your AI Design is Ready!</h1>
+    <p class="result-subtitle">
+      Your personalized fashion design has been created. Download, share, or
+      edit your creation.
+    </p>
+  </div>
 
-    <div
-      *ngIf="this.result === 'success'"
-      class="col-12 col-md-4 d-flex justify-content-center justify-content-md-start mb-2"
-    >
-      <button
-        type="button"
-        class="edit-btn btn-outline-danger"
-        (click)="editImage()"
-      >
-        <lucide-icon name="square-pen"></lucide-icon>
-      </button>
-    </div>
+  <div *ngIf="this.result === 'success'" class="row mb-3">
+    <div class="col-12 d-flex justify-content-center mb-2">
+      <div class="action-buttons">
+        <button type="button" class="action-btn" (click)="downloadImage()">
+          <lucide-icon name="download"></lucide-icon>
+          <span>Download</span>
+        </button>
 
-    <div
-      *ngIf="this.result === 'success'"
-      class="col-12 col-md-3 d-flex justify-content-center justify-content-md-end mb-2"
-    >
-      <button
-        type="button"
-        class="regen-btn btn-outline-danger"
-        (click)="regenerate()"
-      >
-        <lucide-icon name="rotate-ccw"></lucide-icon>
-        Regenerate
-      </button>
+        <button type="button" class="action-btn" (click)="shareImage()">
+          <lucide-icon name="share-2"></lucide-icon>
+          <span>Share</span>
+        </button>
+
+        <button type="button" class="action-btn" (click)="openHome()">
+          <lucide-icon name="repeat-2"></lucide-icon>
+          <span>Start Again</span>
+        </button>
+
+        <button type="button" class="action-btn" (click)="editImage()">
+          <lucide-icon name="square-pen"></lucide-icon>
+          <span>Edit Image</span>
+        </button>
+
+        <button type="button" class="action-btn" (click)="regenerate()">
+          <lucide-icon name="rotate-ccw"></lucide-icon>
+          <span>Regenerate</span>
+        </button>
+      </div>
     </div>
-    <!-- <div class="col-6 col-md-1 d-flex justify-content-center">
-      <button type="button" class="share-btn btn-outline-danger">
-        <i class="bi bi-share-fill"></i>
-      </button>
-    </div>
-    <div class="col-6 col-md-1 d-flex justify-content-center">
-      <button type="button" class="download-btn btn-outline-danger">
-        <i class="bi bi-download"></i>
-      </button>
-    </div> -->
   </div>
 
   <div *ngIf="this.result === 'success'" class="row">

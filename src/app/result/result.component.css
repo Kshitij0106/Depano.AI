@@ -5,7 +5,7 @@
 }
 
 body {
-  background: #ffffff;
+  background: linear-gradient(to bottom right, #faf5ff, #fdf2f8, #eef2ff);
   overflow: hidden;
   align-items: center;
   justify-content: center;
@@ -20,71 +20,188 @@ body {
   padding-left: 130px;
   padding-right: 130px;
   height: calc(100vh - 60px);
+  background: linear-gradient(to bottom right, #faf5ff, #fdf2f8, #eef2ff);
+}
+
+.result-header {
+  text-align: center;
+  margin-bottom: 40px;
+  animation: slideDown 0.6s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.result-title {
+  font-family: "Playfair Display", serif;
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 12px;
+  letter-spacing: -0.5px;
+  background-color: #000000;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.result-subtitle {
+  font-family:
+    "Inter",
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto;
+  font-size: 1.1rem;
+  color: #666666;
+  margin-bottom: 30px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+}
+
+.stat-item:hover {
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 4px 12px rgba(168, 85, 247, 0.15);
+  transform: translateY(-2px);
+}
+
+.stat-icon {
+  width: 20px;
+  height: 20px;
+  color: #a855f7;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: #000000;
+  color: #ffffff;
+  border: none;
+  padding: 14px 22px;
+  border-radius: 12px;
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto;
+  font-weight: 700;
+  font-size: 16px;
+  height: 56px;
+  min-width: 160px;
+  cursor: pointer;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.16);
+  transition:
+    transform 140ms ease,
+    box-shadow 140ms ease,
+    opacity 140ms ease;
+}
+
+.action-btn lucide-icon,
+.action-btn svg {
+  color: #ffffff;
+  width: 20px;
+  height: 20px;
+}
+
+.action-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.18);
+}
+
+.action-btn lucide-icon {
+  display: inline-flex;
+  width: 20px;
+  height: 20px;
+}
+
+.action-btn lucide-icon svg,
+.action-btn svg {
+  stroke: #ffffff !important;
+  fill: #ffffff !important;
+  color: #ffffff !important;
 }
 
 .start-btn {
   font-family: Inter;
   font-style: normal;
   font-weight: 400;
-  font-size: 20px;
-  line-height: 25px;
-  text-align: center;
-  letter-spacing: 0.08em;
-  color: #000000;
-  background-color: #ffffff;
-  border-radius: 10px;
-  height: 50px;
-  width: 200px;
-  margin-top: 10px;
-}
-
-.regen-btn {
-  height: 50px;
-  width: 200px;
-  font-family: Inter;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 20px;
+  font-size: 18px;
   line-height: 25px;
   text-align: center;
   letter-spacing: 0.08em;
   color: #ffffff;
   background-color: #000000;
-  border-radius: 10px;
+  border-radius: 12px;
+  height: 56px;
+  min-width: 160px;
+  margin-top: 10px;
+}
+
+.regen-btn {
+  height: 56px;
+  min-width: 160px;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 20px;
+  text-align: center;
+  letter-spacing: 0.08em;
+  color: #ffffff;
+  background-color: #000000;
+  border-radius: 12px;
   margin-top: 10px;
 }
 
 .share-btn {
   float: right;
-  height: 50px;
+  height: 56px;
   font-family: Inter;
   font-style: normal;
-  font-weight: 400;
-  font-size: 20.8093px;
+  font-weight: 600;
+  font-size: 16px;
   line-height: 25px;
   text-align: center;
   letter-spacing: 0.12em;
   color: #ffffff;
   background-color: #000000;
-  padding: 12px 21px;
-  border-radius: 10px;
+  padding: 14px 22px;
+  border-radius: 12px;
   margin-top: 10px;
 }
 
 .download-btn {
-  height: 50px;
+  height: 56px;
   float: right;
   font-family: Inter;
   font-style: normal;
-  font-weight: 400;
-  font-size: 20.8093px;
+  font-weight: 600;
+  font-size: 16px;
   line-height: 25px;
   text-align: center;
   letter-spacing: 0.12em;
   color: #ffffff;
   background-color: #000000;
-  padding: 12px 21px;
-  border-radius: 10px;
+  padding: 14px 22px;
+  border-radius: 12px;
   margin-top: 10px;
 }
 
@@ -116,21 +233,68 @@ body {
 }
 
 .edit-btn {
-  font-family: Inter;
-  font-style: normal;
-  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial;
+  font-weight: 600;
   font-size: 15px;
-  line-height: 25px;
-  text-align: center;
-  letter-spacing: 0.08em;
-  color: #000000;
-  background-color: #e2e6ea;
-  border-radius: 10px;
+  color: #ffffff;
+  background-color: #000000;
+  border: none;
+  box-shadow: 0 8px 20px rgba(168, 85, 247, 0.3);
+  padding: 10px 14px;
+  cursor: pointer;
+  transition:
+    transform 150ms ease,
+    box-shadow 150ms ease;
+  margin-top: 10px;
+  border-radius: 12px;
   height: 50px;
   width: 200px;
-  margin-top: 10px;
 }
 
 .edit-btn:hover:enabled {
-  background-color: #d6d8db;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(168, 85, 247, 0.4);
+}
+
+.edit-btn:active:enabled {
+  transform: translateY(0);
+}
+
+.edit-btn:focus {
+  outline: none;
+  box-shadow:
+    0 0 0 4px rgba(168, 85, 247, 0.2),
+    0 8px 20px rgba(168, 85, 247, 0.3);
+}
+
+.edit-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(8px);
+}
+
+.edit-icon lucide-icon,
+.edit-icon svg {
+  color: #ffffff;
+}
+
+.edit-label {
+  display: inline-block;
+  line-height: 1;
 }

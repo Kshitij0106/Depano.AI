@@ -580,3 +580,8 @@
   text-align: center;
   font-family: "Inter", sans-serif;
 }
+
+.full-user-input {
+  background-color: #ffff;
+  margin-top: 50px;
+}

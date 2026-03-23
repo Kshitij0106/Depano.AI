@@ -37,7 +37,7 @@
 .footer-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 3rem;
+  gap: 2rem;
 }
 
 .brand-section {
@@ -64,28 +64,35 @@
 
 .brand-name {
   font-family: "Playfair Display", serif;
-  font-size: 1.5rem;
   font-weight: 600;
-  background: linear-gradient(to right, #f472b6, #f97316);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: #ffffff;
+  font-style: SemiBold;
+  font-size: 21px;
+  line-height: 28px;
+  letter-spacing: 0px;
 }
 
 .brand-description {
-  padding-right: 10rem;
-  font-size: 0.875rem;
-  line-height: 1.5;
-  margin-bottom: 0.5rem;
+  font-size: 14px;
+  line-height: 22.75px;
+  color: #d1d5dc;
+  font-family: Inter, sans-serif;
+  font-weight: 400;
+  font-style: Regular;
+  letter-spacing: 0px;
 }
 
-.footer-section h4 {
+.footer-section p {
   font-family: "Playfair Display", serif;
-  font-size: 1.25rem;
   font-weight: 600;
   color: #fff;
   margin-top: 0.5rem;
   margin-bottom: 1rem;
+
+  font-style: SemiBold;
+  font-size: 17.5px;
+  line-height: 24.5px;
+  letter-spacing: 0px;
 }
 
 .nav-list {
@@ -99,12 +106,20 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  color: #a0aec0;
+  color: #d1d5dc;
   text-decoration: none;
-  font-size: 0.875rem;
-  transition: color 0.3s ease, transform 0.3s ease;
+  transition:
+    color 0.3s ease,
+    transform 0.3s ease;
   background: transparent;
   padding: 0.25rem 0;
+
+  font-family: Inter;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 12.25px;
+  line-height: 17.5px;
+  letter-spacing: 0px;
 }
 
 .nav-item:hover {
@@ -113,15 +128,15 @@
   transform: translateX(0.25rem);
 }
 
-.nav-item i {
+.nav-item lucide-icon {
   font-size: 1rem;
-  color: #f9a8d4;
+  color: #d1d5dc;
 }
 
 /* Responsive Design */
 @media (min-width: 1024px) {
   .footer-grid {
-    grid-template-columns: 1.5fr 1fr 1fr;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
   }
 }
 

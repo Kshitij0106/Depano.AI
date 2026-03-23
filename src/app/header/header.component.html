@@ -27,27 +27,41 @@
               [strokeWidth]="2"
             ></lucide-icon>
           </button>
-          <ul class="dropdown-menu">
-            <li>
-              <button class="dropdown-item" type="button">
-                <lucide-icon
-                  class="item-icon"
-                  name="circle-user-round"
-                  [size]="20"
-                  [strokeWidth]="2"
-                ></lucide-icon>
-                <span class="item-text"
-                  >{{ this.loggedInUser.credits }} {{ "Credits" }}</span
-                >
-              </button>
+          <ul class="dropdown-menu dropdown-menu-custom">
+            <li class="dropdown-header-section">
+              <div class="user-profile-section">
+                <div class="user-avatar">
+                  <lucide-icon
+                    name="user"
+                    [size]="24"
+                    [strokeWidth]="2"
+                  ></lucide-icon>
+                </div>
+                <div class="user-info">
+                  <div class="user-name">
+                    {{ getUsername(this.loggedInUser.userName) }}
+                  </div>
+                  <div class="user-credits">
+                    <lucide-icon
+                      name="star"
+                      [size]="14"
+                      [strokeWidth]="2"
+                    ></lucide-icon>
+                    <span>{{ this.loggedInUser.credits }} Credits</span>
+                  </div>
+                </div>
+              </div>
             </li>
-            <li><hr class="dropdown-divider" /></li>
-            <li>
-              <button class="dropdown-item" type="button" (click)="logout()">
+            <li class="dropdown-item-wrapper">
+              <button
+                class="dropdown-item logout-btn"
+                type="button"
+                (click)="logout()"
+              >
                 <lucide-icon
                   class="item-icon"
                   name="log-out"
-                  [size]="20"
+                  [size]="18"
                   [strokeWidth]="2"
                 ></lucide-icon>
                 <span class="item-text">Log Out</span>

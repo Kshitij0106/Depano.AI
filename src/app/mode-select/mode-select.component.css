@@ -17,31 +17,34 @@
   position: relative;
   z-index: 10;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  min-height: 100vh;
-  padding: 2rem;
   width: 100%;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
 }
 
 .content {
   width: 100%;
   max-width: min(96rem, 100%);
-  margin: 0 auto;
+  /* padding: 0 1.5rem; */
 }
 
 .header {
   text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: 1.5rem;
 }
 
 .title {
-  font-family: "Playfair Display", serif;
-  font-size: 2.5rem;
+  font-family: "Playfair Display";
   font-weight: 700;
-  color: #111827;
-  line-height: 1.1;
+  color: #101828;
   margin-bottom: 1rem;
+  font-style: Bold;
+  font-size: 52.5px;
+  line-height: 65.63px;
+  letter-spacing: 0px;
+  text-align: center;
 }
 
 @media (min-width: 768px) {
@@ -51,18 +54,24 @@
 }
 
 .subtitle {
-  font-size: 1.2rem;
-  color: #4b5563;
-  line-height: 1.625;
+  color: #4a5565;
   max-width: 42rem;
-  margin: 0 auto;
+  margin: auto;
+
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 17.5px;
+  line-height: 28.44px;
+  letter-spacing: 0px;
+  text-align: center;
 }
 
 .cards-grid {
   display: grid;
   gap: 2.25rem;
   max-width: 52rem;
-  margin: 0 auto;
+  margin: auto;
 }
 
 @media (min-width: 768px) {
@@ -188,6 +197,13 @@
   position: relative;
   z-index: 10;
   padding: 2rem;
+
+  width: 378;
+  height: 598;
+  opacity: 1;
+  border-radius: 12.75px;
+  border-width: 1px;
+  column-span: 1;
 }
 
 .icon-container {
@@ -213,16 +229,28 @@
 
 .card-title {
   font-family: "Playfair Display", serif;
-  font-size: 1.5rem;
   font-weight: 700;
-  color: #111827;
+  color: #101828;
   margin-bottom: 1rem;
+
+  font-style: Bold;
+  font-size: 21px;
+  line-height: 28px;
+  letter-spacing: 0px;
+  text-align: center;
 }
 
 .card-description {
-  color: #4b5563;
-  line-height: 1.625;
-  margin-bottom: 1.5rem;
+  color: #4b5565;
+  margin-bottom: 1rem;
+
+  font-family: Inter;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 14px;
+  line-height: 22.75px;
+  letter-spacing: 0px;
+  text-align: center;
 }
 
 .features {

@@ -138,7 +138,7 @@
                 Enter verification code
               </h2>
               <p class="font-inter text-gray-600">
-                We sent a code to {{ otpValidateRequest.mobileNumber }}
+                We sent a code to {{ otpSendRequest.mobileNumber }}
               </p>
             </div>
           </div>
@@ -182,7 +182,11 @@
                     >Phone is required.</span
                   >
                   <span
-                    *ngIf="mobileId.errors?.['pattern'] || mobileId.errors?.['minlength'] || mobileId.errors?.['maxlength']"
+                    *ngIf="
+                      mobileId.errors?.['pattern'] ||
+                      mobileId.errors?.['minlength'] ||
+                      mobileId.errors?.['maxlength']
+                    "
                     >Invalid mobile number!</span
                   >
                 </div>
@@ -231,38 +235,28 @@
                   ></lucide-icon>
                   6-digit code *
                 </label>
-                <input
-                  id="otp"
-                  type="text"
-                  placeholder="123456"
-                  [(ngModel)]="otpValidateRequest.otp"
-                  name="otp"
-                  class="w-full h-10 small-placeholder rounded-xl border border-gray-200 focus:border-pink-400 focus:ring-2 focus:ring-pink-400/20 px-3 text-center text-lg tracking-widest {{
-                    userOtp.invalid && (userOtp.dirty || userOtp.touched)
-                      ? 'border-red-300 focus:border-red-400'
-                      : ''
-                  }}"
-                  required
-                  pattern="\d{6}"
-                  minlength="6"
-                  maxlength="6"
-                  #userOtp="ngModel"
-                  aria-describedby="otp-error"
-                  autocomplete="one-time-code"
-                />
+                <div class="flex justify-center gap-2 my-4">
+                  <input
+                    *ngFor="let i of [0, 1, 2, 3, 4, 5]"
+                    #otpInput
+                    type="text"
+                    inputmode="numeric"
+                    maxlength="1"
+                    class="w-12 h-14 text-center text-2xl font-semibold rounded-lg border-2 border-gray-200 focus:border-pink-400 focus:ring-2 focus:ring-pink-400/20 transition-all"
+                    [value]="otpDigits[i] || ''"
+                    (input)="onOtpInput($event, i)"
+                    (keydown)="onOtpKeydown($event, i)"
+                    [attr.aria-label]="'OTP digit ' + (i + 1) + ' of 6'"
+                    autocomplete="one-time-code"
+                  />
+                </div>
                 <div
                   id="otp-error"
-                  *ngIf="userOtp.invalid && (userOtp.dirty || userOtp.touched)"
-                  class="invalid-error text-red-500 text-sm font-inter mt-1"
+                  *ngIf="otpError"
+                  class="invalid-error text-red-500 text-sm font-inter mt-1 text-center"
                   role="alert"
                 >
-                  <span *ngIf="userOtp.errors?.['required']"
-                    >OTP is required.</span
-                  >
-                  <span
-                    *ngIf="userOtp.errors?.['pattern'] || userOtp.errors?.['minlength'] || userOtp.errors?.['maxlength']"
-                    >Please enter a valid 6-digit code.</span
-                  >
+                  {{ otpError }}
                 </div>
               </div>
 

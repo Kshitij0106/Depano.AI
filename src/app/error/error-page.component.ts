@@ -18,8 +18,6 @@ export type ErrorType =
 interface ErrorConfig {
   title: string;
   description: string;
-  code: string;
-  emoji: string;
   subtitle?: string;
   cta?: string;
 }
@@ -54,59 +52,41 @@ export class ErrorPageComponent {
       title: 'Server Temporarily Unavailable',
       description:
         'Our servers are currently unavailable. Please try again later.',
-      code: '500',
-      emoji: '⚠️',
     },
     network: {
       title: 'Connection Lost',
       description: 'Unable to connect. Please check your internet connection.',
-      code: 'NET',
-      emoji: '⚡',
     },
     timeout: {
       title: 'Request Timeout',
       description: 'The request took too long. Please try again.',
-      code: '408',
-      emoji: '⏱️',
     },
     general: {
       title: 'Something Went Wrong',
       description: 'An unexpected error occurred.',
-      code: 'ERR',
-      emoji: '❌',
     },
     'content-policy': {
       title: 'Please Revise Your Input',
       description: 'Your input contains restricted content.',
-      code: '403',
-      emoji: '🚫',
       cta: 'Try again with different wording.',
     },
     'network-error': {
       title: 'Network Error',
       description: 'We’re having trouble connecting.',
-      code: 'NET',
-      emoji: '🌐',
       subtitle: 'Check your internet and retry.',
     },
     'out-of-credits': {
       title: "You're Out of Credits",
       description: 'Top up your credits to continue.',
-      code: '402',
-      emoji: '😕',
     },
     'generic-error': {
       title: 'Oops! Something Went Wrong',
       description: 'Unexpected issue occurred.',
-      code: 'ERROR',
-      emoji: '😕',
       subtitle: 'Please try again shortly.',
     },
     'server-error': {
       title: 'Server Error',
       description: 'Technical difficulty detected.',
-      code: '500',
-      emoji: '🔧',
       subtitle: 'Your data is safe.',
     },
   };

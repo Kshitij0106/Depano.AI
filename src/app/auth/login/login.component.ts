@@ -32,12 +32,14 @@ export class LoginComponent {
   mobileError: boolean = false;
 
   otpSent: boolean = false;
+  otpDigits: string[] = ['', '', '', '', '', ''];
+  otpError: string = '';
 
   constructor(
     private router: Router,
     private authService: AuthService,
     private userService: UserService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
   ) {}
 
   /**
@@ -96,5 +98,62 @@ export class LoginComponent {
    */
   goToSignUp() {
     this.router.navigate(['signup']);
+  }
+
+  onOtpInput(event: Event, index: number): void {
+    const input = event.target as HTMLInputElement;
+    const value = input.value;
+
+    if (value && !/^\d$/.test(value)) {
+      input.value = '';
+      this.otpDigits[index] = '';
+      return;
+    }
+
+    this.otpDigits[index] = value;
+    this.otpError = '';
+
+    if (value && index < 5) {
+      const nextInput = (event.target as HTMLInputElement)
+        .nextElementSibling as HTMLInputElement;
+      if (nextInput) {
+        nextInput.focus();
+      }
+    }
+
+    this.updateOtpValue();
+  }
+
+  onOtpKeydown(event: KeyboardEvent, index: number): void {
+    const input = event.target as HTMLInputElement;
+
+    if (event.key === 'Backspace') {
+      if (input.value === '' && index > 0) {
+        const prevInput = input.previousElementSibling as HTMLInputElement;
+        if (prevInput) {
+          this.otpDigits[index - 1] = '';
+          prevInput.value = '';
+          prevInput.focus();
+          this.updateOtpValue();
+        }
+      } else if (input.value !== '') {
+        this.otpDigits[index] = '';
+        this.updateOtpValue();
+      }
+    } else if (event.key === 'ArrowLeft' && index > 0) {
+      const prevInput = input.previousElementSibling as HTMLInputElement;
+      if (prevInput) {
+        prevInput.focus();
+      }
+    } else if (event.key === 'ArrowRight' && index < 5) {
+      const nextInput = input.nextElementSibling as HTMLInputElement;
+      if (nextInput) {
+        nextInput.focus();
+      }
+    }
+  }
+
+  private updateOtpValue(): void {
+    this.otpValidateRequest.otp = this.otpDigits.join('');
   }
 }

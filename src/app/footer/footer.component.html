@@ -20,9 +20,43 @@
           </p>
         </div>
 
+        <!-- Products -->
+        <div class="footer-section">
+          <p>Design Tools</p>
+          <nav class="nav-list">
+            <a (click)="onNavigate?.('generate')" class="nav-item">
+              <lucide-icon
+                name="users"
+                [size]="16"
+                [strokeWidth]="2"
+                aria-hidden="true"
+              ></lucide-icon>
+              <span>Men's Fashion</span>
+            </a>
+            <a (click)="onNavigate?.('sketch')" class="nav-item">
+              <lucide-icon
+                name="users"
+                [size]="16"
+                [strokeWidth]="2"
+                aria-hidden="true"
+              ></lucide-icon>
+              <span>Women's Fashion</span>
+            </a>
+            <a (click)="onNavigate?.('edit')" class="nav-item">
+              <lucide-icon
+                name="camera"
+                [size]="16"
+                [strokeWidth]="2"
+                aria-hidden="true"
+              ></lucide-icon>
+              <span>Sketch to Image</span>
+            </a>
+          </nav>
+        </div>
+
         <!-- Company -->
         <div class="footer-section">
-          <h4>Company</h4>
+          <p>Company</p>
           <nav class="nav-list">
             <a (click)="onNavigate?.('about')" class="nav-item">
               <span>About Us</span>
@@ -41,23 +75,61 @@
 
         <!-- Support & Legal -->
         <div class="footer-section">
-          <h4>Support & Legal</h4>
+          <p>Support & Legal</p>
           <nav class="nav-list">
             <a (click)="handleLinkClick('Help Center')" class="nav-item">
-              <i class="fas fa-question-circle" aria-hidden="true"></i>
+              <lucide-icon
+                name="help-circle"
+                [size]="16"
+                [strokeWidth]="2"
+                aria-hidden="true"
+              ></lucide-icon>
               <span>Help Center</span>
             </a>
             <a (click)="handleLinkClick('Contact Support')" class="nav-item">
-              <i class="fas fa-envelope" aria-hidden="true"></i>
+              <lucide-icon
+                name="mail"
+                [size]="16"
+                [strokeWidth]="2"
+                aria-hidden="true"
+              ></lucide-icon>
               <span>Contact Support</span>
             </a>
+            <a (click)="handleLinkClick('API Documentation')" class="nav-item">
+              <lucide-icon
+                name="file-text"
+                [size]="16"
+                [strokeWidth]="2"
+                aria-hidden="true"
+              ></lucide-icon>
+              <span>API Documentation</span>
+            </a>
             <a (click)="handleLinkClick('Privacy Policy')" class="nav-item">
-              <i class="fas fa-shield-alt" aria-hidden="true"></i>
+              <lucide-icon
+                name="shield"
+                [size]="16"
+                [strokeWidth]="2"
+                aria-hidden="true"
+              ></lucide-icon>
               <span>Privacy Policy</span>
             </a>
             <a (click)="handleLinkClick('Terms of Service')" class="nav-item">
-              <i class="fas fa-file-alt" aria-hidden="true"></i>
+              <lucide-icon
+                name="file-text"
+                [size]="16"
+                [strokeWidth]="2"
+                aria-hidden="true"
+              ></lucide-icon>
               <span>Terms of Service</span>
+            </a>
+            <a (click)="handleLinkClick('Cookie Policy')" class="nav-item">
+              <lucide-icon
+                name="globe"
+                [size]="16"
+                [strokeWidth]="2"
+                aria-hidden="true"
+              ></lucide-icon>
+              <span>Cookie Policy</span>
             </a>
           </nav>
         </div>

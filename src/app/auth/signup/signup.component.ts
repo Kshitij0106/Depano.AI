@@ -30,16 +30,16 @@ export class SignupComponent implements OnInit {
   };
 
   mobileError: boolean = false;
-
   acceptTerms = false;
-
   otpSent: boolean = false;
   resendTimer = 0;
+  otpDigits: string[] = ['', '', '', '', '', ''];
+  otpError: string = '';
   constructor(
     private authService: AuthService,
     private toastr: ToastrService,
     private router: Router,
-    private userService: UserService
+    private userService: UserService,
   ) {}
 
   ngOnInit(): void {
@@ -112,5 +112,66 @@ export class SignupComponent implements OnInit {
       return;
     }
     this.registerUser();
+  }
+
+  onOtpInput(event: Event, index: number): void {
+    const input = event.target as HTMLInputElement;
+    const value = input.value;
+
+    // Only allow single digit
+    if (value && !/^\d$/.test(value)) {
+      input.value = '';
+      this.otpDigits[index] = '';
+      return;
+    }
+
+    this.otpDigits[index] = value;
+    this.otpError = '';
+
+    // Auto-focus to next input
+    if (value && index < 5) {
+      const nextInput = (event.target as HTMLInputElement)
+        .nextElementSibling as HTMLInputElement;
+      if (nextInput) {
+        nextInput.focus();
+      }
+    }
+
+    // Update the combined OTP value
+    this.updateOtpValue();
+  }
+
+  onOtpKeydown(event: KeyboardEvent, index: number): void {
+    const input = event.target as HTMLInputElement;
+
+    if (event.key === 'Backspace') {
+      if (input.value === '' && index > 0) {
+        // Move to previous input on backspace if current is empty
+        const prevInput = input.previousElementSibling as HTMLInputElement;
+        if (prevInput) {
+          this.otpDigits[index - 1] = '';
+          prevInput.value = '';
+          prevInput.focus();
+          this.updateOtpValue();
+        }
+      } else if (input.value !== '') {
+        this.otpDigits[index] = '';
+        this.updateOtpValue();
+      }
+    } else if (event.key === 'ArrowLeft' && index > 0) {
+      const prevInput = input.previousElementSibling as HTMLInputElement;
+      if (prevInput) {
+        prevInput.focus();
+      }
+    } else if (event.key === 'ArrowRight' && index < 5) {
+      const nextInput = input.nextElementSibling as HTMLInputElement;
+      if (nextInput) {
+        nextInput.focus();
+      }
+    }
+  }
+
+  private updateOtpValue(): void {
+    this.otpValidateRequest.otp = this.otpDigits.join('');
   }
 }

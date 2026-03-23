@@ -1,13 +1,12 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PreviewComponent } from '../preview/preview.component';
 import { LucideAngularModule } from 'lucide-angular';
 import { ImageService } from 'src/app/services/image.service';
 import { UserService } from 'src/app/services/user.service';
-import { HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { HeaderComponent } from 'src/app/header/header.component';
 import { UserInputComponent } from 'src/app/generate/user-input/user-input.component';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-upload',
@@ -15,7 +14,6 @@ import { UserInputComponent } from 'src/app/generate/user-input/user-input.compo
   imports: [
     HeaderComponent,
     CommonModule,
-    PreviewComponent,
     LucideAngularModule,
     UserInputComponent,
   ],
@@ -34,13 +32,16 @@ export class UploadComponent {
     private imageService: ImageService,
     private userService: UserService,
     private toastr: ToastrService,
+    private router: Router,
+    private route: ActivatedRoute,
   ) {}
 
   public selectedCategoryName: string = 'Or describe something custom';
   public hideUserPrompt: boolean = false;
 
   inputSelected(input: string) {
-    this.handleUserPrompt(input);
+    this.userPrompt = input;
+    console.log(this.userPrompt);
   }
 
   private readonly allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
@@ -100,102 +101,25 @@ export class UploadComponent {
     this.uploadedFile = file;
   }
 
-  resizeImageToStabilityLimit(file: File): Promise<Blob> {
-    const MAX_PIXELS = 9_437_184; // 3072 x 3072
-
-    return new Promise((resolve, reject) => {
-      const img = new Image();
-      const reader = new FileReader();
-
-      reader.onload = (e: any) => {
-        img.src = e.target.result;
-      };
-
-      img.onload = () => {
-        const width = img.width;
-        const height = img.height;
-        const currentPixels = width * height;
-
-        // If already within limit, return original
-        if (currentPixels <= MAX_PIXELS) {
-          return resolve(file);
-        }
-
-        // Scale factor
-        const scale = Math.sqrt(MAX_PIXELS / currentPixels);
-
-        const newWidth = Math.floor(width * scale);
-        const newHeight = Math.floor(height * scale);
-
-        const canvas = document.createElement('canvas');
-        canvas.width = newWidth;
-        canvas.height = newHeight;
-
-        const ctx = canvas.getContext('2d')!;
-        ctx.drawImage(img, 0, 0, newWidth, newHeight);
-
-        canvas.toBlob(
-          (blob) => {
-            if (blob) resolve(blob);
-            else reject('Canvas Blob conversion failed');
-          },
-          file.type,
-          0.92, // compression quality
-        );
-      };
-
-      reader.onerror = reject;
-      reader.readAsDataURL(file);
-    });
-  }
-
   async handleGenerateImage(): Promise<void> {
     if (!this.uploadedFile) {
       this.toastr.error('Please upload a sketch first');
       return;
     }
 
-    try {
-      const resizedBlob = await this.resizeImageToStabilityLimit(
-        this.uploadedFile,
-      );
+    const resizedImage = new File([this.uploadedFile], this.uploadedFile.name, {
+      type: this.uploadedFile.type,
+    });
 
-      const resizedImage = new File([resizedBlob], this.uploadedFile.name, {
-        type: this.uploadedFile.type,
-      });
+    const formData = await this.imageService.prepareSketchFormData(
+      resizedImage,
+      this.userPrompt,
+    );
 
-      const formData = await this.imageService.prepareSketchFormData(
-        resizedImage,
-        this.userPrompt,
-      );
-
-      this.imageService.sketchToImage(formData).subscribe({
-        next: (result) => {
-          if (result.status === 'Success') {
-            const base64 = result.url;
-            this.generatedImageUrl = `data:image/png;base64,${base64}`;
-            // this.result = 'success';
-            this.userService.updateUserDetails();
-            this.step = 'design-preview';
-            this.toastr.success(result.message);
-          }
-        },
-        error: (err: HttpErrorResponse) => {
-          // this.error = true;
-          // if (
-          //   err.error?.status === 'SERVICE_UNAVAILABLE' ||
-          //   err.error?.status === 'INTERNAL_SERVER_ERROR'
-          // ) {
-          // this.toastr.success('networkIssue');
-          //   this.result = 'networkIssue';
-          // } else if (err.error?.status === 'PAYMENT_REQUIRED') {
-          //   this.result = 'creditIssue';
-          // }
-        },
-      });
-    } catch (error) {
-      this.toastr.error('An error occurred while processing the image.');
-    }
+    this.router.navigate(['../', 'result'], {
+      relativeTo: this.route,
+    });
+    this.imageService.sketchToImage(formData);
   }
 
   handleStartOver(): void {
@@ -210,10 +134,5 @@ export class UploadComponent {
 
   handleShare(): void {
     alert('Share link copied! Share your creation with others');
-  }
-
-  handleUserPrompt(prompt: string) {
-    this.userPrompt = prompt;
-    console.log(this.userPrompt);
   }
 }

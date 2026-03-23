@@ -3,64 +3,31 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ImageResponse } from '../generate/models/imageResponse.model';
-import { UserService } from 'src/app/services/user.service';
-
-interface Prompt {
-  category: string;
-  input: string;
-}
+import { PromptService } from './prompt.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ImageService {
-  private gender: string = '';
-  private userPrompts: Prompt[] = [];
-
   public imageUrl = new BehaviorSubject<string>('');
   public sketchUrl = new BehaviorSubject<string>('');
 
-  constructor(private http: HttpClient) {}
+  public imageSubject = new BehaviorSubject<ImageResponse | null>(null);
 
-  /**
-   * Adds a key-value pair to the user prompt map.
-   * @param key - The key of the selected category.
-   * @param value - The prompt of the selected category.
-   */
-  addToPrompt(key: string, userInput: string) {
-    this.userPrompts.push({
-      category: key,
-      input: userInput,
-    });
-  }
+  constructor(
+    private http: HttpClient,
+    private promptService: PromptService,
+  ) {}
 
-  setGender(gender: string) {
-    this.gender = gender;
-  }
-
-  getGender(): string {
-    return this.gender;
-  }
-
-  setPromptId(promptId: string) {
-    localStorage.setItem('promptId', promptId);
-  }
-
-  clearPromptId() {
-    localStorage.removeItem('promptId');
-  }
-
-  /**
-   * Sends a prompt to the API for image generation based on user prompts.
-   *
-   * @returns {Observable<ImageResponse>} - An observable containing the server's response, which includes generated images.
-   */
-  generateImage(): Observable<ImageResponse> {
-    let userInput = this.getPrompt();
-    return this.http.post<ImageResponse>(
-      environment.gateway + 'images',
-      userInput
-    );
+  generateImage() {
+    this.prepareRequest();
+    let userInput = this.promptService.getPrompt();
+    this.http
+      .post<ImageResponse>(environment.gateway + 'images', userInput)
+      .subscribe({
+        next: (res) => this.handleSuccess(res),
+        error: (err) => this.handleError(err),
+      });
   }
 
   /**
@@ -72,30 +39,27 @@ export class ImageService {
   regenerateImage(promptId: string): Observable<ImageResponse> {
     return this.http.post<ImageResponse>(
       environment.gateway + 'images/regenerate/' + promptId,
-      {}
+      {},
     );
   }
 
   editImage(formData: FormData): Observable<ImageResponse> {
     return this.http.put<ImageResponse>(
       environment.gateway + 'images',
-      formData
+      formData,
     );
   }
 
   async prepareEditFormData(
     imageUrl: string,
-    maskUrl: string,
-    prompt: string
+    prompt: string,
   ): Promise<FormData> {
     const formData = new FormData();
 
     try {
       const imageBlob = await this.fetchBlobFromUrl(imageUrl);
-      const maskBlob = await this.fetchBlobFromUrl(maskUrl);
 
       formData.append('image', imageBlob, 'image.png');
-      formData.append('mask', maskBlob, 'mask.png');
       formData.append('prompt', prompt);
 
       return formData;
@@ -111,11 +75,13 @@ export class ImageService {
     return await response.blob();
   }
 
-  sketchToImage(formData: FormData): Observable<ImageResponse> {
-    return this.http.post<ImageResponse>(
-      environment.gateway + 'images/sketch',
-      formData
-    );
+  sketchToImage(formData: FormData) {
+    this.http
+      .post<ImageResponse>(environment.gateway + 'images/sketch', formData)
+      .subscribe({
+        next: (res) => this.handleSuccess(res),
+        error: (err) => this.handleError(err),
+      });
   }
 
   async prepareSketchFormData(sketch: File, prompt: string): Promise<FormData> {
@@ -132,16 +98,13 @@ export class ImageService {
     }
   }
 
-  /**
-   * Empty the prompt map.
-   * Clears the prompt stored in backend
-   */
-  emptyPrompt() {
-    this.userPrompts = [];
-    this.http.delete(environment.gateway + 'categories').subscribe();
+  private prepareRequest() {
+    this.imageSubject.next(null);
   }
 
-  public getPrompt() {
-    return this.userPrompts;
+  private handleSuccess(res: ImageResponse) {
+    this.imageSubject.next(res);
   }
+
+  private handleError(err: any) {}
 }

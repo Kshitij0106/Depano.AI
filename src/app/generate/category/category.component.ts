@@ -14,6 +14,7 @@ import { LucideAngularModule } from 'lucide-angular';
 import { HeaderComponent } from 'src/app/header/header.component';
 import { CategoryListComponent } from '../category-list/category-list.component';
 import { UserInputComponent } from '../user-input/user-input.component';
+import { PromptService } from 'src/app/services/prompt.service';
 
 @Component({
   standalone: true,
@@ -54,6 +55,7 @@ export class CategoryComponent implements OnInit {
     private route: ActivatedRoute,
     private categoryService: CategoryService,
     private imageService: ImageService,
+    private promptService: PromptService,
     private checkAttributeService: CheckedAttributesService,
     private breadcrumbService: BreadcrumbService,
   ) {}
@@ -199,7 +201,7 @@ export class CategoryComponent implements OnInit {
               this.getCategory('optional');
             } else {
               if (cat.key === 'type') {
-                const gender = this.imageService.getGender();
+                const gender = this.promptService.getGender();
                 const currentCategory = this.selectedCategory.code
                   .split('-')
                   .at(0);
@@ -305,7 +307,7 @@ export class CategoryComponent implements OnInit {
         // If the user is selecting categories
         // Set the 'user-input' prompt
         this.setPrompt('type', input);
-        const gender = this.imageService.getGender();
+        const gender = this.promptService.getGender();
         if (this.selectedCategory.key === 'style') {
           this.getCategory(gender + '-' + 'wear');
           this.changeCategoryRoute(gender + '-' + 'wear');
@@ -338,7 +340,7 @@ export class CategoryComponent implements OnInit {
    */
   setPrompt(key: string, userInput: string) {
     if (key.length > 0 && userInput.length) {
-      this.imageService.addToPrompt(key, userInput);
+      this.promptService.addToPrompt(key, userInput);
     }
   }
 
@@ -367,6 +369,7 @@ export class CategoryComponent implements OnInit {
     this.router.navigate(['../../', 'result'], {
       relativeTo: this.route,
     });
+    this.imageService.generateImage();
   }
 
   disableBackButton() {

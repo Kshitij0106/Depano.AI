@@ -4,12 +4,16 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import { ImageService } from 'src/app/services/image.service';
 import { environment } from 'src/environments/environment';
+import { PromptService } from 'src/app/services/prompt.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CategoryService {
-  constructor(private http: HttpClient, private imageService: ImageService) {}
+  constructor(
+    private http: HttpClient,
+    private promptService: PromptService,
+  ) {}
 
   /**
    * Retrieves the selected gender from the prompt service.
@@ -17,7 +21,7 @@ export class CategoryService {
    * @returns {string} - The user's selected gender, or an empty string if not available.
    */
   private getGender(): string {
-    return this.imageService.getGender();
+    return this.promptService.getGender();
   }
 
   /**
@@ -29,12 +33,12 @@ export class CategoryService {
   public getCategory(category: string): Observable<Category> {
     return this.http
       .get<Category>(
-        environment.gateway + 'categories/' + this.getGender() + '/' + category
+        environment.gateway + 'categories/' + this.getGender() + '/' + category,
       )
       .pipe(
         map((response) => {
           return response;
-        })
+        }),
       );
   }
 
@@ -47,7 +51,7 @@ export class CategoryService {
   public saveAttributeValue(category: string): Observable<any> {
     return this.http.post(
       environment.gateway + 'categories/attributes/' + category,
-      {}
+      {},
     );
   }
 
@@ -58,7 +62,12 @@ export class CategoryService {
    */
   public removeAttributeValue(category: string) {
     return this.http.delete(
-      environment.gateway + 'categories/attributes/' + category
+      environment.gateway + 'categories/attributes/' + category,
     );
+  }
+
+  public deleteCategories() {
+    this.http.delete(environment.gateway + 'categories').subscribe();
+    this.promptService.emptyPrompt();
   }
 }

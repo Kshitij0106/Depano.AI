@@ -62,7 +62,7 @@ export const routes: Routes = [
     path: 'sketch-to-image',
     canActivate: [authGuard],
     loadComponent: () =>
-      import('./sketch/upload/upload.component').then((m) => m.UploadComponent),
+      import('./sketch-upload/upload.component').then((m) => m.UploadComponent),
   },
   {
     path: 'error',

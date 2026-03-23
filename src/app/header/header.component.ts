@@ -8,6 +8,8 @@ import { UserService } from '../services/user.service';
 import { User } from '../models/user.model';
 import { CommonModule } from '@angular/common';
 import { LucideAngularModule } from 'lucide-angular';
+import { CategoryService } from '../generate/services/category.service';
+import { PromptService } from '../services/prompt.service';
 
 @Component({
   standalone: true,
@@ -35,7 +37,9 @@ export class HeaderComponent implements OnInit {
     private userService: UserService,
     private breadcrumbService: BreadcrumbService,
     private imageService: ImageService,
-    private checkAttributeService: CheckedAttributesService
+    private categroryService: CategoryService,
+    private promptService: PromptService,
+    private checkAttributeService: CheckedAttributesService,
   ) {}
 
   ngOnInit(): void {
@@ -104,8 +108,8 @@ export class HeaderComponent implements OnInit {
    */
   emptyData() {
     if (this.source !== 'gender') {
-      this.imageService.clearPromptId();
-      this.imageService.emptyPrompt();
+      this.promptService.clearPromptId();
+      this.categroryService.deleteCategories();
       this.imageService.imageUrl.next('');
       this.breadcrumbService.emptyBreadcrumbList();
       this.checkAttributeService.emptyCheckedAttributesList();

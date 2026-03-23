@@ -22,7 +22,6 @@
     "@angular/router": "^17.3.7",
     "bootstrap": "^5.2.3",
     "bootstrap-icons": "^1.11.3",
-    "fabric": "^6.7.1",
     "lucide-angular": "^0.545.0",
     "ngx-toastr": "^18.0.0",
     "ngx-ui-loader": "^13.0.0",

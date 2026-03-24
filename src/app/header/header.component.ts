@@ -90,6 +90,10 @@ export class HeaderComponent implements OnInit {
     return displayName.length > 10 ? displayName.substring(0, 10) : displayName;
   }
 
+  goToPricing() {
+    this.router.navigate(['/pricing']);
+  }
+
   /**
    * Navigates to homepage or gender page if logged in.
    */

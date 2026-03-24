@@ -28,7 +28,6 @@ export class GenderSelectionComponent {
   openCategory(category: string) {
     this.breadcrumbService.addBreadcrumb(category.toLowerCase(), category);
     this.promptService.setGender(category.toLowerCase());
-    // this.imageService.addToPrompt('gender', category.toLowerCase());
     this.router.navigate(['generate', category.toLowerCase()]);
   }
 

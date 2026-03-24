@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Category } from '../models/category.model';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
-import { ImageService } from 'src/app/services/image.service';
 import { environment } from 'src/environments/environment';
 import { PromptService } from 'src/app/services/prompt.service';
 

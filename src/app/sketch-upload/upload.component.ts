@@ -2,7 +2,6 @@ import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LucideAngularModule } from 'lucide-angular';
 import { ImageService } from 'src/app/services/image.service';
-import { UserService } from 'src/app/services/user.service';
 import { ToastrService } from 'ngx-toastr';
 import { HeaderComponent } from 'src/app/header/header.component';
 import { UserInputComponent } from 'src/app/generate/user-input/user-input.component';
@@ -30,7 +29,6 @@ export class UploadComponent {
 
   constructor(
     private imageService: ImageService,
-    private userService: UserService,
     private toastr: ToastrService,
     private router: Router,
     private route: ActivatedRoute,
@@ -111,7 +109,8 @@ export class UploadComponent {
       type: this.uploadedFile.type,
     });
 
-    const formData = await this.imageService.prepareSketchFormData(
+    const formData = await this.imageService.prepareFormData(
+      'sketch',
       resizedImage,
       this.userPrompt,
     );

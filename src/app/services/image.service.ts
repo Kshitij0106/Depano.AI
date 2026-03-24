@@ -50,30 +50,24 @@ export class ImageService {
     );
   }
 
-  async prepareEditFormData(
-    imageUrl: string,
-    prompt: string,
-  ): Promise<FormData> {
-    const formData = new FormData();
+  // async prepareEditFormData(
+  //   imageUrl: string,
+  //   prompt: string,
+  // ): Promise<FormData> {
+  //   const formData = new FormData();
 
-    try {
-      const imageBlob = await this.fetchBlobFromUrl(imageUrl);
+  //   try {
+  //     const imageBlob = await this.fetchBlobFromUrl(imageUrl);
 
-      formData.append('image', imageBlob, 'image.png');
-      formData.append('prompt', prompt);
+  //     formData.append('image', imageBlob, 'image.png');
+  //     formData.append('prompt', prompt);
 
-      return formData;
-    } catch (err) {
-      console.error('Error fetching blobs:', err);
-      throw err;
-    }
-  }
-
-  private async fetchBlobFromUrl(url: string): Promise<Blob> {
-    const response = await fetch(url);
-    if (!response.ok) throw new Error(`Failed to fetch ${url}`);
-    return await response.blob();
-  }
+  //     return formData;
+  //   } catch (err) {
+  //     console.error('Error fetching blobs:', err);
+  //     throw err;
+  //   }
+  // }
 
   sketchToImage(formData: FormData) {
     this.http
@@ -84,11 +78,29 @@ export class ImageService {
       });
   }
 
-  async prepareSketchFormData(sketch: File, prompt: string): Promise<FormData> {
+  // async prepareSketchFormData(sketch: File, prompt: string): Promise<FormData> {
+  //   const formData = new FormData();
+
+  //   try {
+  //     formData.append('sketch', sketch, 'sketch.png');
+  //     formData.append('prompt', prompt);
+
+  //     return formData;
+  //   } catch (err) {
+  //     console.error('Error fetching blobs:', err);
+  //     throw err;
+  //   }
+  // }
+
+  async prepareFormData(
+    type: 'sketch' | 'image',
+    image: File,
+    prompt: string,
+  ): Promise<FormData> {
     const formData = new FormData();
 
     try {
-      formData.append('sketch', sketch, 'sketch.png');
+      formData.append(type, image, `${type}.png`);
       formData.append('prompt', prompt);
 
       return formData;
@@ -96,6 +108,14 @@ export class ImageService {
       console.error('Error fetching blobs:', err);
       throw err;
     }
+  }
+
+  async fetchImageFromUrl(url: string, filename = 'image.png'): Promise<File> {
+    const response = await fetch(url);
+    if (!response.ok) throw new Error(`Failed to fetch ${url}`);
+    const blob = await response.blob();
+
+    return new File([blob], filename, { type: blob.type });
   }
 
   private prepareRequest() {

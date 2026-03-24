@@ -50,8 +50,11 @@ export class EditComponent implements OnInit {
   /** Send original image URL, mask blob, and prompt to server */
   async sendToServer(): Promise<void> {
     try {
-      const formData = await this.imageService.prepareEditFormData(
-        this.image,
+      const imageFile = await this.imageService.fetchImageFromUrl(this.image);
+
+      const formData = await this.imageService.prepareFormData(
+        'image',
+        imageFile,
         this.userPrompt,
       );
       this.imageService.editImage(formData).subscribe({

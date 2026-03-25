@@ -1,58 +1,69 @@
-<section class="error-wrapper">
-  <div class="error-header">
-    <h1>{{ config.title }}</h1>
+<div class="error-container">
+  <div class="error-content">
+    <div *ngIf="config.badge" class="error-badge">
+      {{ config.badge }}
+    </div>
 
-    <p>
-      {{ errorMessage || config.description }}
-    </p>
+    <h1 class="error-title">{{ config.title }}</h1>
+    <p class="error-subtitle">{{ config.subtitle }}</p>
 
-    <p *ngIf="config.subtitle" class="subtitle">
-      {{ config.subtitle }}
-    </p>
+    <div class="error-card">
+      <div class="icon-container">
+        <lucide-icon
+          class="icon"
+          [name]="config.icon"
+          [size]="32"
+        ></lucide-icon>
+      </div>
 
-    <p *ngIf="config.cta" class="cta">
-      {{ config.cta }}
-    </p>
-  </div>
+      <p class="card-title">
+        {{
+          type === "SERVER_ERROR"
+            ? "We're Working On It"
+            : "Top Up Your Credits"
+        }}
+      </p>
+      <p class="card-subtitle">
+        {{
+          type === "SERVER_ERROR"
+            ? "Our team is working to resolve this issue."
+            : "Continue creating amazing designs by adding more credits."
+        }}
+      </p>
 
-  <div class="error-card">
-    <!-- OUT OF CREDITS -->
-    <ng-container *ngIf="errorType === 'out-of-credits'; else otherErrors">
-      <button class="btn-primary" (click)="topUp.emit()">Top Up Credits</button>
-      <button class="btn-outline" (click)="viewPlans.emit()">View Plans</button>
-      <button class="btn-ghost" (click)="goHome.emit()">Back to Home</button>
-    </ng-container>
-
-    <!-- OTHER ERRORS -->
-    <ng-template #otherErrors>
-      <div *ngIf="troubleshootingSteps.length > 0" class="steps">
-        <div
-          *ngFor="let step of troubleshootingSteps; let i = index"
-          class="step"
-        >
-          <span class="number">{{ i + 1 }}</span>
-          {{ step }}
+      <!-- Tips -->
+      <div *ngIf="config.tips" class="tips">
+        <div *ngFor="let tip of config.tips; let i = index" class="tip">
+          <span class="index">{{ i + 1 }}</span>
+          {{ tip }}
         </div>
       </div>
 
-      <button
-        class="btn-primary"
-        (click)="handleRetry()"
-        [disabled]="isRetrying"
-      >
-        {{ isRetrying ? "Retrying..." : "Try Again" }}
-      </button>
+      <!-- Actions -->
 
-      <button class="btn-outline" (click)="goHome.emit()">Back to Home</button>
+      <div class="actions">
+        <div class="action-row">
+          <button class="primary" (click)="handlePrimaryAction()">
+            <lucide-icon name="credit-card" [size]="20"></lucide-icon>
+            {{ config.primaryAction.label }}
+          </button>
 
-      <button class="btn-ghost" (click)="contactSupport.emit()">
-        Contact Support
-      </button>
-    </ng-template>
+          <button
+            *ngIf="config.secondaryAction"
+            class="secondary"
+            (click)="handleSecondaryAction()"
+          >
+            <i-lucide name="Sparkles" [size]="20"></i-lucide>
+            {{ config.secondaryAction.label }}
+          </button>
+        </div>
+
+        <div class="action-row-center">
+          <button class="tertiary" (click)="goHome()">
+            <lucide-icon name="house" [size]="20"></lucide-icon> Back to Home
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
-
-  <!-- DEV DEBUG -->
-  <div *ngIf="errorMessage && false" class="debug">
-    <pre>{{ errorMessage }}</pre>
-  </div>
-</section>
+</div>

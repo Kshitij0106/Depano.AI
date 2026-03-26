@@ -23,29 +23,28 @@ export class ErrorPageComponent implements OnInit {
     this.config = ERROR_CONFIG_MAP[this.type];
   }
 
-  handlePrimaryAction(): void {
-    switch (this.config.primaryAction.action) {
+  get primaryActions() {
+    return this.config.actions.filter((a) => a.position === 'primaryRow');
+  }
+
+  get secondaryActions() {
+    return this.config.actions.filter((a) => a.position === 'secondaryRow');
+  }
+
+  handleAction(action: string): void {
+    switch (action) {
       case 'retry':
         window.location.reload();
         break;
       case 'topup':
         this.router.navigate(['/top-up']);
         break;
-    }
-  }
-
-  handleSecondaryAction(): void {
-    switch (this.config.secondaryAction?.action) {
       case 'home':
         this.router.navigate(['/home']);
         break;
       case 'plans':
-        this.router.navigate(['/plans']);
+        this.router.navigate(['/pricing']);
         break;
     }
-  }
-
-  goHome(): void {
-    this.router.navigate(['/home']);
   }
 }

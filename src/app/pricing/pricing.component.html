@@ -36,8 +36,11 @@
         <span class="period">/ {{ plan.period }}</span>
       </div>
 
-      <div class="images">
-        {{ plan.images }}
+      <div class="images-wrapper">
+        <div class="images">
+          <i-lucide class="logo-icon" name="Sparkles" [size]="20"></i-lucide>
+          {{ plan.images }}
+        </div>
       </div>
 
       <p class="description">
@@ -45,7 +48,10 @@
       </p>
 
       <ul class="features">
-        <li *ngFor="let feature of plan.features">✔ {{ feature }}</li>
+        <li *ngFor="let feature of plan.features">
+          <span class="index">✔</span> 
+          <span class="sub-features">{{ feature }}</span>
+        </li>
       </ul>
 
       <button class="btn-primary full-width" (click)="onSelect(plan)">

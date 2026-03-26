@@ -15,14 +15,24 @@
   margin-bottom: 50px;
 
   h1 {
-    font-size: 40px;
-    margin-bottom: 15px;
+    font-family: "playfair-display", serif;
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 50.5px;
+    line-height: 52.5px;
+    letter-spacing: 0px;
+    text-align: center;
   }
 
   p {
-    color: #555;
-    max-width: 600px;
-    margin: 0 auto;
+    font-family: "inter", sans-serif;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 17.5px;
+    line-height: 28.44px;
+    letter-spacing: 0px;
+    text-align: center;
+    color: #4a5565;
   }
 }
 
@@ -75,6 +85,9 @@
   .amount {
     font-size: 32px;
     font-weight: bold;
+    font-family: "playfair-display", serif;
+    font-style: Bold;
+    text-align: center;
   }
 
   .period {
@@ -82,10 +95,27 @@
   }
 }
 
+.logo-icon {
+  color: #ec4899;
+}
+
+.images-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
 .images {
+  display: inline-flex;
   text-align: center;
+  align-items: center;
+  justify-content: center;
   font-weight: 600;
   margin-bottom: 15px;
+  border-radius: 25px;
+  border: 1px solid #e5e7eb;
+  padding: 4px 10px;
+  width: fit-content;
+  gap: 6px;
 }
 
 .description {
@@ -153,8 +183,38 @@
   flex: 0 0 360px;
   max-width: 360px;
   width: 100%;
+  h3 {
+    font-family: "playfair-display", serif;
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 21px;
+    line-height: 28px;
+    letter-spacing: 0px;
+    text-align: center;
+  }
 }
 
+.index {
+  background: #ff8904;
+  color: #ffffff;
+  font-family: "Inter", sans-serif;
+  font-weight: 300;
+  font-style: Semibold;
+  text-align: center;
+  padding: 4px 6px;
+  border-radius: 12px;
+  font-size: 12px;
+}
+
+.sub-features {
+  margin-left: 10px;
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 11px;
+  line-height: 20px;
+  letter-spacing: 0px;
+}
 @media (max-width: 768px) {
   .card {
     flex: 0 0 100%;

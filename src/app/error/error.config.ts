@@ -3,17 +3,22 @@ import { ErrorConfig, ErrorType } from './error.type';
 export const ERROR_CONFIG_MAP: Record<ErrorType, ErrorConfig> = {
   [ErrorType.SERVER_ERROR]: {
     title: 'Server Temporarily Unavailable',
-    subtitle:
-      'Failed to connect to the AI fashion design service. Please try again.',
+    subtitle: 'Failed to connect. Please try again.',
     icon: 'triangle-alert',
-    primaryAction: {
-      label: 'Try Again',
-      action: 'retry',
-    },
-    secondaryAction: {
-      label: 'Back to Home',
-      action: 'home',
-    },
+    actions: [
+      {
+        label: 'Try Again',
+        action: 'retry',
+        icon: 'refresh-ccw',
+        position: 'primaryRow',
+      },
+      {
+        label: 'Back to Home',
+        action: 'home',
+        icon: 'house',
+        position: 'primaryRow',
+      },
+    ],
     tips: [
       'Refresh the page and try again',
       'Check your internet connection',
@@ -24,16 +29,28 @@ export const ERROR_CONFIG_MAP: Record<ErrorType, ErrorConfig> = {
 
   [ErrorType.OUT_OF_CREDITS]: {
     title: "Oh no! You're out of credits",
-    subtitle: "It looks like you've run out of credits. Top up to continue.",
+    subtitle: 'Top up to continue.',
     icon: 'coins',
     badge: 'Error 402',
-    primaryAction: {
-      label: 'Top Up Credits',
-      action: 'topup',
-    },
-    secondaryAction: {
-      label: 'View Plans',
-      action: 'plans',
-    },
+    actions: [
+      {
+        label: 'Top Up Credits',
+        action: 'topup',
+        icon: 'credit-card',
+        position: 'primaryRow',
+      },
+      {
+        label: 'View Plans',
+        action: 'plans',
+        icon: 'sparkles',
+        position: 'primaryRow',
+      },
+      {
+        label: 'Back to Home',
+        action: 'home',
+        icon: 'house',
+        position: 'secondaryRow',
+      },
+    ],
   },
 };

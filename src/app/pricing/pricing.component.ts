@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../header/header.component';
+import { LucideAngularModule } from 'lucide-angular';
 
 export interface PricingPlan {
   name: string;
@@ -17,7 +18,7 @@ export interface PricingPlan {
 @Component({
   selector: 'app-pricing',
   standalone: true,
-  imports: [HeaderComponent, CommonModule],
+  imports: [HeaderComponent, CommonModule, LucideAngularModule],
   templateUrl: './pricing.component.html',
   styleUrls: ['./pricing.component.css'],
 })
@@ -40,7 +41,7 @@ export class PricingComponent {
       icon: '🧵',
       price: '₹790',
       period: 'month',
-      images: '100 Images',
+      images: '100 Credits',
       description:
         'Perfect for students and independent designers exploring new ideas and experimenting with styles.',
       features: [
@@ -56,7 +57,7 @@ export class PricingComponent {
       icon: '👗',
       price: '₹1,490',
       period: 'month',
-      images: '200 Images',
+      images: '200 Credits',
       description:
         'Best for freelance designers and growing teams who need more creative bandwidth.',
       features: [
@@ -72,7 +73,7 @@ export class PricingComponent {
       icon: '🏢',
       price: '₹2,090',
       period: 'month',
-      images: '300 Images',
+      images: '300 Credits',
       description:
         'Designed for fashion houses and power users who need scale and efficiency.',
       features: [

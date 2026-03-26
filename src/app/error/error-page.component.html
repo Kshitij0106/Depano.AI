@@ -40,27 +40,28 @@
       </div>
 
       <!-- Actions -->
-
       <div class="actions">
+        <!-- Row 1 -->
         <div class="action-row">
-          <button class="primary" (click)="handlePrimaryAction()">
-            <lucide-icon name="credit-card" [size]="20"></lucide-icon>
-            {{ config.primaryAction.label }}
-          </button>
-
           <button
-            *ngIf="config.secondaryAction"
-            class="secondary"
-            (click)="handleSecondaryAction()"
+            *ngFor="let action of primaryActions"
+            class="primary-btn"
+            (click)="handleAction(action.action)"
           >
-            <i-lucide name="Sparkles" [size]="20"></i-lucide>
-            {{ config.secondaryAction.label }}
+            <lucide-icon [name]="action.icon" [size]="18"></lucide-icon>
+            {{ action.label }}
           </button>
         </div>
 
-        <div class="action-row-center">
-          <button class="tertiary" (click)="goHome()">
-            <lucide-icon name="house" [size]="20"></lucide-icon> Back to Home
+        <!-- Row 2 -->
+        <div class="action-row-center" *ngIf="secondaryActions.length">
+          <button
+            *ngFor="let action of secondaryActions"
+            class="tertiary-btn"
+            (click)="handleAction(action.action)"
+          >
+            <lucide-icon [name]="action.icon" [size]="18"></lucide-icon>
+            {{ action.label }}
           </button>
         </div>
       </div>

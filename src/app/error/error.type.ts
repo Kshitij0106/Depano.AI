@@ -3,18 +3,18 @@ export enum ErrorType {
   OUT_OF_CREDITS = 'OUT_OF_CREDITS',
 }
 
+export interface ErrorAction {
+  label: string;
+  action: 'retry' | 'topup' | 'home' | 'plans';
+  icon: string;
+  position?: 'primaryRow' | 'secondaryRow'; // 🔥 key
+}
+
 export interface ErrorConfig {
   title: string;
   subtitle: string;
   icon: string;
   badge?: string;
-  primaryAction: {
-    label: string;
-    action: 'retry' | 'topup';
-  };
-  secondaryAction?: {
-    label: string;
-    action: 'home' | 'plans';
-  };
+  actions: ErrorAction[]; // 🔥 instead of primary/secondary
   tips?: string[];
 }

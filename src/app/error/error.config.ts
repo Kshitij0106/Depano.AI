@@ -31,7 +31,6 @@ export const ERROR_CONFIG_MAP: Record<ErrorType, ErrorConfig> = {
     title: "Oh no! You're out of credits",
     subtitle: 'Top up to continue.',
     icon: 'coins',
-    badge: 'Error 402',
     actions: [
       {
         label: 'Top Up Credits',

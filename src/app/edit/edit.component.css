@@ -15,11 +15,10 @@ body {
 
 .container {
   min-width: 100%;
-  min-width: 100%;
+  min-height: 100%;
   padding-top: 45px;
   padding-left: 130px;
   padding-right: 130px;
-  height: calc(100vh - 60px);
   background: linear-gradient(to bottom right, #faf5ff, #fdf2f8, #eef2ff);
 }
 

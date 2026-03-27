@@ -7,14 +7,13 @@ export interface ErrorAction {
   label: string;
   action: 'retry' | 'topup' | 'home' | 'plans';
   icon: string;
-  position?: 'primaryRow' | 'secondaryRow'; // 🔥 key
+  position?: 'primaryRow' | 'secondaryRow';
 }
 
 export interface ErrorConfig {
   title: string;
   subtitle: string;
   icon: string;
-  badge?: string;
-  actions: ErrorAction[]; // 🔥 instead of primary/secondary
+  actions: ErrorAction[];
   tips?: string[];
 }

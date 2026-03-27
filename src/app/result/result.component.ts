@@ -11,6 +11,7 @@ import { LucideAngularModule } from 'lucide-angular';
 import { ToastrService } from 'ngx-toastr';
 import { PromptService } from '../services/prompt.service';
 import { CategoryService } from '../generate/services/category.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   standalone: true,
@@ -23,6 +24,8 @@ export class ResultComponent implements OnInit {
   image!: string;
   result: string = '';
   error: boolean = false;
+
+  private sub!: Subscription;
 
   constructor(
     private imageService: ImageService,
@@ -58,9 +61,10 @@ export class ResultComponent implements OnInit {
   }
 
   generateImage() {
-    this.imageService.imageSubject.subscribe((result) => {
+    this.imageService.imageSubject.next(null);
+    this.sub = this.imageService.imageSubject.subscribe((result) => {
+      if (!result) return;
       if (result) {
-        console.log(result.url);
         this.image = result.url;
         this.result = 'success';
         this.error = false;
@@ -72,6 +76,10 @@ export class ResultComponent implements OnInit {
         this.toastr.error('error');
       }
     });
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 
   /**

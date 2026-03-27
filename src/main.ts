@@ -23,7 +23,9 @@ bootstrapApplication(AppComponent, {
       BrowserAnimationsModule,
       HttpClientModule,
       NgxUiLoaderModule,
-      ToastrModule.forRoot(),
+      ToastrModule.forRoot({
+        positionClass: 'toast-top-center',
+      }),
       NgxUiLoaderHttpModule.forRoot({ showForeground: true }),
     ),
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

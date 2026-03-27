@@ -20,12 +20,11 @@ export class ImageService {
   ) {}
 
   generateImage() {
-    this.prepareRequest();
     let userInput = this.promptService.getPrompt();
     this.http
       .post<ImageResponse>(environment.gateway + 'images', userInput)
       .subscribe({
-        next: (res) => this.handleSuccess(res),
+        next: (res) => this.imageSubject.next(res),
         error: (err) => this.handleError(err),
       });
   }
@@ -73,7 +72,7 @@ export class ImageService {
     this.http
       .post<ImageResponse>(environment.gateway + 'images/sketch', formData)
       .subscribe({
-        next: (res) => this.handleSuccess(res),
+        next: (res) => this.imageSubject.next(res),
         error: (err) => this.handleError(err),
       });
   }
@@ -116,14 +115,6 @@ export class ImageService {
     const blob = await response.blob();
 
     return new File([blob], filename, { type: blob.type });
-  }
-
-  private prepareRequest() {
-    this.imageSubject.next(null);
-  }
-
-  private handleSuccess(res: ImageResponse) {
-    this.imageSubject.next(res);
   }
 
   private handleError(err: any) {}

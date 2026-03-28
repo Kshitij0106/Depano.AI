@@ -3,6 +3,7 @@
   padding: 24px;
   border-radius: 20px;
   border: 2px solid #e5e7eb;
+  background-color: #ffffff;
 }
 
 .prompt-label {
@@ -19,11 +20,10 @@
 }
 
 .prompt-input {
-  width: 100%;
+  width: 92%;
   padding: 19px 18px 0px 18px;
   border-radius: 14px;
-  border: 0.5px solid #e5e7eb;
-  background: #f7faff;
+  background: #f3e8ff;
   font-family: Inter, Roboto, sans-serif;
   font-size: 14px;
   line-height: 20px;
@@ -37,20 +37,29 @@
 
 .prompt-btn {
   position: absolute;
-  bottom: 17px;
+  bottom: 8px;
   right: 14px;
-  padding: 8px 18px;
+  padding: 18px 18px;
   font-size: 13px;
   border-radius: 14px;
+  border: none;
   color: #ffffff;
   transition: #f1f5f9 0.2s ease;
   font-family: Roboto;
-  background-color: black;
+  background: linear-gradient(to bottom right, #a855f7, #ec4899);
 }
 
 .prompt-btn:disabled {
   background-color: #e5e7eb;
   color: #9ca3af;
-  border: 1px solid transparent;
   cursor: not-allowed;
+}
+
+textarea,
+textarea:focus,
+textarea:active,
+textarea:focus-visible {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
 }

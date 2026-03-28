@@ -4,7 +4,7 @@
   min-height: 100vh;
   position: relative;
   overflow-x: hidden;
-  background: linear-gradient(to bottom right, #faf5ff, #fdf2f8, #eef2ff);
+  background: linear-gradient(180deg, #fff5f0 0%, #fffbf5 50%, #fff0e6 100%);
   font-family: "Inter", sans-serif;
 }
 
@@ -62,12 +62,15 @@
 }
 
 .title {
-  font-family: "Playfair Display", serif;
-  font-size: 3rem;
-  font-weight: 700;
-  color: #111827;
-  line-height: 1.1;
   margin-bottom: 1rem;
+  font-family: "Playfair Display", serif;
+  font-weight: 700;
+  font-style: Bold;
+  font-size: 52.5px;
+  line-height: 65.63px;
+  letter-spacing: 0px;
+  text-align: center;
+  color: #101828;
 }
 
 .user-input {
@@ -83,11 +86,14 @@
 }
 
 .subtitle {
-  font-size: 1.2rem;
-  color: #4b5563;
-  line-height: 1.8;
-  max-width: 40rem;
-  margin: 0 auto;
+  font-family: Inter;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 17.5px;
+  line-height: 28.44px;
+  letter-spacing: 0px;
+  text-align: center;
+  color: #4a5565;
 }
 
 .grid-container {
@@ -167,15 +173,16 @@
   padding: 1.5rem;
 }
 
-.upload-title {
-  font-family: "Playfair Display", serif;
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #111827;
+.upload-title,
+.features-title {
   margin-bottom: 1.5rem;
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
+  font-family: "Playfair Display", serif;
+  font-weight: 700;
+  font-style: Bold;
+  font-size: 21px;
+  line-height: 28px;
+  letter-spacing: 0px;
+  color: #101828;
 }
 
 .icon-upload {
@@ -260,14 +267,16 @@
 }
 
 .image-icon {
-  width: 4rem;
-  height: 4rem;
-  background: rgba(168, 85, 247, 0.4);
+  background: #f3e8ff;
   border-radius: 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
   color: #7c3aed;
+  width: 46px;
+  height: 46px;
+  opacity: 1;
+  border-radius: 12.75px;
 }
 
 .drag-text {
@@ -375,15 +384,6 @@
   width: 100%;
 }
 
-.features-title {
-  font-family: "Playfair Display", serif;
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #111827;
-  margin-bottom: 1.5rem;
-  gap: 0.75rem;
-}
-
 .feature-item {
   display: flex;
   align-items: flex-start;
@@ -401,17 +401,18 @@
 }
 
 .icon-zap {
-  background: rgba(168, 85, 247, 0.4);
+  background: #f3e8ff;
+
   color: #7c3aed;
 }
 
 .icon-sparkles {
-  background: rgba(236, 72, 153, 0.4);
+  background: #fce7f3;
   color: #db2777;
 }
 
 .icon-file-image {
-  background: rgba(99, 102, 241, 0.4);
+  background: #e0e7ff;
   color: #4f46e5;
 }
 
@@ -587,7 +588,7 @@
   font-family: "Inter", sans-serif;
 }
 
-.full-user-input {
+/* .full-user-input {
   background-color: #ffff;
   margin-top: 50px;
-}
+} */

@@ -8,13 +8,14 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { LucideAngularModule } from 'lucide-angular';
 
 @Component({
   standalone: true,
   selector: 'app-user-input',
   templateUrl: './user-input.component.html',
   styleUrls: ['./user-input.component.css'],
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, LucideAngularModule],
 })
 export class UserInputComponent {
   @Input() hideUserPrompt!: boolean;

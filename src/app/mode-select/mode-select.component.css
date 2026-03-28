@@ -3,7 +3,7 @@
   min-height: 100vh;
   position: relative;
   overflow-x: hidden;
-  background: linear-gradient(to bottom right, #fffaf0, #fdf2f8, #fffbeb);
+  background: linear-gradient(180deg, #fff5f0 0%, #fffbf5 50%, #fff0e6 100%);
   font-family: "Inter", sans-serif;
 }
 
@@ -27,7 +27,6 @@
 .content {
   width: 100%;
   max-width: min(96rem, 100%);
-  /* padding: 0 1.5rem; */
 }
 
 .header {

@@ -19,7 +19,7 @@ body {
   padding-top: 45px;
   padding-left: 130px;
   padding-right: 130px;
-  background: linear-gradient(to bottom right, #faf5ff, #fdf2f8, #eef2ff);
+  background: linear-gradient(180deg, #fff5f0 0%, #fffbf5 50%, #fff0e6 100%);
 }
 
 .result-header {
@@ -90,8 +90,8 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  background: #000000;
-  color: #ffffff;
+  /* background: #000000; */
+  /* color: #ffffff; */
   border: none;
   padding: 14px 22px;
   border-radius: 12px;
@@ -111,6 +111,15 @@ body {
     transform 140ms ease,
     box-shadow 140ms ease,
     opacity 140ms ease;
+
+  background: #ffffff;
+  font-family: Inter;
+  font-weight: 500;
+  font-style: Medium;
+  font-size: 12.25px;
+  line-height: 17.5px;
+  letter-spacing: 0px;
+  text-align: center;
 }
 
 .action-btn lucide-icon,
@@ -166,40 +175,6 @@ body {
   letter-spacing: 0.08em;
   color: #ffffff;
   background-color: #000000;
-  border-radius: 12px;
-  margin-top: 10px;
-}
-
-.share-btn {
-  float: right;
-  height: 56px;
-  font-family: Inter;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 25px;
-  text-align: center;
-  letter-spacing: 0.12em;
-  color: #ffffff;
-  background-color: #000000;
-  padding: 14px 22px;
-  border-radius: 12px;
-  margin-top: 10px;
-}
-
-.download-btn {
-  height: 56px;
-  float: right;
-  font-family: Inter;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 25px;
-  text-align: center;
-  letter-spacing: 0.12em;
-  color: #ffffff;
-  background-color: #000000;
-  padding: 14px 22px;
   border-radius: 12px;
   margin-top: 10px;
 }

@@ -1,16 +1,17 @@
 <app-header [source]="'result'"></app-header>
-<div class="container container-fluid">
-  <div class="row">
-    <div class="col-12 d-flex justify-content-center align-items-center">
-      <img class="img img-fluid" src="{{ image }}" />
+
+<main class="page-wrapper">
+  <div class="content-container">
+    <div class="image-section">
+      <img class="result-image img-fluid" [src]="image" alt="Result Image" />
+    </div>
+
+    <div class="input-section">
+      <app-user-input
+        [categoryName]="selectedCategoryName"
+        [hideUserPrompt]="hideUserPrompt"
+        (userInput)="inputSelected($event)"
+      ></app-user-input>
     </div>
   </div>
-
-  <div class="full-user-input mt-5">
-    <app-user-input
-      [categoryName]="selectedCategoryName"
-      [hideUserPrompt]="hideUserPrompt"
-      (userInput)="inputSelected($event)"
-    ></app-user-input>
-  </div>
-</div>
+</main>

@@ -27,6 +27,7 @@
           <div class="card upload-card">
             <h3 class="upload-title">
               <lucide-icon
+                class="icon-upload"
                 name="upload"
                 [size]="18"
                 [strokeWidth]="2"
@@ -69,8 +70,8 @@
                 <div class="no-file-content">
                   <div class="image-icon">
                     <lucide-icon
-                      name="image"
-                      [size]="24"
+                      name="book-image"
+                      [size]="28"
                       [strokeWidth]="2"
                     ></lucide-icon>
                   </div>
@@ -162,14 +163,14 @@
       </div>
     </div>
     <!-- Full width user prompt below the cards -->
-    <div class="full-user-input">
-      <div class="user-input">
-        <app-user-input
-          [categoryName]="selectedCategoryName"
-          [hideUserPrompt]="hideUserPrompt"
-          (userInput)="inputSelected($event)"
-        ></app-user-input>
-      </div>
+    <!-- <div class="full-user-input"> -->
+    <div class="full-user-input mt-5">
+      <app-user-input
+        [categoryName]="selectedCategoryName"
+        [hideUserPrompt]="hideUserPrompt"
+        (userInput)="inputSelected($event)"
+      ></app-user-input>
     </div>
   </div>
+  <!-- </div> -->
 </div>

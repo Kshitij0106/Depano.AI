@@ -1,5 +1,5 @@
 .pricing-wrapper {
-  background: linear-gradient(to bottom right, #fff5f0, #fffbf5);
+  background: linear-gradient(180deg, #fff5f0 0%, #fffbf5 50%, #fff0e6 100%);
   min-height: 100vh;
   font-family: "Inter", sans-serif;
 }

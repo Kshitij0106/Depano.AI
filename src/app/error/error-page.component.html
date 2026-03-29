@@ -14,16 +14,16 @@
 
       <p class="card-title">
         {{
-          type === "SERVER_ERROR"
-            ? "We're Working On It"
-            : "Top Up Your Credits"
+          type === "PAYMENT_REQUIRED"
+            ? "Top Up Your Credits"
+            : "We're Working On It"
         }}
       </p>
       <p class="card-subtitle">
         {{
-          type === "SERVER_ERROR"
-            ? "Our team is working to resolve this issue."
-            : "Continue creating amazing designs by adding more credits."
+          type === "PAYMENT_REQUIRED"
+            ? "Continue creating amazing designs by adding more credits."
+            : "Our team is working to resolve this issue."
         }}
       </p>
 

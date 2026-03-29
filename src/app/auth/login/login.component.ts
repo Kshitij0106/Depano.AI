@@ -9,6 +9,7 @@ import { OtpValidateRequest } from '../models/otpValidateRequest.model';
 import { UserService } from 'src/app/services/user.service';
 import { LucideAngularModule } from 'lucide-angular';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ErrorService } from 'src/app/services/error.service';
 
 @Component({
   standalone: true,
@@ -40,6 +41,7 @@ export class LoginComponent {
     private authService: AuthService,
     private userService: UserService,
     private toastr: ToastrService,
+    private errorService: ErrorService,
   ) {}
 
   /**
@@ -54,13 +56,11 @@ export class LoginComponent {
         }
       },
       error: (err: HttpErrorResponse) => {
-        if (
-          err.error?.status === 'SERVICE_UNAVAILABLE' ||
-          err.error?.status === 'INTERNAL_SERVER_ERROR'
-        ) {
-          // this.result = 'networkIssue';
-        } else if (err.error?.status === 'NOT_FOUND') {
+        if (err.error?.status === 'NOT_FOUND') {
           this.toastr.error(err.error?.message);
+        } else {
+          this.errorService.errorSubject.next(err.error?.status);
+          this.router.navigate(['error']);
         }
       },
     });
@@ -81,13 +81,11 @@ export class LoginComponent {
         }
       },
       error: (err: HttpErrorResponse) => {
-        if (
-          err.error?.status === 'SERVICE_UNAVAILABLE' ||
-          err.error?.status === 'INTERNAL_SERVER_ERROR'
-        ) {
-          // this.result = 'networkIssue';
-        } else if (err.error?.status === 'BAD_REQUEST') {
+        if (err.error?.status === 'BAD_REQUEST') {
           this.toastr.error(err.error?.message);
+        } else {
+          this.errorService.errorSubject.next(err.error?.status);
+          this.router.navigate(['error']);
         }
       },
     });

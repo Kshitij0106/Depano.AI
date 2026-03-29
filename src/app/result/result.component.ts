@@ -22,8 +22,6 @@ import { Subscription } from 'rxjs';
 })
 export class ResultComponent implements OnInit {
   image!: string;
-  result: string = '';
-  error: boolean = false;
 
   private sub!: Subscription;
 
@@ -55,8 +53,6 @@ export class ResultComponent implements OnInit {
       this.generateImage();
     } else {
       this.image = this.imageService.imageUrl.value;
-      this.result = 'success';
-      this.error = false;
     }
   }
 
@@ -65,15 +61,14 @@ export class ResultComponent implements OnInit {
     this.sub = this.imageService.imageSubject.subscribe((result) => {
       if (!result) return;
       if (result) {
+        console.log(result);
         this.image = result.url;
-        this.result = 'success';
-        this.error = false;
         this.promptService.setPromptId(result.promptId);
         this.userService.updateUserDetails();
         this.toastr.success(result.message);
       } else {
-        this.error = true;
-        this.toastr.error('error');
+        // this.errorService.errorSubject.next(err.error?.status);
+        this.router.navigate(['error']);
       }
     });
   }
@@ -123,20 +118,15 @@ export class ResultComponent implements OnInit {
         next: (result) => {
           if (result.status === 'Success') {
             this.image = result.url;
-            this.result = 'success';
-            this.error = false;
             this.userService.updateUserDetails();
           }
         },
         error: (err: HttpErrorResponse) => {
-          this.error = true;
           if (
             err.error?.status === 'SERVICE_UNAVAILABLE' ||
             err.error?.status === 'INTERNAL_SERVER_ERROR'
           ) {
-            this.result = 'networkIssue';
           } else if (err.error?.status === 'PAYMENT_REQUIRED') {
-            this.result = 'creditIssue';
           }
         },
       });

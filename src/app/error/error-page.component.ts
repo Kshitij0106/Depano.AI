@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ERROR_CONFIG_MAP } from './error.config';
 import { LucideAngularModule } from 'lucide-angular';
 import { CommonModule } from '@angular/common';
+import { ErrorService } from '../services/error.service';
 import { ErrorType, ErrorConfig } from './error.type';
 
 @Component({
@@ -13,14 +13,22 @@ import { ErrorType, ErrorConfig } from './error.type';
   imports: [LucideAngularModule, CommonModule],
 })
 export class ErrorPageComponent implements OnInit {
-  @Input() type: ErrorType = ErrorType.SERVER_ERROR;
+  type: ErrorType = ErrorType.INTERNAL_SERVER_ERROR;
 
   config!: ErrorConfig;
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private errorService: ErrorService,
+  ) {}
 
   ngOnInit(): void {
-    this.config = ERROR_CONFIG_MAP[this.type];
+    this.errorService.errorSubject.subscribe((error) => {
+      if (error) {
+        this.type = error;
+        this.config = this.errorService.getError(this.type);
+      }
+    });
   }
 
   get primaryActions() {

@@ -9,6 +9,7 @@ import { ToastrService } from 'ngx-toastr';
 import { UserInputComponent } from '../generate/user-input/user-input.component';
 import { ErrorService } from '../services/error.service';
 import { Router } from '@angular/router';
+import { ErrorType } from '../error/error.type';
 
 @Component({
   standalone: true,
@@ -27,8 +28,8 @@ export class EditComponent implements OnInit {
   constructor(
     private imageService: ImageService,
     private userService: UserService,
-    private router: Router,
     private errorService: ErrorService,
+    private router: Router,
     private toastr: ToastrService,
   ) {}
 
@@ -47,7 +48,6 @@ export class EditComponent implements OnInit {
     this.sendToServer();
   }
 
-  /** Send original image URL, mask blob, and prompt to server */
   async sendToServer(): Promise<void> {
     try {
       const imageFile = await this.imageService.fetchImageFromUrl(this.image);
@@ -57,6 +57,7 @@ export class EditComponent implements OnInit {
         imageFile,
         this.userPrompt,
       );
+
       this.imageService.editImage(formData).subscribe({
         next: (result) => {
           if (result.status === 'Success') {
@@ -71,7 +72,8 @@ export class EditComponent implements OnInit {
         },
       });
     } catch (err) {
-      console.error('Error preparing data:', err);
+      this.errorService.errorSubject.next(ErrorType.INTERNAL_SERVER_ERROR);
+      this.router.navigate(['error']);
     }
   }
 }

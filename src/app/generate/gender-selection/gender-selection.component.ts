@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { ImageService } from 'src/app/services/image.service';
 import { BreadcrumbService } from 'src/app/services/breadcrumb.service';
 import { PromptService } from 'src/app/services/prompt.service';
 
@@ -15,7 +14,6 @@ export class GenderSelectionComponent {
 
   constructor(
     private router: Router,
-    private imageService: ImageService,
     private promptService: PromptService,
     private breadcrumbService: BreadcrumbService,
   ) {}
@@ -29,16 +27,5 @@ export class GenderSelectionComponent {
     this.breadcrumbService.addBreadcrumb(category.toLowerCase(), category);
     this.promptService.setGender(category.toLowerCase());
     this.router.navigate(['generate', category.toLowerCase()]);
-  }
-
-  disableBackButton() {
-    // Add an initial dummy state
-    history.pushState(null, '', window.location.href);
-
-    // Listen for back and forward buttons (popstate event)
-    window.addEventListener('popstate', (event) => {
-      // Replace the state to prevent the back button from navigating
-      history.pushState(null, '', window.location.href);
-    });
   }
 }

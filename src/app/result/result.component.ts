@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ImageService } from '../services/image.service';
 import { BreadcrumbService } from '../services/breadcrumb.service';
-import { Router } from '@angular/router';
+import { NavigationStart, Router } from '@angular/router';
 import { CheckedAttributesService } from '../generate/services/checked-attributes.service';
 import { UserService } from '../services/user.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -11,7 +11,9 @@ import { LucideAngularModule } from 'lucide-angular';
 import { ToastrService } from 'ngx-toastr';
 import { PromptService } from '../services/prompt.service';
 import { CategoryService } from '../generate/services/category.service';
-import { Subscription } from 'rxjs';
+import { filter, Subscription } from 'rxjs';
+import { ErrorType } from '../error/error.type';
+import { ErrorService } from '../services/error.service';
 
 @Component({
   standalone: true,
@@ -23,7 +25,8 @@ import { Subscription } from 'rxjs';
 export class ResultComponent implements OnInit {
   image!: string;
 
-  private sub!: Subscription;
+  private imageSubscription!: Subscription;
+  private navigationSubscription!: Subscription;
 
   constructor(
     private imageService: ImageService,
@@ -32,12 +35,14 @@ export class ResultComponent implements OnInit {
     private breadcrumbService: BreadcrumbService,
     private categoryService: CategoryService,
     private checkAttributeService: CheckedAttributesService,
+    private errorService: ErrorService,
     private router: Router,
     private toastr: ToastrService,
   ) {}
 
   ngOnInit(): void {
     this.getImage();
+    this.onBackButton();
   }
 
   /**
@@ -57,56 +62,16 @@ export class ResultComponent implements OnInit {
   }
 
   generateImage() {
-    this.imageService.imageSubject.next(null);
-    this.sub = this.imageService.imageSubject.subscribe((result) => {
-      if (!result) return;
-      if (result) {
-        console.log(result);
+    this.imageSubscription = this.imageService.imageSubject
+      .pipe(filter(Boolean))
+      .subscribe((result) => {
+        console.log('Received image result:', result);
         this.image = result.url;
         this.promptService.setPromptId(result.promptId);
         this.userService.updateUserDetails();
         this.toastr.success(result.message);
-      } else {
-        // this.errorService.errorSubject.next(err.error?.status);
-        this.router.navigate(['error']);
-      }
-    });
+      });
   }
-
-  ngOnDestroy() {
-    this.sub.unsubscribe();
-  }
-
-  /**
-   * Sends a request to the generate image.
-   */
-  // generateImage() {
-  //   this.imageService.generateImage().subscribe({
-  //     next: (result) => {
-  //       if (result.status === 'Success') {
-  //         this.image = result.url;
-  //         this.result = 'success';
-  //         this.error = false;
-  //         this.promptService.setPromptId(result.promptId);
-  //         this.userService.updateUserDetails();
-  //         this.toastr.success(result.message);
-  //       }
-  //     },
-  //     error: (err: HttpErrorResponse) => {
-  //       this.error = true;
-  //       if (
-  //         err.error?.status === 'SERVICE_UNAVAILABLE' ||
-  //         err.error?.status === 'INTERNAL_SERVER_ERROR'
-  //       ) {
-  //         this.toastr.error('networkIssue');
-  //         this.result = 'networkIssue';
-  //       } else if (err.error?.status === 'PAYMENT_REQUIRED') {
-  //         this.toastr.error('creditIssue');
-  //         this.result = 'creditIssue';
-  //       }
-  //     },
-  //   });
-  // }
 
   /**
    * Sends a request again to the prompt service to retrieve image and updates the 'image' property accordingly.
@@ -122,12 +87,8 @@ export class ResultComponent implements OnInit {
           }
         },
         error: (err: HttpErrorResponse) => {
-          if (
-            err.error?.status === 'SERVICE_UNAVAILABLE' ||
-            err.error?.status === 'INTERNAL_SERVER_ERROR'
-          ) {
-          } else if (err.error?.status === 'PAYMENT_REQUIRED') {
-          }
+          this.errorService.errorSubject.next(err.error?.status);
+          this.router.navigate(['error']);
         },
       });
     }
@@ -192,14 +153,28 @@ export class ResultComponent implements OnInit {
     }
   }
 
-  /**
-   * Empties the data.
-   */
   emptyData() {
     this.promptService.clearPromptId();
     this.imageService.imageUrl.next('');
+    this.imageService.sketchUrl.next('');
+    this.imageService.imageSubject.next(null);
     this.categoryService.deleteCategories();
     this.breadcrumbService.emptyBreadcrumbList();
     this.checkAttributeService.emptyCheckedAttributesList();
+  }
+
+  onBackButton() {
+    this.navigationSubscription = this.router.events.subscribe((event) => {
+      if (event instanceof NavigationStart) {
+        if (event.navigationTrigger === 'popstate') {
+          this.router.navigate(['/home']);
+        }
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    this.imageSubscription.unsubscribe();
+    this.navigationSubscription.unsubscribe();
   }
 }

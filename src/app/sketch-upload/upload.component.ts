@@ -20,12 +20,16 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrl: './upload.component.css',
 })
 export class UploadComponent {
-  step: 'upload' | 'design-preview' = 'upload';
   uploadedFile: File | null = null;
   dragActive = false;
   generatedImageUrl: string | null = null;
-  userPrompt: string =
-    'Full length realistic image standing in a fashion photoshoot, studio lighting, high resolution, looking at the camera, crystal clear, 8K UHD, highly detailed glossy eyes, legal. Make sure the footwear is visible.';
+  userPrompt: string = '';
+
+  public selectedCategoryName: string = 'Or describe something custom';
+  public hideUserPrompt: boolean = false;
+
+  private readonly allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+  private readonly maxFileSizeMB = 10;
 
   constructor(
     private imageService: ImageService,
@@ -34,16 +38,31 @@ export class UploadComponent {
     private route: ActivatedRoute,
   ) {}
 
-  public selectedCategoryName: string = 'Or describe something custom';
-  public hideUserPrompt: boolean = false;
-
   inputSelected(input: string) {
     this.userPrompt = input;
-    console.log(this.userPrompt);
   }
 
-  private readonly allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
-  private readonly maxFileSizeMB = 10;
+  async handleGenerateImage(): Promise<void> {
+    if (!this.uploadedFile) {
+      this.toastr.error('Please upload a sketch first');
+      return;
+    }
+
+    const resizedImage = new File([this.uploadedFile], this.uploadedFile.name, {
+      type: this.uploadedFile.type,
+    });
+
+    const formData = await this.imageService.prepareFormData(
+      'sketch',
+      resizedImage,
+      this.userPrompt,
+    );
+
+    this.router.navigate(['../', 'result'], {
+      relativeTo: this.route,
+    });
+    this.imageService.sketchToImage(formData);
+  }
 
   handleDrag(event: DragEvent, type: string): void {
     event.preventDefault();
@@ -97,41 +116,5 @@ export class UploadComponent {
     }
 
     this.uploadedFile = file;
-  }
-
-  async handleGenerateImage(): Promise<void> {
-    if (!this.uploadedFile) {
-      this.toastr.error('Please upload a sketch first');
-      return;
-    }
-
-    const resizedImage = new File([this.uploadedFile], this.uploadedFile.name, {
-      type: this.uploadedFile.type,
-    });
-
-    const formData = await this.imageService.prepareFormData(
-      'sketch',
-      resizedImage,
-      this.userPrompt,
-    );
-
-    this.router.navigate(['../', 'result'], {
-      relativeTo: this.route,
-    });
-    this.imageService.sketchToImage(formData);
-  }
-
-  handleStartOver(): void {
-    this.step = 'upload';
-    this.uploadedFile = null;
-    this.generatedImageUrl = null;
-  }
-
-  handleDownload(): void {
-    alert('Download started! Your high-resolution design is being downloaded');
-  }
-
-  handleShare(): void {
-    alert('Share link copied! Share your creation with others');
   }
 }

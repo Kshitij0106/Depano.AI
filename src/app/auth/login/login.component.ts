@@ -40,8 +40,8 @@ export class LoginComponent {
     private router: Router,
     private authService: AuthService,
     private userService: UserService,
-    private toastr: ToastrService,
     private errorService: ErrorService,
+    private toastr: ToastrService,
   ) {}
 
   /**

@@ -1,6 +1,6 @@
 <app-header [source]="'sketch'"></app-header>
 <div class="container">
-  <div class="content" *ngIf="step === 'upload'">
+  <div class="content">
     <div class="header">
       <!-- <div class="logo-container">
         <div class="logo-icon">
@@ -22,7 +22,6 @@
 
     <div class="grid-container">
       <div class="left-column">
-        <!-- Upload Section -->
         <div class="upload-section">
           <div class="card upload-card">
             <h3 class="upload-title">
@@ -162,8 +161,6 @@
         </div>
       </div>
     </div>
-    <!-- Full width user prompt below the cards -->
-    <!-- <div class="full-user-input"> -->
     <div class="full-user-input mt-5">
       <app-user-input
         [categoryName]="selectedCategoryName"
@@ -172,5 +169,4 @@
       ></app-user-input>
     </div>
   </div>
-  <!-- </div> -->
 </div>

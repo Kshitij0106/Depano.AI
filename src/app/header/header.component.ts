@@ -115,6 +115,8 @@ export class HeaderComponent implements OnInit {
       this.promptService.clearPromptId();
       this.categroryService.deleteCategories();
       this.imageService.imageUrl.next('');
+      this.imageService.sketchUrl.next('');
+      this.imageService.imageSubject.next(null);
       this.breadcrumbService.emptyBreadcrumbList();
       this.checkAttributeService.emptyCheckedAttributesList();
     }

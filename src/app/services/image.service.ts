@@ -5,6 +5,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { ImageResponse } from '../generate/models/imageResponse.model';
 import { PromptService } from './prompt.service';
 import { ErrorService } from './error.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -19,15 +20,20 @@ export class ImageService {
     private http: HttpClient,
     private promptService: PromptService,
     private errorService: ErrorService,
+    private router: Router,
   ) {}
 
   generateImage() {
     let userInput = this.promptService.getPrompt();
+    this.imageSubject.next(null);
     this.http
       .post<ImageResponse>(environment.gateway + 'images', userInput)
       .subscribe({
         next: (res) => this.imageSubject.next(res),
-        error: (err) => this.imageSubject.next(err),
+        error: (err) => {
+          this.errorService.errorSubject.next(err.error?.status);
+          this.router.navigate(['error']);
+        },
       });
   }
 
@@ -56,7 +62,10 @@ export class ImageService {
       .post<ImageResponse>(environment.gateway + 'images/sketch', formData)
       .subscribe({
         next: (res) => this.imageSubject.next(res),
-        error: (err) => this.errorService.errorSubject.next(err.message),
+        error: (err) => {
+          this.errorService.errorSubject.next(err.error?.status);
+          this.router.navigate(['error']);
+        },
       });
   }
 

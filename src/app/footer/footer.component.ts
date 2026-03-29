@@ -28,7 +28,7 @@ export class FooterComponent {
     this.router.navigate(['generate', category.toLowerCase()]);
   }
 
-  scrollTo(sectionId: string) {
+  scrollToHomePageSection(sectionId: string) {
     const element = document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });

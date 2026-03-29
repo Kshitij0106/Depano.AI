@@ -6,10 +6,33 @@
 
 body {
   overflow-x: hidden;
+  background:
+    radial-gradient(
+      90.25% 134.83% at 75% 75%,
+      rgba(255, 218, 185, 0.3) 0%,
+      rgba(0, 0, 0, 0) 50%
+    ),
+    radial-gradient(
+      90.25% 134.83% at 25% 25%,
+      rgba(255, 127, 80, 0.3) 0%,
+      rgba(0, 0, 0, 0) 50%
+    );
 }
 
 .ctn {
-  background: #ffffff;
+  min-height: calc(100vh - 60px);
+  background:
+    radial-gradient(
+      90.25% 134.83% at 75% 75%,
+      rgba(255, 218, 185, 0.3) 0%,
+      rgba(0, 0, 0, 0) 50%
+    ),
+    radial-gradient(
+      90.25% 134.83% at 25% 25%,
+      rgba(255, 127, 80, 0.3) 0%,
+      rgba(0, 0, 0, 0) 50%
+    );
+
   width: 100%;
   padding: 20px 30px 40px 30px;
 }

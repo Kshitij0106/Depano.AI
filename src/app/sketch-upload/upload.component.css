@@ -4,7 +4,17 @@
   min-height: 100vh;
   position: relative;
   overflow-x: hidden;
-  background: linear-gradient(180deg, #fff5f0 0%, #fffbf5 50%, #fff0e6 100%);
+  background:
+    radial-gradient(
+      90.25% 134.83% at 75% 75%,
+      rgba(255, 218, 185, 0.3) 0%,
+      rgba(0, 0, 0, 0) 50%
+    ),
+    radial-gradient(
+      90.25% 134.83% at 25% 25%,
+      rgba(255, 127, 80, 0.3) 0%,
+      rgba(0, 0, 0, 0) 50%
+    );
   font-family: "Inter", sans-serif;
 }
 

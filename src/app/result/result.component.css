@@ -52,34 +52,6 @@ body {
   background-clip: text;
 }
 
-.result-subtitle {
-  font-family:
-    "Inter",
-    system-ui,
-    -apple-system,
-    "Segoe UI",
-    Roboto;
-  font-size: 1.1rem;
-  color: #666666;
-  margin-bottom: 30px;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-  line-height: 1.6;
-}
-
-.stat-item:hover {
-  background: rgba(255, 255, 255, 0.8);
-  box-shadow: 0 4px 12px rgba(168, 85, 247, 0.15);
-  transform: translateY(-2px);
-}
-
-.stat-icon {
-  width: 20px;
-  height: 20px;
-  color: #a855f7;
-}
-
 .action-buttons {
   display: flex;
   gap: 16px;
@@ -90,41 +62,26 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  /* background: #000000; */
-  /* color: #ffffff; */
-  border: none;
   padding: 14px 22px;
   border-radius: 12px;
-  font-family:
-    Inter,
-    system-ui,
-    -apple-system,
-    "Segoe UI",
-    Roboto;
-  font-weight: 700;
-  font-size: 16px;
   height: 56px;
   min-width: 160px;
   cursor: pointer;
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.16);
-  transition:
-    transform 140ms ease,
-    box-shadow 140ms ease,
-    opacity 140ms ease;
-
   background: #ffffff;
-  font-family: Inter;
+  font-family: "Inter", sans-serif;
   font-weight: 500;
   font-style: Medium;
   font-size: 12.25px;
   line-height: 17.5px;
   letter-spacing: 0px;
   text-align: center;
+  border: 1px solid #d1d5dc;
 }
 
 .action-btn lucide-icon,
 .action-btn svg {
-  color: #ffffff;
+  color: #0a0a0a;
   width: 20px;
   height: 20px;
 }
@@ -147,38 +104,6 @@ body {
   color: #ffffff !important;
 }
 
-.start-btn {
-  font-family: Inter;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 25px;
-  text-align: center;
-  letter-spacing: 0.08em;
-  color: #ffffff;
-  background-color: #000000;
-  border-radius: 12px;
-  height: 56px;
-  min-width: 160px;
-  margin-top: 10px;
-}
-
-.regen-btn {
-  height: 56px;
-  min-width: 160px;
-  font-family: Inter;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 20px;
-  text-align: center;
-  letter-spacing: 0.08em;
-  color: #ffffff;
-  background-color: #000000;
-  border-radius: 12px;
-  margin-top: 10px;
-}
-
 .img {
   margin-top: 50px;
   margin-bottom: 10px;
@@ -198,60 +123,6 @@ body {
   margin-bottom: 20px;
 }
 
-.error-heading {
-  font-family: Inter;
-  font-size: 24px;
-  font-weight: 700;
-  line-height: 29.05px;
-  text-align: left;
-}
-
-.edit-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  font-family:
-    Inter,
-    system-ui,
-    -apple-system,
-    "Segoe UI",
-    Roboto,
-    "Helvetica Neue",
-    Arial;
-  font-weight: 600;
-  font-size: 15px;
-  color: #ffffff;
-  background-color: #000000;
-  border: none;
-  box-shadow: 0 8px 20px rgba(168, 85, 247, 0.3);
-  padding: 10px 14px;
-  cursor: pointer;
-  transition:
-    transform 150ms ease,
-    box-shadow 150ms ease;
-  margin-top: 10px;
-  border-radius: 12px;
-  height: 50px;
-  width: 200px;
-}
-
-.edit-btn:hover:enabled {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 32px rgba(168, 85, 247, 0.4);
-}
-
-.edit-btn:active:enabled {
-  transform: translateY(0);
-}
-
-.edit-btn:focus {
-  outline: none;
-  box-shadow:
-    0 0 0 4px rgba(168, 85, 247, 0.2),
-    0 8px 20px rgba(168, 85, 247, 0.3);
-}
-
 .edit-icon {
   display: inline-flex;
   align-items: center;
@@ -261,14 +132,4 @@ body {
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.25);
   backdrop-filter: blur(8px);
-}
-
-.edit-icon lucide-icon,
-.edit-icon svg {
-  color: #ffffff;
-}
-
-.edit-label {
-  display: inline-block;
-  line-height: 1;
 }

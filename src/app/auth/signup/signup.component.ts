@@ -9,6 +9,7 @@ import { UserService } from 'src/app/services/user.service';
 import { OtpValidateRequest } from '../models/otpValidateRequest.model';
 import { OtpSendRequest } from '../models/otpSendRequest.model';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ErrorService } from 'src/app/services/error.service';
 
 @Component({
   standalone: true,
@@ -35,11 +36,13 @@ export class SignupComponent implements OnInit {
   resendTimer = 0;
   otpDigits: string[] = ['', '', '', '', '', ''];
   otpError: string = '';
+
   constructor(
     private authService: AuthService,
     private toastr: ToastrService,
     private router: Router,
     private userService: UserService,
+    private errorService: ErrorService,
   ) {}
 
   ngOnInit(): void {
@@ -60,13 +63,11 @@ export class SignupComponent implements OnInit {
         }
       },
       error: (err: HttpErrorResponse) => {
-        if (
-          err.error?.status === 'SERVICE_UNAVAILABLE' ||
-          err.error?.status === 'INTERNAL_SERVER_ERROR'
-        ) {
-          // this.result = 'networkIssue';
-        } else if (err.error?.status === 'CONFLICT') {
+        if (err.error?.status === 'CONFLICT') {
           this.toastr.error(err.error?.message);
+        } else {
+          this.errorService.errorSubject.next(err.error?.status);
+          this.router.navigate(['error']);
         }
       },
     });
@@ -87,13 +88,11 @@ export class SignupComponent implements OnInit {
         }
       },
       error: (err: HttpErrorResponse) => {
-        if (
-          err.error?.status === 'SERVICE_UNAVAILABLE' ||
-          err.error?.status === 'INTERNAL_SERVER_ERROR'
-        ) {
-          // this.result = 'networkIssue';
-        } else if (err.error?.status === 'BAD_REQUEST') {
+        if (err.error?.status === 'BAD_REQUEST') {
           this.toastr.error(err.error?.message);
+        } else {
+          this.errorService.errorSubject.next(err.error?.status);
+          this.router.navigate(['error']);
         }
       },
     });

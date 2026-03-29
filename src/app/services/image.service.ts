@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ImageResponse } from '../generate/models/imageResponse.model';
 import { PromptService } from './prompt.service';
+import { ErrorService } from './error.service';
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +18,7 @@ export class ImageService {
   constructor(
     private http: HttpClient,
     private promptService: PromptService,
+    private errorService: ErrorService,
   ) {}
 
   generateImage() {
@@ -25,7 +27,7 @@ export class ImageService {
       .post<ImageResponse>(environment.gateway + 'images', userInput)
       .subscribe({
         next: (res) => this.imageSubject.next(res),
-        error: (err) => this.handleError(err),
+        error: (err) => this.imageSubject.next(err),
       });
   }
 
@@ -49,47 +51,14 @@ export class ImageService {
     );
   }
 
-  // async prepareEditFormData(
-  //   imageUrl: string,
-  //   prompt: string,
-  // ): Promise<FormData> {
-  //   const formData = new FormData();
-
-  //   try {
-  //     const imageBlob = await this.fetchBlobFromUrl(imageUrl);
-
-  //     formData.append('image', imageBlob, 'image.png');
-  //     formData.append('prompt', prompt);
-
-  //     return formData;
-  //   } catch (err) {
-  //     console.error('Error fetching blobs:', err);
-  //     throw err;
-  //   }
-  // }
-
   sketchToImage(formData: FormData) {
     this.http
       .post<ImageResponse>(environment.gateway + 'images/sketch', formData)
       .subscribe({
         next: (res) => this.imageSubject.next(res),
-        error: (err) => this.handleError(err),
+        error: (err) => this.errorService.errorSubject.next(err.message),
       });
   }
-
-  // async prepareSketchFormData(sketch: File, prompt: string): Promise<FormData> {
-  //   const formData = new FormData();
-
-  //   try {
-  //     formData.append('sketch', sketch, 'sketch.png');
-  //     formData.append('prompt', prompt);
-
-  //     return formData;
-  //   } catch (err) {
-  //     console.error('Error fetching blobs:', err);
-  //     throw err;
-  //   }
-  // }
 
   async prepareFormData(
     type: 'sketch' | 'image',
@@ -116,6 +85,4 @@ export class ImageService {
 
     return new File([blob], filename, { type: blob.type });
   }
-
-  private handleError(err: any) {}
 }

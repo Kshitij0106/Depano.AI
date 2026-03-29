@@ -7,6 +7,8 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 import { UserInputComponent } from '../generate/user-input/user-input.component';
+import { ErrorService } from '../services/error.service';
+import { Router } from '@angular/router';
 
 @Component({
   standalone: true,
@@ -19,15 +21,14 @@ export class EditComponent implements OnInit {
   image: string = '';
   userPrompt: string = '';
 
-  result: string = '';
-  error: boolean = false;
-
   selectedCategoryName: string = '';
   hideUserPrompt: boolean = false;
 
   constructor(
     private imageService: ImageService,
     private userService: UserService,
+    private router: Router,
+    private errorService: ErrorService,
     private toastr: ToastrService,
   ) {}
 
@@ -39,7 +40,6 @@ export class EditComponent implements OnInit {
     this.imageService.imageUrl.subscribe((image) => {
       this.image = image;
     });
-    this.result = 'success';
   }
 
   inputSelected(input: string) {
@@ -61,27 +61,13 @@ export class EditComponent implements OnInit {
         next: (result) => {
           if (result.status === 'Success') {
             this.image = result.url;
-            this.result = 'success';
-            this.error = false;
-            const base64 = result.url;
-            const editedImageUrl = `data:image/png;base64,${base64}`;
-            this.image = editedImageUrl;
             this.userService.updateUserDetails();
             this.toastr.success(result.message);
           }
         },
         error: (err: HttpErrorResponse) => {
-          this.error = true;
-          if (
-            err.error?.status === 'SERVICE_UNAVAILABLE' ||
-            err.error?.status === 'INTERNAL_SERVER_ERROR'
-          ) {
-            this.toastr.error('networkIssue');
-            this.result = 'networkIssue';
-          } else if (err.error?.status === 'PAYMENT_REQUIRED') {
-            this.toastr.error('creditIssue');
-            this.result = 'creditIssue';
-          }
+          this.errorService.errorSubject.next(err.error?.status);
+          this.router.navigate(['error']);
         },
       });
     } catch (err) {

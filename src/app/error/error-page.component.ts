@@ -23,11 +23,17 @@ export class ErrorPageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.errorService.errorSubject.subscribe((error) => {
-      if (error) {
-        this.type = error;
+    this.errorService.errorSubject.subscribe({
+      next: (error) => {
+        if (error) {
+          this.config = this.errorService.getError(error);
+        } else {
+          this.router.navigate(['/home']);
+        }
+      },
+      error: (err) => {
         this.config = this.errorService.getError(this.type);
-      }
+      },
     });
   }
 

@@ -45,10 +45,10 @@ export class EditComponent implements OnInit {
 
   inputSelected(input: string) {
     this.userPrompt = input;
-    this.sendToServer();
+    this.editImage();
   }
 
-  async sendToServer(): Promise<void> {
+  async editImage() {
     try {
       const imageFile = await this.imageService.fetchImageFromUrl(this.image);
 

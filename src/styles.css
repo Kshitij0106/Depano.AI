@@ -30,17 +30,19 @@ html {
 }
 
 .toast-success {
-  background-color: #000000 !important;
-  color: #16a34a !important;
+  background-color: #003d1c !important;
+  color: #9effce !important;
   border-radius: 8px !important;
-  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAACXBIWXMAAAsTAAALEwEAmpwYAAAByUlEQVR4nO2WO0sDQRDHr/EjWPhEsLHQSssks5E0ggZBbuYkvYXPr+BXsAyKhaW9j0IzE7W0NyLYinYmdirKJpeoJLe3dxfRIgMDdyx7v5v/zmMdp2f/zXKX7igwboDQKQhVQPCl4fqZToFpPV2mka4BZ8/cIWAsgtCbEvowOTC+K6FDYBpLBAXGRSVUCwO2OVM1K14+FlQJbfkRRIP+iN7bjBwpJIB+h1tHDlwYjiWvQfbclTdoI/F+16BfvhteMhbZG1lyoTetpOlsNxKe6WO25E4Du6m29bK3ZpAZT5JAgXGyEYA3075OR6bzvYuZQE8Zcaca0OUJJfTQQe6KCVz7DajvtWAwU7XjphIu1Wtb8CVYXpzU76aycgzJddtpU/acxus/VnKhCY8ElVCpA5PrrlkOGq6Y7qNAQ5NLjzbD5hZ8+nqlLwq04bgaCNbzNKSBtODRoPRqbCD+B/dCsvgemLZ1Nkeo8aJjM/gDszuGA+NzulwYcGwsIzTXjZ6tx2JGcMEK2jQ9xJNeBHTvd+JYVrx8HNm1vMA07ySx1IXbD4w7OjNtolSCB9Znan0zKXtrivFYCd74fb2mn3Vz0HUaWjI9c/7APgHqFRd3hEQMfAAAAABJRU5ErkJggg==) !important;
+  background-size: 20px 20px !important;
+  background-image: url("/assets/icons/success.svg");
 }
 
 .toast-error {
-  background-color: #000000 !important;
-  color: #e9500e !important;
+  background-color: #3f0000 !important;
+  color: #ff9e9e !important;
   border-radius: 8px !important;
-  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAADHklEQVR4nO2aS2sUQRDH55ToQTFgoje9KeIpnvSmiK5skp3/fxmQeMgnMAS/hY+DoiBe/QjqkvgNRDybzePkC8WQo273iCO1Tl47szPbsz2PhDTUabur67dVXV3dPY5z2A5oC+r1sY7rNhT5UAEtDbQVuakA1RVyUwPL8pv0kb5Bo3HCqUILarVRBdxRwJIC/mgyMBEZo8hFRc6KLqdwgLm5I5q8p8mvpsb3FeCLBhZEdyEQvuve0uS6NYAo0JpP3sw3jMgnuQFEgV4GnnfULsT09ClNfigMguEaIt8HwIQViN+Nxllxd9EQesczq2LDcJ7wvHFJo6VBcFvWA887PUxmKjycdFKYZUnRinxetvG6FwZ4miXFBlUUv9m8MVhI1Wqjmlwp22DdT4C1gTbNcMcu32Amwsyne0NKhbINZap8Tlz4UgAaK3XdywqYVOR307EyRsbqZvOK8VjgdhLI2wwKJ2Vsx/MumMBIXxnTDWfXvZRh3lZ8WNXrY5lK8V0GDQqTZYyO6vCDWu14BKRDulljVpE/FHAxNOycIr8N1Jc8n9RXp4jvulNxYfUoq8JB/2UbntB7w+tBHEhrGKVpnrHpCb0lwKsIiFSZQyvu86/b9oTeAWlHPUJuWFEeA5MLBLvz/IwLLWVrgt5QshpO3DNHp3iQlGxmD4QHJLS0pYq34MW+nH/67VkTJpumHib9yjWmbU9k6aNN5gTu51eipGQnm57x40oUuVDeV0UjoGOLxnCdLO2bMp58EwsRrpNZY/eSV+VglPVgJWN94JrVg1Wwn466njfSF6TrZmChAoYGiQLcTYTY5ZV2hSFWB75xlPeJ0g1mVBT51yevOyZNkc8qBwI8NoLYCjG5OK4QxLvUBd4XZmrqZEXWy7o8NjkWHnqsHIMzysov8sxQENueASbKCDP1P5zGrUD0PoZK5igEBHiR69u7vE/kGmpA2zjFZm3hpjkvpYJFiE+yY5fzBYTnjUjxFn5f4huvAdKXKlZ0ZE6ttpucDTrktFxjKvJ19wMacmPXRzVyufFRjqdyspNDUTAzc8y6IYfNqUb7B5wH4TdHQIraAAAAAElFTkSuQmCC) !important;
+  background-size: 18px 18px !important;
+  background-image: url("/assets/icons/error.svg") !important;
 }
 
 .toast-title {

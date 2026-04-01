@@ -65,7 +65,6 @@ export class ResultComponent implements OnInit {
     this.imageSubscription = this.imageService.imageSubject
       .pipe(filter(Boolean))
       .subscribe((result) => {
-        console.log('Received image result:', result);
         this.image = result.url;
         this.promptService.setPromptId(result.promptId);
         this.userService.updateUserDetails();

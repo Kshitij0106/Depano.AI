@@ -1,5 +1,5 @@
 <div class="error-container">
-  <div class="error-content">
+  <div *ngIf="this.config" class="error-content">
     <h1 class="error-title">{{ config.title }}</h1>
     <p class="error-subtitle">{{ config.subtitle }}</p>
 

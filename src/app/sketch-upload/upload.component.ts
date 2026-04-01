@@ -48,13 +48,9 @@ export class UploadComponent {
       return;
     }
 
-    const resizedImage = new File([this.uploadedFile], this.uploadedFile.name, {
-      type: this.uploadedFile.type,
-    });
-
     const formData = await this.imageService.prepareFormData(
       'sketch',
-      resizedImage,
+      this.uploadedFile,
       this.userPrompt,
     );
 
@@ -98,11 +94,17 @@ export class UploadComponent {
     }
   }
 
-  /**
-   *  Validate file type and size
-   */
   private validateAndSetFile(file: File): void {
-    if (!this.allowedTypes.includes(file.type)) {
+    const fileName = file.name.toLowerCase();
+
+    const isValidType = this.allowedTypes.includes(file.type);
+
+    const isValidExtension =
+      fileName.endsWith('.jpg') ||
+      fileName.endsWith('.jpeg') ||
+      fileName.endsWith('.png');
+
+    if (!isValidType || !isValidExtension) {
       this.toastr.error('Only JPG, JPEG, or PNG files are allowed.');
       this.uploadedFile = null;
       return;

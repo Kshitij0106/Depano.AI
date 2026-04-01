@@ -4,10 +4,9 @@ import { AboutComponent } from '../about/about.component';
 import { VisionComponent } from '../vision/vision.component';
 import { OutputsComponent } from '../outputs/outputs.component';
 import { FooterComponent } from 'src/app/footer/footer.component';
-import { UserService } from 'src/app/services/user.service';
+import { User, UserService } from 'src/app/services/user.service';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { User } from 'src/app/models/user.model';
 import { FeatureComponent } from '../feature/feature.component';
 import { LucideAngularModule } from 'lucide-angular';
 

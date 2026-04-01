@@ -1,4 +1,6 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Output, OnInit } from '@angular/core';
+import { AuthService } from '../auth/services/auth.service';
+import { UserService } from '../services/user.service';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../header/header.component';
 import { LucideAngularModule } from 'lucide-angular';
@@ -11,7 +13,6 @@ export interface PricingPlan {
   images: string;
   description: string;
   features: string[];
-  cta: string;
   popular: boolean;
 }
 
@@ -22,8 +23,24 @@ export interface PricingPlan {
   templateUrl: './pricing.component.html',
   styleUrls: ['./pricing.component.css'],
 })
-export class PricingComponent {
-  @Input() isLoggedIn: boolean = false;
+export class PricingComponent implements OnInit {
+  isLoggedIn: boolean = false;
+  credits: string = '';
+
+  constructor(
+    private authService: AuthService,
+    private userService: UserService,
+  ) {}
+
+  ngOnInit(): void {
+    this.isLoggedIn = this.authService.isLoggedIn();
+    if (this.isLoggedIn) {
+      this.userService.updateUserDetails();
+      this.userService.userDetails.subscribe((user) => {
+        this.credits = user.credits;
+      });
+    }
+  }
 
   @Output() selectPlan = new EventEmitter<{
     name: string;
@@ -49,7 +66,6 @@ export class PricingComponent {
         'Fast processing using Gemini Imagine & SDXL',
         'Ideal for light usage',
       ],
-      cta: 'Get Started',
       popular: false,
     },
     {
@@ -65,7 +81,6 @@ export class PricingComponent {
         'Priority image generation',
         'Ideal for regular usage',
       ],
-      cta: 'Choose Plan',
       popular: true,
     },
     {
@@ -82,7 +97,6 @@ export class PricingComponent {
         'Best value per image',
         'Ideal for heavy usage',
       ],
-      cta: 'Subscribe Now',
       popular: false,
     },
   ];

@@ -69,6 +69,7 @@ export class HeaderComponent implements OnInit {
         this.loggedInUser.userName =
           user.userName || this.userService.getUserName();
         this.loggedInUser.credits = user.credits;
+        console.log(this.loggedInUser.credits);
       });
     }
   }

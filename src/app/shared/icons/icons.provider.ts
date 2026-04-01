@@ -1,5 +1,5 @@
 import { importProvidersFrom } from '@angular/core';
-import { BookImage, LucideAngularModule } from 'lucide-angular';
+import { BookImage, LucideAngularModule, Star } from 'lucide-angular';
 
 import {
   Sparkles,
@@ -112,6 +112,7 @@ export function provideAppIcons() {
       TriangleAlert,
       RefreshCcw,
       BookImage,
+      Star,
     }),
   );
 }

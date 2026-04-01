@@ -1,3 +1,81 @@
+/* Current Balance Badge Styles */
+.current-balance-badge {
+  display: flex;
+  justify-content: center;
+}
+
+.current-balance-container {
+  display: flex;
+  justify-content: center;
+  margin: 40px 0 50px 0;
+}
+
+.current-balance-badge {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.current-balance-card {
+  background: #ffffff;
+  backdrop-filter: blur(10px);
+  border: 1px solid #e5e7eb;
+  box-shadow:
+    0 4px 15px rgba(0, 0, 0, 0.08),
+    0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  padding: 16px 28px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: fit-content;
+  min-width: 220px;
+}
+
+.balance-icon {
+  background: linear-gradient(135deg, #ffb900 0%, #ff8904 100%);
+  color: #ffffff;
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.balance-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+
+.current-balance-title {
+  color: #6a7282;
+  font-family: Inter, sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.current-balance-credits {
+  font-family: Inter, sans-serif;
+  font-weight: 700;
+  font-size: 19px;
+  line-height: 1.2;
+  color: #101828;
+  margin-top: 2px;
+}
+
+.current-balance-expiry {
+  font-family: Inter, sans-serif;
+  font-size: 12px;
+  color: #ff6900;
+  font-weight: 500;
+  margin-top: 3px;
+}
+
 .pricing-wrapper {
   background:
     radial-gradient(
@@ -53,7 +131,9 @@
 }
 
 .card {
-  background: white;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
   border-radius: 16px;
   padding: 30px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
@@ -65,8 +145,7 @@
   }
 
   &.popular {
-    border: 2px solid #ff7a18;
-    transform: scale(1.05);
+    border: 2px solid #ec4899;
   }
 }
 
@@ -75,7 +154,7 @@
   top: -12px;
   left: 50%;
   transform: translateX(-50%);
-  background: #ff7a18;
+  background: linear-gradient(to right, #ec4899, #f97316);
   color: white;
   padding: 4px 12px;
   font-size: 12px;
@@ -126,6 +205,7 @@
   padding: 4px 10px;
   width: fit-content;
   gap: 6px;
+  background: linear-gradient(90deg, #fef3c6 0%, #ffedd4 100%);
 }
 
 .description {
@@ -161,7 +241,7 @@
 }
 
 .btn-primary {
-  background: linear-gradient(to right, #ff7a18, #ffb347);
+  background: linear-gradient(to right, #ec4899, #f97316);
   border: none;
   color: white;
   padding: 10px 18px;
@@ -204,9 +284,13 @@
   }
 }
 
+.card button {
+  margin-top: auto;
+}
+
 .index {
-  background: #ff8904;
-  color: #ffffff;
+  background: #f3f4f6;
+  color: #585656;
   font-family: "Inter", sans-serif;
   font-weight: 300;
   font-style: Semibold;
@@ -214,6 +298,10 @@
   padding: 4px 6px;
   border-radius: 12px;
   font-size: 12px;
+}
+
+.card.popular .index {
+  background: #fce7f3;
 }
 
 .sub-features {

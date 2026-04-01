@@ -27,7 +27,6 @@
             ></lucide-icon>
           </button>
 
-          <!-- DROPDOWN -->
           <ul class="dropdown-menu dropdown-menu-custom">
             <li class="dropdown-header-section">
               <div class="user-profile-section">
@@ -38,11 +37,7 @@
             </li>
 
             <li class="credits-section">
-              <div
-                class="credits-card"
-                style="cursor: pointer"
-                (click)="goToPricing()"
-              >
+              <div class="credits-card" (click)="goToPricing()">
                 <div class="credits-left">
                   <lucide-icon name="coins" [size]="20"></lucide-icon>
                   <div>
@@ -56,10 +51,8 @@
               </div>
             </li>
 
-            <!-- DIVIDER -->
             <li><hr class="dropdown-divider" /></li>
 
-            <!-- LOGOUT -->
             <li class="dropdown-item-wrapper">
               <button
                 class="dropdown-item logout-btn"

@@ -25,11 +25,11 @@ export class UploadComponent {
   generatedImageUrl: string | null = null;
   userPrompt: string = '';
 
-  public selectedCategoryName: string = 'Or describe something custom';
+  public label: string = 'Describe your sketch';
   public hideUserPrompt: boolean = false;
 
   private readonly allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
-  private readonly maxFileSizeMB = 10;
+  private readonly maxFileSizeMB = 4;
 
   constructor(
     private imageService: ImageService,
@@ -40,6 +40,7 @@ export class UploadComponent {
 
   inputSelected(input: string) {
     this.userPrompt = input;
+    this.handleGenerateImage();
   }
 
   async handleGenerateImage(): Promise<void> {

@@ -44,7 +44,7 @@
 .profile {
   background-color: #ffffff;
   color: #000;
-  width: auto;
+  width: 138px;
   min-width: 100px;
   height: 35px;
   display: flex;
@@ -93,23 +93,12 @@
   gap: 12px;
 }
 
-.user-avatar {
-  border-radius: 50%;
-  background: #fda4af;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  width: 40px;
-  height: 40px;
-}
-
 .profile:focus,
 .profile:active,
 .profile:focus-visible {
   outline: none !important;
   box-shadow: none !important;
-  border: none; /* optional */
+  border: none;
 }
 
 .user-name {
@@ -129,6 +118,7 @@
   background: #fff7ed;
   border-radius: 12px;
   padding: 14px 16px;
+  cursor: pointer;
 }
 
 .credits-left {

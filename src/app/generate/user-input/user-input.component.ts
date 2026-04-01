@@ -19,7 +19,7 @@ import { LucideAngularModule } from 'lucide-angular';
 })
 export class UserInputComponent {
   @Input() hideUserPrompt!: boolean;
-  @Input() categoryName!: string;
+  @Input() label!: string;
   @Output() userInput = new EventEmitter<string>();
   @ViewChild('userInputCategory') userInputRef!: ElementRef;
 

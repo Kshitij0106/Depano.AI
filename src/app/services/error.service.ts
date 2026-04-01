@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { ERROR_CONFIG_MAP } from '../error/error.config';
-import { ErrorConfig, ErrorType } from '../error/error.type';
+import { ErrorType, ErrorConfig } from '../error/error-page.component';
 
 @Injectable({
   providedIn: 'root',

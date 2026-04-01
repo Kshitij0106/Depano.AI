@@ -12,7 +12,6 @@ import { ToastrService } from 'ngx-toastr';
 import { PromptService } from '../services/prompt.service';
 import { CategoryService } from '../generate/services/category.service';
 import { filter, Subscription } from 'rxjs';
-import { ErrorType } from '../error/error.type';
 import { ErrorService } from '../services/error.service';
 
 @Component({
@@ -45,9 +44,6 @@ export class ResultComponent implements OnInit {
     this.onBackButton();
   }
 
-  /**
-   * Navigates to homepage.
-   */
   openHome() {
     this.emptyData();
     this.router.navigate(['gender']);

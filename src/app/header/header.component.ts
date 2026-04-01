@@ -51,7 +51,10 @@ export class HeaderComponent implements OnInit {
    * Show Profile dropdown on homepage only if logged in.
    */
   checkProfile() {
-    if (this.source === 'home' && !this.authService.isLoggedIn()) {
+    if (
+      (this.source === 'home' || this.source === 'pricing') &&
+      !this.authService.isLoggedIn()
+    ) {
       this.showProfile = false;
     } else {
       this.showProfile = true;

@@ -4,22 +4,18 @@
     <div class="col">
       <nav class="crumb">
         <div class="breadcrumb-pill">
-          <div class="breadcrumb-list-wrapper">
-            <ol class="breadcrumb">
-              <ng-container
-                *ngFor="let crumb of breadcrumbsList; let i = index"
-              >
-                <li class="breadcrumb-item">
-                  <a
-                    class="category-link"
-                    [routerLink]="['/generate', crumb.key]"
-                    (click)="goToBreadcrumb(crumb.key)"
-                    >{{ crumb.value }}</a
-                  >
-                </li>
-              </ng-container>
-            </ol>
-          </div>
+          <ol class="breadcrumb">
+            <ng-container *ngFor="let crumb of breadcrumbsList; let i = index">
+              <li class="breadcrumb-item">
+                <a
+                  class="category-link"
+                  [routerLink]="['/generate', crumb.key]"
+                  (click)="goToBreadcrumb(crumb.key)"
+                  >{{ crumb.value }}</a
+                >
+              </li>
+            </ng-container>
+          </ol>
         </div>
       </nav>
     </div>
@@ -53,7 +49,7 @@
 
       <div class="user-input">
         <app-user-input
-          [categoryName]="selectedCategoryName"
+          [label]="'Add your own ' + selectedCategoryName"
           [hideUserPrompt]="hideUserPrompt"
           (userInput)="inputSelected($event)"
         ></app-user-input>

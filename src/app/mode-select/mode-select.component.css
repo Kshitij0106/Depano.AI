@@ -122,92 +122,10 @@
   box-shadow: 0 0 0 2px #a855f7;
 }
 
-.card-bg-gradient {
-  position: absolute;
-  inset: 0;
-  opacity: 0.7;
-  transition: opacity 0.5s;
-}
-
-.card:hover .card-bg-gradient {
-  opacity: 1;
-}
-
-.card-gender .card-bg-gradient {
-  background: linear-gradient(
-    to bottom right,
-    rgba(236, 72, 153, 0.5),
-    rgba(249, 115, 22, 0.3),
-    rgba(251, 191, 36, 0.5)
-  );
-}
-
-.card-sketch-to-image .card-bg-gradient {
-  background: linear-gradient(
-    to bottom right,
-    rgba(168, 85, 247, 0.5),
-    rgba(236, 72, 153, 0.3),
-    rgba(99, 102, 241, 0.5)
-  );
-}
-
-.card-blob {
-  position: absolute;
-  border-radius: 9999px;
-  filter: blur(24px);
-}
-
-.card-blob1 {
-  top: 1rem;
-  right: 1rem;
-  width: 5rem;
-  height: 5rem;
-}
-
-.card-gender .card-blob1 {
-  background: linear-gradient(
-    to bottom right,
-    rgba(236, 72, 153, 0.2),
-    rgba(249, 115, 22, 0.2)
-  );
-}
-
-.card-sketch-to-image .card-blob1 {
-  background: linear-gradient(
-    to bottom right,
-    rgba(168, 85, 247, 0.2),
-    rgba(236, 72, 153, 0.2)
-  );
-}
-
-.card-blob2 {
-  bottom: 1.5rem;
-  left: 1.5rem;
-  width: 4rem;
-  height: 4rem;
-}
-
-.card-gender .card-blob2 {
-  background: linear-gradient(
-    to bottom right,
-    rgba(249, 115, 22, 0.2),
-    rgba(236, 72, 153, 0.2)
-  );
-}
-
-.card-sketch-to-image .card-blob2 {
-  background: linear-gradient(
-    to bottom right,
-    rgba(236, 72, 153, 0.2),
-    rgba(168, 85, 247, 0.2)
-  );
-}
-
 .card-content {
   position: relative;
   z-index: 10;
   padding: 2rem;
-
   width: 378;
   height: 598;
   opacity: 1;
@@ -242,7 +160,6 @@
   font-weight: 700;
   color: #101828;
   margin-bottom: 1rem;
-
   font-style: Bold;
   font-size: 21px;
   line-height: 28px;
@@ -253,7 +170,6 @@
 .card-description {
   color: #4b5565;
   margin-bottom: 1rem;
-
   font-family: Inter;
   font-weight: 400;
   font-style: Regular;
@@ -277,32 +193,6 @@
   gap: 0.75rem;
   font-size: 0.875rem;
   color: #374151;
-}
-
-.feature-dot {
-  width: 0.5rem;
-  height: 0.5rem;
-  border-radius: 9999px;
-}
-
-.dot-pink {
-  background-color: #ec4899;
-}
-
-.dot-orange {
-  background-color: #f97316;
-}
-
-.dot-amber {
-  background-color: #fbbf24;
-}
-
-.dot-purple {
-  background-color: #a855f7;
-}
-
-.dot-indigo {
-  background-color: #6366f1;
 }
 
 .card-button {

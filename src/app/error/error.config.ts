@@ -1,4 +1,4 @@
-import { ErrorType, ErrorConfig } from './error.type';
+import { ErrorConfig, ErrorType } from './error-page.component';
 
 const svcErrorConfig: ErrorConfig = {
   title: 'Server Temporarily Unavailable',

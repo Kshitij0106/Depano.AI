@@ -71,23 +71,18 @@ export class HeaderComponent implements OnInit {
     }
   }
 
-  /**
-   * Truncates username to 10 characters with ellipsis if longer
-   */
   getUsername(name: string): string {
     if (!name) return '';
 
-    const fullname = name.trim().split(' ');
-    const firstName = fullname[0] || '';
-    const lastName = fullname.length > 1 ? fullname[1] : '';
+    const trimmed = name.trim();
 
-    let displayName = firstName;
-
-    if (firstName.length < 4 && lastName) {
-      displayName = `${firstName} ${lastName}`;
+    // If name contains a space, take only the first name
+    if (trimmed.includes(' ')) {
+      return trimmed.split(' ')[0].substring(0, 10);
     }
 
-    return displayName.length > 10 ? displayName.substring(0, 10) : displayName;
+    // No space — truncate with ellipsis if too long
+    return trimmed.length > 10 ? trimmed.substring(0, 10) + '…' : trimmed;
   }
 
   goToPricing() {

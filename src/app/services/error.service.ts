@@ -12,6 +12,9 @@ export class ErrorService {
   constructor() {}
 
   getError(errorCode: ErrorType): ErrorConfig {
-    return ERROR_CONFIG_MAP[errorCode];
+    return (
+      ERROR_CONFIG_MAP[errorCode] ??
+      ERROR_CONFIG_MAP[ErrorType.INTERNAL_SERVER_ERROR]
+    );
   }
 }

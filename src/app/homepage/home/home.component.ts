@@ -9,6 +9,7 @@ import { AuthService } from 'src/app/auth/services/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FeatureComponent } from '../feature/feature.component';
 import { LucideAngularModule } from 'lucide-angular';
+import { ErrorService } from 'src/app/services/error.service';
 
 @Component({
   standalone: true,
@@ -31,22 +32,15 @@ export class HomeComponent {
     private router: Router,
     private authService: AuthService,
     private userService: UserService,
+    private errorService: ErrorService,
   ) {}
 
-  /**
-   * Check if user is logged in
-   */
   isUserLoggedIn(): boolean {
     return this.authService.isLoggedIn();
   }
 
-  /**
-   * Initiates the user flow by checking the login status.
-   * If the user is logged in, they are redirected to the gender selection page;
-   * otherwise, they are redirected to the login page.
-   */
-  getStarted() {
-    if (this.authService.isLoggedIn()) {
+  validateUserSession(destination: string) {
+    if (this.isUserLoggedIn()) {
       this.router.navigate(['mode-select']);
     } else {
       this.userService.getMyUserDetails().subscribe({
@@ -56,49 +50,14 @@ export class HomeComponent {
         },
         error: (err: HttpErrorResponse) => {
           if (err.error?.status === 'UNAUTHORIZED') {
-            this.router.navigate(['login']);
-          } else if (err.error?.status === 'SERVICE_UNAVAILABLE') {
-            // load error screen
-          }
-        },
-      });
-    }
-  }
-
-  login() {
-    if (this.authService.isLoggedIn()) {
-      this.router.navigate(['mode-select']);
-    } else {
-      this.userService.getMyUserDetails().subscribe({
-        next: (user: User) => {
-          this.userService.userDetails.next(user);
-          this.router.navigate(['mode-select']);
-        },
-        error: (err: HttpErrorResponse) => {
-          if (err.error?.status === 'UNAUTHORIZED') {
-            this.router.navigate(['login']);
-          } else if (err.error?.status === 'SERVICE_UNAVAILABLE') {
-            // load error screen
-          }
-        },
-      });
-    }
-  }
-
-  signup() {
-    if (this.authService.isLoggedIn()) {
-      this.router.navigate(['mode-select']);
-    } else {
-      this.userService.getMyUserDetails().subscribe({
-        next: (user: User) => {
-          this.userService.userDetails.next(user);
-          this.router.navigate(['mode-select']);
-        },
-        error: (err: HttpErrorResponse) => {
-          if (err.error?.status === 'UNAUTHORIZED') {
-            this.router.navigate(['signup']);
-          } else if (err.error?.status === 'SERVICE_UNAVAILABLE') {
-            // load error screen
+            if (destination === 'login') {
+              this.router.navigate(['login']);
+            } else if (destination === 'signup') {
+              this.router.navigate(['signup']);
+            }
+          } else {
+            this.errorService.errorSubject.next(err.error?.status);
+            this.router.navigate(['error']);
           }
         },
       });

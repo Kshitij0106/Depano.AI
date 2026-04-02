@@ -3,18 +3,20 @@
   <div class="row">
     <div class="col">
       <nav class="crumb">
-        <ol class="breadcrumb">
-          <ng-container *ngFor="let crumb of breadcrumbsList">
-            <li class="breadcrumb-item">
-              <a
-                class="category-link"
-                [routerLink]="['/generate', crumb.key]"
-                (click)="goToBreadcrumb(crumb.key)"
-                >{{ crumb.value }}</a
-              >
-            </li>
-          </ng-container>
-        </ol>
+        <div class="breadcrumb-pill">
+          <ol class="breadcrumb">
+            <ng-container *ngFor="let crumb of breadcrumbsList; let i = index">
+              <li class="breadcrumb-item">
+                <a
+                  class="category-link"
+                  [routerLink]="['/generate', crumb.key]"
+                  (click)="goToBreadcrumb(crumb.key)"
+                  >{{ crumb.value }}</a
+                >
+              </li>
+            </ng-container>
+          </ol>
+        </div>
       </nav>
     </div>
     <div *ngIf="showGenerateButton; else showSkip" class="col">
@@ -26,6 +28,7 @@
       <div class="col">
         <button type="button" class="btn skip-btn" (click)="onSkip()">
           Skip Category
+          <lucide-icon name="arrow-right"></lucide-icon>
         </button>
       </div>
     </ng-template>
@@ -46,7 +49,7 @@
 
       <div class="user-input">
         <app-user-input
-          [categoryName]="selectedCategoryName"
+          [label]="'Add your own ' + selectedCategoryName"
           [hideUserPrompt]="hideUserPrompt"
           (userInput)="inputSelected($event)"
         ></app-user-input>

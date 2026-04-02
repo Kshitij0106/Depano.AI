@@ -1,25 +1,21 @@
-<div *ngIf="!hideUserPrompt">
-  <div class="container-fluid">
-    <h6 class="or">OR</h6>
-  </div>
-  <div class="container-fluid">
-    <div class="form-floating">
-      <textarea
-        class="prompt-input form-control"
-        placeholder="Add your own {{ categoryName }}"
-        id="userInput"
-        #userInputCategory
-      ></textarea>
-      <span>
-        <button
-          for="userInput"
-          type="submit"
-          class="btn"
-          (click)="onSubmit(userInputCategory.value)"
-        >
-          Submit
-        </button>
-      </span>
-    </div>
+<div *ngIf="!hideUserPrompt" class="prompt-wrapper mt-3">
+  <label class="prompt-label"> {{ label }} </label>
+
+  <div class="prompt-box">
+    <textarea
+      class="prompt-input"
+      placeholder="E.g., 'Vintage-inspired leather jacket with modern details', 'Sustainable casual wear', etc."
+      #userInputCategory
+      [(ngModel)]="userInputCategory.value"
+    ></textarea>
+    <button
+      for="userInput"
+      type="submit"
+      class="prompt-btn"
+      [disabled]="!userInputCategory.value.trim()"
+      (click)="onSubmit(userInputCategory.value)"
+    >
+      <lucide-icon name="arrow-right"></lucide-icon>
+    </button>
   </div>
 </div>

@@ -1,95 +1,17 @@
-<app-header [source]="'result'"></app-header>
-<div class="container container-fluid mt-2">
-  <div class="action-buttons mt-4">
-    <button
-      class="btn secondary"
-      (click)="undoLastMask()"
-      [disabled]="!drawnPaths.length"
-    >
-      Undo Last
-    </button>
+<app-header [source]="'edit'"></app-header>
 
-    <button class="btn secondary" (click)="resetCanvas()">Reset</button>
-  </div>
-
-  <div
-    style="
-      display: flex;
-      gap: 20px;
-      align-items: center;
-      flex-direction: column;
-    "
-  >
-    <div #canvasContainer id="canvasContainer" style="border-radius: 30px">
-      <canvas #canvasEl style="border-radius: 30px"></canvas>
+<main class="page-wrapper">
+  <div class="content-container">
+    <div class="image-section">
+      <img class="result-image img-fluid" [src]="image" alt="Result Image" />
     </div>
 
-    <!-- <img
-      *ngIf="maskImageUrl"
-      [src]="maskImageUrl"
-      alt="Mask"
-      style="width: 55vh; height: 65vh"
-    /> -->
-  </div>
-
-  <div
-    *ngIf="this.result === 'networkIssue' && this.error"
-    class="row error d-flex justify-content-center align-items-center"
-  >
-    <div class="row align-items-center">
-      <div class="col-12 col-md-6 mb-3 mb-md-0 ps-md-5">
-        <h1 class="error-txt mb-3">Uh-oh! 🌐 Network Error</h1>
-        <p class="error-txt text-md-start">
-          It seems we're having trouble connecting right now. Please check your
-          internet connection and try again. <br />
-          If the problem persists, we'll be here when you're back online.
-          <br />Things you can try:
-        </p>
-        <ul class="ms-md-4 text-md-start">
-          <li>Ensure you're connected to the internet.</li>
-          <li>Refresh this page or reopen the app.</li>
-          <li>Try again in a few moments.</li>
-        </ul>
-      </div>
-
-      <div class="col-12 col-md-6 d-flex justify-content-center">
-        <img class="img-fluid" src="{{ image }}" />
-      </div>
+    <div class="user-input">
+      <app-user-input
+        [label]="label"
+        [hideUserPrompt]="hideUserPrompt"
+        (userInput)="inputSelected($event)"
+      ></app-user-input>
     </div>
   </div>
-
-  <div
-    *ngIf="this.result === 'creditIssue' && this.error"
-    class="error d-flex justify-content-center align-items-center"
-  >
-    <div class="row align-items-center">
-      <div class="col-12 col-md-6 mb-3 mb-md-0 ps-md-5">
-        <h1 class="error-txt mb-3">Oh no! 😕 You're out of credits</h1>
-        <p class="error-txt">
-          It looks like you've run out of credits to continue. To keep exploring
-          and using all our features, you can easily top up your credits or
-          upgrade to a plan that suits your needs.
-        </p>
-      </div>
-
-      <div class="col-12 col-md-6 d-flex justify-content-center">
-        <img class="img-fluid" src="{{ image }}" />
-      </div>
-    </div>
-  </div>
-
-  <div *ngIf="drawnPaths.length > 0" class="prompt-footer">
-    <input
-      type="text"
-      [(ngModel)]="userPrompt"
-      placeholder="Describe your edit (e.g., add pocket, remove sleeve)..."
-    />
-    <button
-      class="btn primary"
-      [disabled]="!userPrompt.trim() || !drawnPaths.length"
-      (click)="generateImage()"
-    >
-      Generate Image
-    </button>
-  </div>
-</div>
+</main>

@@ -1,5 +1,8 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { LucideAngularModule } from 'lucide-angular';
+import { PromptService } from '../services/prompt.service';
+import { BreadcrumbService } from '../services/breadcrumb.service';
 
 @Component({
   standalone: true,
@@ -9,18 +12,26 @@ import { LucideAngularModule } from 'lucide-angular';
   imports: [LucideAngularModule],
 })
 export class FooterComponent {
-  @Input() onNavigate?: (section: string) => void;
-  @Input() onStartDesigning?: () => void;
-  @Input() onSignUp?: () => void;
-  @Input() onSignIn?: () => void;
+  constructor(
+    private router: Router,
+    private promptService: PromptService,
+    private breadcrumbService: BreadcrumbService,
+  ) {}
 
-  handleSocialClick(platform: string): void {
-    alert(`Opening ${platform}\nFollow us for the latest in AI fashion design`); // Simplified toast replacement
+  onNavigate(location: string) {
+    this.router.navigate([location]);
   }
 
-  handleLinkClick(link: string): void {
-    alert(
-      `Navigating to ${link}\nThis would typically open the respective page`
-    );
+  onNavigateToCategory(category: string) {
+    this.breadcrumbService.addBreadcrumb(category.toLowerCase(), category);
+    this.promptService.setGender(category.toLowerCase());
+    this.router.navigate(['generate', category.toLowerCase()]);
+  }
+
+  scrollToHomePageSection(sectionId: string) {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
   }
 }

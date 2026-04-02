@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ImageService } from '../services/image.service';
 import { BreadcrumbService } from '../services/breadcrumb.service';
-import { Router } from '@angular/router';
+import { NavigationStart, Router } from '@angular/router';
 import { CheckedAttributesService } from '../generate/services/checked-attributes.service';
 import { UserService } from '../services/user.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -9,6 +9,10 @@ import { HeaderComponent } from '../header/header.component';
 import { CommonModule } from '@angular/common';
 import { LucideAngularModule } from 'lucide-angular';
 import { ToastrService } from 'ngx-toastr';
+import { PromptService } from '../services/prompt.service';
+import { CategoryService } from '../generate/services/category.service';
+import { filter, Subscription } from 'rxjs';
+import { ErrorService } from '../services/error.service';
 
 @Component({
   standalone: true,
@@ -17,25 +21,30 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./result.component.css'],
   imports: [HeaderComponent, CommonModule, LucideAngularModule],
 })
-export class ResultComponent {
+export class ResultComponent implements OnInit {
   image!: string;
-  result: string = '';
-  error: boolean = false;
+  showRegenerateButton: boolean = false;
+
+  private imageSubscription!: Subscription;
+  private navigationSubscription!: Subscription;
 
   constructor(
     private imageService: ImageService,
+    private promptService: PromptService,
     private userService: UserService,
     private breadcrumbService: BreadcrumbService,
+    private categoryService: CategoryService,
     private checkAttributeService: CheckedAttributesService,
+    private errorService: ErrorService,
     private router: Router,
-    private toastr: ToastrService
-  ) {
+    private toastr: ToastrService,
+  ) {}
+
+  ngOnInit(): void {
     this.getImage();
+    this.onBackButton();
   }
 
-  /**
-   * Navigates to homepage.
-   */
   openHome() {
     this.emptyData();
     this.router.navigate(['gender']);
@@ -46,68 +55,42 @@ export class ResultComponent {
       this.generateImage();
     } else {
       this.image = this.imageService.imageUrl.value;
-      this.result = 'success';
-      this.error = false;
     }
   }
 
-  /**
-   * Sends a request to the generate image.
-   */
   generateImage() {
-    this.imageService.generateImage().subscribe({
-      next: (result) => {
-        if (result.status === 'Success') {
-          this.image = result.url;
-          this.result = 'success';
-          this.error = false;
-          this.imageService.setPromptId(result.promptId);
-          this.userService.updateUserDetails();
-          this.toastr.success(result.message);
+    this.imageSubscription = this.imageService.imageSubject
+      .pipe(filter(Boolean))
+      .subscribe((result) => {
+        if (result.promptId) {
+          this.showRegenerateButton = true;
         }
-      },
-      error: (err: HttpErrorResponse) => {
-        this.error = true;
-        if (
-          err.error?.status === 'SERVICE_UNAVAILABLE' ||
-          err.error?.status === 'INTERNAL_SERVER_ERROR'
-        ) {
-          this.toastr.error('networkIssue');
-          this.result = 'networkIssue';
-        } else if (err.error?.status === 'PAYMENT_REQUIRED') {
-          this.toastr.error('creditIssue');
-          this.result = 'creditIssue';
-        }
-      },
-    });
+        this.image = result.url;
+        this.promptService.setPromptId(result.promptId);
+        this.userService.updateUserDetails();
+        this.toastr.success(result.message);
+      });
   }
 
   /**
    * Sends a request again to the prompt service to retrieve image and updates the 'image' property accordingly.
    */
   regenerate() {
-    const promptId = this.getPromptId();
-    this.imageService.regenerateImage(promptId).subscribe({
-      next: (result) => {
-        if (result.status === 'Success') {
-          this.image = result.url;
-          this.result = 'success';
-          this.error = false;
-          this.userService.updateUserDetails();
-        }
-      },
-      error: (err: HttpErrorResponse) => {
-        this.error = true;
-        if (
-          err.error?.status === 'SERVICE_UNAVAILABLE' ||
-          err.error?.status === 'INTERNAL_SERVER_ERROR'
-        ) {
-          this.result = 'networkIssue';
-        } else if (err.error?.status === 'PAYMENT_REQUIRED') {
-          this.result = 'creditIssue';
-        }
-      },
-    });
+    const promptId = this.promptService.getPromptId();
+    if (promptId) {
+      this.imageService.regenerateImage(promptId).subscribe({
+        next: (result) => {
+          if (result.status === 'Success') {
+            this.image = result.url;
+            this.userService.updateUserDetails();
+          }
+        },
+        error: (err: HttpErrorResponse) => {
+          this.errorService.errorSubject.next(err.error?.status);
+          this.router.navigate(['error']);
+        },
+      });
+    }
   }
 
   editImage() {
@@ -115,23 +98,82 @@ export class ResultComponent {
     this.router.navigate(['edit']);
   }
 
-  getPromptId(): string {
-    const promptId = localStorage.getItem('promptId');
-    if (!promptId || promptId.trim().length === 0) {
-      this.result = 'networkIssue';
-      throw new Error('PromptId missing or invalid');
+  downloadImage() {
+    if (!this.image) {
+      this.toastr.error('No image available to download');
+      return;
     }
-    return promptId;
+    (async () => {
+      try {
+        const res = await fetch(this.image);
+        if (!res.ok) throw new Error('Network response was not ok');
+        const blob = await res.blob();
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'depano-design.png';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        // revoke after a short delay to ensure download started
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+      } catch (err) {
+        this.toastr.error('Failed to download image');
+      }
+    })();
   }
 
-  /**
-   * Empties the data.
-   */
+  async shareImage() {
+    if (!this.image) {
+      this.toastr.error('No image available to share');
+      return;
+    }
+    // Try Web Share API first
+    try {
+      if ((navigator as any).share) {
+        await (navigator as any).share({
+          title: 'My AI Design',
+          text: 'Check out this design generated by Depano AI',
+          url: this.image,
+        });
+        return;
+      }
+
+      // Fallback: copy URL to clipboard
+      if ((navigator as any).clipboard) {
+        await (navigator as any).clipboard.writeText(this.image);
+        this.toastr.success('Image link copied to clipboard');
+        return;
+      }
+
+      this.toastr.info('Sharing not supported in this browser');
+    } catch (err) {
+      this.toastr.error('Failed to share image');
+    }
+  }
+
   emptyData() {
-    this.imageService.clearPromptId();
+    this.promptService.clearPromptId();
     this.imageService.imageUrl.next('');
-    this.imageService.emptyPrompt();
+    this.imageService.sketchUrl.next('');
+    this.imageService.imageSubject.next(null);
+    this.categoryService.deleteCategories();
     this.breadcrumbService.emptyBreadcrumbList();
     this.checkAttributeService.emptyCheckedAttributesList();
+  }
+
+  onBackButton() {
+    this.navigationSubscription = this.router.events.subscribe((event) => {
+      if (event instanceof NavigationStart) {
+        if (event.navigationTrigger === 'popstate') {
+          this.router.navigate(['/home']);
+        }
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    this.imageSubscription.unsubscribe();
+    this.navigationSubscription.unsubscribe();
   }
 }

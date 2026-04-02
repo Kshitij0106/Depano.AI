@@ -4,27 +4,26 @@ import {
   ElementRef,
   EventEmitter,
   Input,
-  OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { LucideAngularModule } from 'lucide-angular';
 
 @Component({
   standalone: true,
   selector: 'app-user-input',
   templateUrl: './user-input.component.html',
   styleUrls: ['./user-input.component.css'],
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule, LucideAngularModule],
 })
-export class UserInputComponent implements OnInit {
+export class UserInputComponent {
   @Input() hideUserPrompt!: boolean;
-  @Input() categoryName!: string;
+  @Input() label!: string;
   @Output() userInput = new EventEmitter<string>();
   @ViewChild('userInputCategory') userInputRef!: ElementRef;
 
   constructor() {}
-
-  ngOnInit(): void {}
 
   /**
    * Handles the submission of user input.

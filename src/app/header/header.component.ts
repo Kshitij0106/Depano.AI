@@ -4,10 +4,11 @@ import { BreadcrumbService } from '../services/breadcrumb.service';
 import { ImageService } from '../services/image.service';
 import { CheckedAttributesService } from '../generate/services/checked-attributes.service';
 import { AuthService } from '../auth/services/auth.service';
-import { UserService } from '../services/user.service';
-import { User } from '../models/user.model';
+import { User, UserService } from '../services/user.service';
 import { CommonModule } from '@angular/common';
 import { LucideAngularModule } from 'lucide-angular';
+import { CategoryService } from '../generate/services/category.service';
+import { PromptService } from '../services/prompt.service';
 
 @Component({
   standalone: true,
@@ -35,7 +36,9 @@ export class HeaderComponent implements OnInit {
     private userService: UserService,
     private breadcrumbService: BreadcrumbService,
     private imageService: ImageService,
-    private checkAttributeService: CheckedAttributesService
+    private categroryService: CategoryService,
+    private promptService: PromptService,
+    private checkAttributeService: CheckedAttributesService,
   ) {}
 
   ngOnInit(): void {
@@ -47,7 +50,10 @@ export class HeaderComponent implements OnInit {
    * Show Profile dropdown on homepage only if logged in.
    */
   checkProfile() {
-    if (this.source === 'home' && !this.authService.isLoggedIn()) {
+    if (
+      (this.source === 'home' || this.source === 'pricing') &&
+      !this.authService.isLoggedIn()
+    ) {
       this.showProfile = false;
     } else {
       this.showProfile = true;
@@ -67,23 +73,22 @@ export class HeaderComponent implements OnInit {
     }
   }
 
-  /**
-   * Truncates username to 10 characters with ellipsis if longer
-   */
   getUsername(name: string): string {
     if (!name) return '';
 
-    const fullname = name.trim().split(' ');
-    const firstName = fullname[0] || '';
-    const lastName = fullname.length > 1 ? fullname[1] : '';
+    const trimmed = name.trim();
 
-    let displayName = firstName;
-
-    if (firstName.length < 4 && lastName) {
-      displayName = `${firstName} ${lastName}`;
+    // If name contains a space, take only the first name
+    if (trimmed.includes(' ')) {
+      return trimmed.split(' ')[0].substring(0, 10);
     }
 
-    return displayName.length > 10 ? displayName.substring(0, 10) : displayName;
+    // No space — truncate with ellipsis if too long
+    return trimmed.length > 10 ? trimmed.substring(0, 10) + '…' : trimmed;
+  }
+
+  goToPricing() {
+    this.router.navigate(['/pricing']);
   }
 
   /**
@@ -104,9 +109,11 @@ export class HeaderComponent implements OnInit {
    */
   emptyData() {
     if (this.source !== 'gender') {
-      this.imageService.clearPromptId();
-      this.imageService.emptyPrompt();
+      this.promptService.clearPromptId();
+      this.categroryService.deleteCategories();
       this.imageService.imageUrl.next('');
+      this.imageService.sketchUrl.next('');
+      this.imageService.imageSubject.next(null);
       this.breadcrumbService.emptyBreadcrumbList();
       this.checkAttributeService.emptyCheckedAttributesList();
     }

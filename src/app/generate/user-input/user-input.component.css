@@ -1,59 +1,65 @@
-.ctn {
-  margin-right: 100px;
+.prompt-wrapper {
+  max-width: 100%;
+  padding: 24px;
+  border-radius: 20px;
+  border: 2px solid #e5e7eb;
+  background-color: #ffffff;
 }
 
-.or {
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 18px;
-  line-height: 25px;
-  text-align: center;
-  letter-spacing: 0.12em;
-  color: #62808f;
-  margin-top: 20px;
-  margin-bottom: 50px;
+.prompt-label {
+  display: block;
+  font-family: Inter, Roboto, sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  color: #3a3a3a;
+  margin-bottom: 10px;
+}
+
+.prompt-box {
+  position: relative;
 }
 
 .prompt-input {
-  box-sizing: border-box;
-  border: solid #504949;
-  border-radius: 13px;
-  border-width: 2px;
-  background: #ffffff;
-  min-height: 180px;
-  max-height: 180px;
-  color: #000000;
-  direction: ltr;
-  text-align: start;
+  width: 92%;
+  padding: 19px 18px 0px 18px;
+  border-radius: 14px;
+  background: #f3e8ff;
+  font-family: Inter, Roboto, sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+  resize: none;
 }
 
 .prompt-input::placeholder {
-  font-family: Roboto;
-  font-style: bold;
-  font-weight: 600;
-  font-size: 20px;
-  line-height: 25px;
-  text-align: start;
-  letter-spacing: 0.12em;
-  color: #62808f;
-  padding-left: 10px;
-  padding-top: 10px;
+  color: #9ca3af;
+  font-weight: 400;
 }
 
-.btn {
-  font-family: Inter;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 25px;
-  letter-spacing: 0.12em;
-  width: 115px;
-  text-align: center;
+.prompt-btn {
+  position: absolute;
+  bottom: 8px;
+  right: 14px;
+  padding: 18px 18px;
+  font-size: 13px;
+  border-radius: 14px;
+  border: none;
   color: #ffffff;
-  background: #62808f;
-  border-radius: 7px;
-  float: right;
-  margin-top: -60px;
-  margin-right: 30px;
+  transition: #f1f5f9 0.2s ease;
+  font-family: Roboto;
+  background: linear-gradient(to bottom right, #a855f7, #ec4899);
+}
+
+.prompt-btn:disabled {
+  background-color: #e5e7eb;
+  color: #9ca3af;
+  cursor: not-allowed;
+}
+
+textarea,
+textarea:focus,
+textarea:active,
+textarea:focus-visible {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
 }

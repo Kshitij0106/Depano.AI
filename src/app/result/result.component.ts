@@ -23,6 +23,7 @@ import { ErrorService } from '../services/error.service';
 })
 export class ResultComponent implements OnInit {
   image!: string;
+  showRegenerateButton: boolean = false;
 
   private imageSubscription!: Subscription;
   private navigationSubscription!: Subscription;
@@ -61,6 +62,9 @@ export class ResultComponent implements OnInit {
     this.imageSubscription = this.imageService.imageSubject
       .pipe(filter(Boolean))
       .subscribe((result) => {
+        if (result.promptId) {
+          this.showRegenerateButton = true;
+        }
         this.image = result.url;
         this.promptService.setPromptId(result.promptId);
         this.userService.updateUserDetails();

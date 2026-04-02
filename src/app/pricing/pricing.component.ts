@@ -56,7 +56,7 @@ export class PricingComponent implements OnInit {
     {
       name: 'Starter Plan',
       icon: '🧵',
-      price: '₹790',
+      price: '₹990',
       period: 'month',
       images: '100 Credits',
       description:
@@ -71,7 +71,7 @@ export class PricingComponent implements OnInit {
     {
       name: 'Designer Plan',
       icon: '👗',
-      price: '₹1,490',
+      price: '₹2,090',
       period: 'month',
       images: '200 Credits',
       description:
@@ -86,7 +86,7 @@ export class PricingComponent implements OnInit {
     {
       name: 'Studio Plan',
       icon: '🏢',
-      price: '₹2,090',
+      price: '₹2,490',
       period: 'month',
       images: '300 Credits',
       description:

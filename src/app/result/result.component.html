@@ -27,7 +27,12 @@
           <span>Edit Image</span>
         </button>
 
-        <button type="button" class="action-btn" (click)="regenerate()">
+        <button
+          *ngIf="this.showRegenerateButton"
+          type="button"
+          class="action-btn"
+          (click)="regenerate()"
+        >
           <lucide-icon name="rotate-ccw"></lucide-icon>
           <span>Regenerate</span>
         </button>

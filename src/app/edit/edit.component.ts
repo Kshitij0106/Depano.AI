@@ -9,7 +9,7 @@ import { ToastrService } from 'ngx-toastr';
 import { UserInputComponent } from '../generate/user-input/user-input.component';
 import { ErrorService } from '../services/error.service';
 import { Router } from '@angular/router';
-import { ErrorType } from '../error/error-page.component';
+import { ErrorType } from '../error/error.type';
 
 @Component({
   standalone: true,

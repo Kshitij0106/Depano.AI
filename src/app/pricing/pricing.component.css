@@ -1,4 +1,52 @@
-/* Current Balance Badge Styles */
+.pricing-wrapper {
+  background:
+    radial-gradient(
+      90.25% 134.83% at 75% 75%,
+      rgba(255, 218, 185, 0.3) 0%,
+      rgba(0, 0, 0, 0) 50%
+    ),
+    radial-gradient(
+      90.25% 134.83% at 25% 25%,
+      rgba(255, 127, 80, 0.3) 0%,
+      rgba(0, 0, 0, 0) 50%
+    );
+  min-height: 100vh;
+  font-family: "Inter", sans-serif;
+  padding-bottom: 50px;
+}
+
+.nav-bar {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 40px;
+}
+
+.header {
+  text-align: center;
+  padding-top: 30px;
+
+  h1 {
+    font-family: "playfair-display", serif;
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 50.5px;
+    line-height: 52.5px;
+    letter-spacing: 0px;
+    text-align: center;
+  }
+
+  p {
+    font-family: "inter", sans-serif;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 17.5px;
+    line-height: 28.44px;
+    letter-spacing: 0px;
+    text-align: center;
+    color: #4a5565;
+  }
+}
+
 .current-balance-badge {
   display: flex;
   justify-content: center;
@@ -66,62 +114,6 @@
   line-height: 1.2;
   color: #101828;
   margin-top: 2px;
-}
-
-.current-balance-expiry {
-  font-family: Inter, sans-serif;
-  font-size: 12px;
-  color: #ff6900;
-  font-weight: 500;
-  margin-top: 3px;
-}
-
-.pricing-wrapper {
-  background:
-    radial-gradient(
-      90.25% 134.83% at 75% 75%,
-      rgba(255, 218, 185, 0.3) 0%,
-      rgba(0, 0, 0, 0) 50%
-    ),
-    radial-gradient(
-      90.25% 134.83% at 25% 25%,
-      rgba(255, 127, 80, 0.3) 0%,
-      rgba(0, 0, 0, 0) 50%
-    );
-  min-height: 100vh;
-  font-family: "Inter", sans-serif;
-}
-
-.nav-bar {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 40px;
-}
-
-.header {
-  text-align: center;
-  margin-bottom: 50px;
-
-  h1 {
-    font-family: "playfair-display", serif;
-    font-weight: 700;
-    font-style: Bold;
-    font-size: 50.5px;
-    line-height: 52.5px;
-    letter-spacing: 0px;
-    text-align: center;
-  }
-
-  p {
-    font-family: "inter", sans-serif;
-    font-weight: 400;
-    font-style: Regular;
-    font-size: 17.5px;
-    line-height: 28.44px;
-    letter-spacing: 0px;
-    text-align: center;
-    color: #4a5565;
-  }
 }
 
 .cards {

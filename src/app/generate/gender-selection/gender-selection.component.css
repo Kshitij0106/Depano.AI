@@ -22,78 +22,66 @@ body {
   cursor: hand;
 }
 
-.women-overlay {
-  opacity: 0;
-  position: absolute;
+.overlay {
+  position: fixed;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
-  width: 40%;
+  width: 100vw;
+  height: 100vh;
   opacity: 0;
-  height: calc(100vh - 60px);
-  margin-top: 60px;
-  align-items: center;
-  overflow: hidden;
-  backdrop-filter: blur(2px) brightness(100%);
-  transition: all 0.3s ease-in-out;
-  cursor: pointer;
-  cursor: hand;
   display: flex;
+  align-items: center;
+  z-index: 10;
+  pointer-events: none;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.women-overlay {
+  justify-content: flex-start;
+  backdrop-filter: blur(2px);
 }
 
 .card-women:hover .women-overlay {
   opacity: 1;
-}
-
-.card-title-women {
-  font-weight: bold;
-  text-align: left;
-  font-family: Roboto;
-  padding-left: 70px;
-  font-style: italic;
-  font-size: 66px;
-  letter-spacing: 0.12em;
-  color: #000000;
-}
-
-.card-men {
-  cursor: pointer;
-  cursor: hand;
+  background: linear-gradient(
+    to right,
+    rgba(255, 237, 213, 0.95) 0%,
+    rgba(255, 228, 230, 0.7) 40%,
+    rgba(254, 252, 232, 0.15) 70%,
+    transparent 100%
+  );
 }
 
 .men-overlay {
-  opacity: 0;
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 40%;
-  opacity: 0;
-  margin-top: 60px;
-  height: calc(100vh - 60px);
-  align-items: center;
-  overflow: hidden;
-  backdrop-filter: blur(2px) brightness(100%);
-  transition: all 0.3s ease-in-out;
-  display: flex;
-  cursor: pointer;
-  cursor: hand;
   justify-content: flex-end;
+  backdrop-filter: blur(2px);
 }
 
 .card-men:hover .men-overlay {
   opacity: 1;
+  background: linear-gradient(
+    to left,
+    rgba(255, 237, 213, 0.95) 0%,
+    rgba(255, 228, 230, 0.7) 40%,
+    rgba(254, 252, 232, 0.15) 70%,
+    transparent 100%
+  );
+}
+
+.card-title-women {
+  padding-left: 70px;
+  font-size: 66px;
+  font-style: italic;
+  letter-spacing: 0.12em;
+  color: #371700;
 }
 
 .card-title-men {
   padding-right: 70px;
-  font-weight: bold;
-  text-align: right;
-  font-family: Roboto;
-  font-style: italic;
   font-size: 66px;
+  font-style: italic;
   letter-spacing: 0.12em;
-  color: #000000;
+  color: #371700;
 }
 
 .img {

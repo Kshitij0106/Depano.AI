@@ -5,87 +5,119 @@
 }
 
 body {
-  background: #ffffff;
-  overflow: hidden;
-  align-items: center;
-  justify-content: center;
-  display: flex;
-  flex-wrap: nowrap;
+  min-height: 100vh;
+  margin: 0;
+  background:
+    radial-gradient(
+      90.25% 134.83% at 75% 75%,
+      rgba(255, 218, 185, 0.3) 0%,
+      rgba(0, 0, 0, 0) 50%
+    ),
+    radial-gradient(
+      90.25% 134.83% at 25% 25%,
+      rgba(255, 127, 80, 0.3) 0%,
+      rgba(0, 0, 0, 0) 50%
+    );
 }
 
 .container {
-  min-width: 100%;
+  background:
+    radial-gradient(
+      90.25% 134.83% at 75% 75%,
+      rgba(255, 218, 185, 0.3) 0%,
+      rgba(0, 0, 0, 0) 50%
+    ),
+    radial-gradient(
+      90.25% 134.83% at 25% 25%,
+      rgba(255, 127, 80, 0.3) 0%,
+      rgba(0, 0, 0, 0) 50%
+    );
+  min-height: calc(100vh - 60px);
   min-width: 100%;
   padding-top: 45px;
   padding-left: 130px;
   padding-right: 130px;
-  height: calc(100vh - 60px);
+  padding-bottom: 50px;
 }
 
-.start-btn {
-  font-family: Inter;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 25px;
+.result-header {
   text-align: center;
-  letter-spacing: 0.08em;
-  color: #000000;
-  background-color: #ffffff;
-  border-radius: 10px;
-  height: 50px;
-  width: 200px;
-  margin-top: 10px;
+  margin-bottom: 40px;
+  animation: slideDown 0.6s ease-out;
 }
 
-.regen-btn {
-  height: 50px;
-  width: 200px;
-  font-family: Inter;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 25px;
-  text-align: center;
-  letter-spacing: 0.08em;
-  color: #ffffff;
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.result-title {
+  font-family: "Playfair Display", serif;
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 12px;
+  letter-spacing: -0.5px;
   background-color: #000000;
-  border-radius: 10px;
-  margin-top: 10px;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-.share-btn {
-  float: right;
-  height: 50px;
-  font-family: Inter;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 20.8093px;
-  line-height: 25px;
-  text-align: center;
-  letter-spacing: 0.12em;
-  color: #ffffff;
-  background-color: #000000;
-  padding: 12px 21px;
-  border-radius: 10px;
-  margin-top: 10px;
+.action-buttons {
+  display: flex;
+  gap: 16px;
+  align-items: center;
 }
 
-.download-btn {
-  height: 50px;
-  float: right;
-  font-family: Inter;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 20.8093px;
-  line-height: 25px;
+.action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 15px;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.16);
+  background: #ffffff;
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-style: Medium;
+  font-size: 12.25px;
+  line-height: 17.5px;
+  letter-spacing: 0px;
   text-align: center;
-  letter-spacing: 0.12em;
-  color: #ffffff;
-  background-color: #000000;
-  padding: 12px 21px;
-  border-radius: 10px;
-  margin-top: 10px;
+  border: 1px solid #d1d5dc;
+}
+
+.action-btn lucide-icon,
+.action-btn svg {
+  color: #0a0a0a;
+  width: 20px;
+  height: 20px;
+}
+
+.action-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.18);
+}
+
+.action-btn lucide-icon {
+  display: inline-flex;
+  width: 20px;
+  height: 20px;
+}
+
+.action-btn lucide-icon svg,
+.action-btn svg {
+  stroke: #ffffff !important;
+  fill: #ffffff !important;
+  color: #ffffff !important;
 }
 
 .img {
@@ -96,41 +128,4 @@ body {
   object-fit: contain;
   max-width: 100%;
   max-height: 65vh;
-}
-
-.error {
-  margin-top: 100px;
-  max-height: 65vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 20px;
-}
-
-.error-heading {
-  font-family: Inter;
-  font-size: 24px;
-  font-weight: 700;
-  line-height: 29.05px;
-  text-align: left;
-}
-
-.edit-btn {
-  font-family: Inter;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 15px;
-  line-height: 25px;
-  text-align: center;
-  letter-spacing: 0.08em;
-  color: #000000;
-  background-color: #e2e6ea;
-  border-radius: 10px;
-  height: 50px;
-  width: 200px;
-  margin-top: 10px;
-}
-
-.edit-btn:hover:enabled {
-  background-color: #d6d8db;
 }

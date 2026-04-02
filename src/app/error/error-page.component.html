@@ -1,0 +1,66 @@
+<div class="error-container">
+  <div *ngIf="this.config" class="error-content">
+    <h1 class="error-title">{{ config.title }}</h1>
+    <p class="error-subtitle">{{ config.subtitle }}</p>
+
+    <div class="error-card">
+      <div class="icon-container">
+        <lucide-icon
+          class="icon"
+          [name]="config.icon"
+          [size]="32"
+        ></lucide-icon>
+      </div>
+
+      <p class="card-title">
+        {{
+          type === "PAYMENT_REQUIRED"
+            ? "Top Up Your Credits"
+            : "We're Working On It"
+        }}
+      </p>
+      <p class="card-subtitle">
+        {{
+          type === "PAYMENT_REQUIRED"
+            ? "Continue creating amazing designs by adding more credits."
+            : "Our team is working to resolve this issue."
+        }}
+      </p>
+
+      <!-- Tips -->
+      <div *ngIf="config.tips" class="tips">
+        <div *ngFor="let tip of config.tips; let i = index" class="tip">
+          <span class="index">{{ i + 1 }}</span>
+          {{ tip }}
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="actions">
+        <!-- Row 1 -->
+        <div class="action-row">
+          <button
+            *ngFor="let action of primaryActions"
+            class="primary-btn"
+            (click)="handleAction(action.action)"
+          >
+            <lucide-icon [name]="action.icon" [size]="18"></lucide-icon>
+            {{ action.label }}
+          </button>
+        </div>
+
+        <!-- Row 2 -->
+        <div class="action-row-center" *ngIf="secondaryActions.length">
+          <button
+            *ngFor="let action of secondaryActions"
+            class="tertiary-btn"
+            (click)="handleAction(action.action)"
+          >
+            <lucide-icon [name]="action.icon" [size]="18"></lucide-icon>
+            {{ action.label }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -3,7 +3,7 @@
     <div class="row w-100 align-items-center">
       <div class="logo-container col" (click)="openHome()">
         <div class="logo-icon">
-          <i-lucide name="Sparkles" [size]="24" [strokeWidth]="2"></i-lucide>
+          <i-lucide name="Sparkles" [size]="24"></i-lucide>
         </div>
         <span class="logo-text">Depano AI</span>
       </div>
@@ -19,38 +19,48 @@
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
-            {{ getUsername(this.loggedInUser.userName) }}
+            <span>{{ getUsername(loggedInUser.userName) }}</span>
             <lucide-icon
               class="profile-icon"
               name="chevron-down"
               [size]="18"
-              [strokeWidth]="2"
             ></lucide-icon>
           </button>
-          <ul class="dropdown-menu">
-            <li>
-              <button class="dropdown-item" type="button">
-                <lucide-icon
-                  class="item-icon"
-                  name="circle-user-round"
-                  [size]="20"
-                  [strokeWidth]="2"
-                ></lucide-icon>
-                <span class="item-text"
-                  >{{ this.loggedInUser.credits }} {{ "Credits" }}</span
-                >
-              </button>
+
+          <ul class="dropdown-menu dropdown-menu-custom">
+            <li class="dropdown-header-section">
+              <div class="user-profile-section">
+                <div class="user-name">
+                  {{ getUsername(loggedInUser.userName) }}
+                </div>
+              </div>
             </li>
+
+            <li class="credits-section">
+              <div class="credits-card" (click)="goToPricing()">
+                <div class="credits-left">
+                  <lucide-icon name="coins" [size]="20"></lucide-icon>
+                  <div>
+                    <div class="credits-title">Credits</div>
+                    <div class="credits-sub">Click to top up</div>
+                  </div>
+                </div>
+                <div class="credits-value">
+                  {{ loggedInUser.credits }}
+                </div>
+              </div>
+            </li>
+
             <li><hr class="dropdown-divider" /></li>
-            <li>
-              <button class="dropdown-item" type="button" (click)="logout()">
-                <lucide-icon
-                  class="item-icon"
-                  name="log-out"
-                  [size]="20"
-                  [strokeWidth]="2"
-                ></lucide-icon>
-                <span class="item-text">Log Out</span>
+
+            <li class="dropdown-item-wrapper">
+              <button
+                class="dropdown-item logout-btn"
+                type="button"
+                (click)="logout()"
+              >
+                <lucide-icon name="log-out" [size]="16"></lucide-icon>
+                Logout
               </button>
             </li>
           </ul>

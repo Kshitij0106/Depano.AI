@@ -3,64 +3,38 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ImageResponse } from '../generate/models/imageResponse.model';
-import { UserService } from 'src/app/services/user.service';
-
-interface Prompt {
-  category: string;
-  input: string;
-}
+import { PromptService } from './prompt.service';
+import { ErrorService } from './error.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ImageService {
-  private gender: string = '';
-  private userPrompts: Prompt[] = [];
-
   public imageUrl = new BehaviorSubject<string>('');
   public sketchUrl = new BehaviorSubject<string>('');
 
-  constructor(private http: HttpClient) {}
+  public imageSubject = new BehaviorSubject<ImageResponse | null>(null);
 
-  /**
-   * Adds a key-value pair to the user prompt map.
-   * @param key - The key of the selected category.
-   * @param value - The prompt of the selected category.
-   */
-  addToPrompt(key: string, userInput: string) {
-    this.userPrompts.push({
-      category: key,
-      input: userInput,
-    });
-  }
+  constructor(
+    private http: HttpClient,
+    private promptService: PromptService,
+    private errorService: ErrorService,
+    private router: Router,
+  ) {}
 
-  setGender(gender: string) {
-    this.gender = gender;
-  }
-
-  getGender(): string {
-    return this.gender;
-  }
-
-  setPromptId(promptId: string) {
-    localStorage.setItem('promptId', promptId);
-  }
-
-  clearPromptId() {
-    localStorage.removeItem('promptId');
-  }
-
-  /**
-   * Sends a prompt to the API for image generation based on user prompts.
-   *
-   * @returns {Observable<ImageResponse>} - An observable containing the server's response, which includes generated images.
-   */
-  generateImage(): Observable<ImageResponse> {
-    let userInput = this.getPrompt();
-    return this.http.post<ImageResponse>(
-      environment.gateway + 'images',
-      userInput
-    );
+  generateImage() {
+    let userInput = this.promptService.getPrompt();
+    this.imageSubject.next(null);
+    this.http
+      .post<ImageResponse>(environment.gateway + 'images', userInput)
+      .subscribe({
+        next: (res) => this.imageSubject.next(res),
+        error: (err) => {
+          this.errorService.errorSubject.next(err.error?.status);
+          this.router.navigate(['error']);
+        },
+      });
   }
 
   /**
@@ -72,30 +46,38 @@ export class ImageService {
   regenerateImage(promptId: string): Observable<ImageResponse> {
     return this.http.post<ImageResponse>(
       environment.gateway + 'images/regenerate/' + promptId,
-      {}
+      {},
     );
   }
 
   editImage(formData: FormData): Observable<ImageResponse> {
     return this.http.put<ImageResponse>(
       environment.gateway + 'images',
-      formData
+      formData,
     );
   }
 
-  async prepareEditFormData(
-    imageUrl: string,
-    maskUrl: string,
-    prompt: string
+  sketchToImage(formData: FormData) {
+    this.http
+      .post<ImageResponse>(environment.gateway + 'images/sketch', formData)
+      .subscribe({
+        next: (res) => this.imageSubject.next(res),
+        error: (err) => {
+          this.errorService.errorSubject.next(err.error?.status);
+          this.router.navigate(['error']);
+        },
+      });
+  }
+
+  async prepareFormData(
+    type: 'sketch' | 'image',
+    image: File,
+    prompt: string,
   ): Promise<FormData> {
     const formData = new FormData();
 
     try {
-      const imageBlob = await this.fetchBlobFromUrl(imageUrl);
-      const maskBlob = await this.fetchBlobFromUrl(maskUrl);
-
-      formData.append('image', imageBlob, 'image.png');
-      formData.append('mask', maskBlob, 'mask.png');
+      formData.append(type, image, `${type}.png`);
       formData.append('prompt', prompt);
 
       return formData;
@@ -105,43 +87,11 @@ export class ImageService {
     }
   }
 
-  private async fetchBlobFromUrl(url: string): Promise<Blob> {
+  async fetchImageFromUrl(url: string, filename = 'image.png'): Promise<File> {
     const response = await fetch(url);
     if (!response.ok) throw new Error(`Failed to fetch ${url}`);
-    return await response.blob();
-  }
+    const blob = await response.blob();
 
-  sketchToImage(formData: FormData): Observable<ImageResponse> {
-    return this.http.post<ImageResponse>(
-      environment.gateway + 'images/sketch',
-      formData
-    );
-  }
-
-  async prepareSketchFormData(sketch: File, prompt: string): Promise<FormData> {
-    const formData = new FormData();
-
-    try {
-      formData.append('sketch', sketch, 'sketch.png');
-      formData.append('prompt', prompt);
-
-      return formData;
-    } catch (err) {
-      console.error('Error fetching blobs:', err);
-      throw err;
-    }
-  }
-
-  /**
-   * Empty the prompt map.
-   * Clears the prompt stored in backend
-   */
-  emptyPrompt() {
-    this.userPrompts = [];
-    this.http.delete(environment.gateway + 'categories').subscribe();
-  }
-
-  public getPrompt() {
-    return this.userPrompts;
+    return new File([blob], filename, { type: blob.type });
   }
 }

@@ -275,6 +275,31 @@
                   [strokeWidth]="2"
                 ></lucide-icon>
               </button>
+
+              <!-- Resend row -->
+              <div
+                *ngIf="otpSent && !isResendBlocked"
+                class="font-inter text-sm text-gray-600 flex items-center gap-2 justify-center mt-4"
+              >
+                <div class="font-inter text-sm text-gray-600">
+                  Didn't receive the code?
+                  <button
+                    type="button"
+                    class="resend-link ml-2"
+                    [disabled]="resendDisabled"
+                    (click)="authenticateUser()"
+                  >
+                    Resend
+                  </button>
+                </div>
+
+                <div
+                  *ngIf="resendDisabled"
+                  class="resend-timer font-inter text-sm text-gray-600"
+                >
+                  {{ resendCountdown }}s
+                </div>
+              </div>
             </div>
           </form>
         </div>

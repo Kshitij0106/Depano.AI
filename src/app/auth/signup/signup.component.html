@@ -400,16 +400,28 @@
               </div>
             </div>
 
-            <div class="text-center text-sm text-gray-500">
-              <button
-                type="button"
-                (click)="resendOtp()"
-                [disabled]="resendTimer > 0"
-                class="text-pink-600 hover:text-pink-700 disabled:opacity-50 disabled:cursor-not-allowed resend-otp-btn"
-                aria-label="Resend OTP"
+            <div
+              *ngIf="otpSent && !isResendBlocked"
+              class="font-inter text-sm text-gray-600 flex items-center gap-2 justify-center mt-4"
+            >
+              <div class="font-inter text-sm text-gray-600">
+                Didn't receive the code?
+                <button
+                  type="button"
+                  class="resend-link ml-2"
+                  [disabled]="resendDisabled"
+                  (click)="registerUser()"
+                >
+                  Resend
+                </button>
+              </div>
+
+              <div
+                *ngIf="resendDisabled"
+                class="resend-timer font-inter text-sm text-gray-600"
               >
-                Resend OTP
-              </button>
+                {{ resendCountdown }}s
+              </div>
             </div>
 
             <button

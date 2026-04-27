@@ -33,9 +33,13 @@ export class SignupComponent implements OnInit {
   mobileError: boolean = false;
   acceptTerms = false;
   otpSent: boolean = false;
-  resendTimer = 0;
   otpDigits: string[] = ['', '', '', '', '', ''];
   otpError: string = '';
+
+  resendCountdown: number = 0;
+  resendDisabled: boolean = false;
+  isResendBlocked: boolean = false;
+  private resendTimerRef: any = null;
 
   constructor(
     private authService: AuthService,
@@ -60,10 +64,14 @@ export class SignupComponent implements OnInit {
         if (result.status === 'Success') {
           this.otpSent = true;
           this.toastr.success('An OTP has been sent to your mobile number.');
+          this.startResendTimer();
         }
       },
       error: (err: HttpErrorResponse) => {
-        if (err.error?.status === 'CONFLICT') {
+        if (err.error?.status === 'TOO_MANY_REQUESTS') {
+          this.toastr.error(err.error?.message);
+          this.isResendBlocked = true;
+        } else if (err.error?.status === 'CONFLICT') {
           this.toastr.error(err.error?.message);
         } else {
           this.errorService.errorSubject.next(err.error?.status);
@@ -71,6 +79,24 @@ export class SignupComponent implements OnInit {
         }
       },
     });
+  }
+
+  private startResendTimer(seconds: number = 20) {
+    this.resendDisabled = true;
+    this.resendCountdown = seconds;
+
+    if (this.resendTimerRef) {
+      clearInterval(this.resendTimerRef);
+    }
+
+    this.resendTimerRef = setInterval(() => {
+      this.resendCountdown--;
+      if (this.resendCountdown <= 0) {
+        clearInterval(this.resendTimerRef);
+        this.resendTimerRef = null;
+        this.resendDisabled = false;
+      }
+    }, 1000);
   }
 
   /**
@@ -100,17 +126,6 @@ export class SignupComponent implements OnInit {
 
   goToLogin() {
     this.router.navigate(['login']);
-  }
-
-  /**
-   * Resend OTP.
-   */
-  resendOtp(): void {
-    if (this.resendTimer > 0) {
-      this.toastr.info(`Please wait ${this.resendTimer}s before resending.`);
-      return;
-    }
-    this.registerUser();
   }
 
   onOtpInput(event: Event, index: number): void {

@@ -338,7 +338,7 @@
             <button
               type="button"
               (click)="registerUser()"
-              [disabled]="userform.invalid"
+              [disabled]="isResendBlocked || userform.invalid"
               class="w-full h-12 btn-background-clr from-pink-500 to-orange-500 hover:from-pink-600 hover:to-orange-600 text-white rounded-xl font-inter font-medium transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
               <div
@@ -427,8 +427,12 @@
             <button
               type="button"
               (click)="verifyOtp()"
-              [disabled]="otpForm.invalid"
-              class="w-full h-12 btn-background-clr from-pink-500 to-orange-500 text-white rounded-xl font-inter font-medium transition-all duration-300 hover:scale-[1.02] hover:shadow-lg flex items-center justify-center gap-2"
+              [disabled]="
+                isverifyBlocked ||
+                otpForm.invalid ||
+                this.otpValidateRequest.otp.length != 6
+              "
+              class="w-full h-12 btn-background-clr from-pink-500 to-orange-500 hover:from-pink-600 hover:to-orange-600 text-white rounded-xl font-inter font-medium transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               aria-label="Verify and Create Account"
             >
               Verify & Create Account

@@ -192,7 +192,7 @@
               <button
                 type="submit"
                 class="w-full h-12 btn-background-clr from-pink-500 to-orange-500 hover:from-pink-600 hover:to-orange-600 text-white rounded-xl font-inter font-medium transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-                [disabled]="userform.invalid"
+                [disabled]="isResendBlocked || userform.invalid"
                 (click)="authenticateUser()"
               >
                 <div
@@ -261,7 +261,11 @@
                 type="submit"
                 class="w-full h-12 btn-background-clr from-pink-500 to-orange-500 hover:from-pink-600 hover:to-orange-600 text-white rounded-xl font-inter font-medium transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 (click)="verifyOtp()"
-                [disabled]="userform.invalid"
+                [disabled]="
+                  isverifyBlocked ||
+                  userform.invalid ||
+                  this.otpValidateRequest.otp.length != 6
+                "
               >
                 <div
                   class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"

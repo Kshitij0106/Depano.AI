@@ -9,7 +9,6 @@ import { UserService } from 'src/app/services/user.service';
 import { OtpValidateRequest } from '../models/otpValidateRequest.model';
 import { OtpSendRequest } from '../models/otpSendRequest.model';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ErrorService } from 'src/app/services/error.service';
 
 @Component({
   standalone: true,
@@ -40,13 +39,13 @@ export class SignupComponent implements OnInit {
   resendDisabled: boolean = false;
   isResendBlocked: boolean = false;
   private resendTimerRef: any = null;
+  isverifyBlocked: boolean = false;
 
   constructor(
     private authService: AuthService,
     private toastr: ToastrService,
     private router: Router,
     private userService: UserService,
-    private errorService: ErrorService,
   ) {}
 
   ngOnInit(): void {
@@ -74,29 +73,12 @@ export class SignupComponent implements OnInit {
         } else if (err.error?.status === 'CONFLICT') {
           this.toastr.error(err.error?.message);
         } else {
-          this.errorService.errorSubject.next(err.error?.status);
-          this.router.navigate(['error']);
+          this.toastr.error(
+            'Unable to send OTP at the moment. Please try again shortly.',
+          );
         }
       },
     });
-  }
-
-  private startResendTimer(seconds: number = 20) {
-    this.resendDisabled = true;
-    this.resendCountdown = seconds;
-
-    if (this.resendTimerRef) {
-      clearInterval(this.resendTimerRef);
-    }
-
-    this.resendTimerRef = setInterval(() => {
-      this.resendCountdown--;
-      if (this.resendCountdown <= 0) {
-        clearInterval(this.resendTimerRef);
-        this.resendTimerRef = null;
-        this.resendDisabled = false;
-      }
-    }, 1000);
   }
 
   /**
@@ -114,11 +96,15 @@ export class SignupComponent implements OnInit {
         }
       },
       error: (err: HttpErrorResponse) => {
-        if (err.error?.status === 'BAD_REQUEST') {
+        if (err.error?.status === 'TOO_MANY_REQUESTS') {
+          this.toastr.error(err.error?.message);
+          this.isverifyBlocked = true;
+        } else if (err.error?.status === 'BAD_REQUEST') {
           this.toastr.error(err.error?.message);
         } else {
-          this.errorService.errorSubject.next(err.error?.status);
-          this.router.navigate(['error']);
+          this.toastr.error(
+            'Unable to verify OTP at the moment. Please try again shortly.',
+          );
         }
       },
     });
@@ -183,6 +169,24 @@ export class SignupComponent implements OnInit {
         nextInput.focus();
       }
     }
+  }
+
+  private startResendTimer(seconds: number = 20) {
+    this.resendDisabled = true;
+    this.resendCountdown = seconds;
+
+    if (this.resendTimerRef) {
+      clearInterval(this.resendTimerRef);
+    }
+
+    this.resendTimerRef = setInterval(() => {
+      this.resendCountdown--;
+      if (this.resendCountdown <= 0) {
+        clearInterval(this.resendTimerRef);
+        this.resendTimerRef = null;
+        this.resendDisabled = false;
+      }
+    }, 1000);
   }
 
   private updateOtpValue(): void {

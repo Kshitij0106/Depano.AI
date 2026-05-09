@@ -6,8 +6,8 @@ import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../services/auth.service';
 import { LucideAngularModule } from 'lucide-angular';
 import { UserService } from 'src/app/services/user.service';
-import { OtpValidateRequest } from '../models/otpValidateRequest.model';
-import { OtpSendRequest } from '../models/otpSendRequest.model';
+import { OtpGenerateRequest } from '../models/otpGenerateRequest.model';
+import { SignupOtpVerifyRequest } from '../models/signupOtpVerifyRequest.model';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
@@ -18,11 +18,11 @@ import { HttpErrorResponse } from '@angular/common/http';
   imports: [CommonModule, FormsModule, LucideAngularModule],
 })
 export class SignupComponent implements OnInit {
-  otpSendRequest: OtpSendRequest = {
+  otpGenerateRequest: OtpGenerateRequest = {
     mobileNumber: '',
   };
 
-  otpValidateRequest: OtpValidateRequest = {
+  signupOtpVerifyRequest: SignupOtpVerifyRequest = {
     mobileNumber: '',
     userName: '',
     otp: '',
@@ -58,7 +58,12 @@ export class SignupComponent implements OnInit {
    * Generates a One-Time Password (OTP) to be sent to the user's phone for verification purposes.
    */
   registerUser() {
-    this.authService.registerUser(this.otpSendRequest).subscribe({
+    let mobile = this.otpGenerateRequest.mobileNumber?.trim();
+
+    if (mobile) {
+      this.otpGenerateRequest.mobileNumber = mobile.replace(/^(\+91|91)/, '');
+    }
+    this.authService.generateSignupOtp(this.otpGenerateRequest).subscribe({
       next: (result) => {
         if (result.status === 'Success') {
           this.otpSent = true;
@@ -70,11 +75,14 @@ export class SignupComponent implements OnInit {
         if (err.error?.status === 'TOO_MANY_REQUESTS') {
           this.toastr.error(err.error?.message);
           this.isResendBlocked = true;
-        } else if (err.error?.status === 'CONFLICT') {
+        } else if (
+          err.error?.status === 'CONFLICT' ||
+          err.error?.status === 'UNPROCESSABLE_ENTITY'
+        ) {
           this.toastr.error(err.error?.message);
         } else {
           this.toastr.error(
-            'Unable to send OTP at the moment. Please try again shortly.',
+            'Unable to send OTP at the moment. Please try again later.',
           );
         }
       },
@@ -85,29 +93,33 @@ export class SignupComponent implements OnInit {
    * Validates the One-Time Password (OTP) provided by the user against the generated OTP.
    */
   verifyOtp() {
-    this.otpValidateRequest.mobileNumber = this.otpSendRequest.mobileNumber;
-    this.authService.verifyOtp(this.otpValidateRequest).subscribe({
-      next: (result) => {
-        if (result.status === 'Success') {
-          this.authService.saveToken(result.accessToken);
-          this.toastr.success(result.message);
-          this.router.navigate(['mode-select']);
-          this.userService.updateUserDetails();
-        }
-      },
-      error: (err: HttpErrorResponse) => {
-        if (err.error?.status === 'TOO_MANY_REQUESTS') {
-          this.toastr.error(err.error?.message);
-          this.isverifyBlocked = true;
-        } else if (err.error?.status === 'BAD_REQUEST') {
-          this.toastr.error(err.error?.message);
-        } else {
-          this.toastr.error(
-            'Unable to verify OTP at the moment. Please try again shortly.',
-          );
-        }
-      },
-    });
+    this.signupOtpVerifyRequest.mobileNumber =
+      this.otpGenerateRequest.mobileNumber;
+    this.authService
+      .verifyAndRegisterUser(this.signupOtpVerifyRequest)
+      .subscribe({
+        next: (result) => {
+          if (result.status === 'Success') {
+            this.authService.saveToken(result.accessToken);
+            this.toastr.success(result.message);
+            this.router.navigate(['mode-select']);
+            this.userService.updateUserDetails();
+          }
+        },
+        error: (err: HttpErrorResponse) => {
+          if (err.error?.status === 'TOO_MANY_REQUESTS') {
+            this.toastr.error(err.error?.message);
+            this.isverifyBlocked = true;
+          } else if (
+            err.error?.status === 'BAD_REQUEST' ||
+            err.error?.status === 'UNPROCESSABLE_ENTITY'
+          ) {
+            this.toastr.error(err.error?.message);
+          } else {
+            this.toastr.error('Unable to complete sign in. Please try again.');
+          }
+        },
+      });
   }
 
   goToLogin() {
@@ -190,6 +202,6 @@ export class SignupComponent implements OnInit {
   }
 
   private updateOtpValue(): void {
-    this.otpValidateRequest.otp = this.otpDigits.join('');
+    this.signupOtpVerifyRequest.otp = this.otpDigits.join('');
   }
 }

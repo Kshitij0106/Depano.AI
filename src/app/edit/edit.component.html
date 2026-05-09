@@ -2,11 +2,36 @@
 
 <main class="page-wrapper">
   <div class="content-container">
-    <div class="image-section">
-      <img class="result-image img-fluid" [src]="image" alt="Result Image" />
+    <div class="result-header" *ngIf="this.image">
+      <h1 class="result-title">Refine Your Design!</h1>
     </div>
 
-    <div class="user-input">
+    <div *ngIf="this.image" class="row mb-3">
+      <div class="col-12 d-flex justify-content-center mb-2">
+        <div class="action-buttons">
+          <button type="button" class="action-btn" (click)="downloadImage()">
+            <lucide-icon class="icon" name="download"></lucide-icon>
+            <span>Download</span>
+          </button>
+
+          <button type="button" class="action-btn" (click)="shareImage()">
+            <lucide-icon name="share-2"></lucide-icon>
+            <span>Share</span>
+          </button>
+
+          <button type="button" class="action-btn" (click)="openModeSelect()">
+            <lucide-icon name="repeat-2"></lucide-icon>
+            <span>Start Again</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="image-section">
+      <img class="result-image img-fluid" [src]="image" />
+    </div>
+
+    <div *ngIf="this.image" class="user-input">
       <app-user-input
         [label]="label"
         [hideUserPrompt]="hideUserPrompt"

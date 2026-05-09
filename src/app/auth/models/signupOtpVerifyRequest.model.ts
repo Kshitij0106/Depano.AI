@@ -1,4 +1,4 @@
-export interface OtpValidateRequest {
+export interface SignupOtpVerifyRequest {
   mobileNumber: string;
   userName: string;
   otp: string;

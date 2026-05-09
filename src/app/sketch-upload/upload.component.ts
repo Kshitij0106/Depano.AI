@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { HeaderComponent } from 'src/app/header/header.component';
 import { UserInputComponent } from 'src/app/generate/user-input/user-input.component';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ImageValidationService } from '../services/image-validation.service';
 
 @Component({
   selector: 'app-upload',
@@ -28,11 +29,9 @@ export class UploadComponent {
   public label: string = 'Describe your sketch';
   public hideUserPrompt: boolean = false;
 
-  private readonly allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
-  private readonly maxFileSizeMB = 4;
-
   constructor(
     private imageService: ImageService,
+    private imageValidationService: ImageValidationService,
     private toastr: ToastrService,
     private router: Router,
     private route: ActivatedRoute,
@@ -95,29 +94,17 @@ export class UploadComponent {
     }
   }
 
-  private validateAndSetFile(file: File): void {
-    const fileName = file.name.toLowerCase();
+  private async validateAndSetFile(file: File): Promise<void> {
+    try {
+      this.imageValidationService.preValidateImage(file);
+      if (file.type === 'image/heic' || file.type === 'image/heif') {
+        file = await this.imageValidationService.convertHeicToJpeg(file);
+      }
+      await this.imageValidationService.postValidateFile(file);
 
-    const isValidType = this.allowedTypes.includes(file.type);
-
-    const isValidExtension =
-      fileName.endsWith('.jpg') ||
-      fileName.endsWith('.jpeg') ||
-      fileName.endsWith('.png');
-
-    if (!isValidType || !isValidExtension) {
-      this.toastr.error('Only JPG, JPEG, or PNG files are allowed.');
-      this.uploadedFile = null;
-      return;
+      this.uploadedFile = file;
+    } catch (error: any) {
+      this.toastr.error(error.message);
     }
-
-    const fileSizeMB = file.size / (1024 * 1024);
-    if (fileSizeMB > this.maxFileSizeMB) {
-      this.toastr.error(`File size exceeds ${this.maxFileSizeMB}MB limit.`);
-      this.uploadedFile = null;
-      return;
-    }
-
-    this.uploadedFile = file;
   }
 }

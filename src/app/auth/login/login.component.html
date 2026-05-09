@@ -135,7 +135,7 @@
                 Enter verification code
               </h2>
               <p class="font-inter text-gray-600">
-                We sent a code to {{ otpSendRequest.mobileNumber }}
+                We sent a code to {{ otpGenerateRequest.mobileNumber }}
               </p>
             </div>
           </div>
@@ -157,11 +157,10 @@
                 <input
                   id="phone"
                   type="tel"
-                  maxlength="10"
-                  minlength="10"
-                  pattern="\d{10}"
-                  placeholder="+91 99999-00000"
-                  [(ngModel)]="otpSendRequest.mobileNumber"
+                  maxlength="12"
+                  pattern="^(?:91)?[6-9][0-9]{9}$"
+                  placeholder="Enter mobile number"
+                  [(ngModel)]="otpGenerateRequest.mobileNumber"
                   name="mobileNumber"
                   #mobileId="ngModel"
                   class="w-full h-10 small-placeholder rounded-xl border border-gray-200 focus:border-pink-400 focus:ring-2 focus:ring-pink-400/20 px-3"
@@ -181,7 +180,6 @@
                   <span
                     *ngIf="
                       mobileId.errors?.['pattern'] ||
-                      mobileId.errors?.['minlength'] ||
                       mobileId.errors?.['maxlength']
                     "
                     >Invalid mobile number!</span
@@ -264,7 +262,7 @@
                 [disabled]="
                   isverifyBlocked ||
                   userform.invalid ||
-                  this.otpValidateRequest.otp.length != 6
+                  this.loginOtpVerifyRequest.otp.length != 6
                 "
               >
                 <div

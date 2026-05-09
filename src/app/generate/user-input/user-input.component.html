@@ -4,16 +4,26 @@
   <div class="prompt-box">
     <textarea
       class="prompt-input"
+      name="user-prompt"
+      maxlength="300"
+      pattern="^[A-Za-z0-9](?:[A-Za-z0-9 .,'-]*[A-Za-z0-9.])?$"
       placeholder="E.g., 'Vintage-inspired leather jacket with modern details', 'Sustainable casual wear', etc."
-      #userInputCategory
-      [(ngModel)]="userInputCategory.value"
-    ></textarea>
+      #userInputCategory="ngModel"
+      [(ngModel)]="userPrompt"
+    >
+    </textarea>
+    <div
+      *ngIf="userInputCategory.touched && userInputCategory.errors?.['pattern']"
+    >
+      Use letters, numbers, spaces, and basic punctuation like comma, period,
+      apostrophe, or hyphen.
+    </div>
     <button
       for="userInput"
       type="submit"
       class="prompt-btn"
-      [disabled]="!userInputCategory.value.trim()"
-      (click)="onSubmit(userInputCategory.value)"
+      [disabled]="!userPrompt.trim() || userInputCategory.errors?.['pattern']"
+      (click)="onSubmit(userPrompt)"
     >
       <lucide-icon name="arrow-right"></lucide-icon>
     </button>

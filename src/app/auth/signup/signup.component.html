@@ -139,7 +139,7 @@
                 Enter verification code
               </h2>
               <p class="font-inter text-gray-600">
-                We sent a code to {{ otpSendRequest.mobileNumber }}
+                We sent a code to {{ otpGenerateRequest.mobileNumber }}
               </p>
             </div>
           </div>
@@ -162,14 +162,14 @@
                 id="name"
                 type="text"
                 placeholder="Enter your full name"
-                [(ngModel)]="otpValidateRequest.userName"
+                [(ngModel)]="signupOtpVerifyRequest.userName"
                 class="w-full h-10 small-placeholder rounded-xl border border-gray-200 focus:border-pink-400 focus:ring-2 focus:ring-pink-400/20 px-3"
                 required
                 name="name"
                 #userName="ngModel"
                 minlength="2"
                 maxlength="50"
-                pattern="^[a-zA-Z\s]+$"
+                pattern="^[A-Za-z]+(?: [A-Za-z]+)*$"
                 aria-describedby="name-error"
               />
               <div
@@ -210,13 +210,14 @@
               <input
                 id="phone"
                 type="tel"
-                placeholder="+91 99999-00000"
+                placeholder="Enter mobile number"
                 name="mobileNumber"
-                [(ngModel)]="otpSendRequest.mobileNumber"
+                [(ngModel)]="otpGenerateRequest.mobileNumber"
                 #mobileId="ngModel"
                 class="w-full h-10 small-placeholder rounded-xl border border-gray-200 focus:border-pink-400 focus:ring-2 focus:ring-pink-400/20 px-3"
                 required
-                pattern="^\+?[1-9]\d{1,14}$"
+                maxlength="12"
+                pattern="^(?:91)?[6-9][0-9]{9}$"
                 aria-describedby="phone-error"
               />
               <div
@@ -232,7 +233,7 @@
                   >Mobile number is required.</span
                 >
                 <span *ngIf="mobileId.errors?.['pattern']"
-                  >Please enter a valid mobile number (E.164 format).</span
+                  >Please enter a valid mobile number.</span
                 >
                 <span *ngIf="mobileError"
                   >Invalid mobile number! Please try again.</span
@@ -259,11 +260,12 @@
                 type="email"
                 placeholder="Enter your email"
                 required
-                [(ngModel)]="otpValidateRequest.email"
+                [(ngModel)]="signupOtpVerifyRequest.email"
                 class="w-full h-10 small-placeholder rounded-xl border border-gray-200 focus:border-pink-400 focus:ring-2 focus:ring-pink-400/20 px-3"
                 required
                 email
                 name="email"
+                maxlength="254"
                 #email="ngModel"
                 aria-describedby="email-error"
               />
@@ -430,7 +432,7 @@
               [disabled]="
                 isverifyBlocked ||
                 otpForm.invalid ||
-                this.otpValidateRequest.otp.length != 6
+                this.signupOtpVerifyRequest.otp.length != 6
               "
               class="w-full h-12 btn-background-clr from-pink-500 to-orange-500 hover:from-pink-600 hover:to-orange-600 text-white rounded-xl font-inter font-medium transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               aria-label="Verify and Create Account"

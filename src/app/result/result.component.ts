@@ -45,11 +45,6 @@ export class ResultComponent implements OnInit {
     this.onBackButton();
   }
 
-  openHome() {
-    this.emptyData();
-    this.router.navigate(['gender']);
-  }
-
   getImage() {
     if (this.imageService.imageUrl.value === '') {
       this.generateImage();
@@ -72,9 +67,6 @@ export class ResultComponent implements OnInit {
       });
   }
 
-  /**
-   * Sends a request again to the prompt service to retrieve image and updates the 'image' property accordingly.
-   */
   regenerate() {
     const promptId = this.promptService.getPromptId();
     if (promptId) {
@@ -91,6 +83,11 @@ export class ResultComponent implements OnInit {
         },
       });
     }
+  }
+
+  openModeSelect() {
+    this.emptyData();
+    this.router.navigate(['mode-select']);
   }
 
   editImage() {

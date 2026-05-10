@@ -38,6 +38,10 @@ export class UploadComponent {
   ) {}
 
   inputSelected(input: string) {
+    if (!input.trim() && !this.uploadedFile) {
+      this.toastr.error('Please upload a sketch first');
+      return;
+    }
     this.userPrompt = input;
     this.handleGenerateImage();
   }

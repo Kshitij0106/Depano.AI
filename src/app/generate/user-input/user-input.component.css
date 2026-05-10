@@ -23,7 +23,7 @@
 
 .prompt-input {
   flex: 1;
-  min-height: 52px;
+  height: 52px;
 
   padding: 16px 18px;
   border-radius: 14px;
@@ -36,11 +36,6 @@
   resize: none;
   border: none;
   outline: none;
-}
-
-.prompt-input::placeholder {
-  color: #9ca3af;
-  font-weight: 400;
 }
 
 .prompt-btn {

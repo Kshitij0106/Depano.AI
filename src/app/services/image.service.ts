@@ -6,6 +6,7 @@ import { ImageResponse } from '../generate/models/imageResponse.model';
 import { PromptService } from './prompt.service';
 import { ErrorService } from './error.service';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root',
@@ -21,6 +22,7 @@ export class ImageService {
     private promptService: PromptService,
     private errorService: ErrorService,
     private router: Router,
+    private toastr: ToastrService,
   ) {}
 
   generateImage() {
@@ -31,8 +33,14 @@ export class ImageService {
       .subscribe({
         next: (res) => this.imageSubject.next(res),
         error: (err) => {
-          this.errorService.errorSubject.next(err.error?.status);
-          this.router.navigate(['error']);
+          if (err.error?.status === 'UNPROCESSABLE_ENTITY') {
+            this.toastr.error(
+              err.error?.message || 'Invalid input. Please try again.',
+            );
+          } else {
+            this.errorService.errorSubject.next(err.error?.status);
+            this.router.navigate(['error']);
+          }
         },
       });
   }
@@ -63,8 +71,14 @@ export class ImageService {
       .subscribe({
         next: (res) => this.imageSubject.next(res),
         error: (err) => {
-          this.errorService.errorSubject.next(err.error?.status);
-          this.router.navigate(['error']);
+          if (err.error?.status === 'UNPROCESSABLE_ENTITY') {
+            this.toastr.error(
+              err.error?.message || 'Invalid input. Please try again.',
+            );
+          } else {
+            this.errorService.errorSubject.next(err.error?.status);
+            this.router.navigate(['error']);
+          }
         },
       });
   }
@@ -92,6 +106,34 @@ export class ImageService {
     if (!response.ok) throw new Error(`Failed to fetch ${url}`);
     const blob = await response.blob();
 
-    return new File([blob], filename, { type: blob.type });
+    let mimeType = blob.type;
+
+    if (!mimeType || mimeType === 'application/octet-stream') {
+      mimeType = this.detectMimeTypeFromFileName(filename);
+    }
+
+    return new File([blob], filename, { type: mimeType });
+  }
+
+  private detectMimeTypeFromFileName(fileName: string): string {
+    const lowerCaseName = fileName.toLowerCase();
+
+    if (lowerCaseName.endsWith('.jpg') || lowerCaseName.endsWith('.jpeg')) {
+      return 'image/jpeg';
+    }
+
+    if (lowerCaseName.endsWith('.png')) {
+      return 'image/png';
+    }
+
+    if (lowerCaseName.endsWith('.heic')) {
+      return 'image/heic';
+    }
+
+    if (lowerCaseName.endsWith('.heif')) {
+      return 'image/heif';
+    }
+
+    return 'application/octet-stream';
   }
 }

@@ -21,18 +21,23 @@ export class UserInputComponent {
   @Input() hideUserPrompt!: boolean;
   @Input() label!: string;
   @Output() userInput = new EventEmitter<string>();
-  @ViewChild('userInputCategory') userInputRef!: ElementRef;
+  userPrompt: string = '';
 
   constructor() {}
 
   /**
    * Handles the submission of user input.
-   * @emits {string} input - User's input in the textbox.
    * @param {string} input - The user input to be emitted to category component.
    */
   onSubmit(input: string) {
-    this.userInput.emit(input);
-    // Clear the input field
-    this.userInputRef.nativeElement.value = '';
+    const userprompt = input?.trim().replace(/\s+/g, ' ');
+
+    if (!userprompt) {
+      return;
+    }
+
+    this.userInput.emit(userprompt);
+
+    this.userPrompt = '';
   }
 }

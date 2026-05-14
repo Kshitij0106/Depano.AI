@@ -34,6 +34,25 @@ body {
   padding: 45px 130px 30px 50px;
 }
 
+.result-header {
+  text-align: center;
+  margin-bottom: 40px;
+  animation: slideDown 0.6s ease-out;
+}
+
+.result-title {
+  font-family: "Playfair Display", serif;
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 12px;
+  letter-spacing: -0.5px;
+  background-color: #000000;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
 .content-container {
   flex: 1;
   display: flex;
@@ -64,6 +83,56 @@ body {
 
 .user-input {
   width: 100%;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 15px;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.16);
+  background: #ffffff;
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-style: Medium;
+  font-size: 12.25px;
+  line-height: 17.5px;
+  letter-spacing: 0px;
+  text-align: center;
+  border: 1px solid #d1d5dc;
+}
+
+.action-btn lucide-icon,
+.action-btn svg {
+  color: #0a0a0a;
+  width: 20px;
+  height: 20px;
+}
+
+.action-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.18);
+}
+
+.action-btn lucide-icon {
+  display: inline-flex;
+  width: 20px;
+  height: 20px;
+}
+
+.action-btn lucide-icon svg,
+.action-btn svg {
+  stroke: #ffffff !important;
+  fill: #ffffff !important;
+  color: #ffffff !important;
 }
 
 @media (max-width: 1024px) {

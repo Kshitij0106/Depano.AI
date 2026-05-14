@@ -1,9 +1,15 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationStart, Router } from '@angular/router';
 import { LucideAngularModule } from 'lucide-angular';
 import { CommonModule } from '@angular/common';
 import { ErrorService } from '../services/error.service';
 import { ErrorType, ErrorConfig } from './error.type';
+import { CheckedAttributesService } from '../generate/services/checked-attributes.service';
+import { PromptService } from '../services/prompt.service';
+import { CategoryService } from '../generate/services/category.service';
+import { ImageService } from '../services/image.service';
+import { BreadcrumbService } from '../services/breadcrumb.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-error-page',
@@ -16,9 +22,16 @@ export class ErrorPageComponent implements OnInit {
   type: ErrorType = ErrorType.INTERNAL_SERVER_ERROR;
   config!: ErrorConfig;
 
+  private navigationSubscription!: Subscription;
+
   constructor(
     private router: Router,
     private errorService: ErrorService,
+    private breadcrumbService: BreadcrumbService,
+    private imageService: ImageService,
+    private categroryService: CategoryService,
+    private promptService: PromptService,
+    private checkAttributeService: CheckedAttributesService,
   ) {}
 
   ngOnInit(): void {
@@ -34,6 +47,7 @@ export class ErrorPageComponent implements OnInit {
         this.config = this.errorService.getError(this.type);
       },
     });
+    this.onBackButton();
   }
 
   get primaryActions() {
@@ -47,17 +61,46 @@ export class ErrorPageComponent implements OnInit {
   handleAction(action: string): void {
     switch (action) {
       case 'retry':
-        window.location.reload();
+        this.emptyData();
+        this.router.navigate(['/mode-select']);
         break;
       case 'topup':
         this.router.navigate(['/top-up']);
         break;
       case 'home':
+        this.emptyData();
         this.router.navigate(['/home']);
         break;
       case 'plans':
         this.router.navigate(['/pricing']);
         break;
     }
+  }
+
+  onBackButton() {
+    this.navigationSubscription = this.router.events.subscribe((event) => {
+      if (event instanceof NavigationStart) {
+        if (event.navigationTrigger === 'popstate') {
+          this.router.navigate(['/mode-select']);
+        }
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    this.navigationSubscription.unsubscribe();
+  }
+
+  /**
+   * Empties the data.
+   */
+  emptyData() {
+    this.promptService.clearPromptId();
+    this.categroryService.deleteCategories();
+    this.imageService.imageUrl.next('');
+    this.imageService.sketchUrl.next('');
+    this.imageService.imageSubject.next(null);
+    this.breadcrumbService.emptyBreadcrumbList();
+    this.checkAttributeService.emptyCheckedAttributesList();
   }
 }

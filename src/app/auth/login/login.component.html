@@ -135,7 +135,7 @@
                 Enter verification code
               </h2>
               <p class="font-inter text-gray-600">
-                We sent a code to {{ otpSendRequest.mobileNumber }}
+                We sent a code to {{ otpGenerateRequest.mobileNumber }}
               </p>
             </div>
           </div>
@@ -157,11 +157,10 @@
                 <input
                   id="phone"
                   type="tel"
-                  maxlength="10"
-                  minlength="10"
-                  pattern="\d{10}"
-                  placeholder="+91 99999-00000"
-                  [(ngModel)]="otpSendRequest.mobileNumber"
+                  maxlength="12"
+                  pattern="^(?:91)?[6-9][0-9]{9}$"
+                  placeholder="Enter mobile number"
+                  [(ngModel)]="otpGenerateRequest.mobileNumber"
                   name="mobileNumber"
                   #mobileId="ngModel"
                   class="w-full h-10 small-placeholder rounded-xl border border-gray-200 focus:border-pink-400 focus:ring-2 focus:ring-pink-400/20 px-3"
@@ -181,7 +180,6 @@
                   <span
                     *ngIf="
                       mobileId.errors?.['pattern'] ||
-                      mobileId.errors?.['minlength'] ||
                       mobileId.errors?.['maxlength']
                     "
                     >Invalid mobile number!</span
@@ -192,7 +190,7 @@
               <button
                 type="submit"
                 class="w-full h-12 btn-background-clr from-pink-500 to-orange-500 hover:from-pink-600 hover:to-orange-600 text-white rounded-xl font-inter font-medium transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-                [disabled]="userform.invalid"
+                [disabled]="isResendBlocked || userform.invalid"
                 (click)="authenticateUser()"
               >
                 <div
@@ -261,7 +259,11 @@
                 type="submit"
                 class="w-full h-12 btn-background-clr from-pink-500 to-orange-500 hover:from-pink-600 hover:to-orange-600 text-white rounded-xl font-inter font-medium transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 (click)="verifyOtp()"
-                [disabled]="userform.invalid"
+                [disabled]="
+                  isverifyBlocked ||
+                  userform.invalid ||
+                  this.loginOtpVerifyRequest.otp.length != 6
+                "
               >
                 <div
                   class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"
@@ -275,6 +277,31 @@
                   [strokeWidth]="2"
                 ></lucide-icon>
               </button>
+
+              <!-- Resend row -->
+              <div
+                *ngIf="otpSent && !isResendBlocked"
+                class="font-inter text-sm text-gray-600 flex items-center gap-2 justify-center mt-4"
+              >
+                <div class="font-inter text-sm text-gray-600">
+                  Didn't receive the code?
+                  <button
+                    type="button"
+                    class="resend-link ml-2"
+                    [disabled]="resendDisabled"
+                    (click)="authenticateUser()"
+                  >
+                    Resend
+                  </button>
+                </div>
+
+                <div
+                  *ngIf="resendDisabled"
+                  class="resend-timer font-inter text-sm text-gray-600"
+                >
+                  {{ resendCountdown }}s
+                </div>
+              </div>
             </div>
           </form>
         </div>

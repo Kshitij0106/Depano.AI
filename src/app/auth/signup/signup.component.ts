@@ -6,10 +6,9 @@ import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../services/auth.service';
 import { LucideAngularModule } from 'lucide-angular';
 import { UserService } from 'src/app/services/user.service';
-import { OtpValidateRequest } from '../models/otpValidateRequest.model';
-import { OtpSendRequest } from '../models/otpSendRequest.model';
+import { OtpGenerateRequest } from '../models/otpGenerateRequest.model';
+import { SignupOtpVerifyRequest } from '../models/signupOtpVerifyRequest.model';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ErrorService } from 'src/app/services/error.service';
 
 @Component({
   standalone: true,
@@ -19,11 +18,11 @@ import { ErrorService } from 'src/app/services/error.service';
   imports: [CommonModule, FormsModule, LucideAngularModule],
 })
 export class SignupComponent implements OnInit {
-  otpSendRequest: OtpSendRequest = {
+  otpGenerateRequest: OtpGenerateRequest = {
     mobileNumber: '',
   };
 
-  otpValidateRequest: OtpValidateRequest = {
+  signupOtpVerifyRequest: SignupOtpVerifyRequest = {
     mobileNumber: '',
     userName: '',
     otp: '',
@@ -33,16 +32,20 @@ export class SignupComponent implements OnInit {
   mobileError: boolean = false;
   acceptTerms = false;
   otpSent: boolean = false;
-  resendTimer = 0;
   otpDigits: string[] = ['', '', '', '', '', ''];
   otpError: string = '';
+
+  resendCountdown: number = 0;
+  resendDisabled: boolean = false;
+  isResendBlocked: boolean = false;
+  private resendTimerRef: any = null;
+  isverifyBlocked: boolean = false;
 
   constructor(
     private authService: AuthService,
     private toastr: ToastrService,
     private router: Router,
     private userService: UserService,
-    private errorService: ErrorService,
   ) {}
 
   ngOnInit(): void {
@@ -55,19 +58,32 @@ export class SignupComponent implements OnInit {
    * Generates a One-Time Password (OTP) to be sent to the user's phone for verification purposes.
    */
   registerUser() {
-    this.authService.registerUser(this.otpSendRequest).subscribe({
+    let mobile = this.otpGenerateRequest.mobileNumber?.trim();
+
+    if (mobile) {
+      this.otpGenerateRequest.mobileNumber = mobile.replace(/^(\+91|91)/, '');
+    }
+    this.authService.generateSignupOtp(this.otpGenerateRequest).subscribe({
       next: (result) => {
         if (result.status === 'Success') {
           this.otpSent = true;
           this.toastr.success('An OTP has been sent to your mobile number.');
+          this.startResendTimer();
         }
       },
       error: (err: HttpErrorResponse) => {
-        if (err.error?.status === 'CONFLICT') {
+        if (err.error?.status === 'TOO_MANY_REQUESTS') {
+          this.toastr.error(err.error?.message);
+          this.isResendBlocked = true;
+        } else if (
+          err.error?.status === 'CONFLICT' ||
+          err.error?.status === 'UNPROCESSABLE_ENTITY'
+        ) {
           this.toastr.error(err.error?.message);
         } else {
-          this.errorService.errorSubject.next(err.error?.status);
-          this.router.navigate(['error']);
+          this.toastr.error(
+            'Unable to send OTP at the moment. Please try again later.',
+          );
         }
       },
     });
@@ -77,40 +93,37 @@ export class SignupComponent implements OnInit {
    * Validates the One-Time Password (OTP) provided by the user against the generated OTP.
    */
   verifyOtp() {
-    this.otpValidateRequest.mobileNumber = this.otpSendRequest.mobileNumber;
-    this.authService.verifyOtp(this.otpValidateRequest).subscribe({
-      next: (result) => {
-        if (result.status === 'Success') {
-          this.authService.saveToken(result.accessToken);
-          this.toastr.success(result.message);
-          this.router.navigate(['mode-select']);
-          this.userService.updateUserDetails();
-        }
-      },
-      error: (err: HttpErrorResponse) => {
-        if (err.error?.status === 'BAD_REQUEST') {
-          this.toastr.error(err.error?.message);
-        } else {
-          this.errorService.errorSubject.next(err.error?.status);
-          this.router.navigate(['error']);
-        }
-      },
-    });
+    this.signupOtpVerifyRequest.mobileNumber =
+      this.otpGenerateRequest.mobileNumber;
+    this.authService
+      .verifyAndRegisterUser(this.signupOtpVerifyRequest)
+      .subscribe({
+        next: (result) => {
+          if (result.status === 'Success') {
+            this.authService.saveToken(result.accessToken);
+            this.toastr.success(result.message);
+            this.router.navigate(['mode-select']);
+            this.userService.updateUserDetails();
+          }
+        },
+        error: (err: HttpErrorResponse) => {
+          if (err.error?.status === 'TOO_MANY_REQUESTS') {
+            this.toastr.error(err.error?.message);
+            this.isverifyBlocked = true;
+          } else if (
+            err.error?.status === 'BAD_REQUEST' ||
+            err.error?.status === 'UNPROCESSABLE_ENTITY'
+          ) {
+            this.toastr.error(err.error?.message);
+          } else {
+            this.toastr.error('Unable to complete sign in. Please try again.');
+          }
+        },
+      });
   }
 
   goToLogin() {
     this.router.navigate(['login']);
-  }
-
-  /**
-   * Resend OTP.
-   */
-  resendOtp(): void {
-    if (this.resendTimer > 0) {
-      this.toastr.info(`Please wait ${this.resendTimer}s before resending.`);
-      return;
-    }
-    this.registerUser();
   }
 
   onOtpInput(event: Event, index: number): void {
@@ -170,7 +183,25 @@ export class SignupComponent implements OnInit {
     }
   }
 
+  private startResendTimer(seconds: number = 20) {
+    this.resendDisabled = true;
+    this.resendCountdown = seconds;
+
+    if (this.resendTimerRef) {
+      clearInterval(this.resendTimerRef);
+    }
+
+    this.resendTimerRef = setInterval(() => {
+      this.resendCountdown--;
+      if (this.resendCountdown <= 0) {
+        clearInterval(this.resendTimerRef);
+        this.resendTimerRef = null;
+        this.resendDisabled = false;
+      }
+    }, 1000);
+  }
+
   private updateOtpValue(): void {
-    this.otpValidateRequest.otp = this.otpDigits.join('');
+    this.signupOtpVerifyRequest.otp = this.otpDigits.join('');
   }
 }

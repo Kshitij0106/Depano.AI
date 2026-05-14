@@ -2,20 +2,35 @@
   <label class="prompt-label"> {{ label }} </label>
 
   <div class="prompt-box">
-    <textarea
-      class="prompt-input"
-      placeholder="E.g., 'Vintage-inspired leather jacket with modern details', 'Sustainable casual wear', etc."
-      #userInputCategory
-      [(ngModel)]="userInputCategory.value"
-    ></textarea>
-    <button
-      for="userInput"
-      type="submit"
-      class="prompt-btn"
-      [disabled]="!userInputCategory.value.trim()"
-      (click)="onSubmit(userInputCategory.value)"
+    <div class="prompt-row">
+      <textarea
+        class="prompt-input"
+        name="user-prompt"
+        maxlength="300"
+        pattern="^[A-Za-z0-9](?:[A-Za-z0-9 .,'-]*[A-Za-z0-9.])?$"
+        placeholder="E.g., 'Vintage-inspired leather jacket with modern details', 'Sustainable casual wear', etc."
+        #userInputCategory="ngModel"
+        [(ngModel)]="userPrompt"
+      >
+      </textarea>
+
+      <button
+        for="userInput"
+        type="submit"
+        class="prompt-btn"
+        [disabled]="!userPrompt.trim() || userInputCategory.errors?.['pattern']"
+        (click)="onSubmit(userPrompt)"
+      >
+        <lucide-icon name="arrow-right"></lucide-icon>
+      </button>
+    </div>
+
+    <div
+      class="invalid-error text-red-500 text-sm font-inter mt-1"
+      *ngIf="userInputCategory.errors?.['pattern'] && userPrompt.trim()"
     >
-      <lucide-icon name="arrow-right"></lucide-icon>
-    </button>
+      Use letters, numbers, spaces, and basic punctuation like comma, period,
+      apostrophe, or hyphen.
+    </div>
   </div>
 </div>

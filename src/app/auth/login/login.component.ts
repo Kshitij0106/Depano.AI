@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
-import { OtpSendRequest } from '../models/otpSendRequest.model';
+import { OtpGenerateRequest } from '../models/otpGenerateRequest.model';
+import { LoginOtpVerifyRequest } from '../models/loginOtpVerifyRequest.model';
 import { ToastrService } from 'ngx-toastr';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { OtpValidateRequest } from '../models/otpValidateRequest.model';
 import { UserService } from 'src/app/services/user.service';
 import { LucideAngularModule } from 'lucide-angular';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ErrorService } from 'src/app/services/error.service';
 
 @Component({
   standalone: true,
@@ -19,15 +18,13 @@ import { ErrorService } from 'src/app/services/error.service';
   imports: [FormsModule, CommonModule, LucideAngularModule],
 })
 export class LoginComponent {
-  otpSendRequest: OtpSendRequest = {
+  otpGenerateRequest: OtpGenerateRequest = {
     mobileNumber: '',
   };
 
-  otpValidateRequest: OtpValidateRequest = {
+  loginOtpVerifyRequest: LoginOtpVerifyRequest = {
     mobileNumber: '',
-    userName: '',
     otp: '',
-    email: '',
   };
 
   mobileError: boolean = false;
@@ -36,11 +33,15 @@ export class LoginComponent {
   otpDigits: string[] = ['', '', '', '', '', ''];
   otpError: string = '';
 
+  resendCountdown: number = 0;
+  resendDisabled: boolean = false;
+  isResendBlocked: boolean = false;
+  private resendTimerRef: any = null;
+  isverifyBlocked: boolean = false;
   constructor(
     private router: Router,
     private authService: AuthService,
     private userService: UserService,
-    private errorService: ErrorService,
     private toastr: ToastrService,
   ) {}
 
@@ -48,19 +49,33 @@ export class LoginComponent {
    * Generates a One-Time Password (OTP) to be sent to the user's phone for verification purposes.
    */
   authenticateUser() {
-    this.authService.authenticateUser(this.otpSendRequest).subscribe({
+    let mobile = this.otpGenerateRequest.mobileNumber?.trim();
+
+    if (mobile) {
+      this.otpGenerateRequest.mobileNumber = mobile.replace(/^(\+91|91)/, '');
+    }
+
+    this.authService.generateLoginOtp(this.otpGenerateRequest).subscribe({
       next: (result) => {
         if (result.status === 'Success') {
           this.otpSent = true;
           this.toastr.success('An OTP has been sent to your mobile number.');
+          this.startResendTimer();
         }
       },
       error: (err: HttpErrorResponse) => {
-        if (err.error?.status === 'NOT_FOUND') {
+        if (err.error?.status === 'TOO_MANY_REQUESTS') {
+          this.toastr.error(err.error?.message);
+          this.isResendBlocked = true;
+        } else if (
+          err.error?.status === 'NOT_FOUND' ||
+          err.error?.status === 'UNPROCESSABLE_ENTITY'
+        ) {
           this.toastr.error(err.error?.message);
         } else {
-          this.errorService.errorSubject.next(err.error?.status);
-          this.router.navigate(['error']);
+          this.toastr.error(
+            'Unable to send OTP at the moment. Please try again shortly.',
+          );
         }
       },
     });
@@ -70,25 +85,33 @@ export class LoginComponent {
    * Validates the One-Time Password (OTP) provided by the user against the generated OTP.
    */
   verifyOtp() {
-    this.otpValidateRequest.mobileNumber = this.otpSendRequest.mobileNumber;
-    this.authService.verifyOtp(this.otpValidateRequest).subscribe({
-      next: (result) => {
-        if (result.status === 'Success') {
-          this.authService.saveToken(result.accessToken);
-          this.toastr.success(result.message);
-          this.router.navigate(['mode-select']);
-          this.userService.updateUserDetails();
-        }
-      },
-      error: (err: HttpErrorResponse) => {
-        if (err.error?.status === 'BAD_REQUEST') {
-          this.toastr.error(err.error?.message);
-        } else {
-          this.errorService.errorSubject.next(err.error?.status);
-          this.router.navigate(['error']);
-        }
-      },
-    });
+    this.loginOtpVerifyRequest.mobileNumber =
+      this.otpGenerateRequest.mobileNumber;
+    this.authService
+      .verifyAndAuthenticateUser(this.loginOtpVerifyRequest)
+      .subscribe({
+        next: (result) => {
+          if (result.status === 'Success') {
+            this.authService.saveToken(result.accessToken);
+            this.toastr.success(result.message);
+            this.router.navigate(['mode-select']);
+            this.userService.updateUserDetails();
+          }
+        },
+        error: (err: HttpErrorResponse) => {
+          if (err.error?.status === 'TOO_MANY_REQUESTS') {
+            this.toastr.error(err.error?.message);
+            this.isverifyBlocked = true;
+          } else if (
+            err.error?.status === 'BAD_REQUEST' ||
+            err.error?.status === 'UNPROCESSABLE_ENTITY'
+          ) {
+            this.toastr.error(err.error?.message);
+          } else {
+            this.toastr.error('Unable to complete log in. Please try again.');
+          }
+        },
+      });
   }
 
   /**
@@ -151,7 +174,25 @@ export class LoginComponent {
     }
   }
 
+  private startResendTimer(seconds: number = 20) {
+    this.resendDisabled = true;
+    this.resendCountdown = seconds;
+
+    if (this.resendTimerRef) {
+      clearInterval(this.resendTimerRef);
+    }
+
+    this.resendTimerRef = setInterval(() => {
+      this.resendCountdown--;
+      if (this.resendCountdown <= 0) {
+        clearInterval(this.resendTimerRef);
+        this.resendTimerRef = null;
+        this.resendDisabled = false;
+      }
+    }, 1000);
+  }
+
   private updateOtpValue(): void {
-    this.otpValidateRequest.otp = this.otpDigits.join('');
+    this.loginOtpVerifyRequest.otp = this.otpDigits.join('');
   }
 }

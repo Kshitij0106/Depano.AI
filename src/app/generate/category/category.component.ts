@@ -104,9 +104,7 @@ export class CategoryComponent implements OnInit {
         this.loadCategoryList();
       },
       error: (err) => {
-        if (err.error?.status === 'NOT_FOUND') {
-          this.toastr.error(err.error?.message);
-        } else {
+        if (err.error?.status !== 'NOT_FOUND') {
           this.errorService.errorSubject.next(err.error?.status);
           this.router.navigate(['error']);
         }
@@ -313,7 +311,10 @@ export class CategoryComponent implements OnInit {
       // If the user is selecting attribute, route to previous category
       this.categoryService.saveAttributeValue(subCategory.code).subscribe({
         error: (err) => {
-          if (err.error?.status === 'NOT_FOUND') {
+          if (
+            err.error?.status === 'NOT_FOUND' ||
+            err.error?.status === 'UNPROCESSABLE_ENTITY'
+          ) {
             this.toastr.error(err.error?.message);
           } else {
             this.errorService.errorSubject.next(err.error?.status);
@@ -391,7 +392,10 @@ export class CategoryComponent implements OnInit {
   onRemoveSelectedAttribute(code: string) {
     this.categoryService.removeAttributeValue(code).subscribe({
       error: (err) => {
-        if (err.error?.status === 'NOT_FOUND') {
+        if (
+          err.error?.status === 'NOT_FOUND' ||
+          err.error?.status === 'UNPROCESSABLE_ENTITY'
+        ) {
           this.toastr.error(err.error?.message);
         } else {
           this.errorService.errorSubject.next(err.error?.status);

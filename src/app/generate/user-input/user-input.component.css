@@ -15,38 +15,46 @@
   margin-bottom: 10px;
 }
 
-.prompt-box {
-  position: relative;
+.prompt-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
 .prompt-input {
-  width: 92%;
-  padding: 19px 18px 0px 18px;
+  flex: 1;
+  height: 52px;
+
+  padding: 16px 18px;
   border-radius: 14px;
   background: #f3e8ff;
+
   font-family: Inter, Roboto, sans-serif;
   font-size: 14px;
   line-height: 20px;
-  resize: none;
-}
 
-.prompt-input::placeholder {
-  color: #9ca3af;
-  font-weight: 400;
+  resize: none;
+  border: none;
+  outline: none;
 }
 
 .prompt-btn {
-  position: absolute;
-  bottom: 8px;
-  right: 14px;
-  padding: 18px 18px;
-  font-size: 13px;
+  height: 52px;
+  min-width: 52px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   border-radius: 14px;
   border: none;
+
   color: #ffffff;
-  transition: #f1f5f9 0.2s ease;
-  font-family: Roboto;
+  cursor: pointer;
+
   background: linear-gradient(to bottom right, #a855f7, #ec4899);
+
+  transition: opacity 0.2s ease;
 }
 
 .prompt-btn:disabled {
@@ -62,4 +70,16 @@ textarea:focus-visible {
   border: none !important;
   outline: none !important;
   box-shadow: none !important;
+}
+
+.invalid-error {
+  color: red;
+  margin-left: 2px;
+}
+
+.invalid-error,
+.text-red-500.text-sm.font-inter.mt-1 {
+  font-size: 12px !important;
+  line-height: 1.3 !important;
+  margin-top: 2px !important;
 }

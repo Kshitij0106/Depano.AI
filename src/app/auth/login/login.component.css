@@ -112,6 +112,24 @@ body {
   font-size: 0.825rem;
 }
 
+.resend-link {
+  background: transparent;
+  color: #ec4899;
+  border: none;
+  padding: 0;
+  font-weight: 600;
+  cursor: pointer;
+}
+.resend-link[disabled] {
+  color: #c7b0b8;
+  cursor: default;
+  opacity: 0.6;
+}
+.resend-timer {
+  color: #6b7280;
+  font-size: 0.875rem;
+}
+
 .text-transparent {
   text-emphasis-color: transparent;
 }

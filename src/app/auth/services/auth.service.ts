@@ -3,8 +3,9 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { Auth } from '../models/auth.model';
-import { OtpSendRequest } from '../models/otpSendRequest.model';
-import { OtpValidateRequest } from '../models/otpValidateRequest.model';
+import { OtpGenerateRequest } from '../models/otpGenerateRequest.model';
+import { LoginOtpVerifyRequest } from '../models/loginOtpVerifyRequest.model';
+import { SignupOtpVerifyRequest } from '../models/signupOtpVerifyRequest.model';
 import { OtpResponse } from '../models/otpResponse.model';
 import { UserService } from 'src/app/services/user.service';
 
@@ -14,44 +15,68 @@ import { UserService } from 'src/app/services/user.service';
 export class AuthService {
   private accessToken: string | null = null;
 
-  constructor(private http: HttpClient, private userService: UserService) {}
+  constructor(
+    private http: HttpClient,
+    private userService: UserService,
+  ) {}
 
   /**
-   * Registers a new user by sending their details to the server.
+   * Generates and OTP request for user to login.
    *
-   * @param {OtpSendRequest} otpSendRequest - The user's registration details, including necessary information such as username and mobile number.
+   * @param {OtpGenerateRequest} otpGenerateRequest - The user's registration details, including necessary information such as mobile number.
    * @returns {Observable<Auth>} - An observable containing the authentication response.
    */
-  authenticateUser(otpSendRequest: OtpSendRequest): Observable<OtpResponse> {
+  generateLoginOtp(
+    otpGenerateRequest: OtpGenerateRequest,
+  ): Observable<OtpResponse> {
     return this.http.post<OtpResponse>(
       environment.gateway + 'auth/login/otp',
-      otpSendRequest
+      otpGenerateRequest,
     );
   }
 
   /**
-   * Registers a new user by sending their details to the server.
+   * Returns an existing user once OTP is verified.
    *
-   * @param {OtpSendRequest} otpSendRequest - The user's registration details, including necessary information such as username and mobile number.
+   * @param {LoginOtpVerifyRequest} loginOtpRequest - The user's registration details, including necessary information such as mobile number.
    * @returns {Observable<Auth>} - An observable containing the authentication response.
    */
-  registerUser(otpSendRequest: OtpSendRequest): Observable<OtpResponse> {
+  verifyAndAuthenticateUser(
+    loginOtpRequest: LoginOtpVerifyRequest,
+  ): Observable<Auth> {
+    return this.http.post<Auth>(
+      environment.gateway + 'auth/login/verify',
+      loginOtpRequest,
+    );
+  }
+
+  /**
+   * Generates and OTP request for user to signup.
+   *
+   * @param {OtpGenerateRequest} otpGenerateRequest - The user's registration details, including necessary information such as username and mobile number.
+   * @returns {Observable<Auth>} - An observable containing the authentication response.
+   */
+  generateSignupOtp(
+    otpGenerateRequest: OtpGenerateRequest,
+  ): Observable<OtpResponse> {
     return this.http.post<OtpResponse>(
       environment.gateway + 'auth/signup/otp',
-      otpSendRequest
+      otpGenerateRequest,
     );
   }
 
   /**
    * Registers a new user by sending their details to the server.
    *
-   * @param {OtpValidateRequest} otpValidateRequest - The user's registration details, including necessary information such as username and mobile number.
+   * @param {SignupOtpVerifyRequest} signupOtpVerifyRequest - The user's registration details, including necessary information such as username and mobile number.
    * @returns {Observable<Auth>} - An observable containing the authentication response.
    */
-  verifyOtp(otpValidateRequest: OtpValidateRequest): Observable<Auth> {
+  verifyAndRegisterUser(
+    signupOtpVerifyRequest: SignupOtpVerifyRequest,
+  ): Observable<Auth> {
     return this.http.post<Auth>(
-      environment.gateway + 'auth/verify',
-      otpValidateRequest
+      environment.gateway + 'auth/signup/verify',
+      signupOtpVerifyRequest,
     );
   }
 

@@ -26,32 +26,34 @@ const svcErrorConfig: ErrorConfig = {
   ],
 };
 
+const paymentErrorConfig: ErrorConfig = {
+  title: "Oh no! You're out of credits",
+  subtitle: 'Top up to continue.',
+  icon: 'coins',
+  actions: [
+    {
+      label: 'Top Up Credits',
+      action: 'topup',
+      icon: 'credit-card',
+      position: 'primaryRow',
+    },
+    {
+      label: 'View Plans',
+      action: 'plans',
+      icon: 'sparkles',
+      position: 'primaryRow',
+    },
+    {
+      label: 'Back to Home',
+      action: 'home',
+      icon: 'house',
+      position: 'secondaryRow',
+    },
+  ],
+};
+
 export const ERROR_CONFIG_MAP: Record<ErrorType, ErrorConfig> = {
   [ErrorType.INTERNAL_SERVER_ERROR]: svcErrorConfig,
   [ErrorType.SERVICE_UNAVAILABLE]: svcErrorConfig,
-  [ErrorType.PAYMENT_REQUIRED]: {
-    title: "Oh no! You're out of credits",
-    subtitle: 'Top up to continue.',
-    icon: 'coins',
-    actions: [
-      {
-        label: 'Top Up Credits',
-        action: 'topup',
-        icon: 'credit-card',
-        position: 'primaryRow',
-      },
-      {
-        label: 'View Plans',
-        action: 'plans',
-        icon: 'sparkles',
-        position: 'primaryRow',
-      },
-      {
-        label: 'Back to Home',
-        action: 'home',
-        icon: 'house',
-        position: 'secondaryRow',
-      },
-    ],
-  },
+  [ErrorType.PAYMENT_REQUIRED]: paymentErrorConfig,
 };

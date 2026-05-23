@@ -9,7 +9,6 @@ import { HeaderComponent } from '../header/header.component';
 import { CommonModule } from '@angular/common';
 import { LucideAngularModule } from 'lucide-angular';
 import { ToastrService } from 'ngx-toastr';
-import { PromptService } from '../services/prompt.service';
 import { CategoryService } from '../generate/services/category.service';
 import { filter, Subscription } from 'rxjs';
 import { ErrorService } from '../services/error.service';
@@ -30,7 +29,6 @@ export class ResultComponent implements OnInit {
 
   constructor(
     private imageService: ImageService,
-    private promptService: PromptService,
     private userService: UserService,
     private breadcrumbService: BreadcrumbService,
     private categoryService: CategoryService,
@@ -61,16 +59,16 @@ export class ResultComponent implements OnInit {
           this.showRegenerateButton = true;
         }
         this.image = result.url;
-        this.promptService.setPromptId(result.imageId);
+        this.imageService.setImageId(result.imageId);
         this.userService.updateUserDetails();
         this.toastr.success(result.message);
       });
   }
 
   regenerate() {
-    const promptId = this.promptService.getPromptId();
-    if (promptId) {
-      this.imageService.regenerateImage(promptId).subscribe({
+    const imageId = this.imageService.getImageId();
+    if (imageId) {
+      this.imageService.regenerateImage(imageId).subscribe({
         next: (result) => {
           if (result.status === 'Success') {
             this.image = result.url;
@@ -150,10 +148,7 @@ export class ResultComponent implements OnInit {
   }
 
   emptyData() {
-    this.promptService.clearPromptId();
-    this.imageService.imageUrl.next('');
-    this.imageService.sketchUrl.next('');
-    this.imageService.imageSubject.next(null);
+    this.imageService.clearImageData();
     this.categoryService.deleteCategories();
     this.breadcrumbService.emptyBreadcrumbList();
     this.checkAttributeService.emptyCheckedAttributesList();

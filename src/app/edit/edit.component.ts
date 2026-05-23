@@ -10,7 +10,6 @@ import { ErrorService } from '../services/error.service';
 import { NavigationStart, Router } from '@angular/router';
 import { LucideAngularModule } from 'lucide-angular';
 import { Subscription } from 'rxjs';
-import { PromptService } from '../services/prompt.service';
 import { CategoryService } from '../generate/services/category.service';
 import { CheckedAttributesService } from '../generate/services/checked-attributes.service';
 import { BreadcrumbService } from '../services/breadcrumb.service';
@@ -41,7 +40,6 @@ export class EditComponent implements OnInit {
     private imageService: ImageService,
     private userService: UserService,
     private errorService: ErrorService,
-    private promptService: PromptService,
     private breadcrumbService: BreadcrumbService,
     private categoryService: CategoryService,
     private checkAttributeService: CheckedAttributesService,
@@ -125,10 +123,7 @@ export class EditComponent implements OnInit {
   }
 
   emptyData() {
-    this.promptService.clearPromptId();
-    this.imageService.imageUrl.next('');
-    this.imageService.sketchUrl.next('');
-    this.imageService.imageSubject.next(null);
+    this.imageService.clearImageData();
     this.categoryService.deleteCategories();
     this.breadcrumbService.emptyBreadcrumbList();
     this.checkAttributeService.emptyCheckedAttributesList();

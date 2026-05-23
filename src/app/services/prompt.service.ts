@@ -36,18 +36,6 @@ export class PromptService {
     });
   }
 
-  setPromptId(promptId: string) {
-    localStorage.setItem('promptId', promptId);
-  }
-
-  getPromptId() {
-    return localStorage.getItem('promptId');
-  }
-
-  clearPromptId() {
-    localStorage.removeItem('promptId');
-  }
-
   /**
    * Empty the prompt map.
    * Clears the prompt stored in backend

@@ -57,11 +57,11 @@ export class ResultComponent implements OnInit {
     this.imageSubscription = this.imageService.imageSubject
       .pipe(filter(Boolean))
       .subscribe((result) => {
-        if (result.promptId) {
+        if (result.imageId) {
           this.showRegenerateButton = true;
         }
         this.image = result.url;
-        this.promptService.setPromptId(result.promptId);
+        this.promptService.setPromptId(result.imageId);
         this.userService.updateUserDetails();
         this.toastr.success(result.message);
       });

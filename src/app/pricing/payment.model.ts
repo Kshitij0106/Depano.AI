@@ -17,6 +17,8 @@ export interface CreateOrderRequest {
 }
 
 export interface CreateOrderResponse {
+  amountInPaise: number;
+  gatewayOrderId: string;
   orderId: string;
   amount: number;
   currency: string;
@@ -29,10 +31,9 @@ export interface RazorpaySuccessResponse {
 }
 
 export interface VerifyPaymentRequest {
-  razorpayPaymentId: string;
-  razorpayOrderId: string;
-  razorpaySignature: string;
-  planCode: PlanCode;
+  razorpay_payment_id: any;
+  razorpay_order_id: any;
+  razorpay_signature: any;
 }
 
 export interface VerifyPaymentResponse {

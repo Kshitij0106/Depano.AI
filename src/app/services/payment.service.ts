@@ -8,7 +8,6 @@ import {
   CreateOrderResponse,
   VerifyPaymentRequest,
   VerifyPaymentResponse,
-  RazorpaySuccessResponse,
   RazorpayCheckoutOptions,
 } from '../pricing/payment.model';
 
@@ -23,7 +22,7 @@ export class PaymentService {
 
   createOrder(planCode: PlanCode): Observable<CreateOrderResponse> {
     return this.http
-      .post<CreateOrderResponse>(`${this.apiUrl}/payments/${planCode}`, {})
+      .post<CreateOrderResponse>(this.apiUrl + 'payments/' + planCode, {})
       .pipe(catchError(this.handleError));
   }
 
@@ -31,7 +30,7 @@ export class PaymentService {
     request: VerifyPaymentRequest,
   ): Observable<VerifyPaymentResponse> {
     return this.http
-      .post<VerifyPaymentResponse>(`${this.apiUrl}/payments/verify`, request)
+      .post<VerifyPaymentResponse>(this.apiUrl + 'payments/verify', request)
       .pipe(catchError(this.handleError));
   }
 
@@ -56,20 +55,20 @@ export class PaymentService {
   openCheckout(
     orderData: CreateOrderResponse,
     userDetails?: { name?: string; email?: string; contact?: string },
-  ): Promise<RazorpaySuccessResponse> {
+  ): Promise<VerifyPaymentRequest> {
     return new Promise((resolve, reject) => {
       const options: RazorpayCheckoutOptions = {
         key: this.razorpayKeyId,
-        amount: orderData.amount,
+        amount: orderData.amountInPaise,
         currency: orderData.currency,
         name: 'DEPANO AI',
         description: 'Plan Purchase',
         // Note: order_id is commented out for frontend-only testing mode
         // In production: Uncomment this and ensure backend creates real Razorpay order
-        order_id: orderData.orderId,
+        order_id: orderData.gatewayOrderId,
 
         // handler is called by Razorpay when payment succeeds
-        handler: (response: RazorpaySuccessResponse) => {
+        handler: (response: VerifyPaymentRequest) => {
           resolve(response);
         },
 
@@ -118,10 +117,9 @@ export class PaymentService {
 
     // Step 4: Verify with backend
     const verifyPayload: VerifyPaymentRequest = {
-      razorpayPaymentId: paymentResponse.razorpay_payment_id,
-      razorpayOrderId: paymentResponse.razorpay_order_id,
-      razorpaySignature: paymentResponse.razorpay_signature,
-      planCode: planCode,
+      razorpay_payment_id: paymentResponse.razorpay_payment_id,
+      razorpay_order_id: paymentResponse.razorpay_order_id,
+      razorpay_signature: paymentResponse.razorpay_signature,
     };
 
     const result = await firstValueFrom(

@@ -76,8 +76,14 @@ export class ResultComponent implements OnInit {
           }
         },
         error: (err: HttpErrorResponse) => {
-          this.errorService.errorSubject.next(err.error?.status);
-          this.router.navigate(['error']);
+          if (err.error?.status === 'BAD_REQUEST') {
+            this.toastr.error(
+              err.error?.message || 'Something went wrong. Please try again.',
+            );
+          } else {
+            this.errorService.errorSubject.next(err.error?.status);
+            this.router.navigate(['error']);
+          }
         },
       });
     }

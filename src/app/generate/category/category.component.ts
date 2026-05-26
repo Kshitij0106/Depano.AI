@@ -273,7 +273,10 @@ export class CategoryComponent implements OnInit {
               }
             },
             error: (err) => {
-              if (err.error?.status !== 'NOT_FOUND') {
+              if (
+                err.error?.status !== 'NOT_FOUND' &&
+                err.error?.status !== 'BAD_REQUEST'
+              ) {
                 this.errorService.errorSubject.next(err.error?.status);
                 this.router.navigate(['error']);
               }
@@ -313,7 +316,7 @@ export class CategoryComponent implements OnInit {
         error: (err) => {
           if (
             err.error?.status === 'NOT_FOUND' ||
-            err.error?.status === 'UNPROCESSABLE_ENTITY'
+            err.error?.status === 'BAD_REQUEST'
           ) {
             this.toastr.error(err.error?.message);
           } else {
@@ -394,7 +397,7 @@ export class CategoryComponent implements OnInit {
       error: (err) => {
         if (
           err.error?.status === 'NOT_FOUND' ||
-          err.error?.status === 'UNPROCESSABLE_ENTITY'
+          err.error?.status === 'BAD_REQUEST'
         ) {
           this.toastr.error(err.error?.message);
         } else {

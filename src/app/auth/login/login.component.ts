@@ -69,7 +69,7 @@ export class LoginComponent {
           this.isResendBlocked = true;
         } else if (
           err.error?.status === 'NOT_FOUND' ||
-          err.error?.status === 'UNPROCESSABLE_ENTITY'
+          err.error?.status === 'BAD_REQUEST'
         ) {
           this.toastr.error(err.error?.message);
         } else {
@@ -102,10 +102,7 @@ export class LoginComponent {
           if (err.error?.status === 'TOO_MANY_REQUESTS') {
             this.toastr.error(err.error?.message);
             this.isverifyBlocked = true;
-          } else if (
-            err.error?.status === 'BAD_REQUEST' ||
-            err.error?.status === 'UNPROCESSABLE_ENTITY'
-          ) {
+          } else if (err.error?.status === 'BAD_REQUEST') {
             this.toastr.error(err.error?.message);
           } else {
             this.toastr.error('Unable to complete log in. Please try again.');

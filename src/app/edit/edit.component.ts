@@ -83,7 +83,7 @@ export class EditComponent implements OnInit {
         },
       });
     } catch (err: any) {
-      if (err.error?.status === 'UNPROCESSABLE_ENTITY') {
+      if (err.error?.status === 'BAD_REQUEST') {
         this.toastr.error(err.error?.message);
       } else {
         this.errorService.errorSubject.next(err.error?.status);

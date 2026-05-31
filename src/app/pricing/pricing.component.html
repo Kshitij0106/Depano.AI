@@ -11,7 +11,7 @@
   </div>
 
   <!-- Current Balance Badge -->
-  <div *ngIf="isLoggedIn" class="current-balance-container">
+  <div *ngIf="this.isUserLoggedIn()" class="current-balance-container">
     <div class="current-balance-badge">
       <div class="current-balance-card">
         <lucide-icon
@@ -26,6 +26,35 @@
           >
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- Shown for 5 seconds after backend confirms payment -->
+  <div
+    *ngIf="paymentState === PaymentState.SUCCESS"
+    class="payment-toast payment-toast--success"
+  >
+    <lucide-icon name="check-circle" [size]="20"></lucide-icon>
+    <div class="payment-toast__content">
+      <strong>Payment Successful!</strong>
+      <!-- <span *ngIf="paymentSuccessData?.creditsAdded">
+        {{ paymentSuccessData?.creditsAdded }} credits added to your account.
+      </span>
+      <span *ngIf="!paymentSuccessData?.creditsAdded">
+        Your plan has been activated.
+      </span> -->
+    </div>
+  </div>
+
+  <!-- Shown for 4 seconds on error or cancellation -->
+  <div
+    *ngIf="paymentState === PaymentState.FAILED"
+    class="payment-toast payment-toast--error"
+  >
+    <lucide-icon name="alert-circle" [size]="20"></lucide-icon>
+    <div class="payment-toast__content">
+      <strong>Payment Failed</strong>
+      <!-- <span>{{ paymentErrorMessage }}</span> -->
     </div>
   </div>
 
@@ -50,7 +79,6 @@
 
       <div class="price">
         <span class="amount">{{ plan.price }}</span>
-        <span class="period">/ {{ plan.period }}</span>
       </div>
       <div class="images-wrapper">
         <div class="images">
@@ -66,11 +94,31 @@
         </li>
       </ul>
 
-      <button class="btn-primary full-width" (click)="onSelect(plan)">
+      <button
+        class="btn-primary full-width"
+        [disabled]="this.loading"
+        (click)="onPlanSelect(plan.planCode)"
+      >
+        <!-- State: this plan is being processed right now -->
+        <span *ngIf="this.loading" class="btn-loading-state">
+          <span class="spinner"></span>
+          Processing...
+        </span>
+
+        <!-- State: payment just completed successfully (brief) -->
         <span
-          >Purchase Now
-          <lucide-icon [size]="18" name="arrow-right"></lucide-icon
-        ></span>
+          *ngIf="paymentState === PaymentState.SUCCESS"
+          class="btn-success-state"
+        >
+          <lucide-icon [size]="18" name="check"></lucide-icon>
+          Payment Done
+        </span>
+
+        <!-- State: idle, normal button -->
+        <span *ngIf="paymentState === PaymentState.IDLE" class="btn-idle-state">
+          Purchase Now
+          <lucide-icon [size]="18" name="arrow-right"></lucide-icon>
+        </span>
       </button>
     </div>
   </div>

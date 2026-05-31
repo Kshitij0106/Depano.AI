@@ -77,7 +77,7 @@ export class SignupComponent implements OnInit {
           this.isResendBlocked = true;
         } else if (
           err.error?.status === 'CONFLICT' ||
-          err.error?.status === 'UNPROCESSABLE_ENTITY'
+          err.error?.status === 'BAD_REQUEST'
         ) {
           this.toastr.error(err.error?.message);
         } else {
@@ -110,10 +110,7 @@ export class SignupComponent implements OnInit {
           if (err.error?.status === 'TOO_MANY_REQUESTS') {
             this.toastr.error(err.error?.message);
             this.isverifyBlocked = true;
-          } else if (
-            err.error?.status === 'BAD_REQUEST' ||
-            err.error?.status === 'UNPROCESSABLE_ENTITY'
-          ) {
+          } else if (err.error?.status === 'BAD_REQUEST') {
             this.toastr.error(err.error?.message);
           } else {
             this.toastr.error('Unable to complete sign in. Please try again.');

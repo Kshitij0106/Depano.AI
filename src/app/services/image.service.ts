@@ -33,7 +33,7 @@ export class ImageService {
       .subscribe({
         next: (res) => this.imageSubject.next(res),
         error: (err) => {
-          if (err.error?.status === 'UNPROCESSABLE_ENTITY') {
+          if (err.error?.status === 'BAD_REQUEST') {
             this.toastr.error(
               err.error?.message || 'Invalid input. Please try again.',
             );
@@ -48,12 +48,12 @@ export class ImageService {
   /**
    * Sends a request again to the API for image generation based on user prompts.
    *
-   * @param promptId - The id of the prompt.
+   * @param imageId - The id of the image.
    * @returns {Observable<ImageResponse>} - An observable containing the server's response, which includes generated images.
    */
-  regenerateImage(promptId: string): Observable<ImageResponse> {
+  regenerateImage(imageId: string): Observable<ImageResponse> {
     return this.http.post<ImageResponse>(
-      environment.gateway + 'images/regenerate/' + promptId,
+      environment.gateway + 'images/' + imageId + '/regenerate',
       {},
     );
   }
@@ -71,7 +71,7 @@ export class ImageService {
       .subscribe({
         next: (res) => this.imageSubject.next(res),
         error: (err) => {
-          if (err.error?.status === 'UNPROCESSABLE_ENTITY') {
+          if (err.error?.status === 'BAD_REQUEST') {
             this.toastr.error(
               err.error?.message || 'Invalid input. Please try again.',
             );
@@ -135,5 +135,20 @@ export class ImageService {
     }
 
     return 'application/octet-stream';
+  }
+
+  setImageId(imageId: string) {
+    localStorage.setItem('imageId', imageId);
+  }
+
+  getImageId() {
+    return localStorage.getItem('imageId');
+  }
+
+  clearImageData() {
+    localStorage.removeItem('imageId');
+    this.imageUrl.next('');
+    this.sketchUrl.next('');
+    this.imageSubject.next(null);
   }
 }

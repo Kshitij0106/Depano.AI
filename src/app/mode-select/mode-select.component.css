@@ -80,13 +80,13 @@
 .cards-grid {
   display: grid;
   gap: 2.25rem;
-  max-width: 52rem;
+  max-width: 80rem;
   margin: auto;
 }
 
 @media (min-width: 768px) {
   .cards-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
@@ -118,8 +118,12 @@
   box-shadow: 0 0 0 2px #ec4899;
 }
 
-.card-sketch-to-image.selected {
+..card-sketch-to-image.selected {
   box-shadow: 0 0 0 2px #a855f7;
+}
+
+.card-edit-image.selected {
+  box-shadow: 0 0 0 2px #22c55e;
 }
 
 .card-content {
@@ -149,6 +153,10 @@
 
 .card-sketch-to-image .icon-container {
   background: linear-gradient(to bottom right, #a855f7, #ec4899);
+}
+
+.card-edit-image .icon-container {
+  background: linear-gradient(to bottom right, #22c55e, #10b981);
 }
 
 .card:hover .icon-container {
@@ -211,6 +219,10 @@
   background: linear-gradient(to right, #a855f7, #ec4899);
 }
 
+.card-edit-image .card-button {
+  background: linear-gradient(to right, #22c55e, #10b981);
+}
+
 .card-button:hover {
   background: linear-gradient(to right, #db2777, #ea580c);
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
@@ -218,6 +230,10 @@
 
 .card-sketch-to-image .card-button:hover {
   background: linear-gradient(to right, #9333ea, #db2777);
+}
+
+.card-edit-image .card-button:hover {
+  background: linear-gradient(to right, #16a34a, #059669);
 }
 
 .button-text {

@@ -65,6 +65,14 @@ export const routes: Routes = [
       import('./sketch-upload/upload.component').then((m) => m.UploadComponent),
   },
   {
+    path: 'edit-image',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./edit-image/edit-image.component').then(
+        (m) => m.EditImageComponent,
+      ),
+  },
+  {
     path: 'error',
     loadComponent: () =>
       import('./error/error-page.component').then((m) => m.ErrorPageComponent),

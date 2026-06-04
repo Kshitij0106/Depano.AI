@@ -1,0 +1,161 @@
+<app-header [source]="'sketch'"></app-header>
+<div class="container">
+  <div class="content">
+    <div class="header">
+      <h1 class="title">Edit Your Image with AI</h1>
+      <p class="subtitle">
+        Upload an existing design or fashion photo and let our AI refine the
+        look, textures, and styling based on your prompt.
+      </p>
+    </div>
+
+    <div class="grid-container">
+      <div class="left-column">
+        <div class="upload-section">
+          <div class="card upload-card">
+            <h3 class="upload-title">
+              <lucide-icon
+                class="icon-upload"
+                name="upload"
+                [size]="18"
+                [strokeWidth]="2"
+              ></lucide-icon>
+              Upload Your Image
+            </h3>
+
+            <div
+              class="upload-area"
+              [class.drag-active]="dragActive"
+              [class.uploaded]="uploadedFile"
+              (dragenter)="handleDrag($event, 'enter')"
+              (dragleave)="handleDrag($event, 'leave')"
+              (dragover)="handleDrag($event, 'over')"
+              (drop)="handleDrop($event)"
+            >
+              <input
+                type="file"
+                accept="image/png,image/jpeg,image/jpg"
+                (change)="handleFileSelect($event)"
+                class="file-input"
+              />
+              <ng-container *ngIf="uploadedFile; else noFile">
+                <div class="uploaded-content">
+                  <div class="success-icon">
+                    <lucide-icon
+                      name="circle-check-big"
+                      [size]="24"
+                      [strokeWidth]="2"
+                    ></lucide-icon>
+                  </div>
+                  <p class="file-name">{{ uploadedFile.name }}</p>
+                  <p class="file-status">Ready to edit</p>
+                  <button class="change-button" (click)="uploadedFile = null">
+                    Change File
+                  </button>
+                </div>
+              </ng-container>
+              <ng-template #noFile>
+                <div class="no-file-content">
+                  <div class="image-icon">
+                    <lucide-icon
+                      name="book-image"
+                      [size]="28"
+                      [strokeWidth]="2"
+                    ></lucide-icon>
+                  </div>
+                  <p class="drag-text">Drag and drop your image here</p>
+                  <p class="browse-text">or click to browse files</p>
+                  <p class="support-text">
+                    Supports JPG, JPEG, PNG, HEIC up to 6MB
+                  </p>
+                </div>
+              </ng-template>
+            </div>
+
+            <button
+              *ngIf="uploadedFile"
+              class="generate-button"
+              (click)="handleEditImage()"
+            >
+              <lucide-icon
+                name="wand"
+                [size]="22"
+                [strokeWidth]="2"
+              ></lucide-icon>
+              Edit Image
+              <lucide-icon
+                name="arrow-right"
+                [size]="22"
+                [strokeWidth]="2"
+              ></lucide-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="right-column">
+        <div class="features-section">
+          <div class="card features-card">
+            <h3 class="features-title">What You Can Do</h3>
+            <div class="features-content">
+              <div class="feature-item">
+                <div class="feature-icon icon-zap">
+                  <lucide-icon
+                    name="zap"
+                    [size]="24"
+                    [strokeWidth]="2"
+                  ></lucide-icon>
+                </div>
+                <div>
+                  <h4>Smart Retouching</h4>
+                  <p>
+                    Improve color, lighting, and style details with a single
+                    prompt.
+                  </p>
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-icon icon-sparkles">
+                  <lucide-icon
+                    name="sparkles"
+                    [size]="24"
+                    [strokeWidth]="2"
+                  ></lucide-icon>
+                </div>
+                <div>
+                  <h4>Preserve Original Quality</h4>
+                  <p>
+                    Retain the image’s texture while refreshing its fashion
+                    appeal.
+                  </p>
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-icon icon-file-image">
+                  <lucide-icon
+                    name="file-image"
+                    [size]="24"
+                    [strokeWidth]="2"
+                  ></lucide-icon>
+                </div>
+                <div>
+                  <h4>Fast Results</h4>
+                  <p>
+                    Receive your edited fashion-ready image quickly and clearly.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="full-user-input mt-5">
+      <app-user-input
+        [label]="label"
+        [hideUserPrompt]="hideUserPrompt"
+        (userInput)="inputSelected($event)"
+      ></app-user-input>
+    </div>
+  </div>
+</div>

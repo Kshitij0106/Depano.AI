@@ -54,6 +54,7 @@ import {
   House,
   TriangleAlert,
   RefreshCcw,
+  Wallpaper,
 } from 'lucide-angular';
 
 export function provideAppIcons() {
@@ -113,6 +114,7 @@ export function provideAppIcons() {
       RefreshCcw,
       BookImage,
       Star,
+      Wallpaper,
     }),
   );
 }

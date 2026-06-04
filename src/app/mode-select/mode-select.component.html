@@ -97,6 +97,55 @@
           </button>
         </div>
       </div>
+
+      <!-- Edit Your Image Category -->
+      <div
+        class="card card-edit-image"
+        [class.selected]="selectedCategory === 'edit-image'"
+        (click)="handleCategorySelect('edit-image')"
+      >
+        <div class="card-content">
+          <div class="icon-container">
+            <lucide-icon
+              name="wallpaper"
+              class="green-icon"
+              [size]="24"
+              [strokeWidth]="3"
+            ></lucide-icon>
+          </div>
+          <h3 class="card-title">Edit Your Image</h3>
+          <p class="card-description">
+            Upload your own design or photo and let AI enhance it with precise
+            styling edits. Perfect for refining existing images into polished
+            fashion assets.
+          </p>
+          <div class="features">
+            <div class="feature-item">
+              <span>Upload any existing image</span>
+            </div>
+            <div class="feature-item">
+              <span>Refine the look with AI-driven edits</span>
+            </div>
+            <div class="feature-item">
+              <span>Keep original detail and texture</span>
+            </div>
+          </div>
+          <button
+            class="card-button"
+            (click)="handleCategorySelect('edit-image')"
+          >
+            <span class="button-text">
+              Upload Image
+              <lucide-icon
+                name="camera"
+                class="pink-icon"
+                [size]="16"
+                [strokeWidth]="2.5"
+              ></lucide-icon>
+            </span>
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </div>

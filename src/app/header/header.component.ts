@@ -24,10 +24,7 @@ export class HeaderComponent implements OnInit {
   colorStart: string = '#444543';
   colorEnd: string = '#c1bebe';
 
-  loggedInUser: User = {
-    userName: '',
-    credits: '',
-  };
+  loggedInUser: User | null = null;
 
   constructor(
     private router: Router,
@@ -40,43 +37,22 @@ export class HeaderComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.checkProfile();
-    this.updateUserDetails();
+    this.userService.userDetails.subscribe((user) => {
+      if (this.source === 'home' || this.source === 'pricing') {
+        this.showProfile = user !== null;
+      } else {
+        this.showProfile = true;
+      }
+
+      this.loggedInUser = user;
+    });
   }
 
-  /**
-   * Show Profile dropdown on homepage only if logged in.
-   */
-  checkProfile() {
-    if (
-      (this.source === 'home' || this.source === 'pricing') &&
-      !this.authService.isLoggedIn()
-    ) {
-      this.showProfile = false;
-    } else {
-      this.showProfile = true;
-    }
-  }
-
-  /**
-   * Update credits after successfull generation of image.
-   */
-  updateUserDetails() {
-    if (this.authService.isLoggedIn()) {
-      this.userService.userDetails.subscribe((user) => {
-        this.loggedInUser.userName =
-          user.userName || this.userService.getUserName();
-        this.loggedInUser.credits = user.credits;
-      });
-    }
-  }
-
-  getUsername(name: string): string {
+  getUsername(name: string | undefined): string {
     if (!name) return '';
 
     const trimmed = name.trim();
 
-    // If name contains a space, take only the first name
     if (trimmed.includes(' ')) {
       return trimmed.split(' ')[0].substring(0, 10);
     }
@@ -89,22 +65,15 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/pricing']);
   }
 
-  /**
-   * Navigates to homepage or gender page if logged in.
-   */
   openHome() {
     this.emptyData();
     if (this.source === 'category') {
       this.router.navigate(['mode-select']);
     } else {
-      this.checkProfile();
       this.router.navigate(['home']);
     }
   }
 
-  /**
-   * Empties the data.
-   */
   emptyData() {
     if (this.source !== 'gender') {
       this.categroryService.deleteCategories();
@@ -114,13 +83,10 @@ export class HeaderComponent implements OnInit {
     }
   }
 
-  /**
-   * Log out.
-   */
   logout() {
-    this.openHome();
     this.authService.logout().subscribe(() => {
-      this.userService.clearUserDetails();
+      this.authService.clearUserInfo();
+      this.openHome();
     });
   }
 }

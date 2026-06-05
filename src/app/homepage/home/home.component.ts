@@ -39,28 +39,24 @@ export class HomeComponent {
     return this.authService.isLoggedIn();
   }
 
-  validateUserSession(destination: string) {
-    if (this.isUserLoggedIn()) {
-      this.router.navigate(['mode-select']);
-    } else {
-      this.userService.getMyUserDetails().subscribe({
-        next: (user: User) => {
-          this.userService.userDetails.next(user);
-          this.router.navigate(['mode-select']);
-        },
-        error: (err: HttpErrorResponse) => {
-          if (err.error?.status === 'UNAUTHORIZED') {
-            if (destination === 'login') {
-              this.router.navigate(['login']);
-            } else if (destination === 'signup') {
-              this.router.navigate(['signup']);
-            }
-          } else {
-            this.errorService.errorSubject.next(err.error?.status);
-            this.router.navigate(['error']);
+  checkUserSession(destination: string) {
+    this.userService.getMyUserDetails().subscribe({
+      next: (user: User) => {
+        this.userService.saveUserInfo(user);
+        this.router.navigate(['mode-select']);
+      },
+      error: (err: HttpErrorResponse) => {
+        if (err.error?.status === 'UNAUTHORIZED') {
+          if (destination === 'login') {
+            this.router.navigate(['login']);
+          } else if (destination === 'signup') {
+            this.router.navigate(['signup']);
           }
-        },
-      });
-    }
+        } else {
+          this.errorService.errorSubject.next(err.error?.status);
+          this.router.navigate(['error']);
+        }
+      },
+    });
   }
 }

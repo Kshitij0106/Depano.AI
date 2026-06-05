@@ -88,7 +88,6 @@ export class AuthService {
    * Deletes logged in user information from the session storage.
    */
   logout(): Observable<any> {
-    this.clearUserInfo();
     return this.http.post<Auth>(environment.gateway + 'auth/logout', {});
   }
 
@@ -99,7 +98,7 @@ export class AuthService {
   /**
    * Saves user information in session storage.
    */
-  saveToken(token: string) {
+  saveLoginInfo(token: string) {
     this.accessToken = token;
     sessionStorage.setItem('isLoggedIn', 'true');
   }

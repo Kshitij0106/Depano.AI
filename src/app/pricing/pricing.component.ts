@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../auth/services/auth.service';
 import { User, UserService } from '../services/user.service';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../header/header.component';
@@ -18,8 +17,6 @@ import {
   RazorpaySuccessResponse,
 } from './razorpay.types';
 import { DepanoAIPlan } from './models/plans.model';
-import { HttpErrorResponse } from '@angular/common/http';
-import { ErrorService } from '../services/error.service';
 
 @Component({
   selector: 'app-pricing',
@@ -29,7 +26,8 @@ import { ErrorService } from '../services/error.service';
   styleUrls: ['./pricing.component.css'],
 })
 export class PricingComponent implements OnInit {
-  credits: string = '';
+  isLoggedIn = false;
+  userDetails: User | null = null;
 
   readonly PlanType = PlanType;
   readonly PaymentState = PaymentState;
@@ -38,27 +36,6 @@ export class PricingComponent implements OnInit {
   loading = false;
 
   private razorpayInstance: InstanceType<Window['Razorpay']> | null = null;
-
-  constructor(
-    private router: Router,
-    private authService: AuthService,
-    private userService: UserService,
-    private paymentService: PaymentService,
-    private errorService: ErrorService,
-    private toastr: ToastrService,
-  ) {}
-
-  ngOnInit(): void {
-    if (this.isUserLoggedIn()) {
-      this.userService.userDetails.subscribe((user) => {
-        this.credits = user.credits;
-      });
-    }
-  }
-
-  isUserLoggedIn(): boolean {
-    return this.authService.isLoggedIn();
-  }
 
   plans: DepanoAIPlan[] = [
     {
@@ -112,14 +89,30 @@ export class PricingComponent implements OnInit {
     },
   ];
 
+  constructor(
+    private router: Router,
+    private userService: UserService,
+    private paymentService: PaymentService,
+    private toastr: ToastrService,
+  ) {}
+
+  ngOnInit(): void {
+    this.userService.userDetails.subscribe((user) => {
+      this.isLoggedIn = user !== null;
+      if (user) {
+        this.userDetails = user;
+      }
+    });
+  }
+
   async onPlanSelect(planType: PlanType): Promise<void> {
     if (this.loading) {
       return;
     }
 
-    const validSession = await this.checkUserSession();
+    const hasSession = await this.checkUserSession();
 
-    if (!validSession) {
+    if (!hasSession) {
       return;
     }
 
@@ -150,13 +143,16 @@ export class PricingComponent implements OnInit {
 
     const options: RazorpayCheckoutOptions = {
       key: environment.razorpayKeyId,
-
       amount: order.amount,
       currency: order.currency,
       name: 'DepanoAI',
       description: `${planType} purchase`,
       order_id: order.orderId,
-      prefill: { contact: '', email: '' },
+      prefill: {
+        contact: this.userDetails?.mobileNumber,
+        email: this.userDetails?.email,
+        name: this.userDetails?.userName,
+      },
       notes: { orderId: order.orderId },
       retry: { enabled: true, max_count: 2 },
       theme: { color: '#000000' },
@@ -205,9 +201,14 @@ export class PricingComponent implements OnInit {
         }),
       );
 
-      this.paymentState = PaymentState.SUCCESS;
+      const user = await firstValueFrom(this.userService.getMyUserDetails());
+      this.userService.saveUserInfo(user);
 
+      this.paymentState = PaymentState.SUCCESS;
       this.toastr.success('Payment successful.');
+      setTimeout(() => {
+        this.paymentState = PaymentState.IDLE;
+      }, 2000);
     } catch (error: any) {
       console.error('Payment Verification Failed', error);
 
@@ -222,28 +223,16 @@ export class PricingComponent implements OnInit {
   }
 
   private async checkUserSession(): Promise<boolean> {
-    if (this.isUserLoggedIn()) {
+    try {
+      const user = await firstValueFrom(this.userService.getMyUserDetails());
+      this.userService.saveUserInfo(user);
       return true;
-    } else {
-      this.userService.getMyUserDetails().subscribe({
-        next: (user: User) => {
-          this.userService.userDetails.next(user);
-          this.credits = this.userService.userDetails.value.credits;
-          return true;
-        },
-        error: (err: HttpErrorResponse) => {
-          if (err.error?.status === 'UNAUTHORIZED') {
-            this.loading = false;
-            this.toastr.warning('Please login to purchase a plan.');
-            this.redirectToLogin();
-          } else {
-            this.errorService.errorSubject.next(err.error?.status);
-            this.router.navigate(['error']);
-          }
-        },
-      });
+    } catch (error: any) {
+      this.loading = false;
+      this.toastr.warning('Please login to purchase a plan.');
+      this.redirectToLogin();
+      return false;
     }
-    return false;
   }
 
   private redirectToLogin() {

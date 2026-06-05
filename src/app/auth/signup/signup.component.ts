@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../services/auth.service';
 import { LucideAngularModule } from 'lucide-angular';
-import { UserService } from 'src/app/services/user.service';
+import { User, UserService } from 'src/app/services/user.service';
 import { OtpGenerateRequest } from '../models/otpGenerateRequest.model';
 import { SignupOtpVerifyRequest } from '../models/signupOtpVerifyRequest.model';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -100,10 +100,25 @@ export class SignupComponent implements OnInit {
       .subscribe({
         next: (result) => {
           if (result.status === 'Success') {
-            this.authService.saveToken(result.accessToken);
-            this.toastr.success(result.message);
-            this.router.navigate(['mode-select']);
-            this.userService.updateUserDetails();
+            this.authService.saveLoginInfo(result.accessToken);
+
+            this.userService.getMyUserDetails().subscribe({
+              next: (user: User) => {
+                this.userService.saveUserInfo(user);
+
+                this.toastr.success(result.message);
+                this.router.navigate(['mode-select']);
+              },
+              error: (err: HttpErrorResponse) => {
+                if (err.error?.status === 'NOT_FOUND') {
+                  this.toastr.error(err.error?.message);
+                } else {
+                  this.toastr.error(
+                    'Unable to complete log in. Please try again.',
+                  );
+                }
+              },
+            });
           }
         },
         error: (err: HttpErrorResponse) => {
@@ -127,7 +142,6 @@ export class SignupComponent implements OnInit {
     const input = event.target as HTMLInputElement;
     const value = input.value;
 
-    // Only allow single digit
     if (value && !/^\d$/.test(value)) {
       input.value = '';
       this.otpDigits[index] = '';
@@ -146,7 +160,6 @@ export class SignupComponent implements OnInit {
       }
     }
 
-    // Update the combined OTP value
     this.updateOtpValue();
   }
 
@@ -155,7 +168,6 @@ export class SignupComponent implements OnInit {
 
     if (event.key === 'Backspace') {
       if (input.value === '' && index > 0) {
-        // Move to previous input on backspace if current is empty
         const prevInput = input.previousElementSibling as HTMLInputElement;
         if (prevInput) {
           this.otpDigits[index - 1] = '';

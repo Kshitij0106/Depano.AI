@@ -19,7 +19,7 @@
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
-            <span>{{ getUsername(loggedInUser.userName) }}</span>
+            <span>{{ getUsername(loggedInUser?.userName) }}</span>
             <lucide-icon
               class="profile-icon"
               name="chevron-down"
@@ -31,7 +31,7 @@
             <li class="dropdown-header-section">
               <div class="user-profile-section">
                 <div class="user-name">
-                  {{ getUsername(loggedInUser.userName) }}
+                  {{ getUsername(loggedInUser?.userName) }}
                 </div>
               </div>
             </li>
@@ -46,7 +46,7 @@
                   </div>
                 </div>
                 <div class="credits-value">
-                  {{ loggedInUser.credits }}
+                  {{ loggedInUser?.credits }}
                 </div>
               </div>
             </li>

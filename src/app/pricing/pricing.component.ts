@@ -1,22 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { User, UserService } from '../services/user.service';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../header/header.component';
 import { LucideAngularModule } from 'lucide-angular';
 import { PaymentService } from '../services/payment.service';
+import { ErrorService } from '../services/error.service';
 import { firstValueFrom } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environments/environment';
 import { PlanType } from './models/planType.model';
 import { PaymentState } from './models/paymentState.model';
+import { DEPANOAIPLANS } from './types/depanoai.plans.types';
 import { Router } from '@angular/router';
 import { CreateOrderResponse } from './models/createOrderResponse.model';
 import {
   RazorpayCheckoutOptions,
   RazorpayFailureResponse,
   RazorpaySuccessResponse,
-} from './razorpay.types';
-import { DepanoAIPlan } from './models/plans.model';
+} from './types/razorpay.types';
 
 @Component({
   selector: 'app-pricing',
@@ -29,79 +30,28 @@ export class PricingComponent implements OnInit {
   isLoggedIn = false;
   userDetails: User | null = null;
 
-  readonly PlanType = PlanType;
   readonly PaymentState = PaymentState;
   paymentState = PaymentState.IDLE;
-
   loading = false;
 
-  private razorpayInstance: InstanceType<Window['Razorpay']> | null = null;
+  readonly PlanType = PlanType;
+  readonly plans = DEPANOAIPLANS;
 
-  plans: DepanoAIPlan[] = [
-    {
-      planCode: PlanType.DP_STARTER,
-      name: 'Starter Plan',
-      icon: '🧵',
-      price: '₹990',
-      images: '100 Credits',
-      credits: 100,
-      description:
-        'Perfect for students and independent designers exploring new ideas and experimenting with styles.',
-      features: [
-        'Access to all image generation & editing features',
-        'Fast processing using Gemini Imagine & SDXL',
-        'Ideal for light usage',
-      ],
-      popular: false,
-    },
-    {
-      planCode: PlanType.DP_DESIGNER,
-      name: 'Designer Plan',
-      icon: '👗',
-      price: '₹2,090',
-      images: '200 Credits',
-      credits: 200,
-      description:
-        'Best for freelance designers and growing teams who need more creative bandwidth.',
-      features: [
-        'All Starter features',
-        'Priority image generation',
-        'Ideal for regular usage',
-      ],
-      popular: true,
-    },
-    {
-      planCode: PlanType.DP_STUDIO,
-      name: 'Studio Plan',
-      icon: '🏢',
-      price: '₹2,490',
-      images: '300 Credits',
-      credits: 300,
-      description:
-        'Designed for fashion houses and power users who need scale and efficiency.',
-      features: [
-        'All Designer features',
-        'Dedicated support',
-        'Best value per image',
-        'Ideal for heavy usage',
-      ],
-      popular: false,
-    },
-  ];
+  private razorpayInstance: InstanceType<Window['Razorpay']> | null = null;
 
   constructor(
     private router: Router,
     private userService: UserService,
     private paymentService: PaymentService,
+    private errorService: ErrorService,
     private toastr: ToastrService,
+    private ngZone: NgZone,
   ) {}
 
   ngOnInit(): void {
     this.userService.userDetails.subscribe((user) => {
       this.isLoggedIn = user !== null;
-      if (user) {
-        this.userDetails = user;
-      }
+      this.userDetails = user;
     });
   }
 
@@ -126,10 +76,18 @@ export class PricingComponent implements OnInit {
 
       this.openRazorpayCheckout(planType, order);
     } catch (error: any) {
-      console.error('Create Order Failed', error);
-
       this.paymentState = PaymentState.FAILED;
       this.loading = false;
+      const status = error?.error?.status;
+
+      if (
+        status === 'SERVICE_UNAVAILABLE' ||
+        status === 'INTERNAL_SERVER_ERROR'
+      ) {
+        this.errorService.errorSubject.next(status);
+        this.router.navigate(['error']);
+        return;
+      }
 
       this.toastr.error(error?.error?.message ?? 'Unable to initiate payment.');
     }
@@ -159,15 +117,19 @@ export class PricingComponent implements OnInit {
 
       modal: {
         ondismiss: () => {
-          this.paymentState = PaymentState.CANCELLED;
-          this.loading = false;
-          this.toastr.warning('Payment cancelled.');
+          this.ngZone.run(() => {
+            this.paymentState = PaymentState.CANCELLED;
+            this.loading = false;
+            this.toastr.warning('Payment cancelled.');
+          });
         },
       },
 
       handler: async (response: RazorpaySuccessResponse) => {
-        this.paymentState = PaymentState.VERIFYING_PAYMENT;
-        await this.verifyPayment(response);
+        this.ngZone.run(async () => {
+          this.paymentState = PaymentState.VERIFYING_PAYMENT;
+          await this.verifyPayment(response);
+        });
       },
     };
 
@@ -176,11 +138,11 @@ export class PricingComponent implements OnInit {
     this.razorpayInstance.on(
       'payment.failed',
       (response: RazorpayFailureResponse) => {
-        console.error('Payment Failed', response);
-        this.paymentState = PaymentState.FAILED;
-        this.loading = false;
-
-        this.toastr.error(response.error.description || 'Payment failed.');
+        this.ngZone.run(() => {
+          this.paymentState = PaymentState.FAILED;
+          this.loading = false;
+          this.toastr.error(response.error.description || 'Payment failed.');
+        });
       },
     );
 
@@ -210,12 +172,22 @@ export class PricingComponent implements OnInit {
         this.paymentState = PaymentState.IDLE;
       }, 2000);
     } catch (error: any) {
-      console.error('Payment Verification Failed', error);
-
       this.paymentState = PaymentState.FAILED;
+      const status = error?.error?.status;
+
+      if (
+        status === 'SERVICE_UNAVAILABLE' ||
+        status === 'INTERNAL_SERVER_ERROR'
+      ) {
+        this.errorService.errorSubject.next(status);
+        this.router.navigate(['error']);
+        return;
+      }
 
       this.toastr.error(
-        error?.error?.message ?? 'Payment verification failed.',
+        error?.error?.message ??
+          'Payment verification failed. Please try again.',
+        'Payment Failed',
       );
     } finally {
       this.loading = false;
@@ -239,7 +211,7 @@ export class PricingComponent implements OnInit {
     this.router.navigate(['login']);
   }
 
-  ngOnDestroy(): void {
+  ngOnDestroy() {
     this.razorpayInstance?.close();
   }
 }

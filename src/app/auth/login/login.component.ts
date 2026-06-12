@@ -46,6 +46,10 @@ export class LoginComponent {
     private toastr: ToastrService,
   ) {}
 
+  openHome() {
+    this.router.navigate(['home']);
+  }
+
   /**
    * Generates a One-Time Password (OTP) to be sent to the user's phone for verification purposes.
    */

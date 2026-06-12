@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -17,7 +17,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./signup.component.css'],
   imports: [CommonModule, FormsModule, LucideAngularModule],
 })
-export class SignupComponent implements OnInit {
+export class SignupComponent {
   otpGenerateRequest: OtpGenerateRequest = {
     mobileNumber: '',
   };
@@ -48,10 +48,8 @@ export class SignupComponent implements OnInit {
     private userService: UserService,
   ) {}
 
-  ngOnInit(): void {
-    if (this.authService.isLoggedIn()) {
-      this.router.navigate(['gender']);
-    }
+  openHome() {
+    this.router.navigate(['home']);
   }
 
   /**

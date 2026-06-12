@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { OtpGenerateRequest } from '../models/otpGenerateRequest.model';
@@ -6,7 +6,7 @@ import { LoginOtpVerifyRequest } from '../models/loginOtpVerifyRequest.model';
 import { ToastrService } from 'ngx-toastr';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { UserService } from 'src/app/services/user.service';
+import { User, UserService } from 'src/app/services/user.service';
 import { LucideAngularModule } from 'lucide-angular';
 import { HttpErrorResponse } from '@angular/common/http';
 
@@ -38,12 +38,17 @@ export class LoginComponent {
   isResendBlocked: boolean = false;
   private resendTimerRef: any = null;
   isverifyBlocked: boolean = false;
+
   constructor(
     private router: Router,
     private authService: AuthService,
     private userService: UserService,
     private toastr: ToastrService,
   ) {}
+
+  openHome() {
+    this.router.navigate(['home']);
+  }
 
   /**
    * Generates a One-Time Password (OTP) to be sent to the user's phone for verification purposes.
@@ -69,7 +74,7 @@ export class LoginComponent {
           this.isResendBlocked = true;
         } else if (
           err.error?.status === 'NOT_FOUND' ||
-          err.error?.status === 'UNPROCESSABLE_ENTITY'
+          err.error?.status === 'BAD_REQUEST'
         ) {
           this.toastr.error(err.error?.message);
         } else {
@@ -92,20 +97,32 @@ export class LoginComponent {
       .subscribe({
         next: (result) => {
           if (result.status === 'Success') {
-            this.authService.saveToken(result.accessToken);
-            this.toastr.success(result.message);
-            this.router.navigate(['mode-select']);
-            this.userService.updateUserDetails();
+            this.authService.saveLoginInfo(result.accessToken);
+
+            this.userService.getMyUserDetails().subscribe({
+              next: (user: User) => {
+                this.userService.saveUserInfo(user);
+
+                this.toastr.success(result.message);
+                this.router.navigate(['mode-select']);
+              },
+              error: (err: HttpErrorResponse) => {
+                if (err.error?.status === 'NOT_FOUND') {
+                  this.toastr.error(err.error?.message);
+                } else {
+                  this.toastr.error(
+                    'Unable to complete log in. Please try again.',
+                  );
+                }
+              },
+            });
           }
         },
         error: (err: HttpErrorResponse) => {
           if (err.error?.status === 'TOO_MANY_REQUESTS') {
             this.toastr.error(err.error?.message);
             this.isverifyBlocked = true;
-          } else if (
-            err.error?.status === 'BAD_REQUEST' ||
-            err.error?.status === 'UNPROCESSABLE_ENTITY'
-          ) {
+          } else if (err.error?.status === 'BAD_REQUEST') {
             this.toastr.error(err.error?.message);
           } else {
             this.toastr.error('Unable to complete log in. Please try again.');

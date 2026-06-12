@@ -1,20 +1,23 @@
-import { Component, EventEmitter, Output, OnInit } from '@angular/core';
-import { AuthService } from '../auth/services/auth.service';
-import { UserService } from '../services/user.service';
+import { Component, NgZone, OnInit } from '@angular/core';
+import { User, UserService } from '../services/user.service';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../header/header.component';
 import { LucideAngularModule } from 'lucide-angular';
-
-export interface PricingPlan {
-  name: string;
-  icon: string;
-  price: string;
-  period: string;
-  images: string;
-  description: string;
-  features: string[];
-  popular: boolean;
-}
+import { PaymentService } from '../services/payment.service';
+import { ErrorService } from '../services/error.service';
+import { firstValueFrom } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
+import { environment } from 'src/environments/environment';
+import { PlanType } from './models/planType.model';
+import { PaymentState } from './models/paymentState.model';
+import { DEPANOAIPLANS } from './types/depanoai.plans.types';
+import { Router } from '@angular/router';
+import { CreateOrderResponse } from './models/createOrderResponse.model';
+import {
+  RazorpayCheckoutOptions,
+  RazorpayFailureResponse,
+  RazorpaySuccessResponse,
+} from './types/razorpay.types';
 
 @Component({
   selector: 'app-pricing',
@@ -24,97 +27,191 @@ export interface PricingPlan {
   styleUrls: ['./pricing.component.css'],
 })
 export class PricingComponent implements OnInit {
-  isLoggedIn: boolean = false;
-  credits: string = '';
+  isLoggedIn = false;
+  userDetails: User | null = null;
+
+  readonly PaymentState = PaymentState;
+  paymentState = PaymentState.IDLE;
+  loading = false;
+
+  readonly PlanType = PlanType;
+  readonly plans = DEPANOAIPLANS;
+
+  private razorpayInstance: InstanceType<Window['Razorpay']> | null = null;
 
   constructor(
-    private authService: AuthService,
+    private router: Router,
     private userService: UserService,
+    private paymentService: PaymentService,
+    private errorService: ErrorService,
+    private toastr: ToastrService,
+    private ngZone: NgZone,
   ) {}
 
   ngOnInit(): void {
-    this.isLoggedIn = this.authService.isLoggedIn();
-    if (this.isLoggedIn) {
-      this.userService.updateUserDetails();
-      this.userService.userDetails.subscribe((user) => {
-        this.credits = user.credits;
-      });
-    }
-  }
-
-  @Output() selectPlan = new EventEmitter<{
-    name: string;
-    price: string;
-    images: string;
-    icon: string;
-  }>();
-
-  @Output() navigateHome = new EventEmitter<void>();
-  @Output() navigateDashboard = new EventEmitter<void>();
-
-  plans: PricingPlan[] = [
-    {
-      name: 'Starter Plan',
-      icon: '🧵',
-      price: '₹990',
-      period: 'month',
-      images: '100 Credits',
-      description:
-        'Perfect for students and independent designers exploring new ideas and experimenting with styles.',
-      features: [
-        'Access to all image generation & editing features',
-        'Fast processing using Gemini Imagine & SDXL',
-        'Ideal for light usage',
-      ],
-      popular: false,
-    },
-    {
-      name: 'Designer Plan',
-      icon: '👗',
-      price: '₹2,090',
-      period: 'month',
-      images: '200 Credits',
-      description:
-        'Best for freelance designers and growing teams who need more creative bandwidth.',
-      features: [
-        'All Starter features',
-        'Priority image generation',
-        'Ideal for regular usage',
-      ],
-      popular: true,
-    },
-    {
-      name: 'Studio Plan',
-      icon: '🏢',
-      price: '₹2,490',
-      period: 'month',
-      images: '300 Credits',
-      description:
-        'Designed for fashion houses and power users who need scale and efficiency.',
-      features: [
-        'All Designer features',
-        'Dedicated support',
-        'Best value per image',
-        'Ideal for heavy usage',
-      ],
-      popular: false,
-    },
-  ];
-
-  onSelect(plan: PricingPlan) {
-    this.selectPlan.emit({
-      name: plan.name,
-      price: plan.price,
-      images: plan.images,
-      icon: plan.icon,
+    this.userService.userDetails.subscribe((user) => {
+      this.isLoggedIn = user !== null;
+      this.userDetails = user;
     });
   }
 
-  onHome() {
-    this.navigateHome.emit();
+  async onPlanSelect(planType: PlanType): Promise<void> {
+    if (this.loading) {
+      return;
+    }
+
+    const hasSession = await this.checkUserSession();
+
+    if (!hasSession) {
+      return;
+    }
+
+    this.loading = true;
+    this.paymentState = PaymentState.CREATING_ORDER;
+
+    try {
+      const order = await firstValueFrom(
+        this.paymentService.createOrder(planType),
+      );
+
+      this.openRazorpayCheckout(planType, order);
+    } catch (error: any) {
+      this.paymentState = PaymentState.FAILED;
+      this.loading = false;
+      const status = error?.error?.status;
+
+      if (
+        status === 'SERVICE_UNAVAILABLE' ||
+        status === 'INTERNAL_SERVER_ERROR'
+      ) {
+        this.errorService.errorSubject.next(status);
+        this.router.navigate(['error']);
+        return;
+      }
+
+      this.toastr.error(error?.error?.message ?? 'Unable to initiate payment.');
+    }
   }
 
-  onDashboard() {
-    this.navigateDashboard.emit();
+  private openRazorpayCheckout(
+    planType: PlanType,
+    order: CreateOrderResponse,
+  ): void {
+    this.paymentState = PaymentState.OPENING_CHECKOUT;
+
+    const options: RazorpayCheckoutOptions = {
+      key: environment.razorpayKeyId,
+      amount: order.amount,
+      currency: order.currency,
+      name: 'DepanoAI',
+      description: `${planType} purchase`,
+      order_id: order.orderId,
+      prefill: {
+        contact: this.userDetails?.mobileNumber,
+        email: this.userDetails?.email,
+        name: this.userDetails?.userName,
+      },
+      notes: { orderId: order.orderId },
+      retry: { enabled: true, max_count: 2 },
+      theme: { color: '#000000' },
+
+      modal: {
+        ondismiss: () => {
+          this.ngZone.run(() => {
+            this.paymentState = PaymentState.CANCELLED;
+            this.loading = false;
+            this.toastr.warning('Payment cancelled.');
+          });
+        },
+      },
+
+      handler: async (response: RazorpaySuccessResponse) => {
+        this.ngZone.run(async () => {
+          this.paymentState = PaymentState.VERIFYING_PAYMENT;
+          await this.verifyPayment(response);
+        });
+      },
+    };
+
+    this.razorpayInstance = new window.Razorpay(options);
+
+    this.razorpayInstance.on(
+      'payment.failed',
+      (response: RazorpayFailureResponse) => {
+        this.ngZone.run(() => {
+          this.paymentState = PaymentState.FAILED;
+          this.loading = false;
+          this.toastr.error(response.error.description || 'Payment failed.');
+        });
+      },
+    );
+
+    this.razorpayInstance.open();
+  }
+
+  private async verifyPayment(
+    response: RazorpaySuccessResponse,
+  ): Promise<void> {
+    this.paymentState = PaymentState.VERIFYING_PAYMENT;
+
+    try {
+      await firstValueFrom(
+        this.paymentService.verifyPayment({
+          razorpay_payment_id: response.razorpay_payment_id,
+          razorpay_order_id: response.razorpay_order_id,
+          razorpay_signature: response.razorpay_signature,
+        }),
+      );
+
+      const user = await firstValueFrom(this.userService.getMyUserDetails());
+      this.userService.saveUserInfo(user);
+
+      this.paymentState = PaymentState.SUCCESS;
+      this.toastr.success('Payment successful.');
+      setTimeout(() => {
+        this.paymentState = PaymentState.IDLE;
+      }, 2000);
+    } catch (error: any) {
+      this.paymentState = PaymentState.FAILED;
+      const status = error?.error?.status;
+
+      if (
+        status === 'SERVICE_UNAVAILABLE' ||
+        status === 'INTERNAL_SERVER_ERROR'
+      ) {
+        this.errorService.errorSubject.next(status);
+        this.router.navigate(['error']);
+        return;
+      }
+
+      this.toastr.error(
+        error?.error?.message ??
+          'Payment verification failed. Please try again.',
+        'Payment Failed',
+      );
+    } finally {
+      this.loading = false;
+    }
+  }
+
+  private async checkUserSession(): Promise<boolean> {
+    try {
+      const user = await firstValueFrom(this.userService.getMyUserDetails());
+      this.userService.saveUserInfo(user);
+      return true;
+    } catch (error: any) {
+      this.loading = false;
+      this.toastr.warning('Please login to purchase a plan.');
+      this.redirectToLogin();
+      return false;
+    }
+  }
+
+  private redirectToLogin() {
+    this.router.navigate(['login']);
+  }
+
+  ngOnDestroy() {
+    this.razorpayInstance?.close();
   }
 }

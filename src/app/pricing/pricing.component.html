@@ -1,7 +1,6 @@
 <app-header [source]="'pricing'"></app-header>
 
 <section class="pricing-wrapper">
-  <!-- Header -->
   <div class="header">
     <h1>Choose Your Creative Journey</h1>
     <p>
@@ -11,7 +10,7 @@
   </div>
 
   <!-- Current Balance Badge -->
-  <div *ngIf="isLoggedIn" class="current-balance-container">
+  <div *ngIf="isLoggedIn && !loading" class="current-balance-container">
     <div class="current-balance-badge">
       <div class="current-balance-card">
         <lucide-icon
@@ -22,7 +21,7 @@
         <div class="balance-info">
           <span class="current-balance-title">Current Balance</span>
           <span class="current-balance-credits"
-            >{{ credits || "0" }} Credits</span
+            >{{ userDetails?.credits || "0" }} Credits</span
           >
         </div>
       </div>
@@ -50,7 +49,6 @@
 
       <div class="price">
         <span class="amount">{{ plan.price }}</span>
-        <span class="period">/ {{ plan.period }}</span>
       </div>
       <div class="images-wrapper">
         <div class="images">
@@ -66,11 +64,37 @@
         </li>
       </ul>
 
-      <button class="btn-primary full-width" (click)="onSelect(plan)">
+      <button
+        class="btn-primary full-width"
+        [disabled]="loading"
+        (click)="onPlanSelect(plan.planCode)"
+      >
+        <!-- Processing -->
         <span
-          >Purchase Now
-          <lucide-icon [size]="18" name="arrow-right"></lucide-icon
-        ></span>
+          *ngIf="loading && paymentState !== PaymentState.SUCCESS"
+          class="btn-loading-state"
+        >
+          <span class="spinner"></span>
+          Processing...
+        </span>
+
+        <!-- Success -->
+        <span
+          *ngIf="!loading && paymentState === PaymentState.SUCCESS"
+          class="btn-success-state"
+        >
+          <lucide-icon [size]="18" name="check"></lucide-icon>
+          Payment Done
+        </span>
+
+        <!-- Default -->
+        <span
+          *ngIf="!loading && paymentState !== PaymentState.SUCCESS"
+          class="btn-idle-state"
+        >
+          Purchase Now
+          <lucide-icon [size]="18" name="arrow-right"></lucide-icon>
+        </span>
       </button>
     </div>
   </div>

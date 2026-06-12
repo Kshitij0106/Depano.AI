@@ -161,7 +161,7 @@
 
 .price {
   text-align: center;
-  margin: 15px 0;
+  margin-bottom: 20px;
 
   .amount {
     font-size: 32px;
@@ -203,7 +203,6 @@
 .description {
   text-align: center;
   color: #666;
-  margin-bottom: 20px;
 }
 
 .features {

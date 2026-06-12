@@ -1,10 +1,10 @@
 @if (!isUserLoggedIn()) {
   <div class="fixed-buttons">
-    <button class="sign-in-btn" (click)="validateUserSession('login')">
+    <button class="sign-in-btn" (click)="checkUserSession('login')">
       <lucide-icon name="log-in" [size]="16" [strokeWidth]="2"></lucide-icon>
       Sign In
     </button>
-    <button class="sign-up-btn" (click)="validateUserSession('signup')">
+    <button class="sign-up-btn" (click)="checkUserSession('signup')">
       <lucide-icon name="user-plus" [size]="16" [strokeWidth]="2"></lucide-icon>
       Sign Up
     </button>
@@ -31,7 +31,7 @@
       <p class="subheadline">
         Empowering Designers to Create, Innovate, and Inspire
       </p>
-      <button class="cta-button" (click)="validateUserSession('login')">
+      <button class="cta-button" (click)="checkUserSession('login')">
         Start Designing Now
       </button>
     </div>

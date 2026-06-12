@@ -10,7 +10,6 @@ import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, filter, switchMap, take } from 'rxjs/operators';
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
-import { UserService } from 'src/app/services/user.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -26,16 +25,15 @@ export class AuthInterceptor implements HttpInterceptor {
 
   constructor(
     private authService: AuthService,
-    private userService: UserService,
-    private router: Router
+    private router: Router,
   ) {}
 
   intercept(
     request: HttpRequest<any>,
-    next: HttpHandler
+    next: HttpHandler,
   ): Observable<HttpEvent<any>> {
     const isUnprotected = this.publicPaths.some((url) =>
-      request.url.includes(url)
+      request.url.includes(url),
     );
 
     let authReq = request;
@@ -57,21 +55,16 @@ export class AuthInterceptor implements HttpInterceptor {
     return next.handle(authReq).pipe(
       catchError((error: HttpErrorResponse) => {
         if (error.status === 401 && !isUnprotected) {
-          // Silently retry /me endpoint to avoid logout during home page check
-          if (request.url.includes('/me')) {
-            return this.handle401Error(authReq, next, true);
-          }
-          return this.handle401Error(authReq, next, false);
+          return this.handle401Error(authReq, next);
         }
         return throwError(() => error);
-      })
+      }),
     );
   }
 
   private handle401Error(
     request: HttpRequest<any>,
     next: HttpHandler,
-    silentRetry: boolean
   ): Observable<HttpEvent<any>> {
     if (!this.isRefreshing) {
       this.isRefreshing = true;
@@ -82,9 +75,8 @@ export class AuthInterceptor implements HttpInterceptor {
           this.isRefreshing = false;
 
           if (response.accessToken) {
-            this.authService.saveToken(response.accessToken);
+            this.authService.saveLoginInfo(response.accessToken);
             this.refreshTokenSubject.next(response.accessToken);
-            this.userService.updateUserDetails();
 
             const newReq = request.clone({
               setHeaders: { Authorization: `Bearer ${response.accessToken}` },
@@ -108,7 +100,7 @@ export class AuthInterceptor implements HttpInterceptor {
           }
 
           return throwError(() => err);
-        })
+        }),
       );
     } else {
       // Queue requests until refresh completes
@@ -121,13 +113,13 @@ export class AuthInterceptor implements HttpInterceptor {
             withCredentials: true,
           });
           return next.handle(newReq);
-        })
+        }),
       );
     }
   }
 
   private forceLogout() {
-    this.authService.logout();
+    this.authService.clearUserInfo();
     this.router.navigate(['/login']);
   }
 }

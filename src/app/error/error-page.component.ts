@@ -1,11 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
 import { LucideAngularModule } from 'lucide-angular';
 import { CommonModule } from '@angular/common';
 import { ErrorService } from '../services/error.service';
 import { ErrorType, ErrorConfig } from './error.type';
 import { CheckedAttributesService } from '../generate/services/checked-attributes.service';
-import { PromptService } from '../services/prompt.service';
 import { CategoryService } from '../generate/services/category.service';
 import { ImageService } from '../services/image.service';
 import { BreadcrumbService } from '../services/breadcrumb.service';
@@ -30,7 +29,6 @@ export class ErrorPageComponent implements OnInit {
     private breadcrumbService: BreadcrumbService,
     private imageService: ImageService,
     private categroryService: CategoryService,
-    private promptService: PromptService,
     private checkAttributeService: CheckedAttributesService,
   ) {}
 
@@ -87,20 +85,14 @@ export class ErrorPageComponent implements OnInit {
     });
   }
 
-  ngOnDestroy() {
-    this.navigationSubscription.unsubscribe();
-  }
-
-  /**
-   * Empties the data.
-   */
   emptyData() {
-    this.promptService.clearPromptId();
     this.categroryService.deleteCategories();
-    this.imageService.imageUrl.next('');
-    this.imageService.sketchUrl.next('');
-    this.imageService.imageSubject.next(null);
+    this.imageService.clearImageData();
     this.breadcrumbService.emptyBreadcrumbList();
     this.checkAttributeService.emptyCheckedAttributesList();
+  }
+
+  ngOnDestroy() {
+    this.navigationSubscription.unsubscribe();
   }
 }

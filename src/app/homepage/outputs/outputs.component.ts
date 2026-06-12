@@ -55,10 +55,10 @@ import { LucideAngularModule } from 'lucide-angular';
             100,
             animate(
               '0.6s ease-out',
-              style({ opacity: 1, transform: 'scale(1)' })
-            )
+              style({ opacity: 1, transform: 'scale(1)' }),
+            ),
           ),
-          { optional: true }
+          { optional: true },
         ),
       ]),
     ]),
@@ -79,43 +79,43 @@ export class OutputsComponent implements AfterViewInit {
 
   styleCategories = [
     {
+      name: 'Vintage',
+      image:
+        'https://firebasestorage.googleapis.com/v0/b/depano-ai.appspot.com/o/App%2FHomePage%2Fhome.png?alt=media&token=3b9a93c2-7a3f-4c6e-ab25-fab5b3c8f27d',
+      description: 'Timeless classics with nostalgic charm and retro appeal',
+    },
+    {
+      name: 'Traditional',
+      image:
+        'https://firebasestorage.googleapis.com/v0/b/depano-ai.appspot.com/o/App%2FHomePage%2Fhome6.png?alt=media&token=c6a38eaf-07a2-46ed-a7f6-fcba9cf1a113',
+      description: 'Innovative materials and avant-garde silhouettes',
+    },
+    {
       name: 'Boho',
       image:
-        'https://firebasestorage.googleapis.com/v0/b/depano-ai.appspot.com/o/App%2FHomePage%2F1179166747.png?alt=media&token=90a0a320-3696-4eeb-b7d0-ebf6ac9c10ef',
+        'https://firebasestorage.googleapis.com/v0/b/depano-ai.appspot.com/o/App%2FHomePage%2Fhome2.png?alt=media&token=6bc54c0e-ebc0-41aa-b848-9dac778eeed3',
       description:
         'Free-spirited designs with flowing fabrics and earthy tones',
     },
     {
       name: 'Ethnic',
       image:
-        'https://firebasestorage.googleapis.com/v0/b/depano-ai.appspot.com/o/App%2FHomePage%2F1381583102.png?alt=media&token=9f657bf5-d29e-4490-b0a2-dfb7706f652a',
+        'https://firebasestorage.googleapis.com/v0/b/depano-ai.appspot.com/o/App%2FHomePage%2Fhome8.png?alt=media&token=8c158d51-105d-45c8-a7d6-969ebd5743fc',
       description:
         'Urban fashion with bold graphics and contemporary silhouettes',
     },
     {
-      name: 'Minimalist',
-      image:
-        'https://firebasestorage.googleapis.com/v0/b/depano-ai.appspot.com/o/App%2FHomePage%2F204703172.png?alt=media&token=85c6aabe-560c-4fe0-b716-d2de98c4bbc3',
-      description:
-        'Traditional patterns and cultural heritage in modern interpretations',
-    },
-    {
       name: 'Streetwear',
       image:
-        'https://firebasestorage.googleapis.com/v0/b/depano-ai.appspot.com/o/App%2FHomePage%2F136500795.png?alt=media&token=759202a0-a1c4-47c4-a6e8-4bfe786bfc24',
+        'https://firebasestorage.googleapis.com/v0/b/depano-ai.appspot.com/o/App%2FHomePage%2Fhome5.png?alt=media&token=b523fbc5-05f7-48e7-bff8-d2a26f3dc5d8',
       description: 'Clean lines and understated elegance in neutral palettes',
     },
     {
-      name: 'Traditional',
+      name: 'Minimalist',
       image:
-        'https://firebasestorage.googleapis.com/v0/b/depano-ai.appspot.com/o/App%2FHomePage%2F1775046177.png?alt=media&token=d83e80b3-3598-436c-99c2-aaa165230ac0',
-      description: 'Innovative materials and avant-garde silhouettes',
-    },
-    {
-      name: 'Vintage',
-      image:
-        'https://firebasestorage.googleapis.com/v0/b/depano-ai.appspot.com/o/App%2FHomePage%2F860254096.png?alt=media&token=2b7819de-df63-40cc-b134-970524872a14',
-      description: 'Timeless classics with nostalgic charm and retro appeal',
+        'https://firebasestorage.googleapis.com/v0/b/depano-ai.appspot.com/o/App%2FHomePage%2Fhome9.png?alt=media&token=4e50e54d-8ce7-4ec2-b205-f6d2cd206b3d',
+      description:
+        'Traditional patterns and cultural heritage in modern interpretations',
     },
   ];
 
@@ -144,7 +144,7 @@ export class OutputsComponent implements AfterViewInit {
     const windowHeight = window.innerHeight;
     const progress = Math.max(
       0,
-      Math.min(1, (windowHeight - rect.top) / (windowHeight + rect.height))
+      Math.min(1, (windowHeight - rect.top) / (windowHeight + rect.height)),
     );
     const y = 50 - progress * 100;
     this.headerRef.nativeElement.style.transform = `translateY(${y}px)`;

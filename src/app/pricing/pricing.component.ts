@@ -97,6 +97,13 @@ export class PricingComponent implements OnInit {
     planType: PlanType,
     order: CreateOrderResponse,
   ): void {
+    if (!environment.razorpayKeyId || environment.razorpayKeyId.length === 0) {
+      this.paymentState = PaymentState.FAILED;
+      this.loading = false;
+      this.toastr.error('Payment configuration error. Please contact support.');
+      return;
+    }
+
     this.paymentState = PaymentState.OPENING_CHECKOUT;
 
     const options: RazorpayCheckoutOptions = {
@@ -133,6 +140,28 @@ export class PricingComponent implements OnInit {
       },
     };
 
+    const originalAlert = window.alert;
+    let alertRestored = false;
+
+    const restoreAlert = () => {
+      if (!alertRestored) {
+        window.alert = originalAlert;
+        alertRestored = true;
+      }
+    };
+
+    window.alert = (message?: any) => {
+      this.ngZone.run(() => {
+        this.paymentState = PaymentState.FAILED;
+        this.loading = false;
+        this.toastr.error(
+          typeof message === 'string' ? message : 'Payment failed.',
+          'Payment Failed',
+        );
+      });
+      restoreAlert();
+    };
+
     this.razorpayInstance = new window.Razorpay(options);
 
     this.razorpayInstance.on(
@@ -143,10 +172,13 @@ export class PricingComponent implements OnInit {
           this.loading = false;
           this.toastr.error(response.error.description || 'Payment failed.');
         });
+        restoreAlert();
       },
     );
 
     this.razorpayInstance.open();
+
+    setTimeout(restoreAlert, 5000);
   }
 
   private async verifyPayment(

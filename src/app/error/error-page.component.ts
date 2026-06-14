@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
 import { LucideAngularModule } from 'lucide-angular';
 import { CommonModule } from '@angular/common';
@@ -85,17 +85,14 @@ export class ErrorPageComponent implements OnInit {
     });
   }
 
-  ngOnDestroy() {
-    this.navigationSubscription.unsubscribe();
-  }
-
-  /**
-   * Empties the data.
-   */
   emptyData() {
     this.categroryService.deleteCategories();
     this.imageService.clearImageData();
     this.breadcrumbService.emptyBreadcrumbList();
     this.checkAttributeService.emptyCheckedAttributesList();
+  }
+
+  ngOnDestroy() {
+    this.navigationSubscription.unsubscribe();
   }
 }

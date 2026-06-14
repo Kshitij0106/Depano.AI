@@ -4,18 +4,17 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 export interface User {
+  mobileNumber: string;
+  email: string;
   userName: string;
-  credits: string;
+  credits: number;
 }
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  public userDetails = new BehaviorSubject<User>({
-    userName: '',
-    credits: '',
-  });
+  public userDetails = new BehaviorSubject<User | null>(null);
 
   constructor(private http: HttpClient) {}
 
@@ -27,8 +26,17 @@ export class UserService {
     return this.http.get<User>(environment.gateway + 'users' + '/me');
   }
 
+  public saveUserInfo(user: User) {
+    localStorage.setItem('user', user.userName);
+    this.userDetails.next(user);
+  }
+
   public getUserName(): string {
     return localStorage.getItem('user') || '';
+  }
+
+  public clearUserDetails() {
+    this.userDetails.next(null);
   }
 
   /**
@@ -39,9 +47,5 @@ export class UserService {
       localStorage.setItem('user', user.userName);
       this.userDetails.next(user);
     });
-  }
-
-  public clearUserDetails() {
-    this.userDetails.next({ userName: '', credits: '' });
   }
 }

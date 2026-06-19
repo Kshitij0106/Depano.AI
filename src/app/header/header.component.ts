@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BreadcrumbService } from '../services/breadcrumb.service';
-import { ImageService } from '../services/image.service';
+import { DesignService } from '../services/design.service';
 import { CheckedAttributesService } from '../generate/services/checked-attributes.service';
 import { AuthService } from '../auth/services/auth.service';
 import { User, UserService } from '../services/user.service';
@@ -31,7 +31,7 @@ export class HeaderComponent implements OnInit {
     private authService: AuthService,
     private userService: UserService,
     private breadcrumbService: BreadcrumbService,
-    private imageService: ImageService,
+    private designService: DesignService,
     private categroryService: CategoryService,
     private checkAttributeService: CheckedAttributesService,
   ) {}
@@ -68,7 +68,7 @@ export class HeaderComponent implements OnInit {
   openHome() {
     this.emptyData();
     if (this.source === 'category') {
-      this.router.navigate(['mode-select']);
+      this.router.navigate(['mode']);
     } else {
       this.router.navigate(['home']);
     }
@@ -77,7 +77,7 @@ export class HeaderComponent implements OnInit {
   emptyData() {
     if (this.source !== 'gender') {
       this.categroryService.deleteCategories();
-      this.imageService.clearImageData();
+      this.designService.clearDesignData();
       this.breadcrumbService.emptyBreadcrumbList();
       this.checkAttributeService.emptyCheckedAttributesList();
     }

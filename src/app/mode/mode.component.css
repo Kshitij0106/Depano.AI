@@ -118,7 +118,7 @@
   box-shadow: 0 0 0 2px #ec4899;
 }
 
-.card-sketch-to-image.selected {
+.card-sketch.selected {
   box-shadow: 0 0 0 2px #a855f7;
 }
 
@@ -147,7 +147,7 @@
   color: white;
 }
 
-.card-sketch-to-image .icon-container {
+.card-sketch .icon-container {
   background: linear-gradient(to bottom right, #a855f7, #ec4899);
 }
 
@@ -207,7 +207,7 @@
   cursor: pointer;
 }
 
-.card-sketch-to-image .card-button {
+.card-sketch .card-button {
   background: linear-gradient(to right, #a855f7, #ec4899);
 }
 
@@ -216,7 +216,7 @@
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
 
-.card-sketch-to-image .card-button:hover {
+.card-sketch .card-button:hover {
   background: linear-gradient(to right, #9333ea, #db2777);
 }
 

@@ -40,7 +40,7 @@ export class UserService {
   }
 
   /**
-   * Update credits after successfull generation of image.
+   * Update credits after successfull generation of design.
    */
   public updateUserDetails() {
     this.getMyUserDetails().subscribe((user) => {

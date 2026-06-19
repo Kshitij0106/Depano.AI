@@ -156,7 +156,7 @@
   filter: blur(60px);
 }
 
-.images {
+.designs {
   position: relative;
   width: 100%;
   height: 100%;
@@ -188,7 +188,7 @@
   z-index: 10;
 }
 
-/* Responsive image positions */
+/* Responsive design positions */
 .img-box:nth-child(1) {
   top: 0;
   right: 5%;

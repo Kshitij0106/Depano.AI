@@ -180,12 +180,12 @@
   color: #ec4899;
 }
 
-.images-wrapper {
+.credits-wrapper {
   display: flex;
   justify-content: center;
 }
 
-.images {
+.credits {
   display: inline-flex;
   text-align: center;
   align-items: center;

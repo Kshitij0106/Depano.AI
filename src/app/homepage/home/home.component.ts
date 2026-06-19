@@ -43,7 +43,7 @@ export class HomeComponent {
     this.userService.getMyUserDetails().subscribe({
       next: (user: User) => {
         this.userService.saveUserInfo(user);
-        this.router.navigate(['mode-select']);
+        this.router.navigate(['mode']);
       },
       error: (err: HttpErrorResponse) => {
         if (err.error?.status === 'UNAUTHORIZED') {

@@ -23,19 +23,22 @@ export const routes: Routes = [
       import('./auth/signup/signup.component').then((m) => m.SignupComponent),
   },
   {
-    path: 'mode-select',
+    path: 'pricing',
+    loadComponent: () =>
+      import('./pricing/pricing.component').then((m) => m.PricingComponent),
+  },
+  {
+    path: 'mode',
     canActivate: [authGuard],
     loadComponent: () =>
-      import('./mode-select/mode-select.component').then(
-        (m) => m.ModeSelectComponent,
-      ),
+      import('./mode/mode.component').then((m) => m.ModeComponent),
   },
   {
     path: 'gender',
     canActivate: [authGuard],
     loadComponent: () =>
-      import('./generate/gender-selection/gender-selection.component').then(
-        (m) => m.GenderSelectionComponent,
+      import('./generate/gender/gender.component').then(
+        (m) => m.GenderComponent,
       ),
   },
   {
@@ -47,10 +50,16 @@ export const routes: Routes = [
       ),
   },
   {
-    path: 'result',
+    path: 'design',
     canActivate: [authGuard],
     loadComponent: () =>
-      import('./result/result.component').then((m) => m.ResultComponent),
+      import('./design/design.component').then((m) => m.DesignComponent),
+  },
+  {
+    path: 'sketch',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./sketch/sketch.component').then((m) => m.SketchComponent),
   },
   {
     path: 'edit',
@@ -59,20 +68,9 @@ export const routes: Routes = [
       import('./edit/edit.component').then((m) => m.EditComponent),
   },
   {
-    path: 'sketch-to-image',
-    canActivate: [authGuard],
-    loadComponent: () =>
-      import('./sketch-upload/upload.component').then((m) => m.UploadComponent),
-  },
-  {
     path: 'error',
     loadComponent: () =>
       import('./error/error-page.component').then((m) => m.ErrorPageComponent),
-  },
-  {
-    path: 'pricing',
-    loadComponent: () =>
-      import('./pricing/pricing.component').then((m) => m.PricingComponent),
   },
   { path: '**', redirectTo: '/home' },
 ];

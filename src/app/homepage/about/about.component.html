@@ -41,13 +41,13 @@
       <!-- Right Collage -->
       <div class="collage">
         <div class="collage-bg"></div>
-        <div class="images">
+        <div class="designs">
           <div
             class="img-box"
-            *ngFor="let image of mockupImages"
-            [ngClass]="image.className"
+            *ngFor="let design of depanoAIDesigns"
+            [ngClass]="design.className"
           >
-            <img [src]="image.src" [alt]="image.alt" />
+            <img [src]="design.src" [alt]="design.alt" />
           </div>
         </div>
       </div>

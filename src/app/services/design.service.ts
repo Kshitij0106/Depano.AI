@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { ImageResponse } from '../generate/models/imageResponse.model';
+import { DesignResponse } from '../generate/models/designResponse.model';
 import { PromptService } from './prompt.service';
 import { ErrorService } from './error.service';
 import { Router } from '@angular/router';
@@ -11,11 +11,11 @@ import { ToastrService } from 'ngx-toastr';
 @Injectable({
   providedIn: 'root',
 })
-export class ImageService {
-  public imageUrl = new BehaviorSubject<string>('');
+export class DesignService {
+  public designUrl = new BehaviorSubject<string>('');
   public sketchUrl = new BehaviorSubject<string>('');
 
-  public imageSubject = new BehaviorSubject<ImageResponse | null>(null);
+  public designSubject = new BehaviorSubject<DesignResponse | null>(null);
 
   constructor(
     private http: HttpClient,
@@ -25,13 +25,13 @@ export class ImageService {
     private toastr: ToastrService,
   ) {}
 
-  generateImage() {
+  generateDesign() {
     let userInput = this.promptService.getPrompt();
-    this.imageSubject.next(null);
+    this.designSubject.next(null);
     this.http
-      .post<ImageResponse>(environment.gateway + 'images', userInput)
+      .post<DesignResponse>(environment.gateway + 'designs', userInput)
       .subscribe({
-        next: (res) => this.imageSubject.next(res),
+        next: (res) => this.designSubject.next(res),
         error: (err) => {
           if (err.error?.status === 'BAD_REQUEST') {
             this.toastr.error(
@@ -46,30 +46,30 @@ export class ImageService {
   }
 
   /**
-   * Sends a request again to the API for image generation based on user prompts.
+   * Sends a request again to the API for design generation based on user prompts.
    *
-   * @param imageId - The id of the image.
-   * @returns {Observable<ImageResponse>} - An observable containing the server's response, which includes generated images.
+   * @param designId - The id of the design.
+   * @returns {Observable<DesignResponse>} - An observable containing the server's response, which includes generated designs.
    */
-  regenerateImage(imageId: string): Observable<ImageResponse> {
-    return this.http.post<ImageResponse>(
-      environment.gateway + 'images/' + imageId + '/regenerate',
+  regenerateDesign(designId: string): Observable<DesignResponse> {
+    return this.http.post<DesignResponse>(
+      environment.gateway + 'designs/' + designId + '/regenerate',
       {},
     );
   }
 
-  editImage(formData: FormData): Observable<ImageResponse> {
-    return this.http.put<ImageResponse>(
-      environment.gateway + 'images',
+  editDesign(formData: FormData): Observable<DesignResponse> {
+    return this.http.put<DesignResponse>(
+      environment.gateway + 'designs',
       formData,
     );
   }
 
-  sketchToImage(formData: FormData) {
+  sketchToDesign(formData: FormData) {
     this.http
-      .post<ImageResponse>(environment.gateway + 'images/sketch', formData)
+      .post<DesignResponse>(environment.gateway + 'designs/sketch', formData)
       .subscribe({
-        next: (res) => this.imageSubject.next(res),
+        next: (res) => this.designSubject.next(res),
         error: (err) => {
           if (err.error?.status === 'BAD_REQUEST') {
             this.toastr.error(
@@ -84,7 +84,7 @@ export class ImageService {
   }
 
   async prepareFormData(
-    type: 'sketch' | 'image',
+    type: 'sketch' | 'design',
     image: File,
     prompt: string,
   ): Promise<FormData> {
@@ -137,18 +137,18 @@ export class ImageService {
     return 'application/octet-stream';
   }
 
-  setImageId(imageId: string) {
-    localStorage.setItem('imageId', imageId);
+  setDesignId(designId: string) {
+    localStorage.setItem('designId', designId);
   }
 
-  getImageId() {
-    return localStorage.getItem('imageId');
+  getDesignId() {
+    return localStorage.getItem('designId');
   }
 
-  clearImageData() {
-    localStorage.removeItem('imageId');
-    this.imageUrl.next('');
+  clearDesignData() {
+    localStorage.removeItem('designId');
+    this.designUrl.next('');
     this.sketchUrl.next('');
-    this.imageSubject.next(null);
+    this.designSubject.next(null);
   }
 }

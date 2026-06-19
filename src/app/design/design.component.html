@@ -1,30 +1,30 @@
-<app-header [source]="'result'"></app-header>
+<app-header [source]="'design'"></app-header>
 <div class="container container-fluid">
-  <div class="result-header" *ngIf="this.image">
-    <h1 class="result-title">Your Design is Ready!</h1>
+  <div class="design-header" *ngIf="this.design">
+    <h1 class="design-title">Your Design is Ready!</h1>
   </div>
 
-  <div *ngIf="this.image" class="row mb-3">
+  <div *ngIf="this.design" class="row mb-3">
     <div class="col-12 d-flex justify-content-center mb-2">
       <div class="action-buttons">
-        <button type="button" class="action-btn" (click)="downloadImage()">
+        <button type="button" class="action-btn" (click)="downloadDesign()">
           <lucide-icon class="icon" name="download"></lucide-icon>
           <span>Download</span>
         </button>
 
-        <button type="button" class="action-btn" (click)="shareImage()">
+        <button type="button" class="action-btn" (click)="shareDesign()">
           <lucide-icon name="share-2"></lucide-icon>
           <span>Share</span>
         </button>
 
-        <button type="button" class="action-btn" (click)="openModeSelect()">
+        <button type="button" class="action-btn" (click)="openMode()">
           <lucide-icon name="repeat-2"></lucide-icon>
           <span>Start Again</span>
         </button>
 
-        <button type="button" class="action-btn" (click)="editImage()">
+        <button type="button" class="action-btn" (click)="editDesign()">
           <lucide-icon name="square-pen"></lucide-icon>
-          <span>Edit Image</span>
+          <span>Edit Design</span>
         </button>
 
         <button
@@ -40,9 +40,9 @@
     </div>
   </div>
 
-  <div *ngIf="this.image" class="row">
+  <div *ngIf="this.design" class="row">
     <div class="col-12 d-flex justify-content-center align-items-center">
-      <img class="img img-fluid" src="{{ image }}" />
+      <img class="img img-fluid" src="{{ design }}" />
     </div>
   </div>
 </div>

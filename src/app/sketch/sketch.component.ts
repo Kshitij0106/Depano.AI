@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LucideAngularModule } from 'lucide-angular';
-import { ImageService } from 'src/app/services/image.service';
+import { DesignService } from 'src/app/services/design.service';
 import { ToastrService } from 'ngx-toastr';
 import { HeaderComponent } from 'src/app/header/header.component';
 import { UserInputComponent } from 'src/app/generate/user-input/user-input.component';
@@ -9,7 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ImageValidationService } from '../services/image-validation.service';
 
 @Component({
-  selector: 'app-upload',
+  selector: 'app-sketch',
   standalone: true,
   imports: [
     HeaderComponent,
@@ -17,20 +17,19 @@ import { ImageValidationService } from '../services/image-validation.service';
     LucideAngularModule,
     UserInputComponent,
   ],
-  templateUrl: './upload.component.html',
-  styleUrl: './upload.component.css',
+  templateUrl: './sketch.component.html',
+  styleUrl: './sketch.component.css',
 })
-export class UploadComponent {
+export class SketchComponent {
   uploadedFile: File | null = null;
   dragActive = false;
-  generatedImageUrl: string | null = null;
   userPrompt: string = '';
 
   public label: string = 'Describe your sketch';
   public hideUserPrompt: boolean = false;
 
   constructor(
-    private imageService: ImageService,
+    private designService: DesignService,
     private imageValidationService: ImageValidationService,
     private toastr: ToastrService,
     private router: Router,
@@ -43,25 +42,25 @@ export class UploadComponent {
       return;
     }
     this.userPrompt = input;
-    this.handleGenerateImage();
+    this.handleGenerateDesign();
   }
 
-  async handleGenerateImage(): Promise<void> {
+  async handleGenerateDesign(): Promise<void> {
     if (!this.uploadedFile) {
       this.toastr.error('Please upload a sketch first');
       return;
     }
 
-    const formData = await this.imageService.prepareFormData(
+    const formData = await this.designService.prepareFormData(
       'sketch',
       this.uploadedFile,
       this.userPrompt,
     );
 
-    this.router.navigate(['../', 'result'], {
+    this.router.navigate(['../', 'design'], {
       relativeTo: this.route,
     });
-    this.imageService.sketchToImage(formData);
+    this.designService.sketchToDesign(formData);
   }
 
   handleDrag(event: DragEvent, type: string): void {

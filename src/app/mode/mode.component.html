@@ -49,11 +49,11 @@
         </div>
       </div>
 
-      <!-- Sketch to Image Category -->
+      <!-- Sketch to Design Category -->
       <div
-        class="card card-sketch-to-image"
-        [class.selected]="selectedCategory === 'sketch-to-image'"
-        (click)="handleCategorySelect('sketch-to-image')"
+        class="card card-sketch"
+        [class.selected]="selectedCategory === 'sketch'"
+        (click)="handleCategorySelect('sketch')"
       >
         <div class="card-content">
           <div class="icon-container">
@@ -64,7 +64,7 @@
               [strokeWidth]="3"
             ></lucide-icon>
           </div>
-          <h3 class="card-title">Sketch to Image</h3>
+          <h3 class="card-title">Sketch to Design</h3>
           <p class="card-description">
             Upload your fashion sketches and watch AI transform them into
             photorealistic designs. Perfect for bringing hand-drawn concepts to
@@ -75,16 +75,13 @@
               <span>Upload hand-drawn sketches</span>
             </div>
             <div class="feature-item">
-              <span>AI-powered image generation</span>
+              <span>AI-powered design generation</span>
             </div>
             <div class="feature-item">
               <span>Photorealistic results</span>
             </div>
           </div>
-          <button
-            class="card-button"
-            (click)="handleCategorySelect('sketch-to-image')"
-          >
+          <button class="card-button" (click)="handleCategorySelect('sketch')">
             <span class="button-text">
               Upload Sketch
               <lucide-icon

@@ -1,6 +1,6 @@
-export interface ImageResponse {
+export interface DesignResponse {
   status: string;
   url: string;
   message: string;
-  imageId: string;
+  designId: string;
 }

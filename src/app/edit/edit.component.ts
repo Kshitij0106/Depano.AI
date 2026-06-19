@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ImageService } from '../services/image.service';
+import { DesignService } from '../services/design.service';
 import { UserService } from '../services/user.service';
 import { HeaderComponent } from '../header/header.component';
 import { FormsModule } from '@angular/forms';
@@ -28,7 +28,7 @@ import { BreadcrumbService } from '../services/breadcrumb.service';
   ],
 })
 export class EditComponent implements OnInit {
-  image: string = '';
+  design: string = '';
   userPrompt: string = '';
 
   label: string = 'Describe your changes';
@@ -37,7 +37,7 @@ export class EditComponent implements OnInit {
   private navigationSubscription!: Subscription;
 
   constructor(
-    private imageService: ImageService,
+    private designService: DesignService,
     private userService: UserService,
     private errorService: ErrorService,
     private breadcrumbService: BreadcrumbService,
@@ -48,35 +48,35 @@ export class EditComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getImage();
+    this.getDesign();
     this.onBackButton();
   }
 
-  private getImage() {
-    this.imageService.imageUrl.subscribe((image) => {
-      this.image = image;
+  private getDesign() {
+    this.designService.designUrl.subscribe((design) => {
+      this.design = design;
     });
   }
 
   inputSelected(input: string) {
     this.userPrompt = input;
-    this.editImage();
+    this.editDesign();
   }
 
-  async editImage() {
+  async editDesign() {
     try {
-      const imageFile = await this.imageService.fetchImageFromUrl(this.image);
+      const imageFile = await this.designService.fetchImageFromUrl(this.design);
 
-      const formData = await this.imageService.prepareFormData(
-        'image',
+      const formData = await this.designService.prepareFormData(
+        'design',
         imageFile,
         this.userPrompt,
       );
 
-      this.imageService.editImage(formData).subscribe({
+      this.designService.editDesign(formData).subscribe({
         next: (result) => {
           if (result.status === 'Success') {
-            this.image = `data:image/png;base64,${result.url}`;
+            this.design = `data:image/png;base64,${result.url}`;
             this.userService.updateUserDetails();
             this.toastr.success(result.message);
           }
@@ -92,38 +92,38 @@ export class EditComponent implements OnInit {
     }
   }
 
-  openModeSelect() {
+  openMode() {
     this.emptyData();
-    this.router.navigate(['mode-select']);
+    this.router.navigate(['mode']);
   }
 
-  downloadImage() {
-    if (!this.image) {
-      this.toastr.error('No image available to download');
+  downloadDesign() {
+    if (!this.design) {
+      this.toastr.error('No design available to download');
       return;
     }
     (async () => {
       try {
-        const res = await fetch(this.image);
+        const res = await fetch(this.design);
         if (!res.ok) throw new Error('Network response was not ok');
         const blob = await res.blob();
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = 'depano-design.png';
+        a.download = 'depanoai-design.png';
         document.body.appendChild(a);
         a.click();
         a.remove();
         // revoke after a short delay to ensure download started
         setTimeout(() => URL.revokeObjectURL(url), 1000);
       } catch (err) {
-        this.toastr.error('Failed to download image');
+        this.toastr.error('Failed to download design');
       }
     })();
   }
 
   emptyData() {
-    this.imageService.clearImageData();
+    this.designService.clearDesignData();
     this.categoryService.deleteCategories();
     this.breadcrumbService.emptyBreadcrumbList();
     this.checkAttributeService.emptyCheckedAttributesList();

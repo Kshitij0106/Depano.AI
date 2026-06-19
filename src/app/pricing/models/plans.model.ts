@@ -5,7 +5,7 @@ export interface DepanoAIPlan {
   name: string;
   icon: string;
   price: string;
-  images: string;
+  designs: string;
   credits: number;
   description: string;
   features: string[];

@@ -2,19 +2,19 @@
 
 <main class="page-wrapper">
   <div class="content-container">
-    <div class="result-header" *ngIf="this.image">
-      <h1 class="result-title">Refine Your Design!</h1>
+    <div class="edit-header" *ngIf="this.design">
+      <h1 class="edit-title">Refine Your Design!</h1>
     </div>
 
-    <div *ngIf="this.image" class="row mb-3">
+    <div *ngIf="this.design" class="row mb-3">
       <div class="col-12 d-flex justify-content-center mb-2">
         <div class="action-buttons">
-          <button type="button" class="action-btn" (click)="downloadImage()">
+          <button type="button" class="action-btn" (click)="downloadDesign()">
             <lucide-icon class="icon" name="download"></lucide-icon>
             <span>Download</span>
           </button>
 
-          <button type="button" class="action-btn" (click)="openModeSelect()">
+          <button type="button" class="action-btn" (click)="openMode()">
             <lucide-icon name="repeat-2"></lucide-icon>
             <span>Start Again</span>
           </button>
@@ -22,11 +22,11 @@
       </div>
     </div>
 
-    <div class="image-section">
-      <img class="result-image img-fluid" [src]="image" />
+    <div class="design-section">
+      <img class="design-cnt img-fluid" [src]="design" />
     </div>
 
-    <div *ngIf="this.image" class="user-input">
+    <div *ngIf="this.design" class="user-input">
       <app-user-input
         [label]="label"
         [hideUserPrompt]="hideUserPrompt"

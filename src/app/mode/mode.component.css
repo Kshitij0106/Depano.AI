@@ -118,11 +118,11 @@
   box-shadow: 0 0 0 2px #ec4899;
 }
 
-..card-sketch-to-image.selected {
+.card-sketch.selected {
   box-shadow: 0 0 0 2px #a855f7;
 }
 
-.card-edit-image.selected {
+.card-edit-dress.selected {
   box-shadow: 0 0 0 2px #22c55e;
 }
 
@@ -151,11 +151,11 @@
   color: white;
 }
 
-.card-sketch-to-image .icon-container {
+.card-sketch .icon-container {
   background: linear-gradient(to bottom right, #a855f7, #ec4899);
 }
 
-.card-edit-image .icon-container {
+.card-edit-dress .icon-container {
   background: linear-gradient(to bottom right, #22c55e, #10b981);
 }
 
@@ -215,11 +215,11 @@
   cursor: pointer;
 }
 
-.card-sketch-to-image .card-button {
+.card-sketch .card-button {
   background: linear-gradient(to right, #a855f7, #ec4899);
 }
 
-.card-edit-image .card-button {
+.card-edit-dress .card-button {
   background: linear-gradient(to right, #22c55e, #10b981);
 }
 
@@ -228,11 +228,11 @@
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
 
-.card-sketch-to-image .card-button:hover {
+.card-sketch .card-button:hover {
   background: linear-gradient(to right, #9333ea, #db2777);
 }
 
-.card-edit-image .card-button:hover {
+.card-edit-dress .card-button:hover {
   background: linear-gradient(to right, #16a34a, #059669);
 }
 

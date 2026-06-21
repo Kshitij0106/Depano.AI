@@ -5,11 +5,11 @@ import { PromptService } from 'src/app/services/prompt.service';
 
 @Component({
   standalone: true,
-  selector: 'app-gender-selection',
-  templateUrl: './gender-selection.component.html',
-  styleUrls: ['./gender-selection.component.css'],
+  selector: 'app-gender',
+  templateUrl: './gender.component.html',
+  styleUrls: ['./gender.component.css'],
 })
-export class GenderSelectionComponent {
+export class GenderComponent {
   title = 'Depano AI';
 
   constructor(

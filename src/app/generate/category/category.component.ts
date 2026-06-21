@@ -13,7 +13,7 @@ import {
   breadcrumb,
 } from 'src/app/services/breadcrumb.service';
 import { CategoryService } from '../services/category.service';
-import { ImageService } from 'src/app/services/image.service';
+import { DesignService } from 'src/app/services/design.service';
 import { CheckedAttributesService } from '../services/checked-attributes.service';
 import { CommonModule } from '@angular/common';
 import { LucideAngularModule } from 'lucide-angular';
@@ -65,7 +65,7 @@ export class CategoryComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private categoryService: CategoryService,
-    private imageService: ImageService,
+    private designService: DesignService,
     private promptService: PromptService,
     private checkAttributeService: CheckedAttributesService,
     private breadcrumbService: BreadcrumbService,
@@ -419,20 +419,20 @@ export class CategoryComponent implements OnInit {
   }
 
   /**
-   * Navigates to the result component.
+   * Navigates to the design component.
    */
   generate() {
-    this.router.navigate(['../../', 'result'], {
+    this.router.navigate(['../../', 'design'], {
       relativeTo: this.route,
     });
-    this.imageService.generateImage();
+    this.designService.generateDesign();
   }
 
   onBackButton() {
     this.navigationSubscription = this.router.events.subscribe((event) => {
       if (event instanceof NavigationStart) {
         if (event.navigationTrigger === 'popstate') {
-          this.router.navigate(['/mode-select']);
+          this.router.navigate(['/mode']);
         }
       }
     });

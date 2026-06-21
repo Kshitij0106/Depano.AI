@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 
-interface MockupImage {
+interface DepanoAIDesign {
   src: string;
   alt: string;
   className: string;
@@ -15,7 +15,7 @@ interface MockupImage {
   imports: [CommonModule],
 })
 export class AboutComponent {
-  mockupImages: MockupImage[] = [
+  depanoAIDesigns: DepanoAIDesign[] = [
     {
       src: 'https://firebasestorage.googleapis.com/v0/b/depano-ai.appspot.com/o/App%2FHomePage%2Fhome10.png?alt=media&token=4e612ef0-4a11-4442-9fcc-1d1399b220f5',
       alt: 'Fashion design sketch',

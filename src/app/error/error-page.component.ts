@@ -6,7 +6,7 @@ import { ErrorService } from '../services/error.service';
 import { ErrorType, ErrorConfig } from './error.type';
 import { CheckedAttributesService } from '../generate/services/checked-attributes.service';
 import { CategoryService } from '../generate/services/category.service';
-import { ImageService } from '../services/image.service';
+import { DesignService } from '../services/design.service';
 import { BreadcrumbService } from '../services/breadcrumb.service';
 import { Subscription } from 'rxjs';
 
@@ -27,7 +27,7 @@ export class ErrorPageComponent implements OnInit {
     private router: Router,
     private errorService: ErrorService,
     private breadcrumbService: BreadcrumbService,
-    private imageService: ImageService,
+    private designService: DesignService,
     private categroryService: CategoryService,
     private checkAttributeService: CheckedAttributesService,
   ) {}
@@ -60,7 +60,7 @@ export class ErrorPageComponent implements OnInit {
     switch (action) {
       case 'retry':
         this.emptyData();
-        this.router.navigate(['/mode-select']);
+        this.router.navigate(['/mode']);
         break;
       case 'topup':
         this.router.navigate(['/top-up']);
@@ -79,7 +79,7 @@ export class ErrorPageComponent implements OnInit {
     this.navigationSubscription = this.router.events.subscribe((event) => {
       if (event instanceof NavigationStart) {
         if (event.navigationTrigger === 'popstate') {
-          this.router.navigate(['/mode-select']);
+          this.router.navigate(['/mode']);
         }
       }
     });
@@ -87,7 +87,7 @@ export class ErrorPageComponent implements OnInit {
 
   emptyData() {
     this.categroryService.deleteCategories();
-    this.imageService.clearImageData();
+    this.designService.clearDesignData();
     this.breadcrumbService.emptyBreadcrumbList();
     this.checkAttributeService.emptyCheckedAttributesList();
   }

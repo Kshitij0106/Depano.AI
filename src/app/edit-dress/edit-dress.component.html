@@ -2,10 +2,10 @@
 <div class="container">
   <div class="content">
     <div class="header">
-      <h1 class="title">Transform Sketches into Reality</h1>
+      <h1 class="title">Edit Your Dress with AI</h1>
       <p class="subtitle">
-        Upload your fashion sketches and watch our AI transform them into
-        photorealistic designs. From concept to creation in seconds.
+        Upload an existing dress design or fashion photo and let our AI refine
+        the look, textures, and styling based on your prompt.
       </p>
     </div>
 
@@ -20,7 +20,7 @@
                 [size]="18"
                 [strokeWidth]="2"
               ></lucide-icon>
-              Upload Your Sketch
+              Upload Your Image
             </h3>
 
             <div
@@ -48,7 +48,7 @@
                     ></lucide-icon>
                   </div>
                   <p class="file-name">{{ uploadedFile.name }}</p>
-                  <p class="file-status">Ready to transform</p>
+                  <p class="file-status">Ready to edit</p>
                   <button class="change-button" (click)="uploadedFile = null">
                     Change File
                   </button>
@@ -63,7 +63,7 @@
                       [strokeWidth]="2"
                     ></lucide-icon>
                   </div>
-                  <p class="drag-text">Drag and drop your sketch here</p>
+                  <p class="drag-text">Drag and drop your image here</p>
                   <p class="browse-text">or click to browse files</p>
                   <p class="support-text">
                     Supports JPG, JPEG, PNG, HEIC up to 6MB
@@ -71,33 +71,14 @@
                 </div>
               </ng-template>
             </div>
-
-            <button
-              *ngIf="uploadedFile"
-              class="generate-button"
-              (click)="handleGenerateImage()"
-            >
-              <lucide-icon
-                name="wand"
-                [size]="22"
-                [strokeWidth]="2"
-              ></lucide-icon>
-              Generate Fashion Design
-              <lucide-icon
-                name="arrow-right"
-                [size]="22"
-                [strokeWidth]="2"
-              ></lucide-icon>
-            </button>
           </div>
         </div>
       </div>
 
       <div class="right-column">
-        <!-- Features Section -->
         <div class="features-section">
           <div class="card features-card">
-            <h3 class="features-title">Features</h3>
+            <h3 class="features-title">What You Can Do</h3>
             <div class="features-content">
               <div class="feature-item">
                 <div class="feature-icon icon-zap">
@@ -108,10 +89,10 @@
                   ></lucide-icon>
                 </div>
                 <div>
-                  <h4>Instant AI Processing</h4>
+                  <h4>Smart Retouching</h4>
                   <p>
-                    Transform sketches to photorealistic designs in under 30
-                    seconds
+                    Improve color, lighting, and style details with a single
+                    prompt.
                   </p>
                 </div>
               </div>
@@ -124,10 +105,10 @@
                   ></lucide-icon>
                 </div>
                 <div>
-                  <h4>Style Enhancement</h4>
+                  <h4>Preserve Original Quality</h4>
                   <p>
-                    AI adds realistic textures, lighting, and fashion-forward
-                    styling
+                    Retain the image’s texture while refreshing its fashion
+                    appeal.
                   </p>
                 </div>
               </div>
@@ -140,10 +121,9 @@
                   ></lucide-icon>
                 </div>
                 <div>
-                  <h4>High Resolution Output</h4>
+                  <h4>Fast Results</h4>
                   <p>
-                    Export designs in 4K resolution perfect for portfolios and
-                    presentations
+                    Receive your edited fashion-ready image quickly and clearly.
                   </p>
                 </div>
               </div>

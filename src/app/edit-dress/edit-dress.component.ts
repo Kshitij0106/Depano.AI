@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LucideAngularModule } from 'lucide-angular';
-import { ImageService } from '../services/image.service';
 import { ToastrService } from 'ngx-toastr';
 import { HeaderComponent } from '../header/header.component';
 import { UserInputComponent } from '../generate/user-input/user-input.component';
 import { Router } from '@angular/router';
 import { ImageValidationService } from '../services/image-validation.service';
+import { DesignService } from '../services/design.service';
 
 @Component({
-  selector: 'app-edit-image',
+  selector: 'app-edit-dress',
   standalone: true,
   imports: [
     HeaderComponent,
@@ -17,10 +17,10 @@ import { ImageValidationService } from '../services/image-validation.service';
     LucideAngularModule,
     UserInputComponent,
   ],
-  templateUrl: './edit-image.component.html',
-  styleUrls: ['./edit-image.component.css'],
+  templateUrl: './edit-dress.component.html',
+  styleUrls: ['./edit-dress.component.css'],
 })
-export class EditImageComponent {
+export class EditDressComponent {
   uploadedFile: File | null = null;
   dragActive = false;
   userPrompt: string = '';
@@ -29,7 +29,7 @@ export class EditImageComponent {
   public hideUserPrompt: boolean = false;
 
   constructor(
-    private imageService: ImageService,
+    private designService: DesignService,
     private imageValidationService: ImageValidationService,
     private toastr: ToastrService,
     private router: Router,
@@ -50,18 +50,18 @@ export class EditImageComponent {
       return;
     }
 
-    const formData = await this.imageService.prepareFormData(
-      'image',
+    const formData = await this.designService.prepareFormData(
+      'design',
       this.uploadedFile,
       this.userPrompt,
     );
 
-    this.imageService.editImage(formData).subscribe({
+    this.designService.editDesign(formData).subscribe({
       next: (result) => {
-        this.imageService.imageSubject.next(result);
+        this.designService.designSubject.next(result);
         this.router.navigate(['result']);
       },
-      error: (error) => {
+      error: (error: any) => {
         this.toastr.error(
           error.error?.message || 'Unable to edit the image. Please try again.',
         );

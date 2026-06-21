@@ -6,13 +6,13 @@ import { HeaderComponent } from '../header/header.component';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-mode-select',
+  selector: 'app-mode',
   standalone: true,
   imports: [HeaderComponent, CommonModule, LucideAngularModule],
-  templateUrl: './mode-select.component.html',
-  styleUrl: './mode-select.component.css',
+  templateUrl: './mode.component.html',
+  styleUrl: './mode.component.css',
 })
-export class ModeSelectComponent implements OnInit, OnDestroy {
+export class ModeComponent implements OnInit, OnDestroy {
   selectedCategory: string = '';
   private navigationSubscription!: Subscription;
 

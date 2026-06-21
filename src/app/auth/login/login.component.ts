@@ -104,7 +104,7 @@ export class LoginComponent {
                 this.userService.saveUserInfo(user);
 
                 this.toastr.success(result.message);
-                this.router.navigate(['mode-select']);
+                this.router.navigate(['mode']);
               },
               error: (err: HttpErrorResponse) => {
                 if (err.error?.status === 'NOT_FOUND') {

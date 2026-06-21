@@ -9,7 +9,7 @@ import { ImageValidationService } from '../services/image-validation.service';
 import { DesignService } from '../services/design.service';
 
 @Component({
-  selector: 'app-edit-dress',
+  selector: 'app-dress',
   standalone: true,
   imports: [
     HeaderComponent,
@@ -17,10 +17,10 @@ import { DesignService } from '../services/design.service';
     LucideAngularModule,
     UserInputComponent,
   ],
-  templateUrl: './edit-dress.component.html',
-  styleUrls: ['./edit-dress.component.css'],
+  templateUrl: './dress.component.html',
+  styleUrls: ['./dress.component.css'],
 })
-export class EditDressComponent {
+export class DressComponent {
   uploadedFile: File | null = null;
   dragActive = false;
   userPrompt: string = '';

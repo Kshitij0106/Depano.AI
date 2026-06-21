@@ -73,12 +73,10 @@ export const routes: Routes = [
       import('./error/error-page.component').then((m) => m.ErrorPageComponent),
   },
   {
-    path: 'edit-dress',
+    path: 'dress',
     canActivate: [authGuard],
     loadComponent: () =>
-      import('./edit-dress/edit-dress.component').then(
-        (m) => m.EditDressComponent,
-      ),
+      import('./dress/dress.component').then((m) => m.DressComponent),
   },
   { path: '**', redirectTo: '/home' },
 ];

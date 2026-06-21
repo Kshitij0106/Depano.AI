@@ -97,9 +97,9 @@
 
       <!-- Edit Your Image Category -->
       <div
-        class="card card-edit-dress"
-        [class.selected]="selectedCategory === 'edit-dress'"
-        (click)="handleCategorySelect('edit-dress')"
+        class="card card-dress"
+        [class.selected]="selectedCategory === 'dress'"
+        (click)="handleCategorySelect('dress')"
       >
         <div class="card-content">
           <div class="icon-container">
@@ -127,10 +127,7 @@
               <span>Keep original detail and texture</span>
             </div>
           </div>
-          <button
-            class="card-button"
-            (click)="handleCategorySelect('edit-dress')"
-          >
+          <button class="card-button" (click)="handleCategorySelect('dress')">
             <span class="button-text">
               Upload Image
               <lucide-icon

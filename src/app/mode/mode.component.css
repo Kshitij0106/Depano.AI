@@ -122,7 +122,7 @@
   box-shadow: 0 0 0 2px #a855f7;
 }
 
-.card-edit-dress.selected {
+.card-dress.selected {
   box-shadow: 0 0 0 2px #22c55e;
 }
 
@@ -155,7 +155,7 @@
   background: linear-gradient(to bottom right, #a855f7, #ec4899);
 }
 
-.card-edit-dress .icon-container {
+.card-dress .icon-container {
   background: linear-gradient(to bottom right, #22c55e, #10b981);
 }
 
@@ -219,7 +219,7 @@
   background: linear-gradient(to right, #a855f7, #ec4899);
 }
 
-.card-edit-dress .card-button {
+.card-dress .card-button {
   background: linear-gradient(to right, #22c55e, #10b981);
 }
 
@@ -232,7 +232,7 @@
   background: linear-gradient(to right, #9333ea, #db2777);
 }
 
-.card-edit-dress .card-button:hover {
+.card-dress .card-button:hover {
   background: linear-gradient(to right, #16a34a, #059669);
 }
 

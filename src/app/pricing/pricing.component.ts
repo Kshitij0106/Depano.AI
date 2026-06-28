@@ -10,7 +10,12 @@ import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environments/environment';
 import { PlanType } from './models/planType.model';
 import { PaymentState } from './models/paymentState.model';
-import { DEPANOAIPLANS } from './types/depanoai.plans.types';
+import {
+  DEPANOAIPLANS,
+  DEPANOAIPLANS_YEARLY,
+  DEPANOAIPLANS_TOPUP,
+} from './types/depanoai.plans.types';
+import { DepanoAIPlan } from './models/plans.model';
 import { Router } from '@angular/router';
 import { CreateOrderResponse } from './models/createOrderResponse.model';
 import {
@@ -35,7 +40,25 @@ export class PricingComponent implements OnInit {
   loading = false;
 
   readonly PlanType = PlanType;
-  readonly plans = DEPANOAIPLANS;
+  activeTab: 'monthly' | 'yearly' | 'topup' = 'monthly';
+  readonly monthlyPlans = DEPANOAIPLANS;
+  readonly yearlyPlans = DEPANOAIPLANS_YEARLY;
+  readonly topupPlans = DEPANOAIPLANS_TOPUP;
+
+  get currentPlans(): DepanoAIPlan[] {
+    switch (this.activeTab) {
+      case 'yearly':
+        return this.yearlyPlans;
+      case 'topup':
+        return this.topupPlans;
+      default:
+        return this.monthlyPlans;
+    }
+  }
+
+  setActiveTab(tab: 'monthly' | 'yearly' | 'topup'): void {
+    this.activeTab = tab;
+  }
 
   private razorpayInstance: InstanceType<Window['Razorpay']> | null = null;
 

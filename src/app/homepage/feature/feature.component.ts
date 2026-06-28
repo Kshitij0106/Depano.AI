@@ -35,7 +35,7 @@ import { LucideAngularModule } from 'lucide-angular';
         query(
           '.feature-card',
           style({ opacity: 0, transform: 'translateY(50px)' }),
-          { optional: true }
+          { optional: true },
         ),
         query(
           '.feature-card',
@@ -43,10 +43,10 @@ import { LucideAngularModule } from 'lucide-angular';
             100,
             animate(
               '0.6s ease-out',
-              style({ opacity: 1, transform: 'translateY(0)' })
-            )
+              style({ opacity: 1, transform: 'translateY(0)' }),
+            ),
           ),
-          { optional: true }
+          { optional: true },
         ),
       ]),
     ]),
@@ -65,27 +65,27 @@ export class FeatureComponent implements AfterViewInit {
   features = [
     {
       icon: 'BookOpen',
-      title: 'Smart Sketching',
+      title: 'Innovative Outfit Generation',
       description:
-        'Transform rough concepts into detailed fashion illustrations with AI-powered sketch enhancement and style refinement tools.',
+        'Create unique, never-seen-before outfits in seconds with Depano AI’s user-friendly interface. Depano AI blends creativity with precision to bring your boldest fashion ideas to life instantly.',
     },
     {
       icon: 'Scissors',
-      title: 'Pattern Generation',
+      title: 'Real-Time Editing',
       description:
-        'Create complex and technical patterns instantly. Our AI understands cloth construction and fit for perfect results.',
+        'Refine and customize designs effortlessly with intuitive prompt-based editing tool. Make quick adjustments to styles, colors, and details until your vision is perfectly realized.',
     },
     {
       icon: 'Shirt',
-      title: 'Style Curation',
+      title: 'Sketch to Reality',
       description:
-        'Generate complete look books and seasonal collections with intelligent color matching and trend forecasting capabilities.',
+        'Turn rough sketches into stunning, photorealistic outfits. The AI enhances your concepts with accurate textures, proportions, and design detailing.',
     },
     {
       icon: 'Users',
-      title: 'Virtual Fitting',
+      title: 'Virtual Try-On (Beta-phase)',
       description:
-        'Visualize designs on diverse body types and sizes with realistic fabric draping and movement simulation technology.',
+        'Visualize any outfit on models of your choice. Experience realistic fitting with advanced fabric draping across body types.',
     },
   ];
 

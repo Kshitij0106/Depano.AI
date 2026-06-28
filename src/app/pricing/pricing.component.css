@@ -55,7 +55,7 @@
 .current-balance-container {
   display: flex;
   justify-content: center;
-  margin: 40px 0 50px 0;
+  margin: 40px 0 28px 0;
 }
 
 .current-balance-badge {
@@ -114,6 +114,56 @@
   line-height: 1.2;
   color: #101828;
   margin-top: 2px;
+}
+
+.pricing-tabs {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 35px;
+}
+
+.pricing-tabs .nav-tabs {
+  border-bottom: none;
+  background: transparent;
+}
+
+.pricing-tabs .nav-item {
+  margin-right: 12px;
+}
+
+.pricing-tabs .nav-link {
+  border: 1px solid #e5e7eb;
+  border-radius: 999px;
+  color: #475569;
+  background: #f8fafc;
+  padding: 0.9rem 1.4rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.pricing-tabs .nav-link.active {
+  color: #ffffff;
+  background: linear-gradient(90deg, #ec4899, #f97316);
+  border-color: transparent;
+  box-shadow: 0 10px 20px rgba(236, 72, 153, 0.18);
+}
+
+@media (max-width: 768px) {
+  .pricing-tabs {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .pricing-tabs .nav-item {
+    margin-right: 0;
+    margin-bottom: 12px;
+    width: 100%;
+  }
+
+  .pricing-tabs .nav-link {
+    width: 100%;
+    text-align: center;
+  }
 }
 
 .cards {

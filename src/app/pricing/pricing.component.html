@@ -28,10 +28,52 @@
     </div>
   </div>
 
+  <!-- Pricing Tabs -->
+  <div class="pricing-tabs">
+    <ul class="nav nav-tabs" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button
+          type="button"
+          class="nav-link"
+          [class.active]="activeTab === 'monthly'"
+          (click)="setActiveTab('monthly')"
+          role="tab"
+          [attr.aria-selected]="activeTab === 'monthly' ? 'true' : 'false'"
+        >
+          Monthly
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button
+          type="button"
+          class="nav-link"
+          [class.active]="activeTab === 'yearly'"
+          (click)="setActiveTab('yearly')"
+          role="tab"
+          [attr.aria-selected]="activeTab === 'yearly' ? 'true' : 'false'"
+        >
+          Yearly
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button
+          type="button"
+          class="nav-link"
+          [class.active]="activeTab === 'topup'"
+          (click)="setActiveTab('topup')"
+          role="tab"
+          [attr.aria-selected]="activeTab === 'topup' ? 'true' : 'false'"
+        >
+          Top-ups
+        </button>
+      </li>
+    </ul>
+  </div>
+
   <!-- Pricing Cards -->
   <div class="cards">
     <div
-      *ngFor="let plan of plans"
+      *ngFor="let plan of currentPlans"
       class="card justify-items-center"
       [class.popular]="plan.popular"
     >

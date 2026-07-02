@@ -85,7 +85,53 @@
             <span class="button-text">
               Upload Sketch
               <lucide-icon
-                name="camera"
+                name="upload"
+                class="pink-icon"
+                [size]="16"
+                [strokeWidth]="2.5"
+              ></lucide-icon>
+            </span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Edit Your Dress Category -->
+      <div
+        class="card card-dress"
+        [class.selected]="selectedCategory === 'dress'"
+        (click)="handleCategorySelect('dress')"
+      >
+        <div class="card-content">
+          <div class="icon-container">
+            <lucide-icon
+              name="shirt"
+              class="blue-icon"
+              [size]="24"
+              [strokeWidth]=""
+            ></lucide-icon>
+          </div>
+          <h3 class="card-title">Edit Your Dress</h3>
+          <p class="card-description">
+            Upload your dress design or photo and let AI enhance it with precise
+            styling edits. Perfect for refining dress details into polished
+            fashion assets.
+          </p>
+          <div class="features">
+            <div class="feature-item">
+              <span>Upload any existing dress</span>
+            </div>
+            <div class="feature-item">
+              <span>Refine the look with AI-driven edits</span>
+            </div>
+            <div class="feature-item">
+              <span>Keep original detail and texture</span>
+            </div>
+          </div>
+          <button class="card-button" (click)="handleCategorySelect('dress')">
+            <span class="button-text">
+              Upload Dress
+              <lucide-icon
+                name="image-up"
                 class="pink-icon"
                 [size]="16"
                 [strokeWidth]="2.5"

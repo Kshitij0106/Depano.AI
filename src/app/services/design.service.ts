@@ -8,6 +8,8 @@ import { ErrorService } from './error.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
+export type DesignType = 'TEXT' | 'SKETCH' | 'DRESS';
+
 @Injectable({
   providedIn: 'root',
 })

@@ -4,9 +4,11 @@ import { LucideAngularModule } from 'lucide-angular';
 import { ToastrService } from 'ngx-toastr';
 import { HeaderComponent } from '../header/header.component';
 import { UserInputComponent } from '../generate/user-input/user-input.component';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ImageValidationService } from '../services/image-validation.service';
 import { DesignService } from '../services/design.service';
+import { UserService } from '../services/user.service';
+import { ErrorService } from '../services/error.service';
 
 @Component({
   selector: 'app-dress',
@@ -29,10 +31,13 @@ export class DressComponent {
   public hideUserPrompt: boolean = false;
 
   constructor(
+    private userService: UserService,
     private designService: DesignService,
     private imageValidationService: ImageValidationService,
+    private errorService: ErrorService,
     private toastr: ToastrService,
     private router: Router,
+    private route: ActivatedRoute,
   ) {}
 
   inputSelected(input: string) {
@@ -41,32 +46,24 @@ export class DressComponent {
       return;
     }
     this.userPrompt = input;
-    this.handleEditImage();
+    this.handleEditDress();
   }
 
-  async handleEditImage(): Promise<void> {
+  async handleEditDress(): Promise<void> {
     if (!this.uploadedFile) {
-      this.toastr.error('Please upload an image first');
+      this.toastr.error('Please upload a dress first');
       return;
     }
-
     const formData = await this.designService.prepareFormData(
-      'design',
+      'dress',
       this.uploadedFile,
       this.userPrompt,
     );
 
-    this.designService.editDesign(formData).subscribe({
-      next: (result) => {
-        this.designService.designSubject.next(result);
-        this.router.navigate(['result']);
-      },
-      error: (error: any) => {
-        this.toastr.error(
-          error.error?.message || 'Unable to edit the image. Please try again.',
-        );
-      },
+    this.router.navigate(['../', 'design'], {
+      relativeTo: this.route,
     });
+    this.designService.dressToDesign(formData);
   }
 
   handleDrag(event: DragEvent, type: string): void {

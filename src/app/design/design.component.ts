@@ -85,6 +85,9 @@ export class DesignComponent implements OnInit {
           }
         },
       });
+    } else {
+      this.toastr.error('Something went wrong. Please start again.');
+      this.router.navigate(['mode']);
     }
   }
 

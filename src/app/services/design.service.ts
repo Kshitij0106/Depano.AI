@@ -45,26 +45,6 @@ export class DesignService {
       });
   }
 
-  /**
-   * Sends a request again to the API for design generation based on user prompts.
-   *
-   * @param designId - The id of the design.
-   * @returns {Observable<DesignResponse>} - An observable containing the server's response, which includes generated designs.
-   */
-  regenerateDesign(designId: string): Observable<DesignResponse> {
-    return this.http.post<DesignResponse>(
-      environment.gateway + 'designs/' + designId + '/regenerate',
-      {},
-    );
-  }
-
-  editDesign(formData: FormData): Observable<DesignResponse> {
-    return this.http.put<DesignResponse>(
-      environment.gateway + 'designs',
-      formData,
-    );
-  }
-
   sketchToDesign(formData: FormData) {
     this.http
       .post<DesignResponse>(environment.gateway + 'designs/sketch', formData)
@@ -83,8 +63,46 @@ export class DesignService {
       });
   }
 
+  dressToDesign(formData: FormData) {
+    this.http
+      .post<DesignResponse>(environment.gateway + 'designs/dress', formData)
+      .subscribe({
+        next: (res) => this.designSubject.next(res),
+        error: (err) => {
+          if (err.error?.status === 'BAD_REQUEST') {
+            this.toastr.error(
+              err.error?.message || 'Invalid input. Please try again.',
+            );
+          } else {
+            this.errorService.errorSubject.next(err.error?.status);
+            this.router.navigate(['error']);
+          }
+        },
+      });
+  }
+
+  /**
+   * Sends a request again to the API for design generation based on user prompts.
+   *
+   * @param designId - The id of the design.
+   * @returns {Observable<DesignResponse>} - An observable containing the server's response, which includes generated designs.
+   */
+  regenerateDesign(designId: string): Observable<DesignResponse> {
+    return this.http.post<DesignResponse>(
+      environment.gateway + 'designs/' + designId + '/regenerate',
+      {},
+    );
+  }
+
+  editDesign(designId: string, userPrompt: string): Observable<DesignResponse> {
+    return this.http.put<DesignResponse>(
+      environment.gateway + 'designs/' + designId,
+      userPrompt,
+    );
+  }
+
   async prepareFormData(
-    type: 'sketch' | 'design',
+    type: 'sketch' | 'dress',
     image: File,
     prompt: string,
   ): Promise<FormData> {

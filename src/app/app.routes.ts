@@ -62,6 +62,12 @@ export const routes: Routes = [
       import('./sketch/sketch.component').then((m) => m.SketchComponent),
   },
   {
+    path: 'dress',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./dress/dress.component').then((m) => m.DressComponent),
+  },
+  {
     path: 'edit',
     canActivate: [authGuard],
     loadComponent: () =>
@@ -71,12 +77,6 @@ export const routes: Routes = [
     path: 'error',
     loadComponent: () =>
       import('./error/error-page.component').then((m) => m.ErrorPageComponent),
-  },
-  {
-    path: 'dress',
-    canActivate: [authGuard],
-    loadComponent: () =>
-      import('./dress/dress.component').then((m) => m.DressComponent),
   },
   { path: '**', redirectTo: '/home' },
 ];

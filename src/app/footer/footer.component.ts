@@ -22,10 +22,10 @@ export class FooterComponent {
     this.router.navigate([location]);
   }
 
-  onNavigateToCategory(category: string) {
-    this.breadcrumbService.addBreadcrumb(category.toLowerCase(), category);
-    this.promptService.setGender(category.toLowerCase());
-    this.router.navigate(['generate', category.toLowerCase()]);
+  onNavigateToGender(gender: string) {
+    this.breadcrumbService.addBreadcrumb(gender.toLowerCase(), gender);
+    this.promptService.setGender(gender.toLowerCase());
+    this.router.navigate(['generate', gender.toLowerCase()]);
   }
 
   scrollToHomePageSection(sectionId: string) {

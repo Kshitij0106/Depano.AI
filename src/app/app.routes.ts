@@ -62,6 +62,12 @@ export const routes: Routes = [
       import('./sketch/sketch.component').then((m) => m.SketchComponent),
   },
   {
+    path: 'dress',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./dress/dress.component').then((m) => m.DressComponent),
+  },
+  {
     path: 'edit',
     canActivate: [authGuard],
     loadComponent: () =>

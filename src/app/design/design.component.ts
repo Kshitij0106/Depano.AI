@@ -54,9 +54,7 @@ export class DesignComponent implements OnInit {
     this.designService.designSubject
       .pipe(filter(Boolean))
       .subscribe((result) => {
-        if (result.designId) {
-          this.showRegenerateButton = true;
-        }
+        this.showRegenerateButton = result.designType === 'TEXT';
         this.design = result.url;
         this.designService.setDesignId(result.designId);
         this.userService.updateUserDetails();
@@ -85,6 +83,9 @@ export class DesignComponent implements OnInit {
           }
         },
       });
+    } else {
+      this.toastr.error('Something went wrong. Please start again.');
+      this.router.navigate(['mode']);
     }
   }
 

@@ -7,8 +7,6 @@ import { UserInputComponent } from '../generate/user-input/user-input.component'
 import { ActivatedRoute, Router } from '@angular/router';
 import { ImageValidationService } from '../services/image-validation.service';
 import { DesignService } from '../services/design.service';
-import { UserService } from '../services/user.service';
-import { ErrorService } from '../services/error.service';
 
 @Component({
   selector: 'app-dress',
@@ -31,10 +29,8 @@ export class DressComponent {
   public hideUserPrompt: boolean = false;
 
   constructor(
-    private userService: UserService,
     private designService: DesignService,
     private imageValidationService: ImageValidationService,
-    private errorService: ErrorService,
     private toastr: ToastrService,
     private router: Router,
     private route: ActivatedRoute,
@@ -46,10 +42,10 @@ export class DressComponent {
       return;
     }
     this.userPrompt = input;
-    this.handleEditDress();
+    this.handleDressToDesign();
   }
 
-  async handleEditDress(): Promise<void> {
+  async handleDressToDesign(): Promise<void> {
     if (!this.uploadedFile) {
       this.toastr.error('Please upload a dress first');
       return;

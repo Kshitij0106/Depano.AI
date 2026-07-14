@@ -144,8 +144,10 @@ export class EditComponent implements OnInit {
       }
 
       this.toastr.info('Sharing not supported in this browser');
-    } catch (err) {
-      this.toastr.error('Failed to share design');
+    } catch (error: any) {
+      if (error?.name !== 'AbortError') {
+        this.toastr.error('Unable to share the design.');
+      }
     }
   }
 

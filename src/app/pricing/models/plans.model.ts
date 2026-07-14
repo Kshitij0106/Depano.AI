@@ -1,11 +1,9 @@
-import { PlanType } from './planType.model';
-
 export interface DepanoAIPlan {
-  planCode: PlanType;
+  planCode: string;
   name: string;
   icon: string;
-  price: string;
-  designs: string;
+  originalPrice: string;
+  discountedPrice: string;
   credits: number;
   description: string;
   features: string[];

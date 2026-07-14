@@ -8,6 +8,7 @@ export interface User {
   email: string;
   userName: string;
   credits: number;
+  activePlan: boolean;
 }
 
 @Injectable({

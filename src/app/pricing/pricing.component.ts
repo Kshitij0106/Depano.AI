@@ -8,12 +8,11 @@ import { ErrorService } from '../services/error.service';
 import { firstValueFrom } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environments/environment';
-import { PlanType } from './models/planType.model';
 import { PaymentState } from './models/paymentState.model';
 import {
-  DEPANOAIPLANS,
-  DEPANOAIPLANS_YEARLY,
-  DEPANOAIPLANS_TOPUP,
+  MONTHLY_PLANS,
+  ANNUAL_PLANS,
+  TOP_UP_PLANS,
 } from './types/depanoai.plans.types';
 import { DepanoAIPlan } from './models/plans.model';
 import { Router } from '@angular/router';
@@ -38,12 +37,10 @@ export class PricingComponent implements OnInit {
   readonly PaymentState = PaymentState;
   paymentState = PaymentState.IDLE;
   loading = false;
-
-  readonly PlanType = PlanType;
   activeTab: 'monthly' | 'yearly' | 'topup' = 'monthly';
-  readonly monthlyPlans = DEPANOAIPLANS;
-  readonly yearlyPlans = DEPANOAIPLANS_YEARLY;
-  readonly topupPlans = DEPANOAIPLANS_TOPUP;
+  readonly monthlyPlans = MONTHLY_PLANS;
+  readonly yearlyPlans = ANNUAL_PLANS;
+  readonly topupPlans = TOP_UP_PLANS;
 
   get currentPlans(): DepanoAIPlan[] {
     switch (this.activeTab) {
@@ -78,7 +75,7 @@ export class PricingComponent implements OnInit {
     });
   }
 
-  async onPlanSelect(planType: PlanType): Promise<void> {
+  async onPlanSelect(planType: string): Promise<void> {
     if (this.loading) {
       return;
     }
@@ -117,7 +114,7 @@ export class PricingComponent implements OnInit {
   }
 
   private openRazorpayCheckout(
-    planType: PlanType,
+    planType: string,
     order: CreateOrderResponse,
   ): void {
     this.paymentState = PaymentState.OPENING_CHECKOUT;

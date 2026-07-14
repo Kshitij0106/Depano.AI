@@ -55,7 +55,7 @@
           Yearly
         </button>
       </li>
-      <li class="nav-item" role="presentation">
+      <li *ngIf="userDetails?.activePlan" class="nav-item" role="presentation">
         <button
           type="button"
           class="nav-link"
@@ -90,12 +90,16 @@
       </p>
 
       <div class="price">
-        <span class="amount">{{ plan.price }}</span>
+        <span *ngIf="plan.originalPrice != '-'" class="original-price">{{
+          "₹" + plan.originalPrice
+        }}</span>
+        <span class="discounted-price">{{ "₹" + plan.discountedPrice }}</span>
       </div>
+
       <div class="credits-wrapper">
         <div class="credits">
           <lucide-icon class="logo-icon" name="coins" [size]="20"></lucide-icon>
-          {{ plan.designs }}
+          {{ plan.credits }} Credits
         </div>
       </div>
 

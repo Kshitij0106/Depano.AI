@@ -1,13 +1,12 @@
 import { DepanoAIPlan } from '../models/plans.model';
-import { PlanType } from '../models/planType.model';
 
-export const DEPANOAIPLANS: DepanoAIPlan[] = [
+export const MONTHLY_PLANS: DepanoAIPlan[] = [
   {
-    planCode: PlanType.DP_STARTER,
+    planCode: 'DEPANO_MONTHLY_STARTER',
     name: 'Starter Plan',
     icon: '🧵',
-    price: '₹949',
-    designs: '80 Credits',
+    originalPrice: '1299',
+    discountedPrice: '949',
     credits: 80,
     description:
       'Perfect for students and independent designers exploring new ideas and experimenting with styles.',
@@ -19,11 +18,11 @@ export const DEPANOAIPLANS: DepanoAIPlan[] = [
     popular: false,
   },
   {
-    planCode: PlanType.DP_DESIGNER,
+    planCode: 'DEPANO_MONTHLY_DESIGNER',
     name: 'Designer Plan',
     icon: '👗',
-    price: '₹2,099',
-    designs: '200 Credits',
+    originalPrice: '2,799',
+    discountedPrice: '2,099',
     credits: 200,
     description:
       'Best for freelance designers and growing teams who need more creative bandwidth.',
@@ -35,31 +34,30 @@ export const DEPANOAIPLANS: DepanoAIPlan[] = [
     popular: true,
   },
   {
-    planCode: PlanType.DP_STUDIO,
+    planCode: 'DEPANO_MONTHLY_STUDIO',
     name: 'Studio Plan',
     icon: '🏢',
-    price: '₹4,499',
-    designs: '500 Credits',
+    originalPrice: '5,499',
+    discountedPrice: '4,499',
     credits: 500,
     description:
       'Designed for fashion houses and power users who need scale and efficiency.',
     features: [
       'All Designer features',
-      'Dedicated support',
-      'Best value per design',
+      'Priority support',
       'Ideal for heavy usage',
     ],
     popular: false,
   },
 ];
 
-export const DEPANOAIPLANS_YEARLY: DepanoAIPlan[] = [
+export const ANNUAL_PLANS: DepanoAIPlan[] = [
   {
-    planCode: PlanType.DP_STARTER_YEARLY,
-    name: 'Starter Yearly',
+    planCode: 'DEPANO_ANNUAL_STARTER',
+    name: 'Starter Plan',
     icon: '🧵',
-    price: '₹9,999',
-    designs: '1,000 Credits',
+    originalPrice: '12,999',
+    discountedPrice: '9,999',
     credits: 1000,
     description:
       'Best for beginners who want a full year of creative support with predictable value.',
@@ -71,11 +69,11 @@ export const DEPANOAIPLANS_YEARLY: DepanoAIPlan[] = [
     popular: false,
   },
   {
-    planCode: PlanType.DP_DESIGNER_YEARLY,
-    name: 'Designer Yearly',
+    planCode: 'DEPANO_ANNUAL_DESIGNER',
+    name: 'Designer Plan',
     icon: '👗',
-    price: '₹21,999',
-    designs: '2,500 Credits',
+    originalPrice: '27,999',
+    discountedPrice: '21,999',
     credits: 2500,
     description:
       'Perfect for freelance designers and teams who want premium annual savings.',
@@ -87,11 +85,11 @@ export const DEPANOAIPLANS_YEARLY: DepanoAIPlan[] = [
     popular: true,
   },
   {
-    planCode: PlanType.DP_STUDIO_YEARLY,
-    name: 'Studio Yearly',
+    planCode: 'DEPANO_ANNUAL_STUDIO',
+    name: 'Studio Plan',
     icon: '🏢',
-    price: '₹44,999',
-    designs: '6,000 Credits',
+    originalPrice: '54,999',
+    discountedPrice: '44,999',
     credits: 6000,
     description:
       'Designed for studios and power users who want maximum annual value and performance.',
@@ -104,13 +102,13 @@ export const DEPANOAIPLANS_YEARLY: DepanoAIPlan[] = [
   },
 ];
 
-export const DEPANOAIPLANS_TOPUP: DepanoAIPlan[] = [
+export const TOP_UP_PLANS: DepanoAIPlan[] = [
   {
-    planCode: PlanType.DP_TOPUP_SMALL,
-    name: 'Top-up 75',
+    planCode: 'DEPANO_TOP_UP_SMALL',
+    name: 'Small Top-up',
     icon: '🔋',
-    price: '₹75',
-    designs: '6 Credits',
+    originalPrice: '-',
+    discountedPrice: '75',
     credits: 6,
     description: 'Add a burst of credits for on-demand editing and generation.',
     features: [
@@ -121,11 +119,11 @@ export const DEPANOAIPLANS_TOPUP: DepanoAIPlan[] = [
     popular: false,
   },
   {
-    planCode: PlanType.DP_TOPUP_MEDIUM,
-    name: 'Top-up 125',
+    planCode: 'DEPANO_TOP_UP_MEDIUM',
+    name: 'Medium Top-up',
     icon: '🔋',
-    price: '₹125',
-    designs: '10 Credits',
+    originalPrice: '-',
+    discountedPrice: '125',
     credits: 10,
     description:
       'A flexible boost for users who need creative capacity without a full plan.',
@@ -137,14 +135,14 @@ export const DEPANOAIPLANS_TOPUP: DepanoAIPlan[] = [
     popular: true,
   },
   {
-    planCode: PlanType.DP_TOPUP_LARGE,
-    name: 'Top-up 250',
+    planCode: 'DEPANO_TOP_UP_LARGE',
+    name: 'Large Top-up',
     icon: '🔋',
-    price: '₹250',
-    designs: '20 Credits',
+    originalPrice: '-',
+    discountedPrice: '250',
     credits: 20,
     description:
-      'Large top-up option for heavy edits, fast turnarounds, and high-volume work.',
+      'Large top-up option for edits, fast turnarounds, and high-volume work.',
     features: [
       'Maximum pay-as-you-go value',
       'Great for sales season or bulk work',

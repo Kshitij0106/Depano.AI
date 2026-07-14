@@ -210,11 +210,23 @@
 }
 
 .price {
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
   margin-bottom: 20px;
 
-  .amount {
-    font-size: 32px;
+  .original-price {
+    text-decoration: line-through;
+    font-size: 26px;
+    font-weight: bold;
+    font-family: "playfair-display", serif;
+    font-style: Bold;
+    text-align: center;
+  }
+
+  .discounted-price {
+    font-size: 26px;
     font-weight: bold;
     font-family: "playfair-display", serif;
     font-style: Bold;

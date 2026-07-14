@@ -67,7 +67,7 @@ export class FeatureComponent implements AfterViewInit {
       icon: 'BookOpen',
       title: 'Innovative Outfit Generation',
       description:
-        'Create unique, never-seen-before outfits in seconds with Depano AI’s user-friendly interface. Depano AI blends creativity with precision to bring your boldest fashion ideas to life instantly.',
+        'Create unique, never-seen-before outfits in seconds with Depano AI. Blend creativity with precision to bring your boldest fashion ideas to life instantly.',
     },
     {
       icon: 'Scissors',

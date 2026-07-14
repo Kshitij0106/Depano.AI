@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common';
 import { LucideAngularModule } from 'lucide-angular';
 import { ToastrService } from 'ngx-toastr';
 import { CategoryService } from '../generate/services/category.service';
-import { filter, Subscription } from 'rxjs';
+import { filter, take, Subscription } from 'rxjs';
 import { ErrorService } from '../services/error.service';
 
 @Component({
@@ -52,7 +52,7 @@ export class DesignComponent implements OnInit {
 
   generateDesign() {
     this.designService.designSubject
-      .pipe(filter(Boolean))
+      .pipe(filter(Boolean), take(1))
       .subscribe((result) => {
         this.showRegenerateButton = result.designType === 'TEXT';
         this.design = result.url;
@@ -148,8 +148,10 @@ export class DesignComponent implements OnInit {
       }
 
       this.toastr.info('Sharing not supported in this browser');
-    } catch (err) {
-      this.toastr.error('Failed to share design');
+    } catch (error: any) {
+      if (error?.name !== 'AbortError') {
+        this.toastr.error('Unable to share the design.');
+      }
     }
   }
 

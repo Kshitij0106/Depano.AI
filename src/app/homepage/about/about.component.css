@@ -1,7 +1,8 @@
 .about-section {
-  min-height: 100vh;
   background: linear-gradient(to bottom, #f9fafb, #ffffff);
-  padding: 5rem 1.5rem;
+  padding-top: 5rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
 }
 
 .container {
@@ -65,49 +66,6 @@
 @media (min-width: 640px) {
   .text p {
     font-size: 1rem;
-  }
-}
-
-.stats {
-  display: flex;
-  gap: 8rem;
-  margin-top: 2rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid #e5e7eb;
-  justify-content: center;
-}
-
-@media (max-width: 639px) {
-  .stats {
-    flex-direction: column;
-    gap: 1.5rem;
-    align-items: center;
-  }
-}
-
-.stats .number {
-  font-size: 1.25rem;
-  font-family: "Playfair Display", serif;
-  color: #111827;
-}
-
-@media (min-width: 640px) {
-  .stats .number {
-    font-size: 1.5rem;
-  }
-}
-
-.stats .label {
-  font-size: 0.75rem;
-  color: #6b7280;
-  font-family: "Inter", sans-serif;
-  font-weight: 400;
-  margin-top: 0.25rem;
-}
-
-@media (min-width: 640px) {
-  .stats .label {
-    font-size: 0.875rem;
   }
 }
 

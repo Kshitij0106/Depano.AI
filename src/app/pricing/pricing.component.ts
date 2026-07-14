@@ -8,9 +8,13 @@ import { ErrorService } from '../services/error.service';
 import { firstValueFrom } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environments/environment';
-import { PlanType } from './models/planType.model';
 import { PaymentState } from './models/paymentState.model';
-import { DEPANOAIPLANS } from './types/depanoai.plans.types';
+import {
+  MONTHLY_PLANS,
+  ANNUAL_PLANS,
+  TOP_UP_PLANS,
+} from './types/depanoai.plans.types';
+import { DepanoAIPlan } from './models/plans.model';
 import { Router } from '@angular/router';
 import { CreateOrderResponse } from './models/createOrderResponse.model';
 import {
@@ -33,9 +37,25 @@ export class PricingComponent implements OnInit {
   readonly PaymentState = PaymentState;
   paymentState = PaymentState.IDLE;
   loading = false;
+  activeTab: 'monthly' | 'yearly' | 'topup' = 'monthly';
+  readonly monthlyPlans = MONTHLY_PLANS;
+  readonly yearlyPlans = ANNUAL_PLANS;
+  readonly topupPlans = TOP_UP_PLANS;
 
-  readonly PlanType = PlanType;
-  readonly plans = DEPANOAIPLANS;
+  get allPlans(): DepanoAIPlan[] {
+    switch (this.activeTab) {
+      case 'yearly':
+        return this.yearlyPlans;
+      case 'topup':
+        return this.topupPlans;
+      default:
+        return this.monthlyPlans;
+    }
+  }
+
+  setActiveTab(tab: 'monthly' | 'yearly' | 'topup'): void {
+    this.activeTab = tab;
+  }
 
   private razorpayInstance: InstanceType<Window['Razorpay']> | null = null;
 
@@ -55,7 +75,7 @@ export class PricingComponent implements OnInit {
     });
   }
 
-  async onPlanSelect(planType: PlanType): Promise<void> {
+  async onPlanSelect(planType: string): Promise<void> {
     if (this.loading) {
       return;
     }
@@ -94,7 +114,7 @@ export class PricingComponent implements OnInit {
   }
 
   private openRazorpayCheckout(
-    planType: PlanType,
+    planType: string,
     order: CreateOrderResponse,
   ): void {
     this.paymentState = PaymentState.OPENING_CHECKOUT;

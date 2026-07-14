@@ -42,7 +42,7 @@ export class PricingComponent implements OnInit {
   readonly yearlyPlans = ANNUAL_PLANS;
   readonly topupPlans = TOP_UP_PLANS;
 
-  get currentPlans(): DepanoAIPlan[] {
+  get allPlans(): DepanoAIPlan[] {
     switch (this.activeTab) {
       case 'yearly':
         return this.yearlyPlans;
